@@ -21,7 +21,7 @@ import HistoryIcon from '@material-ui/icons/History';
 import ListItem from "@material-ui/core/ListItem";
 import {connect} from "react-redux";
 import {navigate, openDrawer} from "../actions";
-import LogoSysco from '../assets/logoSysco.png'
+import LogoSysco from '../assets/images/logoSysco.png'
 import {bindActionCreators} from 'redux';
 import {SHOW_EXCEL_UPLOAD, SHOW_HISTORY_TABLE, SHOW_RESULT_TABLE} from "../actions/ActionType";
 import Typography from "@material-ui/core/Typography";
