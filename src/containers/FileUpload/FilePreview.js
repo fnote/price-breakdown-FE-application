@@ -16,11 +16,10 @@ import Paper from '@material-ui/core/Paper';
 import {connect} from 'react-redux';
 import Button from "@material-ui/core/Button";
 import TableContainer from "@material-ui/core/TableContainer";
-import Container from "@material-ui/core/Container";
 
 const styles = theme => ({
-    root: {
-        width: '100%',
+    container: {
+        width: `calc(100% - ${theme.spacing(1) * 6}px)`,
         marginTop: theme.spacing(1) * 3,
         overFlow: 'auto'
     },
@@ -28,9 +27,18 @@ const styles = theme => ({
         minWidth: 650,
     },
     btnToolBar: {
-        marginTop: theme.spacing(1) * 2,
+        margin: theme.spacing(1),
         justifyContent: "flex-end",
         display: "flex"
+    },
+    button: {
+        margin: theme.spacing(1),
+        backgroundColor: "#D7E8F3",
+        textTransform: "capitalize"
+    },
+    cancelButton: {
+        backgroundColor: "#1a713b",
+        color: "#FFFFFF"
     }
 });
 
@@ -46,8 +54,8 @@ class FilePreview extends Component {
         const {classes} = this.props;
         return (
             this.state.shouldShowTable &&
-            <div>
-                <div component={Paper}>
+            <div className={classes.container}>
+                <TableContainer component={Paper}>
                     <Table className={classes.table}>
                         <TableHead>
                             <TableRow>
@@ -71,15 +79,14 @@ class FilePreview extends Component {
                             })}
                         </TableBody>
                     </Table>
-                </div>
+                </TableContainer>
                 <div className={classes.btnToolBar}>
-                    <Button onClick={() => this.removePreviewTable()}
-                            style={{marginRight: "8px", "backgroundColor": "#D7E8F3", "textTransform": "capitalize"}}
+                    <Button className={classes.button} onClick={() => this.removePreviewTable()}
                             variant="contained">
                         Cancel
                     </Button>
                     <Button variant="contained"
-                            style={{"backgroundColor": "#1a713b", "color": "#FFFFFF", "textTransform": "capitalize"}}>
+                            className={classes.button}>
                         Submit
                     </Button>
                 </div>

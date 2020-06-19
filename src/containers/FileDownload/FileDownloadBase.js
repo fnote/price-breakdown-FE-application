@@ -1,7 +1,7 @@
 /**
  * Base component for file upload and its preview.
  *
- * @author: adis0892 on 6/20/18
+ * @author: cwic0864
  **/
 
 import React, {Component} from 'react';
