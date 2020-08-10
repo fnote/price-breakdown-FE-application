@@ -1,0 +1,30 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      nodejs: 10
+    commands:
+      # Install dependencies needed for running tests
+      - npm install
+      # Upgrade AWS CLI to the latest version
+      - pip3 install --upgrade awscli
+      # Install sonar-scanner
+      - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.2.0.1873-linux.zip
+      - unzip sonar-scanner-cli-4.2.0.1873-linux.zip
+      - export PATH=$PATH:./sonar-scanner-4.2.0.1873-linux/bin/
+      # Get sonar-scanner details
+      - sonar-scanner --version
+  pre_build:
+    commands:
+      # Scan and push to sonarqube
+      - sonar-scanner -Dsonar.host.url=https://cloudpricing-sonar-dev.prcp-np.us-east-1.aws.sysco.net/ -Dsonar.verbose=true -Dsonar.projectName=Cloud-PCI-Frontend
+
+  build:
+    commands:
+      # Run the build command to generate build folder output
+      - npm run build:$ENV
+      # Use AWS CLI to copy the folder to the s3 bucket
+      - aws s3 cp --recursive build/ s3://$WEBSITE_S3_BUCKET/build/
+  post_build:
+    commands:
+      - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'
