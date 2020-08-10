@@ -37,9 +37,14 @@ const styles = theme => ({
         textTransform: "capitalize"
     },
     cancelButton: {
+        margin: theme.spacing(1),
         backgroundColor: "#1a713b",
         color: "#FFFFFF"
-    }
+    },
+    tableRow: {
+        fontWeight: theme.typography.fontWeightBold,
+        color: "#000000"}
+
 });
 
 class FilePreview extends Component {
@@ -60,9 +65,8 @@ class FilePreview extends Component {
                         <TableHead>
                             <TableRow>
                                 {
-                                    this.props.fileData.header.map((headerCell, index) => <TableCell
-                                        style={{"fontWeight": "bold", color: "#000000"}}
-                                        key={index}>{headerCell}</TableCell>)
+                                    this.props.fileData.header.map((headerCell, index) =>
+                                        <TableCell className={classes.tableRow} key={index}>{headerCell}</TableCell>)
                                 }
                             </TableRow>
                         </TableHead>
@@ -81,7 +85,7 @@ class FilePreview extends Component {
                     </Table>
                 </TableContainer>
                 <div className={classes.btnToolBar}>
-                    <Button className={classes.button} onClick={() => this.removePreviewTable()}
+                    <Button className={classes.cancelButton} onClick={() => this.removePreviewTable()}
                             variant="contained">
                         Cancel
                     </Button>

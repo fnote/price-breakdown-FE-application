@@ -35,12 +35,12 @@ class FileUploadBase extends Component {
     render() {
         return (
             <div>
-                <Dropzone accept={" .csv, .xlsx, .xls"} multiple={false} className="dropZone"
+                <Dropzone accept={" .csv, .xlsx, .xls, .txt"} multiple={true} className="dropZone"
                           onDrop={(e) => this.handleFile(e)}>
                     <Button variant="contained" style={{
                         marginRight: "15px", "backgroundColor": "#D7E8F3", "color": "#1A4F71",
                         "textTransform": "capitalize"
-                    }}><b>Select File</b></Button>
+                    }}><b>Select Files</b></Button>
                     <i className='fa fa-upload'
                        style={{marginRight: "4px", "color": "#808080", "fontSize": "28px", "padding": "5px"}}/>
                     <p style={{"paddingTop": "5px", "color": "#808080"}}>Drop file here</p>
@@ -69,7 +69,7 @@ class FileUploadBase extends Component {
             this.setState({
                 isInvalidFile: true,
                 errorTitle: "Invalid File Extension",
-                errorMsg: "Only Excel and CSV files are allowed.",
+                errorMsg: "Only Excel, Text and CSV files are allowed.",
                 showPreview: false
             });
             this.validationFailureType = null;
@@ -172,7 +172,7 @@ class FileUploadBase extends Component {
     }
 
     validateFileExtension = (file) => {
-        let allowedExtensions = /(\.csv|\.xlsx|\.xls)$/i;
+        let allowedExtensions = /(\.csv|\.xlsx|\.xls|\.txt)$/i;
         if (file === undefined || !allowedExtensions.exec(file.name)) {
             this.validationFailureType = FILE_EXTENSION_FAIL;
         }
