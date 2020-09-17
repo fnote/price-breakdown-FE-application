@@ -1,0 +1,49 @@
+.searchpanel {
+  @include flexbox(0 0 auto, column, flex-start, flex-start);
+  width: 21rem;
+  height: 100vh;
+  background-size: 100% 100%;
+  padding: 1.2rem 3rem 1.2rem 1.9rem;
+  position: relative;
+  z-index: 1;
+  transition: width ease-in-out 300ms;
+  .collapser {
+    color: $textalternative;
+    border: 1px solid rgba(255, 255, 255, 0.33);
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    position: absolute;
+    right: 4rem;
+    cursor: pointer;
+    transition: all ease-in-out 200ms;
+    &:hover {
+      border: 1px solid rgba(255, 255, 255, 0.83);
+      background: rgba(255, 255, 255, 0.93);
+      color: $syscoblue;
+    }
+    &:active {
+      border: 1px solid rgba(255, 255, 255, 0.33);
+      background: rgba(255, 255, 255, 0.53);
+      color: $syscoblue;
+    }
+  }
+
+  .branding {
+    position: sticky;
+    margin-bottom: 1rem;
+    .logo {
+      // width: 11rem;
+      width: 8rem;
+      transition: width ease-in-out 300ms;
+    }
+  }
+
+
+
+
+  &.collapsed {
+   
+  
+  }
+}

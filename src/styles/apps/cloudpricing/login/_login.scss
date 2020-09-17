@@ -1,0 +1,81 @@
+/***********************************************************
+    LOGIN PRIMARY SASS FILE - BUILT ON BT-UX-FRAMEWORK
+    Author: Michael Lu 
+    (Auto Compiled to CSS during runtime)
+***********************************************************/
+
+.login-wrapper {
+  @include flexbox();
+  background: url("../../../images/loginbg.png") no-repeat bottom center;
+  background-size: 100% auto;
+  justify-content: center;
+  align-items: center;
+
+  .login-panel {
+    @include flexbox(0 0 auto, column, flex-start, center);
+    .logo {
+      // width: 18rem;
+      width: 14rem;
+      margin: 1rem 0;
+      filter: drop-shadow(0 0 0.55rem rgba(7, 102, 149, 0.68));
+    }
+    .title {
+      font-weight: 300;
+      font-size: 1.2rem;
+      margin: 1rem 0;
+      color: $textstandard;
+      opacity: 0.8;
+      .bold {
+        font-weight: 600;
+      }
+    }
+
+    .loginbtn {
+      border-radius: 0.3rem;
+      background: #008ace;
+      box-shadow: 0px 0px 1rem rgba(7, 102, 149, 0.68);
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.6rem 1rem;
+      @include flexbox(0 0 auto);
+      user-select: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      transition: all ease-in-out 200ms;
+      &:hover {
+        opacity: 0.8;
+      }
+      &:active {
+        opacity: 0.9;
+      }
+    }
+
+    .validations {
+      @include flexbox();
+      text-align: center;
+      padding: 1rem 0;
+      color: $syscored;
+      max-width: 16rem;
+    }
+    .login-loader {
+      margin: 1.6rem 0;
+    }
+
+    .error-text {
+      color: darken($syscored, 20%);
+      font-size: 1.2rem;
+      width: 38rem;
+      text-align: center;
+      .fi {
+        margin-right: 10px;
+      }
+      &.spaced{
+        margin: 2rem 0;
+      }
+    }
+
+
+  }
+}

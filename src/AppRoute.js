@@ -3,11 +3,7 @@ import {Provider} from "react-redux";
 import { createStore } from 'redux';
 import reducer from './reducers';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import {ThemeProvider as MuiThemeProvider} from '@material-ui/core/styles';
-import HomePage from "./containers/HomePage";
-
-// const theme = createMuiTheme(AppThemes.light);
+import ApplicationBase from './containers/ApplicationBase';
 const store = createStore(reducer);
 
 function AppRoute() {
@@ -15,11 +11,9 @@ function AppRoute() {
       <Provider store={store}>
         <Fragment>
           <Router>
-
                   <Switch>
-                      <Route path="/" component={HomePage}/>
+                      <Route path="/" component={ApplicationBase}/>
                   </Switch>
-
           </Router>
         </Fragment>
       </Provider>
