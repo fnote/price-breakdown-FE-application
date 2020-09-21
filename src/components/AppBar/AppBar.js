@@ -6,7 +6,7 @@ import Navigation from "./Navigation";
 function AppBar() {
   return (
     <div className="appbar" id="appbar">
-      <img data-testid="logo" src={logo} alt="Sysco Cloud Pricing" className="logo" />
+      <img src={logo} alt="Sysco Cloud Pricing" className="logo" />
       <Navigation />
       <AccountWidget />
     </div>
