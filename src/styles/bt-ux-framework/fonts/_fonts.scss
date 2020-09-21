@@ -1,14 +1,11 @@
 /* Set of embedded font file definitions
         Fonts used:
-          - Neo Sans
+          - Proxima Nova
           - Myriad Pro (Disabled)
           
     Please use typekit whenever possible
 */
 
-///// Enable the following if you wish to use offline fonts, make sure to comment the typekit import below if you do so.
-// @import '_myriadpro';
-
 //Typekit import
 // @import url('https://use.typekit.net/wvb1lqs.css'); //Myriad Pro
-@import url("https://use.typekit.net/ltr8uly.css"); //Neo Sans
+@import url("https://use.typekit.net/nmy0jqj.css"); //Proxima Nova
