@@ -12,10 +12,11 @@
         @include flexbox(0 0 auto, row, flex-start, center);
         li {
             font-weight: 400;
-            margin: 0 1rem 0 0;
+            margin: 0 0 0 0;
             padding: 2.1rem 1rem 0.9rem 1rem;
             transition: all ease-in-out 200ms;
             border: 1px solid transparent;
+            font-size: 1rem;
             cursor: pointer;
             // height: 4rem;
             .bold {
