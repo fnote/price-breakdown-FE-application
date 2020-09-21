@@ -31,7 +31,7 @@
             font-size: 1rem !important;
         }
         .ant-switch-checked {
-            background-color: $payplusblue;
+            background-color: $syscoblue;
         }
         .icon.confirm-icon, .icon.save-icon {
             color: $syscogreen;
@@ -127,7 +127,7 @@
     .column-group{
         border: none;
         .column-group-title{
-            color: $payplusblue;
+            color: $syscoblue;
         }
         .group-boundary-left{
             border-top: 1px dashed lighten($textstandard, 20%);

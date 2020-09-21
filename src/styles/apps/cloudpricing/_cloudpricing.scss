@@ -7,8 +7,9 @@
 @import "searchpanel/_searchpanel";
 @import "actionbuttons/_actionbuttons";
 
-
 .cloudpricing-wrapper {
   @include flexbox(1 1 auto, row, flex-start, flex-start);
+  background: url("../../images/pagebg.png") no-repeat top center;
+  background-size: 100% auto;
   overflow: hidden;
 }

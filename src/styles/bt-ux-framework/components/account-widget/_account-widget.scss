@@ -5,7 +5,6 @@
   position: absolute;
   right: 0.5rem;
   top: 0.5rem;
-  background-color: $textalternative;
   @include flexbox(0 0 auto, column, flex-end, center);
   padding: 0.5rem 0;
   z-index: 2;

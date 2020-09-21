@@ -21,7 +21,7 @@ function Login() {
     return (
         <div className="wrapper login-wrapper">
             <div className="login-panel">
-                <img data-testid='logo' src={logo} alt="Sysco Payplus" className="logo" />
+                <img data-testid='logo' src={logo} alt="Sysco Cloud Pricing" className="logo" />
                 <p className="error-text hide"><i className="fi flaticon-alert" /> For security reasons you have been signed out automatically.</p>
                 <div className="button-bar">
                 <div data-testid='signin-msg' className="title">Please sign in to begin</div>

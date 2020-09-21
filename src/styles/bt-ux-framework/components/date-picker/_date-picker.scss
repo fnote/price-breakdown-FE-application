@@ -31,10 +31,10 @@
         color: $textalternative;
         text-transform: uppercase;
         &.pending {
-          background-color: $payplusblue;
+          background-color: $syscoblue;
         }
         &.inprogress {
-          background-color: darken($payplusblue, 5%);
+          background-color: darken($syscoblue, 5%);
           opacity: 0.8;
         }
       }
@@ -43,7 +43,7 @@
         margin: 0.35rem 0;
         text-transform: uppercase;
         .special-txt {
-          color: $payplusblue;
+          color: $syscoblue;
           font-weight: 600;
         }
         .special-txt-year {
@@ -84,7 +84,7 @@
       transition: color ease-in-out 200ms;
       &:hover {
         cursor: pointer;
-        color: $payplusblue;
+        color: $syscoblue;
       }
     }
   }
