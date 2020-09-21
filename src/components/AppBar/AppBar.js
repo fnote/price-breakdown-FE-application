@@ -7,7 +7,7 @@ function AppBar() {
   return (
     <div className="appbar" id="appbar">
       <img data-testid="logo" src={logo} alt="Sysco Cloud Pricing" className="logo" />
-      <Navigation /> ss
+      <Navigation />
       <AccountWidget />
     </div>
   );

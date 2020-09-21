@@ -1,0 +1,45 @@
+.appbar {
+    @include flexbox(0 0 auto, row, flex-start, center);
+    width: 80%;
+    padding: 1rem 1.5rem;
+
+    .logo {
+        width: 20rem;
+        margin-right: 2rem;
+    }
+    .navigation {
+        margin-top: -1rem;
+        @include flexbox(0 0 auto, row, flex-start, center);
+        li {
+            font-weight: 400;
+            margin: 0 1rem 0 0;
+            padding: 2.1rem 1rem 0.9rem 1rem;
+            transition: all ease-in-out 200ms;
+            border: 1px solid transparent;
+            cursor: pointer;
+            // height: 4rem;
+            .bold {
+                font-weight: 600;
+            }
+            .icon {
+                margin-right: 0.6rem;
+                padding-right: 0.6rem;
+                border-right: 1px solid lighten($textstandard, 30%);
+                font-size: 1.2rem;
+            }
+            &.selecte, &:hover {
+                color: $syscoblue;
+                border-radius: 9px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                background: #ecf7ff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAYCAYAAAAoG9cuAAAAAXNSR0IArs4c6QAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAACaADAAQAAAABAAAAGAAAAABRCgWpAAAALUlEQVQoFWP8////fQYCgImAPFh6VBED9YKABRikqwmFOvWsGzWJinFHVGACAPOVBLngB5XvAAAAAElFTkSuQmCC) no-repeat top center/100% 30%;
+                border: 1px solid #d9eaf2;
+                box-shadow: 0px 0px 0.5rem #e9f3fc;
+            }
+            &:active{
+                filter:brightness(105%);
+            }
+
+        }
+    }
+}
