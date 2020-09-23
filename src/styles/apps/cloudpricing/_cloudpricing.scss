@@ -7,9 +7,10 @@
 @import "appbar/_appbar";
 @import "searchpanel/_searchpanel";
 @import "actionbuttons/_actionbuttons";
+@import "pricevalidation/_pricevalidation";
 
 .cloudpricing-wrapper {
-  @include flexbox(1 1 auto, row, flex-start, flex-start);
+  @include flexbox(1 1 auto, column, flex-start, flex-start);
   background: url("../../images/pagebg.png") no-repeat top center;
   background-size: 100% auto;
   overflow: hidden;

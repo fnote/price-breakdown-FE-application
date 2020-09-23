@@ -2,6 +2,7 @@
     @include flexbox(0 0 auto, row, flex-start, center);
     width: 80%;
     padding: 1rem 1.5rem;
+    margin-bottom: 0.8rem;
 
     .logo {
         width: 20rem;
@@ -12,12 +13,13 @@
         @include flexbox(0 0 auto, row, flex-start, center);
         li {
             font-weight: 400;
-            margin: 0 0 0 0;
+            margin: 0 0.2rem;
             padding: 2.1rem 1rem 0.9rem 1rem;
-            transition: all ease-in-out 200ms;
+            transition: all ease-in-out 300ms;
             border: 1px solid transparent;
             font-size: 1rem;
             cursor: pointer;
+            background-position: bottom center;
             // height: 4rem;
             .bold {
                 font-weight: 600;
@@ -28,7 +30,7 @@
                 border-right: 1px solid lighten($textstandard, 30%);
                 font-size: 1.2rem;
             }
-            &.selecte, &:hover {
+            &.selected, &:hover {
                 color: $syscoblue;
                 border-radius: 9px;
                 border-top-left-radius: 0;

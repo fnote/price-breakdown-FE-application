@@ -1,0 +1,12 @@
+.content {
+  @include flexbox(1 1 auto, row, flex-start, flex-start);
+  width: 100%;
+}
+
+.pricing-results {
+  @include flexbox(1 1 auto, row, flex-start, flex-start);
+  margin: 0 2rem;
+  border-radius: 1rem;
+  background: $textalternative;
+  border: 1px solid rgba(98, 115, 126, 0.25);  
+}
