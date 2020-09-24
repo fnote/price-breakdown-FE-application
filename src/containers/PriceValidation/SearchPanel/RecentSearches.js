@@ -11,7 +11,6 @@ function RecentSearches() {
       <ul className="recent-searches">
         <RecentSearchBlock />
         <RecentSearchBlock />
-        <RecentSearchBlock />
       </ul>
     </>
   );
