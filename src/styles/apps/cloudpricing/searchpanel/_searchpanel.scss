@@ -11,8 +11,10 @@
   border: 1px solid $textalternative;
   opacity: 0.9;
   box-shadow: 0px 0px 0.9rem rgba(0, 0, 0, 0.16);
-  overflow: auto;
-
+  overflow: hidden;
+  &:hover{
+    overflow: auto;
+  }
   .panel-header {
     color: $bluegrey;
     font-weight: 600;
