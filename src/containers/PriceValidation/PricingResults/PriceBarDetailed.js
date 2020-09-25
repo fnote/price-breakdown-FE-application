@@ -1,17 +1,13 @@
 import React from "react";
+import PriceBarDetailedHeader from "./PriceBarDetailedHeader";
 
 function PriceBarDetailed() {
   return (
     <div className="price-bar-detailed">
       <div className="price-bar-divider"></div>
+
       <section className="detailed-left">
-        <header>
-          <div className="icon-col"></div>
-          <div className="description-col">Description</div>
-          <div className="adjustment-col">Adjustment</div>
-          <div className="calculated-col">Calculated</div>
-          <div className="source-col">Source</div>
-        </header>
+        <PriceBarDetailedHeader />
         <div className="block group1">
           <div className="icon-col">
             <i className="icon fi flaticon-diamond" />
@@ -90,24 +86,11 @@ function PriceBarDetailed() {
           </div>
         </div>
       </section>
+
       <div className="price-bar-divider overlap"></div>
 
-
-
-
-
-
-
-
-
       <section className="detailed-right">
-        <header>
-          <div className="icon-col"></div>
-          <div className="description-col">Description</div>
-          <div className="adjustment-col">Adjustment</div>
-          <div className="calculated-col">Calculated</div>
-          <div className="source-col">Source</div>
-        </header>
+        <PriceBarDetailedHeader />
         <div className="block group3">
           <div className="icon-col">
             <i className="icon fi flaticon-diamond" />
@@ -115,9 +98,7 @@ function PriceBarDetailed() {
           <div className="data-fields">
             <div className="row">
               <div className="description-col">
-                <div className="title">
-                Discount Price
-                </div>
+                <div className="title">Discount Price</div>
                 <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>
@@ -141,10 +122,41 @@ function PriceBarDetailed() {
                   <i className="icon fi flaticon-circle" />
                   Item/Order Specific promotions
                 </div>
-              </div>              
+              </div>
+            </div>
+            <div className="row sub-row">
+              <ul className="value-table">
+                <li>
+                  <div className="description-col">0 <span>to</span> 5</div>
+                  <div className="adjustment-col">- 0.000%</div>
+                  <div className="calculated-col">- $0.000</div> 
+                </li>
+                <li>
+                  <div className="description-col">6 <span>to</span> 10</div>
+                  <div className="adjustment-col">- 0.250%</div>
+                  <div className="calculated-col">- $0.153</div>
+                </li>
+                <li className="selected">
+                  <div className="description-col">11 <span>to</span> 15</div>
+                  <div className="adjustment-col">- 0.500%</div>
+                  <div className="calculated-col">- $0.287 </div>
+                  <div className="source-col"><i className="icon fi flaticon-tick-1"/> Discount Service</div>
+                </li>
+                <li>
+                  <div className="description-col">16 <span>to</span> 25</div>
+                  <div className="adjustment-col">- 0.750%</div>
+                  <div className="calculated-col">- $0.458</div>
+                </li>
+                <li>
+                  <div className="description-col">26 <span>and</span> above</div>
+                  <div className="adjustment-col">- 1.000%</div>
+                  <div className="calculated-col">- $0.610</div>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
+
         <div className="block group4">
           <div className="icon-col">
             <i className="icon fi flaticon-diamond" />
@@ -152,9 +164,7 @@ function PriceBarDetailed() {
           <div className="data-fields">
             <div className="row">
               <div className="description-col">
-                <div className="title">
-                Order Net Price w/o Exceptions
-                </div>
+                <div className="title">Order Net Price w/o Exceptions</div>
                 <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>

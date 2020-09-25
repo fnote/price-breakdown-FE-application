@@ -1,0 +1,121 @@
+.price-bar {
+  width: calc(100% + 4px);
+  margin-left: -2px;
+  height: 9rem;
+  background: #fbfbfb;
+  box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.15);
+  @include flexbox(0 0 auto, row, flex-start, center);
+
+  .price-bar-divider {
+    border-left: 1px dashed lighten($textstandard, 15%);
+    width: 2px;
+    height: 100%;
+    margin: 0 0 0 1.65rem;
+  }
+  section {
+    margin: 0 0 0 1rem;
+    @include flexbox(1 1 auto, column, center, flex-start);
+    &:first-of-type {
+      margin: 0 0 0 -0.5rem;
+      background: #fbfbfb;
+      padding: 1rem 0 1rem 0.4rem;
+    }
+    &.pad-right {
+      width: 20%;
+    }
+    label {
+      text-transform: uppercase;
+      font-weight: 300;
+      font-size: 0.9rem;
+    }
+    .price-block {
+      @include flexbox(1 1 auto, row, flex-start, flex-end);
+      width: 100%;
+    }
+    .value {
+      @include flexbox(0 0 auto, row, flex-start, flex-start);
+      margin-top: 0.5rem;
+      font-weight: 800;
+      font-size: 2.25rem;
+      // letter-spacing: -0.1rem;
+      &::before {
+        content: "$";
+        font-size: 1.2rem;
+        margin-right: 0.3rem;
+      }
+    }
+    .unit-block {
+      @include flexbox(1 1 auto, column, flex-start, flex-start);
+      margin: 0 0 0.3rem 0.5rem;
+      .divider {
+        border-bottom: 1px dotted lighten($textstandard, 15%);
+        width: 100%;
+        margin: 0 0 0.3rem 0.2rem;
+        height: 1px;
+      }
+      .unit {
+        font-size: 1rem;
+        font-weight: 800;
+      }
+    }
+
+    &.main-price {
+      @include flexbox(0 0 auto, column, center, flex-start);
+      margin-right: 2rem;
+      label {
+        font-size: 1.1rem;
+      }
+      .value {
+        color: $syscogreen;
+        margin-top: 0.6rem;
+        font-size: 2.8rem;
+        &::before {
+          content: "$";
+          font-size: 1.6rem;
+          margin-right: 0.3rem;
+        }
+      }
+      .unit-block {
+        color: $syscogreen;
+        @include flexbox(1 1 auto, column, flex-start, flex-start);
+        margin: 0 0 0.3rem 0.5rem;
+        .unit {
+          font-size: 1.4rem;
+          font-weight: 800;
+        }
+      }
+    }
+    &.group1 {
+      .value {
+        color: $price-group-color-1;
+      }
+      .unit-block {
+        color: $price-group-color-1;
+      }
+    }
+    &.group2 {
+      .value {
+        color: $price-group-color-2;
+      }
+      .unit-block {
+        color: $price-group-color-2;
+      }
+    }
+    &.group3 {
+      .value {
+        color: $price-group-color-3;
+      }
+      .unit-block {
+        color: $price-group-color-3;
+      }
+    }
+    &.group4 {
+      .value {
+        color: $price-group-color-4;
+      }
+      .unit-block {
+        color: $price-group-color-4;
+      }
+    }
+  }
+}
