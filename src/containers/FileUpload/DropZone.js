@@ -26,7 +26,6 @@ function DropZone() {
     <div className="drop-zone">
       <Dragger {...props}>
         <i className="icon fi flaticon-upload" />
-
         <p className="ant-upload-text">Drag and drop file here</p>
         <p className="ant-upload-hint">or</p>
         <button
@@ -36,7 +35,7 @@ function DropZone() {
           Select File
         </button>
       </Dragger>
-      <div>as</div>
+      <div className="upload-list">List</div>
     </div>
   );
 }
