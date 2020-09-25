@@ -22,7 +22,7 @@
 .ant-input {
   padding: 0.293rem 0.6rem;
 }
-.ant-input::placeholder{
+.ant-input::placeholder {
   font-style: italic;
   font-weight: 400;
 }
@@ -56,7 +56,7 @@
 .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
   height: 2.3rem;
 }
-.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input{
+.ant-select-single:not(.ant-select-customize-input) .ant-select-selector .ant-select-selection-search-input {
   height: 2rem;
 }
 .ant-select-item {
@@ -85,7 +85,7 @@
   @include breakpoint(lg) {
     margin-top: 0 !important;
   }
-  & > input{
+  & > input {
     line-height: 1.3rem;
   }
 }
@@ -125,7 +125,6 @@
   font-size: 1rem;
 }
 
-
 .ant-table {
   tbody {
     tr:not(.ant-table-expanded-row) {
@@ -141,22 +140,20 @@
         background-color: $gridstripes;
       }
       &.ant-table-row-selected td {
-        background-color: $syscoblue !important;
+        background-color: darken($gridhighlight, 3%) !important;
       }
       &:hover td {
-        background-color: lighten($syscoblue, 3%) !important;
-        color: $textalternative;
+        background-color: $gridhighlight !important;
+        // color: $textalternative;
       }
       &.selected {
         td,
         &:nth-child(odd) td,
         &.ant-table-row-selected td {
-          background-color: $syscoblue;
-          color: white;
+          background: $gridhighlight !important;
         }
         &:hover td {
-          background-color: lighten($syscoblue, 5%) !important;
-          color: $textalternative;
+          background-color: $gridhighlight !important;
         }
       }
     }
@@ -198,7 +195,7 @@
 .ant-popover-inner {
   border-radius: 1rem !important;
 }
-.ant-popover-message>.anticon {
+.ant-popover-message > .anticon {
   position: absolute;
   top: 0.65rem;
   font-size: 1.2rem;
@@ -216,4 +213,8 @@
 
 .ant-tree {
   font-size: 1rem;
+}
+
+.ant-checkbox-inner{
+  border-radius: 50%;
 }

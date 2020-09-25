@@ -97,7 +97,7 @@ class FileList extends React.Component {
               onClick={this.start}
               disabled={!hasSelected}
               loading={loading}
-              scroll={{ x: "auto", y: "70vh" }}>
+              scroll={{ x: 'auto', y: 300 }}>
               <i className="icon fi flaticon-download" /> Download Selected
             </Button>}
           </div>
