@@ -6,17 +6,17 @@ const columns = [
   {
     title: "SUBMIT TIME",
     dataIndex: "submittime",
-    className: "submittime"
+    className: "submittime",
   },
   {
     title: "FILE NAME",
     dataIndex: "filename",
-    className: "filename"
+    className: "filename",
   },
   {
     title: "",
     dataIndex: "action",
-    className: "action"
+    className: "action",
   },
 ];
 
@@ -73,34 +73,32 @@ class FileList extends React.Component {
             // loading
           />
           <div className="spacer"></div>
+          <div className="selected-item-status">
+            <p>
+              {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
+            </p>
+            {hasSelected && (
+              <Button
+                type="primary"
+                className="btn green-action-btn rounded download-btn"
+                onClick={this.start}
+                disabled={!hasSelected}
+                loading={loading}
+                scroll={{ x: "auto", y: 300 }}>
+                <i className="icon fi flaticon-download" /> Download Selected
+              </Button>
+            )}
+          </div>
           <Button type="link" className="refresh-btn">
             <i className="icon fi flaticon-refresh-1" /> Refresh
           </Button>
         </div>
         <div className="file-list-table-wrapper">
-          <div style={{ marginBottom: 16 }}>
-            
-          </div>
           <Table
             rowSelection={rowSelection}
             columns={columns}
             dataSource={data}
           />
-          <div className="selected-item-status">
-            <p>
-              {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
-            </p>
-            {hasSelected &&
-            <Button
-              type="primary"
-              className="btn green-action-btn rounded download-btn"
-              onClick={this.start}
-              disabled={!hasSelected}
-              loading={loading}
-              scroll={{ x: 'auto', y: 300 }}>
-              <i className="icon fi flaticon-download" /> Download Selected
-            </Button>}
-          </div>
         </div>
       </div>
     );

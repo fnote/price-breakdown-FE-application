@@ -79,16 +79,19 @@
       .filename {
         color: darken($syscoblue, 5%);
       }
-      .selected-item-status {
-        @include flexbox(0 0 auto, row, flex-start, center);
-        p {
-          margin: 0 1rem 0 0;
-          color: $bluegrey;
-        }
-        .download-btn {
-          border-radius: 1.5rem;
-        }
-      }
     }
+  }
+}
+
+.selected-item-status {
+  @include flexbox(0 0 auto, row, flex-start, center);
+  border-right: 1px solid lighten($textstandard, 45%);
+  p {
+    margin: 0 1rem 0 0;
+    color: $bluegrey;
+  }
+  .download-btn {
+    border-radius: 1.5rem;
+    @include flexbox(0 0 auto, row, flex-start, center);
   }
 }
