@@ -14,11 +14,11 @@
     .ant-upload.ant-upload-drag {
       background: transparent;
       border: none;
-      .ant-upload-drag-container{
+      .ant-upload-drag-container {
         @include flexbox(1 1 auto, column, center, center);
       }
     }
-    
+
     .icon {
       font-size: 8rem;
       color: $bluegrey;
@@ -66,9 +66,29 @@
         }
       }
     }
-    .file-list-tabvle-wrapper {
+    .file-list-table-wrapper {
       width: 100%;
       margin-top: 1rem;
+      font-weight: 700;
+      .ant-table-thead > tr > th.ant-table-cell {
+        font-weight: 300 !important;
+      }
+      .submittime {
+        color: $textstandard;
+      }
+      .filename {
+        color: darken($syscoblue, 5%);
+      }
+      .selected-item-status {
+        @include flexbox(0 0 auto, row, flex-start, center);
+        p {
+          margin: 0 1rem 0 0;
+          color: $bluegrey;
+        }
+        .download-btn {
+          border-radius: 1.5rem;
+        }
+      }
     }
   }
 }

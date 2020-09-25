@@ -26,7 +26,7 @@ $bluegrey2: #7792a5;
 $syscopurple: #8e44ad;
 
 //Grid Colors
-$gridstripes: #f7fbfd;
+$gridstripes: lighten($syscoblue, 58%);
 $gridhighlight: #fff7e4;
 
 //Modals
