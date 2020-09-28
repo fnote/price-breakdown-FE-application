@@ -171,6 +171,17 @@
         animation: rotation 2s infinite linear;
         margin: 0 0.5rem;
       }
+      @include breakpoint(xs) {
+        .btn{
+          padding: 0.3rem 0.5rem 0 0;
+          height: auto;
+          margin-top: 1rem;
+          text-align: center;
+        }
+        .icon{
+          font-size: 1.8rem;
+        }
+      }
       @keyframes rotation {
         from {
           transform: rotate(0deg);
