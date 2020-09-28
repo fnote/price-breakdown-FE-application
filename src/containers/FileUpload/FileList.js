@@ -6,7 +6,7 @@ const columns = [
   {
     title: "SUBMIT TIME",
     dataIndex: "submittime",
-    className: "submittime",
+    className: "submittime"
   },
   {
     title: "FILE NAME",
@@ -16,6 +16,7 @@ const columns = [
   {
     dataIndex: "action",
     className: "action",
+    width: 'auto',
     render: (text) => (
       <div className="action-bar">
         {text[0] == "processing" && (
@@ -78,7 +79,7 @@ const data = [
     action: ["success"],
   },
 ];
-for (let i = 1; i < 46; i++) {
+for (let i = 1; i < 26; i++) {
   data.push({
     key: i,
     submittime: `${i} July 2020 10:15 AM `,

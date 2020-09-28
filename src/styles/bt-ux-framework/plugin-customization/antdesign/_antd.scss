@@ -189,7 +189,40 @@
   padding: 0;
 }
 .ant-pagination {
+  &.ant-table-pagination {
+    margin: 2rem 0;
+  }
+
   padding: 0 1rem !important;
+  font-size: 1rem;
+  @include flexbox(1 1 auto, row, flex-start, flex-start);
+  flex-wrap: wrap;
+  li {
+    border-radius: 0.5rem;
+    min-width: 2.5rem;
+    padding: 0;
+    @include flexbox(0 0 auto, row, center, center);
+    line-height: 1;
+    height: 2rem;
+  }
+}
+.ant-pagination-item-active {
+  font-weight: 600;
+  background: $bluegrey;
+  border-color: $bluegrey;
+}
+.ant-pagination-item, .ant-pagination-item-link {
+  margin-right: 0.5rem;
+  a{
+    padding: 0;
+    color:$textstandard;
+  }
+}
+
+
+.ant-pagination-item-active a{
+  padding: 0;
+  color: $textalternative;
 }
 //Popover styles
 .ant-popover-inner {
@@ -215,6 +248,6 @@
   font-size: 1rem;
 }
 
-.ant-checkbox-inner{
+.ant-checkbox-inner {
   border-radius: 50%;
 }
