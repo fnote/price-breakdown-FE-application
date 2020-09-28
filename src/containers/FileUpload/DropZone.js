@@ -35,7 +35,6 @@ function DropZone() {
           Select File
         </button>
       </Dragger>
-      <div className="upload-list">List</div>
     </div>
   );
 }
