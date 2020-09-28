@@ -10,7 +10,12 @@
   background-size: 100% auto;
   justify-content: center;
   align-items: center;
-
+  @include breakpoint(xs) {
+    background-size: cover;
+  }
+  @include breakpoint(sm) {
+    background-size: cover;
+  }
   .login-panel {
     @include flexbox(0 0 auto, column, flex-start, center);
     background: $textalternative;
@@ -18,18 +23,24 @@
     opacity: 0.9;
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.16);
     padding: 2.7rem 3rem;
-
+    @include breakpoint(xs) {
+      padding: 2.7rem 5vw;
+    }
     .logo {
-      // width: 18rem;
       width: 26rem;
       margin-bottom: 1rem;
+      @include breakpoint(xs) {
+        width: 85vw;
+      }
     }
-    .button-bar{
+    .button-bar {
       @include flexbox(0 0 auto, row, center, center);
       width: 100%;
       border-top: 2px dotted #e9e9e9;
       padding-top: 1.5rem;
-
+      @include breakpoint(xs) {
+        @include flexbox(0 0 auto, column, center, center);
+      }
     }
     .title {
       @include flexbox(1 1 auto, row, flex-start, center);
@@ -56,7 +67,9 @@
       box-shadow: 0px 0px 1rem rgba(132, 176, 197, 0.74);
       background: #eb01a5;
       // background-image: url("IMAGE_URL"); /* fallback */
-      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAYAAACdKY9CAAAAAXNSR0IArs4c6QAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAADKADAAQAAAABAAAADQAAAAANpPHXAAAAkUlEQVQoFWP4//9/JhDLMhAJGIGK+4Fq/wPxBSDewsjI+A6fXhaoJCOQNgRiXaABR4H0HqDGL1A5FApmA4ogkPMDiPeDMFDjb2RJXBpgaj4AGTuB+BRQ4z+QICENIDUg8AqItwI1XSJWA1gXkNgL8zRMABcNt4GQBgw/4NKAM5TQNfwBuglvPMA0EB3TDKSmJQAQFEJ/h7HZXwAAAABJRU5ErkJggg==) no-repeat 90% center/auto 30%, linear-gradient(#9bc4d8 0%, #2990c2 100%);
+      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAYAAACdKY9CAAAAAXNSR0IArs4c6QAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAADKADAAQAAAABAAAADQAAAAANpPHXAAAAkUlEQVQoFWP4//9/JhDLMhAJGIGK+4Fq/wPxBSDewsjI+A6fXhaoJCOQNgRiXaABR4H0HqDGL1A5FApmA4ogkPMDiPeDMFDjb2RJXBpgaj4AGTuB+BRQ4z+QICENIDUg8AqItwI1XSJWA1gXkNgL8zRMABcNt4GQBgw/4NKAM5TQNfwBuglvPMA0EB3TDKSmJQAQFEJ/h7HZXwAAAABJRU5ErkJggg==)
+          no-repeat 90% center/auto 30%,
+        linear-gradient(#9bc4d8 0%, #2990c2 100%);
 
       @include flexbox(0 0 auto);
       user-select: none;
@@ -68,6 +81,13 @@
       }
       &:active {
         opacity: 0.9;
+      }
+      @include breakpoint(xs) {
+        border-radius: 2.5rem;
+        width: 100%;
+        margin-top: 1.5rem;
+        padding: 0.6rem 3.5rem 0.6rem 3rem;
+        font-size: 1.5rem;
       }
     }
 

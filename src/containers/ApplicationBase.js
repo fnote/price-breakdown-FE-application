@@ -5,6 +5,6 @@ import FileUpload from './FileUpload/FileUpload';
 
 export default function ApplicationBase() {
   return (
-    <FileUpload />
+    <Login />
   );
 }
