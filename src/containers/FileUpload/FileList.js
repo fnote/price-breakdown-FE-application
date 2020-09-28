@@ -14,19 +14,76 @@ const columns = [
     className: "filename",
   },
   {
-    title: "",
     dataIndex: "action",
     className: "action",
+    render: (text) => (
+      <div className="action-bar">
+        {text[0] == "processing" && (
+          <div className="file-process-status">FILE IS BEING PROCESSED</div>
+        )}
+        {text[0] == "error" && (
+          <div className="file-process-status error">
+            File Contained errors
+            <div className="divider"></div>
+            <Button className="btn empty-btn download-error-file">
+              <i className="icon fi flaticon-cloud-computing" />
+              View error file
+            </Button>
+          </div>
+        )}
+        {text[0] == "success" && (
+          <div className="file-process-status success">
+            File processed successfully
+          </div>
+        )}
+        {text[0] != "processing" ? (
+          <>
+            <Button className="btn icon-only empty-btn">
+              <i className="icon fi flaticon-bin" />
+            </Button>
+            <Button className="btn icon-only empty-btn download-file">
+              <i className="icon fi flaticon-cloud-computing" />
+            </Button>
+          </>
+        ) : (
+          <>           
+            <Button className="btn icon-only empty-btn cancel-process">
+              <i className="icon fi flaticon-close" />
+            </Button>
+            <i className="icon fi flaticon-refresh-2 processing-spinner" />
+          </>
+        )}
+      </div>
+    ),
   },
 ];
 
-const data = [];
+const data = [
+  {
+    key: 1,
+    submittime: "01 July 2020 10:15 AM",
+    filename: `2841202-075.XLS`,
+    action: ["processing"],
+  },
+  {
+    key: 1,
+    submittime: "01 July 2020 10:15 AM",
+    filename: `2841202-075.XLS`,
+    action: ["error"],
+  },
+  {
+    key: 1,
+    submittime: "01 July 2020 10:15 AM",
+    filename: `2841202-075.XLS`,
+    action: ["success"],
+  },
+];
 for (let i = 1; i < 46; i++) {
   data.push({
     key: i,
     submittime: `${i} July 2020 10:15 AM `,
     filename: `284${i}02-075.XLS`,
-    action: "FILE IS BEING PROCESSED",
+    action: [],
   });
 }
 
@@ -98,6 +155,7 @@ class FileList extends React.Component {
             rowSelection={rowSelection}
             columns={columns}
             dataSource={data}
+            scroll={{x: 'auto', y: '60vh'}}
           />
         </div>
       </div>

@@ -42,7 +42,8 @@
     box-shadow: none;
     margin-right: 0;
     font-size: 1.3rem;
-    border-left: 1px grey dotted;
+    padding: 0.5rem;
+    // border-left: 1px grey dotted;
     border-radius: 0;
     &:active {
       background-color: $background;
