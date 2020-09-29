@@ -12,8 +12,7 @@ function PriceValidation() {
       <div className="content">
         <SearchPanel />
         {/* <SearchStatuses />     Status message collection. */}
-        <PricingResults />
-        
+        <PricingResults />        
       </div>
     </div>
   );

@@ -15,6 +15,12 @@
   &:hover{
     overflow: auto;
   }
+  @include breakpoint(xs) {
+    position: absolute;
+    width: 95vw;
+    display: none;
+  }
+  
   .panel-header {
     color: $bluegrey;
     font-weight: 600;

@@ -5,6 +5,11 @@
   background: #fbfbfb;
   box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.15);
   @include flexbox(0 0 auto, row, flex-start, center);
+  @include breakpoint(xs) {
+    @include flexbox(0 0 auto, column, flex-start, flex-start);
+    height: auto;
+    padding: 1rem 2rem;
+  }
 
   .price-bar-divider {
     border-left: 1px dashed lighten($textstandard, 15%);
@@ -20,8 +25,23 @@
       background: #fbfbfb;
       padding: 1rem 0 1rem 0.4rem;
     }
+    @include breakpoint(xs) {
+      width: 100%;
+      @include flexbox(0 0 auto, column, flex-start, flex-start);
+      border-bottom: 1px dotted lighten($textstandard, 35%);
+      padding: 1.5rem 1rem 1.5rem 0;
+      &:first-of-type {
+        margin: 0 0 0 1rem;
+        background: #fbfbfb;
+        padding: 1.5rem 1rem 1.5rem 0;
+      }
+    }
+
     &.pad-right {
       width: 20%;
+      @include breakpoint(xs) {
+        width: 100%;
+      }
     }
     label {
       text-transform: uppercase;
@@ -52,6 +72,9 @@
         width: 100%;
         margin: 0 0 0.3rem 0.2rem;
         height: 1px;
+        @include breakpoint(xs) {
+          display: none;
+        }
       }
       .unit {
         font-size: 1rem;
