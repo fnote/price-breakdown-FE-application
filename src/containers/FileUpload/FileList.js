@@ -1,5 +1,6 @@
 import React from "react";
 import { Input, Button, Table, Tag } from "antd";
+import { SyncOutlined } from "@ant-design/icons";
 const { Search } = Input;
 
 const columns = [
@@ -51,7 +52,7 @@ const columns = [
             <Button className="btn icon-only empty-btn cancel-process">
               <i className="icon fi flaticon-close" />
             </Button>
-            <i className="icon fi flaticon-refresh-2 processing-spinner" />
+            <SyncOutlined spin className="icon processing-spinner" />
           </>
         )}
       </div>

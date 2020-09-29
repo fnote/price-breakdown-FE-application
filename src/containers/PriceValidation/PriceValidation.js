@@ -1,7 +1,9 @@
 import React from "react";
 import AppBar from "../../components/AppBar/AppBar";
 import SearchPanel from "./SearchPanel/SearchPanel";
+import SearchStatuses from "./SearchPanel/SearchStatuses";
 import PricingResults from "./PricingResults/PricingResults";
+
 
 function PriceValidation() {
   return (
@@ -9,7 +11,9 @@ function PriceValidation() {
       <AppBar />
       <div className="content">
         <SearchPanel />
+        {/* <SearchStatuses />     Status message collection. */}
         <PricingResults />
+        
       </div>
     </div>
   );

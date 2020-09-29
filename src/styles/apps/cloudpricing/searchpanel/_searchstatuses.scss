@@ -1,0 +1,58 @@
+.search-statuses {
+  @include flexbox(1 1 auto, row, flex-start, flex-start);
+  margin: 0 2rem;
+  border-radius: 0.9rem;
+  background: $textalternative;
+  border: 1px solid rgba(98, 115, 126, 0.25);
+  padding: 2rem;
+  .section-wrapper {
+    @include flexbox(1 1 auto, column, flex-start, flex-start);
+    overflow: hidden;
+  }
+
+  .message-block {
+    .title {
+      color: $bluegrey;
+      font-size: 3rem;
+      font-weight: 200;
+      .icon {
+        margin-right: 0.7rem;
+      }
+    }
+    .subitle-title {
+      @include flexbox(0 0 auto, row, flex-start, center);
+      color: $syscoblue;
+      font-size: 1.5rem;
+      margin-top: 1.8rem;
+      opacity: 0.75;
+      line-height: 1;
+      .icon {
+        font-size: 2.5rem;
+        margin-right: 0.5rem;
+        margin-top: 0.2rem;
+      }
+    }
+    &.loading {
+      .title {
+        font-size: 2rem;
+      }
+      .icon {
+        animation: rotation 2s infinite linear;
+      }
+    }
+    &.error {
+      .title {
+        font-size: 1.8rem;
+        font-weight: 400;
+        color: darken($syscored, 20%);
+      }
+      .subitle-title{
+        font-size: 1.3rem;
+        font-weight: 300;
+        color: darken($syscored, 20%);
+        margin-top: 0.8rem;
+        margin-left: 3rem;
+      }
+    }
+  }
+}

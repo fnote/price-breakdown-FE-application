@@ -182,14 +182,6 @@
           font-size: 1.8rem;
         }
       }
-      @keyframes rotation {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(359deg);
-        }
-      }
       .action-bar {
         @include flexbox(0 0 auto, row, flex-end, center);
         @include breakpoint(xs) {
