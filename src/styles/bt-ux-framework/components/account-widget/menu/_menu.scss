@@ -40,7 +40,7 @@
     }
     .icon {
       font-size: 1.2rem;
-      margin-left: 1rem;
+      margin-right: 0.5rem;
     }
     .linkbutton {
       &:link,
@@ -111,7 +111,7 @@
         margin-right: 0.9rem;
         padding-right: 0.9rem;
         font-size: 2rem;
-    }
+      }
       &:first-of-type {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
