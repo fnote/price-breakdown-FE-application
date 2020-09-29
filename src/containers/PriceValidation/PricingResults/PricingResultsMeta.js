@@ -13,7 +13,7 @@ function PricingResultsMeta() {
           <div className="block">
             <label>Item</label>
             <div className="value bold">452332</div>
-            <div className="value">Cookie Choc Filled Trpl IW</div>
+            <div className="value full-width-ellipsis">Cookie Choc Filled Trpl IW</div>
           </div>
           <div className="block row">
             <div className="sub-block">

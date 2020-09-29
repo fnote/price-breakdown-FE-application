@@ -5,6 +5,12 @@
   $calculated-col-width: 6rem;
   $source-col-width: 9rem;
 
+  // $icon-col-width: 2rem;
+  // $description-col-width: 13vw;
+  // $adjustment-col-width: 4vw;
+  // $calculated-col-width: 5vw;
+  // $source-col-width: 5vw;
+  
   .icon-col {
     width: $icon-col-width;
   }
@@ -41,7 +47,7 @@
   }
   section {
     @include flexbox(0 0 auto, column, flex-start, flex-start);
-    margin: 2rem;
+    margin: 2rem 2rem 0 2rem;
     header {
       @include flexbox(0 0 auto, row, flex-start, flex-start);
       width: 100%;
@@ -82,7 +88,7 @@
         }
         .description-col {
           .title {
-            font-weight: 700;
+            font-weight: 800;
             font-size: 1.2rem;
             margin-bottom: 0.3rem;
           }
@@ -90,10 +96,17 @@
             @include flexbox(0 0 auto, row, flex-start, center);
             font-size: 1.1rem;
             margin-bottom: 0.4rem;
+            font-weight: 700;
             // p{
             //   @include flexbox(0 0 auto, row, flex-start, center);
             //   font-size: 0.8rem;
             // }
+          }
+          .subrow-sub-title{
+            font-size: 0.9rem;
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
           }
           .icon {
             font-size: 0.7rem;
@@ -141,7 +154,7 @@
       padding: 0.4rem 0rem 0.4rem 0.5rem;
       .description-col{
         font-weight: 700;
-        width: $description-col-width - 2rem;
+        width:calc($description-col-width - 2rem);
         span{
           font-weight: 400;
         }

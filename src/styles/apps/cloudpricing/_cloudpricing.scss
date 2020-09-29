@@ -15,6 +15,7 @@
   background: url("../../images/pagebg.png") no-repeat top center;
   background-size: 100% auto;
   overflow: hidden;
+  
   @include breakpoint(xs) {
     background-size: cover;
     overflow: auto;

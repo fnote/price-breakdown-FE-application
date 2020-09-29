@@ -22,6 +22,12 @@
         &.bold {
           font-weight: 800;
         }
+        &.full-width-ellipsis {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 19vw;
+        }
       }
       &.row {
         @include flexbox(0 0 auto, row, flex-start, flex-start);

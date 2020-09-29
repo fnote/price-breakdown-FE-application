@@ -111,6 +111,7 @@ function PriceBarDetailed() {
                   <i className="icon fi flaticon-circle" />
                   Post processing / Legal
                 </div>
+                <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
               </div>
               <div className="adjustment-col">- $0.220 /case</div>
               <div className="calculated-col">- $0.88</div>
@@ -122,6 +123,7 @@ function PriceBarDetailed() {
                   <i className="icon fi flaticon-circle" />
                   Item/Order Specific promotions
                 </div>
+                <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
               </div>
             </div>
             <div className="row sub-row">
@@ -177,6 +179,7 @@ function PriceBarDetailed() {
                   <i className="icon fi flaticon-circle" />
                   OFFL and OFFT
                 </div>
+                <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
               </div>
               <div className="adjustment-col">- $3.40</div>
               <div className="calculated-col">- $3.40</div>
