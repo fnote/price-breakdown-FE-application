@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip } from "antd";
 import sampleitemimage from "../../../styles/images/sampleitemimage.png";
 
 function PricingResultsMeta() {
@@ -13,12 +14,18 @@ function PricingResultsMeta() {
           <div className="block">
             <label>Item</label>
             <div className="value bold">452332</div>
-            <div className="value full-width-ellipsis">Cookie Choc Filled Trpl IW</div>
+            <Tooltip title="Cookie Choc Filled Trpl IW" color="blue">
+              <div className="value full-width-ellipsis">
+                Cookie Choc Filled Trpl IW
+              </div>
+            </Tooltip>
           </div>
           <div className="block row">
             <div className="sub-block">
               <label>BRAND</label>
-              <div className="value">RICH'S</div>
+              <Tooltip title="RICH'S" color="blue">
+                <div className="value brand">RICH'S</div>
+              </Tooltip>
             </div>
             <div className="sub-block">
               <label>PACK</label>
@@ -49,7 +56,11 @@ function PricingResultsMeta() {
       <section className="site-info">
         <div className="block">
           <label>Site</label>
-          <div className="value bold">067 - SYSCO Food Services of Houston</div>
+          <Tooltip title="067 - SYSCO Food Services of Houston" color="blue">
+            <div className="value bold full-width-ellipsis">
+              067 - SYSCO Food Services of Houston
+            </div>
+          </Tooltip>
         </div>
         <div className="block row">
           <div className="sub-block">
@@ -66,7 +77,11 @@ function PricingResultsMeta() {
           </div>
         </div>
         <div className="block custname">
-          <div className="value">Mikes Seafood and Grill</div>
+          <Tooltip title="Mikes Seafood and Grill" color="blue">
+            <div className="value full-width-ellipsis">
+              Mikes Seafood and Grill
+            </div>
+          </Tooltip>
         </div>
       </section>
 

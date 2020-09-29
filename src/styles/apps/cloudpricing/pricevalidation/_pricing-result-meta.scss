@@ -3,9 +3,9 @@
   @include flexbox(1 1 auto, row, flex-start, flex-start);
   width: 100%;
   section {
-    @include flexbox(1 1 auto, column, flex-start, flex-start);
+    @include flexbox(0 0 auto, column, flex-start, flex-start);
     border-left: 1px dashed lighten($textstandard, 15%);
-    padding-bottom: 1rem;
+    padding:0 1.5rem 1rem 0;
     min-height: 14rem;
     .block {
       font-size: 1.5rem;
@@ -28,6 +28,12 @@
           text-overflow: ellipsis;
           max-width: 19vw;
         }
+        &.brand{
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 10vw;
+        }
       }
       &.row {
         @include flexbox(0 0 auto, row, flex-start, flex-start);
@@ -39,14 +45,15 @@
     }
 
     &.item-info {
-      @include flexbox(1 1 auto, row, flex-start, flex-start);
-
+      @include flexbox(0 0 auto, row, flex-start, flex-start);
+      width: 35%;
       .item-image {
+        @include flexbox(0 0 auto, row, flex-start, flex-start);
         background: #fff;
         background-position: center center !important;
         background-repeat: no-repeat !important;
         background-size: contain !important;
-        width: 11rem;
+        width: 30%;
         height: 10rem;
         background: #fff;
         box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
@@ -57,6 +64,7 @@
       }
     }
     &.site-info {
+      width: 30%;
       .custname {
         margin-top: -0.8rem;
         .value {
