@@ -87,7 +87,7 @@
     margin: 0;
     background: $background;
     height: 100vh;
-    width: 70%;
+    width: 85%;
     z-index: 1000;
     box-shadow: none;
     padding-top: 4rem;
@@ -111,26 +111,38 @@
       right: 0;
       top: 0;
       height: 101vh;
-      width: 30%;
+      width: 15%;
       overflow: hidden;
     }
 
     .user {
       @include flexbox(0 0 auto, column, center, center);
-      margin-top: 2rem;
       position: absolute;
-      padding-top: 6rem;
+      padding-top: 10rem;
+      margin: 0;
       font-size: 1.2rem;
+      .name {
+        font-weight: 700;
+        font-size: 2rem;
+        text-align: center;
+        text-transform: capitalize;
+        .welcome {
+          font-size: 1.5rem;
+          margin-top: 0.2rem;
+          font-weight: 400;
+          text-transform: capitalize;
+        }
+      }
     }
     .user-pic {
       @include flexbox(0 0 auto);
       padding-left: 0;
       cursor: pointer;
       .pic {
-        margin: 2rem;
+        margin: 1rem;
         border-radius: 50%;
-        height: 4.8rem;
-        width: 4.8rem;
+        height: 6.8rem;
+        width: 6.8rem;
       }
       .menuicon {
         display: none;
@@ -140,8 +152,8 @@
 }
 
 .sidemenu-toggle {
-  padding: 0 0 0 1rem;
-  font-size: 1.3rem;
+  padding: 1rem;
+  font-size: 2rem;
   cursor: pointer;
   &:active {
     color: $syscoblue;
@@ -164,24 +176,18 @@
 .sidemenu-closer {
   color: white;
   position: fixed;
-  padding: 0 0 0 1rem;
-  right: 1.4rem;
-  top: 1.6rem;
-  font-size: 1.3rem;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+  font-size: 3rem;
   z-index: $bringToTop;
-  display: none;
+  display: none !important;
 
   //Responsive
-  @include breakpoint(md) {
+  @include breakpoint(xs) {
     display: none !important;
     &.show {
-      display: none !important;
-    }
-  }
-  @include breakpoint(lg) {
-    display: none !important;
-    &.show {
-      display: none !important;
+      display: block !important;
     }
   }
 }

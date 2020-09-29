@@ -9,7 +9,7 @@
   margin-top: 0.6rem;
   width: 100%;
 
-  .user-type{
+  .user-type {
     text-align: center;
     background: $textstandard;
     color: $textalternative;
@@ -18,12 +18,11 @@
     text-transform: uppercase;
     font-weight: 500;
     font-size: 0.8rem;
-    margin: 0 1rem;    
-    
+    margin: 0 1rem;
   }
-  ul{
+  ul {
     width: 100%;
-    margin-top: 1rem ;
+    margin-top: 1rem;
   }
   li {
     @include flexbox(0 0 auto, row, flex-start);
@@ -36,7 +35,7 @@
       font-weight: 300;
       margin-top: 0.1rem;
     }
-    .menulabel{
+    .menulabel {
       @include flexbox(1 1 auto, column, flex-start, flex-start);
     }
     .icon {
@@ -91,25 +90,28 @@
   //Responsive
   @include breakpoint(xs) {
     @include flexbox(0 0 auto, column, flex-start);
-    width: 100%;
+    position: fixed;
+    width: 85%;
     background: $background;
     padding: 0;
     margin: 0;
     left: 0;
     box-shadow: none;
     border-radius: 0;
-    top: 18rem;
+    top: 21rem;
     overflow-y: auto;
     overflow-x: hidden;
     li {
-      padding: 0.6rem 0.8rem 0.6rem 1.5rem;
-      font-size: 1.2rem;
+      padding: 1.5rem 1.8rem 1.5rem 1.5rem;
+      font-size: 1.8rem;
       border-radius: 0;
-      width: 70vw;
+      font-weight: 300;
+      width: 85vw;
       .icon {
-        font-size: 1.7rem;
-        margin-right: 1rem;
-      }
+        margin-right: 0.9rem;
+        padding-right: 0.9rem;
+        font-size: 2rem;
+    }
       &:first-of-type {
         border-top-left-radius: 0;
         border-top-right-radius: 0;
