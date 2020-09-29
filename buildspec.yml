@@ -22,9 +22,9 @@ phases:
   build:
     commands:
       # Run the build command to generate build folder output
-      - npm run build::dev && mv build cloud-pci-dev
-      - npm run build::exe && mv build cloud-pci-exe
-      - npm run build::prod && mv build cloud-pci-prod
+      - npm run build:dev && mv build cloud-pci-dev
+      - npm run build:exe && mv build cloud-pci-exe
+      - npm run build:prod && mv build cloud-pci-prod
       -
       # Use AWS CLI to copy the folder to the relevant s3 codebuild buckets
       - aws s3 cp --recursive cloud-pci-dev/ s3://$S3_BUCKET_NON_PROD/Cloud-PCI-FE/dev/build/
