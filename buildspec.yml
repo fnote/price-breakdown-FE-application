@@ -29,7 +29,7 @@ phases:
       # Use AWS CLI to copy the folder to the relevant s3 codebuild buckets
       - aws s3 cp --recursive cloud-pci-dev/ s3://$S3_BUCKET_NON_PROD/Cloud-PCI-FE/dev/build/
       - aws s3 cp --recursive cloud-pci-exe/ s3://$S3_BUCKET_NON_PROD/Cloud-PCI-FE/exe/build/
-      - aws s3 cp --recursive cloud-pci-prod/ s3://$S3_BUCKET_PROD/prod/Cloud-PCI-FE/build/ --acl bucket-owner-full-control
+      - aws s3 cp --recursive cloud-pci-prod/ s3://$S3_BUCKET_PROD/Cloud-PCI-FE/prod/build/ --acl bucket-owner-full-control
   post_build:
     commands:
       - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'
