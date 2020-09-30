@@ -72,7 +72,7 @@ class HeaderBar extends Component {
                         </IconButton>
 
                         <Typography variant="h6" noWrap>
-                            Cloud PCI
+                            Price Simulation Tool
                         </Typography>
                     </Toolbar>
                 </AppBar>
