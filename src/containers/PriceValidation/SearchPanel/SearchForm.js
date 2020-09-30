@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input, Checkbox, Select, InputNumber, DatePicker } from "antd";
+import businessUnits from "../../../constants/BusinessUnits";
 
 const { Option } = Select;
 const validateMessages = {
@@ -12,6 +13,15 @@ const validateMessages = {
   },
 };
 
+function getBusinessUnits() {
+  const businessUnitOptions = [];
+  businessUnits.forEach((businessUnit => {
+    businessUnitOptions.push(<Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.name}</Option>)
+  }));
+
+  return businessUnitOptions;
+}
+
 function SearchForm() {
   const onFinish = (values) => {
     console.log(values);
@@ -20,57 +30,56 @@ function SearchForm() {
   return (
     <>
       <div className="panel-header">
-        <i className="icon fi flaticon-list" />
+        <i className="icon fi flaticon-list"/>
         Search
       </div>
       <div className="search-form">
         <Form
-          name="nest-messages"
-          onFinish={onFinish}
-          validateMessages={validateMessages}>
+            name="nest-messages"
+            onFinish={onFinish}
+            validateMessages={validateMessages}>
           <Form.Item
-            name="site"
-            label="Site"
-            rules={[
-              {
-                required: true,
-              },
-            ]}>
+              name="site"
+              label="Site"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}>
             <Select placeholder="Select Site">
-              <Option value="067 - Philadelphia">067 - Philadelphia</Option>
-              <Option value="054 - New York">054 - New York</Option>
+              {getBusinessUnits()}
             </Select>
           </Form.Item>
           <Form.Item name="customer" label="Customer">
-            <Input />
+            <Input/>
           </Form.Item>
           <Form.Item name="itemnum" label="Item #">
-            <Input />
+            <Input/>
           </Form.Item>
           <Form.Item name="date" label="Date">
-            <DatePicker />
+            <DatePicker/>
           </Form.Item>
           <Form.Item
-            name="quantity"
-            label="Quantity"
-            rules={[
-              {
-                type: "number",
-                min: 1,
-                max: 1000,
-              },
-            ]}>
-            <InputNumber defaultValue="1" />
+              name="quantity"
+              label="Quantity"
+              rules={[
+                {
+                  type: "number",
+                  min: 1,
+                  max: 1000,
+                },
+              ]}>
+            <InputNumber defaultValue="1"/>
           </Form.Item>
 
           <Form.Item name="split" label="Split">
-            <Checkbox />
+            <Checkbox/>
           </Form.Item>
           <Form.Item className="search-btn-wrapper">
             <button
-              type="primary"
-              htmlType="submit"
-              className="search-btn outlined-btn">
+                type="primary"
+                htmlType="submit"
+                className="search-btn outlined-btn">
               Search
             </button>
           </Form.Item>
