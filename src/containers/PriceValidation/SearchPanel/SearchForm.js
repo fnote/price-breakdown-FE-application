@@ -16,7 +16,9 @@ const validateMessages = {
 function getBusinessUnits() {
   const businessUnitOptions = [];
   businessUnits.forEach((businessUnit => {
-    businessUnitOptions.push(<Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.name}</Option>)
+    businessUnitOptions.push(
+        <Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.name}</Option>
+    )
   }));
 
   return businessUnitOptions;
@@ -37,7 +39,9 @@ function SearchForm() {
         <Form
             name="nest-messages"
             onFinish={onFinish}
-            validateMessages={validateMessages}>
+            validateMessages={validateMessages}
+            initialValues={{quantity:1}}
+        >
           <Form.Item
               name="site"
               label="Site"
@@ -50,24 +54,57 @@ function SearchForm() {
               {getBusinessUnits()}
             </Select>
           </Form.Item>
-          <Form.Item name="customer" label="Customer">
+          <Form.Item
+              name="customer"
+              label="Customer"
+              rules={[
+                  {
+                      required: true,
+                  },
+                  {
+                      whitespace: true,
+                      message: "Customer cannot be empty"
+                  },
+              ]}>
             <Input/>
           </Form.Item>
-          <Form.Item name="itemnum" label="Item #">
-            <Input/>
+          <Form.Item
+              name="itemnum"
+              label="Item #"
+              rules={[
+                  {
+                      type: "number",
+                      message : "Not a valid number"
+                  },
+                  {
+                    required: true
+                  }
+              ]}
+          >
+            <InputNumber/>
           </Form.Item>
-          <Form.Item name="date" label="Date">
+          <Form.Item
+              name="date"
+              label="Date"
+              rules={[
+                  {
+                    required: true,
+                  },
+              ]}>
             <DatePicker/>
           </Form.Item>
           <Form.Item
               name="quantity"
               label="Quantity"
               rules={[
-                {
-                  type: "number",
-                  min: 1,
-                  max: 1000,
-                },
+                  () => ({
+                      validator(rule, value) {
+                          if (value && !isNaN(value) && 1 <= value && value <= 1000) {
+                              return Promise.resolve();
+                          }
+                          return Promise.reject('Quantity must be a valid number between 1 and 1000');
+                      },
+                  })
               ]}>
             <InputNumber defaultValue="1"/>
           </Form.Item>
