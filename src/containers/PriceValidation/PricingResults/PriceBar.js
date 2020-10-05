@@ -1,60 +1,40 @@
 import React from "react";
+import { connect } from "react-redux";
 
-function PriceBar() {
+import { getPriceUnitBySplitFlag } from '../../../utils/PricingUtils';
+import { META_DATA_PRICE_BAR } from '../../../utils/Constants';
+
+const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true }, pricingData) => (
+    <section className={styleClass}>
+        <label>{label}</label>
+        <div className="price-block">
+            <div className="value">{pricingData[valueKey]}</div>
+            <div className="unit-block">
+                { insertDivider && <div className="divider"/>}
+                <div className="unit">/ {getPriceUnitBySplitFlag(pricingData)}</div>
+            </div>
+        </div>
+    </section>
+);
+
+const renderPricePoints = (priceBarMetaData, pricingData) =>
+    priceBarMetaData.map(pricePointMetaData => renderPricePoint(pricePointMetaData, pricingData));
+
+function PriceBar(props) {
   return (
     <div className="price-bar">
-      <div className="price-bar-divider"></div>
-      <section className="group1">
-        <label>LOCAL SEGMENT REFERENCE PRICE</label>
-        <div className="price-block">
-          <div className="value">61.00</div>
-          <div className="unit-block">
-            <div className="divider"></div>
-            <div className="unit">/ case</div>
-          </div>
-        </div>
-      </section>
-      <section className="group2">
-        <label>STRIKE THROUGH PRICE</label>
-        <div className="price-block">
-          <div className="value">58.36</div>
-          <div className="unit-block">
-            <div className="divider"></div>
-            <div className="unit">/ case</div>
-          </div>
-        </div>
-      </section>
-      <section className="group3">
-        <label>DISCOUNT PRICE</label>
-        <div className="price-block">
-          <div className="value">57.19</div>
-          <div className="unit-block">
-            <div className="divider"></div>
-            <div className="unit">/ case</div>
-          </div>
-        </div>
-      </section>
-      <section className="group4 pad-right">
-        <label>ORDER UNIT PRICE</label>
-        <div className="price-block">
-          <div className="value">57.19</div>
-          <div className="unit-block">
-            <div className="divider"></div>
-            <div className="unit">/ case</div>
-          </div>
-        </div>
-      </section>
-      <section className="main-price">
-        <label>CUSTOMER NET PRICE</label>
-        <div className="price-block">
-          <div className="value">52.79</div>
-          <div className="unit-block">            
-            <div className="unit">/ case</div>
-          </div>
-        </div>
-      </section>
+        <div className="price-bar-divider"/>
+        {renderPricePoints(META_DATA_PRICE_BAR, props)}
     </div>
   );
 }
 
-export default PriceBar;
+function mapState(state) {
+    console.log(state);
+    const { search: { pricePoints } } = state;
+    return {
+        ...pricePoints, isSplit: false
+    };
+}
+
+export default connect(mapState, {})(PriceBar);

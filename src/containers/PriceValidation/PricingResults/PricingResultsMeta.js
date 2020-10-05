@@ -1,90 +1,98 @@
 import React from "react";
+import {connect} from "react-redux";
 import { Tooltip } from "antd";
 import sampleitemimage from "../../../styles/images/sampleitemimage.png";
 
-function PricingResultsMeta() {
+function renderItemInfo({ id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight }) {
   return (
-    <div className="pricing-result-meta">
       <section className="item-info">
         <div
-          className="item-image"
-          style={{ backgroundImage: "url(" + sampleitemimage + ")" }}></div>
+            className="item-image"
+            style={{ backgroundImage: "url(" + sampleitemimage + ")" }}/>
 
         <div className="item-info-block">
           <div className="block">
             <label>Item</label>
-            <div className="value bold">452332</div>
-            <Tooltip title="Cookie Choc Filled Trpl IW" color="blue">
+            <div className="value bold">{id}</div>
+            <Tooltip title={name} color="blue">
               <div className="value full-width-ellipsis">
-                Cookie Choc Filled Trpl IW
+                {name}
               </div>
             </Tooltip>
           </div>
           <div className="block row">
             <div className="sub-block">
               <label>BRAND</label>
-              <Tooltip title="RICH'S" color="blue">
-                <div className="value brand">RICH'S</div>
+              <Tooltip title={brand} color="blue">
+                <div className="value brand">{brand}</div>
               </Tooltip>
             </div>
             <div className="sub-block">
               <label>PACK</label>
-              <div className="value">120</div>
+              <div className="value">{pack}</div>
             </div>
             <div className="sub-block">
               <label>SIZE</label>
-              <div className="value">1.7 Oz</div>
+              <div className="value">{size}</div>
             </div>
           </div>
           <div className="block row">
             <div className="sub-block">
               <label>STOCK</label>
-              <div className="value">S</div>
+              <div className="value">{stockIndicator}</div>
             </div>
             <div className="sub-block">
               <label>CATCH WEIGHT</label>
-              <div className="value">N</div>
+              <div className="value">{catchWeightIndicator}</div>
             </div>
             <div className="sub-block">
               <label>AVG WEIGHT</label>
-              <div className="value">14.78</div>
+              <div className="value">{averageWeight}</div>
             </div>
           </div>
         </div>
       </section>
+  );
+}
 
+function renderSiteInfo({ site, customerAccount, customerName, customerType, priceZone }) {
+  return (
       <section className="site-info">
         <div className="block">
           <label>Site</label>
-          <Tooltip title="067 - SYSCO Food Services of Houston" color="blue">
+          <Tooltip title={site} color="blue">
             <div className="value bold full-width-ellipsis">
-              067 - SYSCO Food Services of Houston
+              {site}
             </div>
           </Tooltip>
         </div>
         <div className="block row">
           <div className="sub-block">
             <label>CUSTOMER</label>
-            <div className="value bold">055437</div>
+            <div className="value bold">{customerAccount}</div>
           </div>
           <div className="sub-block">
             <label>TYPE</label>
-            <div className="value bold">TRS</div>
+            <div className="value bold">{customerType}</div>
           </div>
           <div className="sub-block">
             <label>PRICE ZONE</label>
-            <div className="value bold">Zone 02-04</div>
+            <div className="value bold">{priceZone}</div>
           </div>
         </div>
         <div className="block custname">
-          <Tooltip title="Mikes Seafood and Grill" color="blue">
+          <Tooltip title={customerName} color="blue">
             <div className="value full-width-ellipsis">
-              Mikes Seafood and Grill
+              {customerName}
             </div>
           </Tooltip>
         </div>
       </section>
+  );
+}
 
+function renderOrderInfo(props) {
+  return (
       <section className="order-info">
         <div className="block">
           <label>Date</label>
@@ -99,8 +107,29 @@ function PricingResultsMeta() {
           <div className="value bold">N</div>
         </div>
       </section>
+  );
+}
+
+function PricingResultsMeta(props) {
+  console.log("########################");
+  console.log(props);
+  return (
+    <div className="pricing-result-meta">
+      { renderItemInfo(props.item) }
+      { renderSiteInfo(props.site) }
+      { renderOrderInfo(props) }
     </div>
   );
 }
 
-export default PricingResultsMeta;
+function mapState(state) {
+  console.log(state);
+  const { search: { item, site, pricePoints } } = state;
+  return {
+    item, site, pricePoints
+  };
+}
+
+
+
+export default connect(mapState, {})(PricingResultsMeta);

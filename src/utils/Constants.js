@@ -1,0 +1,40 @@
+
+export const META_DATA_PRICE_BAR = [
+    { label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1' },
+    { label: 'STRIKE THROUGH PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2' },
+    { label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3' },
+    { label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right' },
+    { label: 'CUSTOMER NET PRICE', valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false }
+];
+
+export const PRICE_UNIT_CASE = 'case';
+export const PRICE_UNIT_SPLIT = 'split';
+
+export const PRICE_SOURCE_DISCOUNT_SERVICE = 'Discount Service';
+export const PRICE_SOURCE_SYSTEM = 'System';
+export const PRICE_SOURCE_SUS = 'SUS';
+
+export const DESCRIPTION_LOCAL_SEGMENT_REF_PRICE = 'Local Segment Reference Price (Gross)';
+export const DESCRIPTION_STRIKE_THROUGH_PRICE = 'Strike Through Price';
+export const DESCRIPTION_DISCOUNT_PRICE = 'Discount Price';
+export const DESCRIPTION_ORDER_NET_PRICE = 'Order Net Price w/o Exceptions';
+export const DESCRIPTION_ROUNDING = 'Rounding';
+
+
+export const DISCOUNT_TYPE_REF_PRICE = 'REFERENCE_PRICE';
+export const DISCOUNT_TYPE_PREQUALIFIED = 'PREQUALIFIED';
+
+export const DISCOUNT_CASE_VOLUME = 'CASE_VOLUME_DISCOUNT';
+
+export const DISCOUNT_NAMES_MAP = new Map([
+    ['STRATEGIC_DISCOUNT', 'Strategic Discount'],
+    ['NEW_CUSTOMER_DISCOUNT', 'New Customer Discount'],
+    ['CASE_SPLIT_UPCHARGE', 'Split Up Charge'],
+]);
+
+export const AGREEMENT_CODE_P = 'P';
+export const AGREEMENT_CODE_B = 'B';
+export const AGREEMENT_CODE_T = 'T';
+export const AGREEMENT_CODE_L = 'L';
+
+export const EMPTY_ADJUSTMENT_VALUE_INDICATOR = '-';
