@@ -19,6 +19,12 @@ export const DESCRIPTION_STRIKE_THROUGH_PRICE = 'Strike Through Price';
 export const DESCRIPTION_DISCOUNT_PRICE = 'Discount Price';
 export const DESCRIPTION_ORDER_NET_PRICE = 'Order Net Price w/o Exceptions';
 export const DESCRIPTION_ROUNDING = 'Rounding';
+export const DESCRIPTION_VOLUME_TIERS = 'Item/Order Specific promotions';
+
+export const VOLUME_TIER_OPERATOR_BETWEEN = "Between";
+export const VOLUME_TIER_RANGE_END_ABOVE = "above";
+export const VOLUME_TIER_RANGE_CONNECTOR_TO = "to";
+export const VOLUME_TIER_RANGE_CONNECTOR_AND = "and";
 
 
 export const DISCOUNT_TYPE_REF_PRICE = 'REFERENCE_PRICE';
@@ -38,3 +44,6 @@ export const AGREEMENT_CODE_T = 'T';
 export const AGREEMENT_CODE_L = 'L';
 
 export const EMPTY_ADJUSTMENT_VALUE_INDICATOR = '-';
+
+export const CURRENCY_SYMBOL_USD = '$';
+export const APPLICATION_LOCALE = 'en-US';

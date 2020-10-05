@@ -6,7 +6,8 @@ import {
     prepareLocalSegmentPriceInfo,
     prepareStrikeThroughPriceInfo,
     prepareDiscountPriceInfo,
-    prepareNetPriceInfo
+    prepareNetPriceInfo,
+    prepareVolumePricingInfo
 } from '../utils/PricingUtils';
 import temp from './temp';
 
@@ -26,6 +27,7 @@ const initialState = {
     strikeThroughPriceSection: prepareStrikeThroughPriceInfo(temp.products[0]),
     discountPriceSection: prepareDiscountPriceInfo(temp.products[0]),
     orderNetPriceSection: prepareNetPriceInfo(temp.products[0]),
+    ...prepareVolumePricingInfo(temp.products[0]),
     ...extractItemInfo(temp.products[0]),
     ...extractPricePoints(temp.products[0]),
     ...extractSiteInfo(temp, { id: "067", name: "Philadelphia"}),
