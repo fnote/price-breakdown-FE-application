@@ -1,15 +1,19 @@
-import React from "react";
+import React, {useContext} from "react";
 import PricingResultsMeta from "./PricingResultsMeta";
 import PriceBar from "./PriceBar";
 import PriceBarDetailed from "./PriceBarDetailed";
+import { PriceValidationContext } from '../PriceValidationContext'
 
 function PricingResults() {
-  return (
+    const priceValidationContext = useContext(PriceValidationContext);
+    const priceData = priceValidationContext.priceData;
+
+    return (
     <div className="pricing-results">
       <div className="section-wrapper">
-        <PricingResultsMeta />
-        <PriceBar />
-        <PriceBarDetailed />
+        <PricingResultsMeta priceData={priceData}/>
+        <PriceBar priceData={priceData}/>
+        <PriceBarDetailed priceData={priceData}/>
       </div>
     </div>
   );

@@ -1,5 +1,4 @@
 import React from "react";
-import {connect} from "react-redux";
 import { Tooltip } from "antd";
 import sampleitemimage from "../../../styles/images/sampleitemimage.png";
 
@@ -113,23 +112,14 @@ function renderOrderInfo(props) {
 function PricingResultsMeta(props) {
   console.log("########################");
   console.log(props);
+  const { priceData } = props;
   return (
     <div className="pricing-result-meta">
-      { renderItemInfo(props.item) }
-      { renderSiteInfo(props.site) }
-      { renderOrderInfo(props) }
+      { renderItemInfo(priceData.item) }
+      { renderSiteInfo(priceData.site) }
+      { renderOrderInfo(priceData) }
     </div>
   );
 }
 
-function mapState(state) {
-  console.log(state);
-  const { search: { item, site, pricePoints } } = state;
-  return {
-    item, site, pricePoints
-  };
-}
-
-
-
-export default connect(mapState, {})(PricingResultsMeta);
+export default PricingResultsMeta;
