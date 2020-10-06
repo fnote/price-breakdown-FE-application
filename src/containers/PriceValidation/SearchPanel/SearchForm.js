@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useReducer, useContext } from "react";
 import { Form, Input, Checkbox, Select, InputNumber, DatePicker } from "antd";
 import businessUnits from "../../../constants/BusinessUnits";
+import { PriceValidationContext } from '../PriceValidationContext'
+import temp from './../../../reducers/temp'
 
 const { Option } = Select;
 const validateMessages = {
@@ -14,6 +16,7 @@ const validateMessages = {
 };
 
 function getBusinessUnits() {
+
   const businessUnitOptions = [];
   businessUnits.forEach((businessUnit => {
     businessUnitOptions.push(
@@ -24,9 +27,55 @@ function getBusinessUnits() {
   return businessUnitOptions;
 }
 
-function SearchForm() {
-  const onFinish = (values) => {
-    console.log(values);
+const SearchForm = () => {
+    const priceValidationContext = useContext(PriceValidationContext);
+
+    // const priceReducer = (currentState, action) => {
+    //     switch (action.type) {
+    //         case 'SET_RESPONSE':
+    //         {
+    //             console.log("Action with resp: ", action);
+    //             // priceValidationContext.setPriceData(action.payload);
+    //             return action.payload;
+    //         }
+    //
+    //         default :
+    //             throw Error("Should not reach this!")
+    //     }
+    // };
+
+    // const [priceDetails, dispatch] = useReducer(priceReducer, []);
+
+
+    const onSubmit = (values) => {
+      return priceRequestHandler(values);
+    // console.log(values);
+  };
+
+  const priceRequestHandler = (requestData) => {
+      fetch('http://internal-alb-cloud-pci-bff-exe-1912452817.us-east-1.elb.amazonaws.com/v1/pci-bff/pricing/pricing-data', {
+          method: 'POST',
+          body: JSON.stringify({
+              "businessUnitNumber": "001",
+              "customerAccount": "571549",
+              "priceRequestDate": "20200724",
+              "requestedQuantity": 12.00,
+              "products": [
+                  {
+                      "supc": "3183792",
+                      "splitFlag": false
+                  }
+              ]
+          }),
+          headers: {'Content-Type': 'application/json'}
+      })
+          .then(response => response.json())
+          .then( responseBody => {
+              // priceValidationContext.setPriceData(responseBody);
+              priceValidationContext.setPriceData(temp);
+              return null;
+          });
+
   };
 
   return (
@@ -38,9 +87,9 @@ function SearchForm() {
       <div className="search-form">
         <Form
             name="nest-messages"
-            onFinish={onFinish}
+            onFinish={onSubmit}
             validateMessages={validateMessages}
-            initialValues={{quantity:1}}
+            initialValues={{quantity:1, site:'002', itemnum: 1, customer: "1"}}
         >
           <Form.Item
               name="site"
@@ -124,6 +173,6 @@ function SearchForm() {
       </div>
     </>
   );
-}
+};
 
 export default SearchForm;

@@ -2,7 +2,7 @@ import React from "react";
 import SearchForm from "./SearchForm";
 import RecentSearches from "./RecentSearches";
 
-function SearchPanel() {
+const SearchPanel = () => {
   const [openPanel, setopenPanel] = React.useState(false);
   const mobilePanelOpen = () => {
     setopenPanel(true);
@@ -21,6 +21,6 @@ function SearchPanel() {
       <RecentSearches />
     </div>
   );
-}
+};
 
 export default SearchPanel;

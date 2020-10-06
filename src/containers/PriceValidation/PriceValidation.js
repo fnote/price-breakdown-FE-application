@@ -4,6 +4,8 @@ import AppBar from "../../components/AppBar/AppBar";
 import SearchPanel from "./SearchPanel/SearchPanel";
 import SearchStatuses from "./SearchPanel/SearchStatuses";
 import PricingResults from "./PricingResults/PricingResults";
+import PriceValidationContextProvider from './PriceValidationContext'
+
 
 
 function PriceValidation() {
@@ -11,9 +13,11 @@ function PriceValidation() {
     <div className="wrapper cloudpricing-wrapper">
       <AppBar />
       <div className="content">
-        <SearchPanel />
-        {/* <SearchStatuses />     Status message collection. */}
-        <PricingResults />
+          <PriceValidationContextProvider>
+            <SearchPanel />
+            {/* <SearchStatuses />     Status message collection. */}
+            <PricingResults />
+          </PriceValidationContextProvider>
       </div>
     </div>
   );
