@@ -30,7 +30,9 @@ import {
     VOLUME_TIER_RANGE_CONNECTOR_TO,
     VOLUME_TIER_RANGE_CONNECTOR_AND,
     CURRENCY_SYMBOL_USD,
-    APPLICATION_LOCALE
+    APPLICATION_LOCALE,
+    SPLIT_STATUS_NO,
+    SPLIT_STATUS_YES
 } from './Constants';
 // TODO: change this
 // export const formatBusinessUnit = ({ name, id }) =>  `${id} - ${name}`;
@@ -109,11 +111,23 @@ export const extractSiteInfo = ({ customerAccount, customerName, customerType, p
     }
 });
 
+export const getSplitStatusBySplitFlag = ({ splitFlag }) => splitFlag === true ? SPLIT_STATUS_YES : SPLIT_STATUS_NO;
+
+export const extractRequestInfo = ({ priceRequestDate, requestedQuantity, products }) => ({
+    order: {
+        priceRequestDate: generateReadableDate(priceRequestDate),
+        splitStatus: getSplitStatusBySplitFlag(products[0]),
+        requestedQuantity
+    }
+});
+
 export const prepareLocalSegmentPriceInfo = ({ discounts, rounding: { calculatedAmount }, grossPrice }) => {
     const headerRow = {
         description: DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
         calculatedValue: formatPrice(grossPrice)
     };
+    console.log('discounts');
+    console.log(discounts);
 
     const refPriceDiscountRows = discounts.filter(discount => discount.type === DISCOUNT_TYPE_REF_PRICE)
         .map(discount => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE));

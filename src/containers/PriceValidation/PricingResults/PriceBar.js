@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 
 import { getPriceUnitBySplitFlag } from '../../../utils/PricingUtils';
 import { META_DATA_PRICE_BAR } from '../../../utils/Constants';
@@ -21,20 +20,13 @@ const renderPricePoints = (priceBarMetaData, pricingData) =>
     priceBarMetaData.map(pricePointMetaData => renderPricePoint(pricePointMetaData, pricingData));
 
 function PriceBar(props) {
+  const { priceData: { pricePoints } } = props;
   return (
     <div className="price-bar">
         <div className="price-bar-divider"/>
-        {renderPricePoints(META_DATA_PRICE_BAR, props)}
+        {renderPricePoints(META_DATA_PRICE_BAR, { ...pricePoints, isSplit: false })}
     </div>
   );
 }
 
-function mapState(state) {
-    console.log(state);
-    const { search: { pricePoints } } = state;
-    return {
-        ...pricePoints, isSplit: false
-    };
-}
-
-export default connect(mapState, {})(PriceBar);
+export default PriceBar;

@@ -48,8 +48,9 @@ const SearchForm = () => {
 
 
     const onSubmit = (values) => {
-      return priceRequestHandler(values);
-    // console.log(values);
+        priceValidationContext.setPriceData({ ...priceValidationContext.priceData, isLoading: true, error: null, requestParams: values, response: null });
+        console.log(values);
+        return priceRequestHandler(values);
   };
 
   const priceRequestHandler = (requestData) => {

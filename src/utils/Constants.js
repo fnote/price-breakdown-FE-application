@@ -43,6 +43,9 @@ export const AGREEMENT_CODE_B = 'B';
 export const AGREEMENT_CODE_T = 'T';
 export const AGREEMENT_CODE_L = 'L';
 
+export const SPLIT_STATUS_NO = 'N';
+export const SPLIT_STATUS_YES = 'Y';
+
 export const EMPTY_ADJUSTMENT_VALUE_INDICATOR = '-';
 
 export const CURRENCY_SYMBOL_USD = '$';

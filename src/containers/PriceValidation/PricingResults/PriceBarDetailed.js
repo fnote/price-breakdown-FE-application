@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import PriceBarDetailedHeader from "./PriceBarDetailedHeader";
 
 const renderHeaderRow = ({ description, validityPeriod, adjustmentValue, calculatedValue }, { className }) => (
@@ -65,8 +64,8 @@ const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
     </React.Fragment>
 );
 
-function PriceBarDetailed({ localSegmentRefPriceSection, strikeThroughPriceSection, discountPriceSection, orderNetPriceSection,
-                              volumePricingHeaderRow, volumePricingTiers }) {
+function PriceBarDetailed({ priceData: { localSegmentRefPriceSection, strikeThroughPriceSection, discountPriceSection, orderNetPriceSection,
+    volumePricingHeaderRow, volumePricingTiers }}) {
   return (
     <div className="price-bar-detailed">
       <div className="price-bar-divider"/>
@@ -93,25 +92,4 @@ function PriceBarDetailed({ localSegmentRefPriceSection, strikeThroughPriceSecti
   );
 }
 
-function mapState(state) {
-  console.log(state);
-  const { search: {
-      localSegmentRefPriceSection,
-      strikeThroughPriceSection,
-      discountPriceSection,
-      orderNetPriceSection,
-      volumePricingHeaderRow,
-      volumePricingTiers
-  } } = state;
-
-  return {
-      localSegmentRefPriceSection,
-      strikeThroughPriceSection,
-      discountPriceSection,
-      orderNetPriceSection,
-      volumePricingHeaderRow,
-      volumePricingTiers
-  };
-}
-
-export default connect(mapState, {})(PriceBarDetailed);
+export default PriceBarDetailed;

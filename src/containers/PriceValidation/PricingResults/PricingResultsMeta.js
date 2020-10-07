@@ -1,13 +1,13 @@
 import React from "react";
 import { Tooltip } from "antd";
-import sampleitemimage from "../../../styles/images/sampleitemimage.png";
+// import sampleitemimage from "../../../styles/images/sampleitemimage.png";
 
 function renderItemInfo({ id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight }) {
   return (
       <section className="item-info">
-        <div
+{/*        <div
             className="item-image"
-            style={{ backgroundImage: "url(" + sampleitemimage + ")" }}/>
+            style={{ backgroundImage: "url(" + sampleitemimage + ")" }}/>*/}
 
         <div className="item-info-block">
           <div className="block">
@@ -79,31 +79,31 @@ function renderSiteInfo({ site, customerAccount, customerName, customerType, pri
             <div className="value bold">{priceZone}</div>
           </div>
         </div>
-        <div className="block custname">
+{/*        <div className="block custname">
           <Tooltip title={customerName} color="blue">
             <div className="value full-width-ellipsis">
               {customerName}
             </div>
           </Tooltip>
-        </div>
+        </div>*/}
       </section>
   );
 }
 
-function renderOrderInfo(props) {
+function renderOrderInfo({ priceRequestDate, requestedQuantity, splitStatus }) {
   return (
       <section className="order-info">
         <div className="block">
           <label>Date</label>
-          <div className="value bold">07 Mar 2020</div>
+          <div className="value bold">{priceRequestDate}</div>
         </div>
         <div className="block">
           <label>QTY</label>
-          <div className="value bold">12</div>
+          <div className="value bold">{requestedQuantity}</div>
         </div>
         <div className="block">
           <label>Split</label>
-          <div className="value bold">N</div>
+          <div className="value bold">{splitStatus}</div>
         </div>
       </section>
   );
@@ -117,7 +117,7 @@ function PricingResultsMeta(props) {
     <div className="pricing-result-meta">
       { renderItemInfo(priceData.item) }
       { renderSiteInfo(priceData.site) }
-      { renderOrderInfo(priceData) }
+      { renderOrderInfo(priceData.order) }
     </div>
   );
 }

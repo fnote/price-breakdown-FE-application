@@ -5,6 +5,7 @@
   "customerType": "TRS",
   "priceZone": "05",
   "priceRequestDate": "20200724",
+  "requestedQuantity": 1,
   "requestStatuses": [],
   "products": [
     {
@@ -121,43 +122,10 @@
           "id": "832120",
           "type": "C",
           "applicationCode": "P",
-          "description": "Dollars Off -1",
+          "description": "Dollars Off",
           "priceAdjustment": -1.28,
           "percentageAdjustment": 1.5,
           "methodCode": "APPLY TO PRICE",
-          "effectiveFrom": "20191103",
-          "effectiveTo": "20291103"
-        },
-        {
-          "id": "832128",
-          "type": "C",
-          "applicationCode": "P",
-          "description": "Dollars Off",
-          "priceAdjustment": -1.28,
-          "percentageAdjustment": 0,
-          "methodCode": "APPLY TO PRICE",
-          "effectiveFrom": "20191103",
-          "effectiveTo": "20291103"
-        },
-        {
-          "id": "832128",
-          "type": "CHEF",
-          "applicationCode": "P",
-          "description": "Percent Off",
-          "priceAdjustment": -2.41,
-          "percentageAdjustment": 0,
-          "methodCode": "APPLY TO PRICE",
-          "effectiveFrom": "20191103",
-          "effectiveTo": "20291103"
-        },
-        {
-          "id": "832129",
-          "type": "CHEF",
-          "applicationCode": "B",
-          "description": "Percent Off",
-          "priceAdjustment": -2.41,
-          "percentageAdjustment": 0,
-          "methodCode": "APPLY TO BASE",
           "effectiveFrom": "20191103",
           "effectiveTo": "20291103"
         },
@@ -166,17 +134,6 @@
           "type": "CHEF",
           "applicationCode": "L",
           "description": "OFFL",
-          "priceAdjustment": -2.41,
-          "percentageAdjustment": 0,
-          "methodCode": "OFFLINE",
-          "effectiveFrom": "20191103",
-          "effectiveTo": "20291103"
-        },
-        {
-          "id": "832130",
-          "type": "CHEF",
-          "applicationCode": "T",
-          "description": "OFFT",
           "priceAdjustment": -2.41,
           "percentageAdjustment": 0,
           "methodCode": "OFFLINE",
@@ -198,16 +155,6 @@
           "priceAdjustment": -8.00,
           "amountType": "Factor",
           "amount": 0.90,
-          "effectiveFrom": "20191103",
-          "effectiveTo": "20291103"
-        },
-        {
-          "id": "243513",
-          "type": "REFERENCE_PRICE",
-          "name": "STRATEGIC_DISCOUNT",
-          "priceAdjustment": -7.00,
-          "amountType": "Factor",
-          "amount": 0.80,
           "effectiveFrom": "20191103",
           "effectiveTo": "20291103"
         },

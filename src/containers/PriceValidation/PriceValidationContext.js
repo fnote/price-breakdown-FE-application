@@ -1,11 +1,16 @@
 import React, {useState} from 'react'
 import {
-    extractItemInfo, extractPricePoints, extractSiteInfo,
+    extractItemInfo,
+    extractPricePoints,
+    extractSiteInfo,
+    extractRequestInfo,
     prepareDiscountPriceInfo,
     prepareLocalSegmentPriceInfo,
     prepareNetPriceInfo,
-    prepareStrikeThroughPriceInfo
+    prepareStrikeThroughPriceInfo,
+    prepareVolumePricingInfo,
 } from "../../utils/PricingUtils";
+import temp from "../../reducers/temp";
 
 export const PriceValidationContext = React.createContext({
     priceData: {},
@@ -14,7 +19,7 @@ export const PriceValidationContext = React.createContext({
 });
 
 const initialState = {
-    response: {},
+    response: null,
     recentSearches: [],
     error: null,
     isLoading: false,
@@ -23,9 +28,28 @@ const initialState = {
     strikeThroughPriceSection: [],
     discountPriceSection: [],
     orderNetPriceSection: [],
-    item: {},
-    pricePoints: {},
-    site: {},
+    item: null,
+    pricePoints: null,
+    site: null,
+};
+
+const mapSuccessResponse = (data) => {
+    const product = data.products[0];
+
+    return {
+        response: data,
+        error: null,
+        isLoading: false,
+        localSegmentRefPriceSection: prepareLocalSegmentPriceInfo(product),
+        strikeThroughPriceSection: prepareStrikeThroughPriceInfo(product),
+        discountPriceSection: prepareDiscountPriceInfo(product),
+        orderNetPriceSection: prepareNetPriceInfo(product),
+        ...prepareVolumePricingInfo(product),
+        ...extractItemInfo(product),
+        ...extractPricePoints(product),
+        ...extractSiteInfo(data, { id: "067", name: "Philadelphia"}),
+        ...extractRequestInfo(data)
+    };
 };
 
 const PriceValidationContextProvider = props => {
@@ -35,21 +59,16 @@ const PriceValidationContextProvider = props => {
     const priceDataUpdateHandler = (data) => {
         console.log("Received data to context", data);
 
-        const processedState = {
-            response: data,
+        let processedState = {
             recentSearches: [],
-            error: null,
-            isLoading: false,
-            selectedBusinessUnit: { id: "067", name: "Philadelphia"},
-            localSegmentRefPriceSection: prepareLocalSegmentPriceInfo(data.products[0]),
-            strikeThroughPriceSection: prepareStrikeThroughPriceInfo(data.products[0]),
-            discountPriceSection: prepareDiscountPriceInfo(data.products[0]),
-            orderNetPriceSection: prepareNetPriceInfo(data.products[0]),
-            ...extractItemInfo(data.products[0]),
-            ...extractPricePoints(data.products[0]),
-            ...extractSiteInfo(data, { id: "067", name: "Philadelphia"}),
+            selectedBusinessUnit: { id: "067", name: "Philadelphia"}
         };
 
+        if (data.isLoading === undefined) {
+            processedState = { ...processedState, ...mapSuccessResponse(data) };
+        } else {
+            processedState = {... processedState, ...data };
+        }
 
         setPriceData(processedState);
     };

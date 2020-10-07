@@ -1,5 +1,4 @@
 import React from "react";
-import {connect} from "react-redux";
 import AppBar from "../../components/AppBar/AppBar";
 import SearchPanel from "./SearchPanel/SearchPanel";
 import SearchStatuses from "./SearchPanel/SearchStatuses";
@@ -15,7 +14,7 @@ function PriceValidation() {
       <div className="content">
           <PriceValidationContextProvider>
             <SearchPanel />
-            {/* <SearchStatuses />     Status message collection. */}
+            <SearchStatuses />
             <PricingResults />
           </PriceValidationContextProvider>
       </div>
@@ -23,9 +22,4 @@ function PriceValidation() {
   );
 }
 
-function mapState(state) {
-    console.log(state);
-    return state;
-}
-
-export default connect(mapState, {})(PriceValidation);
+export default PriceValidation;

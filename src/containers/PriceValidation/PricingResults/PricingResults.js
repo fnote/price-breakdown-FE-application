@@ -8,15 +8,20 @@ function PricingResults() {
     const priceValidationContext = useContext(PriceValidationContext);
     const priceData = priceValidationContext.priceData;
 
-    return (
-    <div className="pricing-results">
-      <div className="section-wrapper">
-        <PricingResultsMeta priceData={priceData}/>
-        <PriceBar priceData={priceData}/>
-        <PriceBarDetailed priceData={priceData}/>
-      </div>
-    </div>
-  );
+    if (priceData.response) {
+        return (
+            <div className="pricing-results">
+                <div className="section-wrapper">
+                    <PricingResultsMeta priceData={priceData}/>
+                    <PriceBar priceData={priceData}/>
+                    <PriceBarDetailed priceData={priceData}/>
+                </div>
+            </div>
+        );
+    }
+
+    return null;
+
 }
 
 export default PricingResults;
