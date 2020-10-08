@@ -72,7 +72,7 @@ function PriceBarDetailed({ priceData: { localSegmentRefPriceSection, strikeThro
       <section className="detailed-left">
         <PriceBarDetailedHeader />
         <div className="block group1">
-          {renderDetailedSection(localSegmentRefPriceSection, null,{ className: "description-col colspan-2"})}
+          {renderDetailedSection(localSegmentRefPriceSection, null, { className: "description-col colspan-2" })}
         </div>
         <div className="block group2">
           {renderDetailedSection(strikeThroughPriceSection)}
