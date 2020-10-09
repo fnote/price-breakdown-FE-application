@@ -1,6 +1,7 @@
 import React, {useContext} from "react";
 import { SyncOutlined } from "@ant-design/icons";
 import { PriceValidationContext } from '../PriceValidationContext';
+import {ErrorCodes, ErrorMessages} from "../../../constants/Errors";
 
 const renderWelcomeMessage = () => (
     <div className="search-statuses">
@@ -47,17 +48,26 @@ const renderError = ({ code, message }) => (
     </div>
 );
 
-function SearchStatuses() {
+const SearchStatuses = () => {
   const priceValidationContext = useContext(PriceValidationContext);
-  const { response, error, isLoading, discountPriceSection } = priceValidationContext.priceData;
 
-  if (isLoading) {
+  console.log("State in search statuses",  priceValidationContext.priceData);
+
+  const { response } = priceValidationContext.priceData;
+
+  if (priceValidationContext.isLoading) {
     return renderLoader();
   }
 
-  // TODO: inject error message from the props
-  if (error) {
-    return renderError({code: '393988', message: 'Something went wrong' });
+  if (priceValidationContext.error) {
+      const errorCode = priceValidationContext.error.code;
+      const errorMessage = priceValidationContext.error.message;
+
+      if(errorCode && errorMessage) {
+          return renderError({code: errorCode, message: errorMessage });
+      }
+
+    return renderError({code: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
   }
 
   if (!response) {
@@ -65,6 +75,6 @@ function SearchStatuses() {
   }
 
   return null;
-}
+};
 
 export default SearchStatuses;

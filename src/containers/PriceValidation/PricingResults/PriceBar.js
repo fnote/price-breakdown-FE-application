@@ -1,7 +1,7 @@
 import React from "react";
 
 import { getPriceUnitBySplitFlag } from '../../../utils/PricingUtils';
-import { META_DATA_PRICE_BAR } from '../../../utils/Constants';
+import { META_DATA_PRICE_BAR } from '../../../constants/Constants';
 
 const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true }, pricingData) => (
     <section className={styleClass}>

@@ -33,10 +33,12 @@ import {
     APPLICATION_LOCALE,
     SPLIT_STATUS_NO,
     SPLIT_STATUS_YES
-} from './Constants';
-// TODO: change this
-// export const formatBusinessUnit = ({ name, id }) =>  `${id} - ${name}`;
-export const formatBusinessUnit = () => "067 - Philadelphia";
+} from '../constants/Constants';
+import businessUnits from '../constants/BusinessUnits'
+export const formatBusinessUnit = (businessUnitId) => {
+    const businessUnit = businessUnits.get(businessUnitId);
+    return (businessUnit) ? `${businessUnit.id} - ${businessUnit.name}` : businessUnitId;
+};
 
 export const formatPrice = value => value > 0 ? `${CURRENCY_SYMBOL_USD}${value.toFixed(2)}`
     : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(2)}`;
@@ -101,11 +103,11 @@ export const extractItemInfo = ({ id, name, brand, pack, size, stockIndicator, c
    }
 });
 
-export const extractSiteInfo = ({ customerAccount, customerName, customerType, priceZone }, businessUnit) => ({
+export const extractSiteInfo = ({ customerAccount, customerName, customerType, priceZone, businessUnitNumber }) => ({
     site: {
-        site: formatBusinessUnit(businessUnit),
+        site: formatBusinessUnit(businessUnitNumber),
         customerAccount,
-        customerName: 'Mikes Seafood and Grill',
+        customerName: customerName,
         customerType,
         priceZone
     }

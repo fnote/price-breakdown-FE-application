@@ -79,13 +79,13 @@ function renderSiteInfo({ site, customerAccount, customerName, customerType, pri
             <div className="value bold">{priceZone}</div>
           </div>
         </div>
-{/*        <div className="block custname">
+        <div className="block custname">
           <Tooltip title={customerName} color="blue">
             <div className="value full-width-ellipsis">
               {customerName}
             </div>
           </Tooltip>
-        </div>*/}
+        </div>
       </section>
   );
 }
