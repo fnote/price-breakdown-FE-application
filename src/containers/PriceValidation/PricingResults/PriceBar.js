@@ -7,7 +7,7 @@ function PriceBar() {
       <section className="group1">
         <label>LOCAL SEGMENT REFERENCE PRICE</label>
         <div className="price-block">
-          <div className="value">61.00</div>
+          <div className="value">22.00</div>
           <div className="unit-block">
             <div className="divider"></div>
             <div className="unit">/ case</div>
@@ -17,7 +17,7 @@ function PriceBar() {
       <section className="group2">
         <label>STRIKE THROUGH PRICE</label>
         <div className="price-block">
-          <div className="value">58.36</div>
+          <div className="value">21.98</div>
           <div className="unit-block">
             <div className="divider"></div>
             <div className="unit">/ case</div>
@@ -27,7 +27,7 @@ function PriceBar() {
       <section className="group3">
         <label>DISCOUNT PRICE</label>
         <div className="price-block">
-          <div className="value">57.19</div>
+          <div className="value">18.925</div>
           <div className="unit-block">
             <div className="divider"></div>
             <div className="unit">/ case</div>
@@ -37,7 +37,7 @@ function PriceBar() {
       <section className="group4 pad-right">
         <label>ORDER UNIT PRICE</label>
         <div className="price-block">
-          <div className="value">57.19</div>
+          <div className="value">20.698</div>
           <div className="unit-block">
             <div className="divider"></div>
             <div className="unit">/ case</div>
@@ -47,7 +47,7 @@ function PriceBar() {
       <section className="main-price">
         <label>CUSTOMER NET PRICE</label>
         <div className="price-block">
-          <div className="value">52.79</div>
+          <div className="value">18.686</div>
           <div className="unit-block">            
             <div className="unit">/ case</div>
           </div>

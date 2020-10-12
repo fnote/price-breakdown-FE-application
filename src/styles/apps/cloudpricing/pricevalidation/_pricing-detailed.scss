@@ -1,6 +1,6 @@
 .price-bar-detailed {
   $icon-col-width: 2rem;
-  $description-col-width: 18rem;
+  $description-col-width: 20rem;
   $adjustment-col-width: 8rem;
   $value-col-width: 7rem;
   $tick-col-width: 2rem;
@@ -76,7 +76,7 @@
     .block {
       @include flexbox(0 0 auto, row, flex-start, flex-start);
       width: 100%;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       @include breakpoint(xs) {
         margin-bottom: 3rem;
         padding-bottom: 2rem;
@@ -162,6 +162,9 @@
       }
       &.group4 {
         color: $price-group-color-4;
+      }
+      &.group5 {
+        color: $syscogreen;
       }
     }
   }

@@ -51,7 +51,7 @@
     .price-source {
       text-transform: uppercase;
       font-weight: 300;
-      font-size: 0.9rem;
+      font-size: 1.2rem;
       margin-left: 1.5rem;
       margin-top: 0.1rem;
       strong{
@@ -148,6 +148,14 @@
       }
       .unit-block {
         color: $price-group-color-4;
+      }
+    }
+    &.group5 {
+      .value {
+        color: $syscogreen;
+      }
+      .unit-block {
+        color: $syscogreen;
       }
     }
   }
