@@ -125,8 +125,7 @@ function PriceBarDetailed() {
               </div>
               <div className="value-col">$18.925</div>
               <div className="adjustment-col"></div>
-            </div>
-           
+            </div>           
 
             <div className="row sub-row">
               <div className="description-col">
