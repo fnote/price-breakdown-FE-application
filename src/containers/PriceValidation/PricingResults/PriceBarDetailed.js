@@ -18,7 +18,7 @@ function PriceBarDetailed() {
                 <div className="title">
                   Local Segment Reference Price (Gross)
                 </div>
-                <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
+                <div className="sub-title hide">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>
               <div className="adjustment-col">$61.00</div>
@@ -54,7 +54,7 @@ function PriceBarDetailed() {
             <div className="row">
               <div className="description-col">
                 <div className="title">Strike Through Price</div>
-                <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
+                <div className="sub-title hide">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>
               <div className="value-col">- $0.88</div>
@@ -96,7 +96,7 @@ function PriceBarDetailed() {
             <div className="row">
               <div className="description-col">
                 <div className="title">Discount Price</div>
-                <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
+                <div className="sub-title hide">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>
               <div className="value-col">$61.00</div>
@@ -163,7 +163,7 @@ function PriceBarDetailed() {
             <div className="row">
               <div className="description-col">
                 <div className="title">Order Net Price w/o Exceptions</div>
-                <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
+                <div className="sub-title hide">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>
               <div className="value-col">-$3.40</div>
