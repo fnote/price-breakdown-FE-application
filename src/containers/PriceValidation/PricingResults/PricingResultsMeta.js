@@ -4,7 +4,7 @@ import sampleitemimage from "../../../styles/images/sampleitemimage.png";
 
 function PricingResultsMeta() {
   return (
-    <div className="pricing-result-meta">
+    <div className="pricing-result-meta">      
       <section className="item-info">
         <div
           className="item-image"

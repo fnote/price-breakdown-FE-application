@@ -21,7 +21,7 @@ function PriceBarDetailed() {
                 <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>
-              <div className="calculated-col">$61.00</div>
+              <div className="adjustment-col">$61.00</div>
             </div>
             <div className="row sub-row">
               <div className="description-col">
@@ -30,9 +30,8 @@ function PriceBarDetailed() {
                   Strategic Discount
                 </div>
               </div>
-              <div className="adjustment-col">- $0.220 /case</div>
-              <div className="calculated-col">- $0.88</div>
-              <div className="source-col">Price Advisor</div>
+              <div className="value-col">- $0.88</div>              
+              <div className="adjustment-col">- $0.220 /case</div>              
             </div>
             <div className="row sub-row">
               <div className="description-col">
@@ -41,9 +40,9 @@ function PriceBarDetailed() {
                   Rounding
                 </div>
               </div>
+              <div className="value-col">$0.005</div>
               <div className="adjustment-col">-</div>
-              <div className="calculated-col">$0.005</div>
-              <div className="source-col">System</div>
+              
             </div>
           </div>
         </div>
@@ -58,8 +57,8 @@ function PriceBarDetailed() {
                 <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>
-              <div className="adjustment-col">- 1.500%</div>
-              <div className="calculated-col">- $0.88</div>
+              <div className="value-col">- $0.88</div>
+              <div className="adjustment-col">- 1.500%</div>              
             </div>
             <div className="row sub-row not-applied">
               <div className="description-col">
@@ -68,9 +67,8 @@ function PriceBarDetailed() {
                   Pre-Qualified Discounts (Not Applied)
                 </div>
               </div>
-              <div className="adjustment-col">- $0.100 /case</div>
-              <div className="calculated-col">- $1.20</div>
-              <div className="source-col">Discount Service</div>
+              <div className="value-col">- $1.20</div>                     
+              <div className="adjustment-col">- $0.100 /case</div>             
             </div>
             <div className="row sub-row">
               <div className="description-col">
@@ -79,9 +77,8 @@ function PriceBarDetailed() {
                   Behavioral Discounts
                 </div>
               </div>
-              <div className="adjustment-col">- $0.120 /case</div>
-              <div className="calculated-col">- $1.44</div>
-              <div className="source-col">Discount Service</div>
+              <div className="value-col">- $1.44</div>
+              <div className="adjustment-col">- $0.120 /case</div>              
             </div>
           </div>
         </div>
@@ -102,8 +99,8 @@ function PriceBarDetailed() {
                 <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>
+              <div className="value-col">$61.00</div>
               <div className="adjustment-col">- $0.220 /case</div>
-              <div className="calculated-col">$61.00</div>
             </div>
             <div className="row sub-row">
               <div className="description-col">
@@ -113,9 +110,8 @@ function PriceBarDetailed() {
                 </div>
                 <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
               </div>
+              <div className="value-col">- $0.88</div>
               <div className="adjustment-col">- $0.220 /case</div>
-              <div className="calculated-col">- $0.88</div>
-              <div className="source-col">Price Advisor</div>
             </div>
             <div className="row sub-row">
               <div className="description-col colspan-2">
@@ -130,29 +126,29 @@ function PriceBarDetailed() {
               <ul className="value-table">
                 <li>
                   <div className="description-col">0 <span>to</span> 5</div>
-                  <div className="adjustment-col">- 0.000%</div>
-                  <div className="calculated-col">- $0.000</div> 
+                  <div className="value-col">- $0.000</div> 
+                  <div className="adjustment-col">- 0.000%</div>                  
                 </li>
                 <li>
                   <div className="description-col">6 <span>to</span> 10</div>
-                  <div className="adjustment-col">- 0.250%</div>
-                  <div className="calculated-col">- $0.153</div>
+                  <div className="value-col">- $0.153</div>
+                  <div className="adjustment-col">- 0.250%</div>                  
                 </li>
                 <li className="selected">
                   <div className="description-col">11 <span>to</span> 15</div>
-                  <div className="adjustment-col">- 0.500%</div>
-                  <div className="calculated-col">- $0.287 </div>
-                  <div className="source-col"><i className="icon fi flaticon-tick-1"/> Discount Service</div>
+                  <div className="value-col">- $0.287 </div>
+                  <div className="adjustment-col">- 0.500%</div>                 
+                  <div className="tick-col"><i className="icon fi flaticon-tick-1"/></div>
                 </li>
                 <li>
                   <div className="description-col">16 <span>to</span> 25</div>
-                  <div className="adjustment-col">- 0.750%</div>
-                  <div className="calculated-col">- $0.458</div>
+                  <div className="value-col">- $0.458</div>
+                  <div className="adjustment-col">- 0.750%</div>                  
                 </li>
                 <li>
                   <div className="description-col">26 <span>and</span> above</div>
-                  <div className="adjustment-col">- 1.000%</div>
-                  <div className="calculated-col">- $0.610</div>
+                  <div className="value-col">- $0.610</div>
+                  <div className="adjustment-col">- 1.000%</div>                  
                 </li>
               </ul>
             </div>
@@ -170,8 +166,8 @@ function PriceBarDetailed() {
                 <div className="sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
                 <div className="small-divider"></div>
               </div>
-              <div className="adjustment-col">- $3.40</div>
-              <div className="calculated-col">-$3.40</div>
+              <div className="value-col">-$3.40</div>
+              <div className="adjustment-col">- $3.40</div>              
             </div>
             <div className="row sub-row">
               <div className="description-col">
@@ -181,9 +177,8 @@ function PriceBarDetailed() {
                 </div>
                 <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
               </div>
-              <div className="adjustment-col">- $3.40</div>
-              <div className="calculated-col">- $3.40</div>
-              <div className="source-col">SUS</div>
+              <div className="value-col">- $3.40</div>
+              <div className="adjustment-col">- $3.40</div>              
             </div>
           </div>
         </div>

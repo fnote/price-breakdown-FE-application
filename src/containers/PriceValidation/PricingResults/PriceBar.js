@@ -52,6 +52,7 @@ function PriceBar() {
             <div className="unit">/ case</div>
           </div>
         </div>
+        <div className="price-source">Source: <strong>Price Advisor</strong></div>
       </section>
     </div>
   );

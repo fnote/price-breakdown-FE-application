@@ -48,6 +48,16 @@
       font-weight: 300;
       font-size: 0.9rem;
     }
+    .price-source {
+      text-transform: uppercase;
+      font-weight: 300;
+      font-size: 0.9rem;
+      margin-left: 1.5rem;
+      margin-top: 0.1rem;
+      strong{
+        font-weight: 500;
+      }
+    }
     .price-block {
       @include flexbox(1 1 auto, row, flex-start, flex-end);
       width: 100%;
