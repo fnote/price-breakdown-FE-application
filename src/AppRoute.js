@@ -14,7 +14,7 @@ function AppRoute() {
         <Fragment>
           <Router>
                   <Switch>
-                      <Route path="/" component={PriceValidation}/>
+                      <Route path="/" component={ApplicationBase}/>
                   </Switch>
           </Router>
         </Fragment>

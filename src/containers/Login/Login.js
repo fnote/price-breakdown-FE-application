@@ -1,39 +1,54 @@
-import React from "react";
+import React, {Component} from "react";
 import logo from "../../styles/images/logo.svg";
+import {auth} from "../../utils/security/Auth";
 // import { Auth } from 'aws-amplify';
 // import config from "../../internal/config";
+import { SyncOutlined } from "@ant-design/icons";
 
 /**
  * Login page that shows the login button for SSO sign in
  *
  * @returns {HTMLDivElement} Returns the Login page component
  */
-function Login() {
+class Login extends Component {
+  componentDidMount() {
+    if(auth.isUserLoginPending()) {
+      this.loadUserDetails();
+    }
+  }
+
   /**
    * Login button functionality.
    * Communicates with AWS Cognito service for federated sign in
    */
-  const loginButtonClicked = () => {
-    // Auth.federatedSignIn({provider: config.federatedSignInProvider});
+  loginButtonClicked = () => {
+    auth.getLoginPage();
   };
 
-  return (
-    <div className="wrapper login-wrapper">
-      <div className="login-panel">
-        <img src={logo} alt="Sysco Cloud Pricing" className="logo" />
-        <p className="error-text hide">
-          <i className="fi flaticon-alert" /> For security reasons you have been
-          signed out automatically.
-        </p>
-        <div className="button-bar">
-          <div className="title">Please sign in to begin</div>
-          <button className="loginbtn" onClick={() => loginButtonClicked()}>
-            Sign In
-          </button>
+  loadUserDetails = () => {
+    const {status, userDetailResponse} = auth.callUserDetails();
+    console.log(userDetailResponse);
+  }
+
+  render() {
+    return (
+        <div className="wrapper login-wrapper">
+          <div className="login-panel">
+            <img src={logo} alt="Sysco Cloud Pricing" className="logo"/>
+            <p className="error-text hide">
+              <i className="fi flaticon-alert"/> For security reasons you have been
+              signed out automatically.
+            </p>
+            <div className="button-bar">
+              <div className="title">Please sign in to begin</div>
+              <button className="loginbtn" onClick={() => this.loginButtonClicked()}>
+                Sign In
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Login;

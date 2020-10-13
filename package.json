@@ -22,7 +22,7 @@
     "xlsx": "^0.16.2"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_ENV=local react-scripts start",
     "build": "react-scripts build",
     "build:dev": "REACT_APP_ENV=dev npm run build",
     "build:stg": "REACT_APP_ENV=stg npm run build",
