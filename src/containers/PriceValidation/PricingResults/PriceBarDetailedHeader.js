@@ -5,9 +5,8 @@ function PriceBarDetailedHeader() {
     <header>
     <div className="icon-col"></div>
     <div className="description-col">Description</div>
+    <div className="value-col">Value</div>
     <div className="adjustment-col">Adjustment</div>
-    <div className="calculated-col">Calculated</div>
-    <div className="source-col">Source</div>
   </header>
   );
 }

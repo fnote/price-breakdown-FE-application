@@ -17,7 +17,8 @@ export const PRICE_SOURCE_SUS = 'SUS';
 export const DESCRIPTION_LOCAL_SEGMENT_REF_PRICE = 'Local Segment Reference Price (Gross)';
 export const DESCRIPTION_STRIKE_THROUGH_PRICE = 'Strike Through Price';
 export const DESCRIPTION_DISCOUNT_PRICE = 'Discount Price';
-export const DESCRIPTION_ORDER_NET_PRICE = 'Order Net Price w/o Exceptions';
+export const DESCRIPTION_ORDER_NET_PRICE = 'Order Unit Price';
+export const DESCRIPTION_CUSTOMER_NET_PRICE = 'Customer Net Price';
 export const DESCRIPTION_ROUNDING = 'Rounding';
 export const DESCRIPTION_VOLUME_TIERS = 'Item/Order Specific promotions';
 
@@ -46,7 +47,7 @@ export const AGREEMENT_CODE_L = 'L';
 export const SPLIT_STATUS_NO = 'N';
 export const SPLIT_STATUS_YES = 'Y';
 
-export const EMPTY_ADJUSTMENT_VALUE_INDICATOR = '-';
+export const EMPTY_ADJUSTMENT_VALUE_INDICATOR = ' ';
 
 export const CURRENCY_SYMBOL_USD = '$';
 export const APPLICATION_LOCALE = 'en-US';

@@ -13,6 +13,12 @@ const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true },
                 <div className="unit">/ {getPriceUnitBySplitFlag(pricingData)}</div>
             </div>
         </div>
+        {label ==='CUSTOMER NET PRICE' ?
+            <div className="price-source">Source: <strong>Price Advisor</strong></div>
+            :
+            null
+        }
+
     </section>
 );
 
@@ -20,11 +26,12 @@ const renderPricePoints = (priceBarMetaData, pricingData) =>
     priceBarMetaData.map(pricePointMetaData => renderPricePoint(pricePointMetaData, pricingData));
 
 function PriceBar(props) {
-  const { priceData: { pricePoints } } = props;
+  const { priceData: { pricePoints, response } } = props;
   return (
     <div className="price-bar">
         <div className="price-bar-divider"/>
-        {renderPricePoints(META_DATA_PRICE_BAR, { ...pricePoints, isSplit: false })}
+        {/*TODO: sanjayaa Correct data retrieval here*/}
+        {renderPricePoints(META_DATA_PRICE_BAR, { ...pricePoints, isSplit: response.products[0].splitFlag })}
     </div>
   );
 }

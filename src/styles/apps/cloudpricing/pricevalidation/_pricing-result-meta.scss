@@ -1,4 +1,5 @@
 .pricing-result-meta {
+  position: relative;
   padding: 1.5rem 1.5rem 0 1.5rem;
   @include flexbox(1 1 auto, row, flex-start, flex-start);
   width: 100%;
@@ -101,3 +102,4 @@
     }
   }
 }
+
