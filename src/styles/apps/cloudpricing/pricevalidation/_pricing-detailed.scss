@@ -1,0 +1,204 @@
+.price-bar-detailed {
+  $icon-col-width: 2rem;
+  $description-col-width: 20rem;
+  $adjustment-col-width: 8rem;
+  $value-col-width: 7rem;
+  $tick-col-width: 2rem;
+
+  // $icon-col-width: 2rem;
+  // $description-col-width: 13vw;
+  // $adjustment-col-width: 4vw;
+  // $value-col-width: 5vw;
+  @include flexbox(1 1 auto, row, flex-start, flex-start);
+  width: 100%;
+  padding-bottom: 1rem;
+  overflow: auto;
+
+  .icon-col {
+    width: $icon-col-width;
+  }
+  .description-col {
+    width: $description-col-width;
+    &.colspan-2 {
+      width: $description-col-width + $value-col-width;
+    }
+    padding-right: 1rem;
+  }
+  .adjustment-col {
+    width: $adjustment-col-width;
+    text-align: right;
+  }
+  .value-col {
+    width: $value-col-width;
+    text-align: right;
+    padding-right: 2rem;
+  }
+  .tick-col {
+    width: $tick-col-width;
+  }
+
+  @include breakpoint(xs) {
+    @include flexbox(1 1 auto, column, flex-start, flex-start);
+    padding-bottom: 0;
+  }
+  .price-bar-divider {
+    border-left: 1px dashed lighten($textstandard, 15%);
+    width: 2px;
+    margin: 0 0 0 1.5rem;
+    height: 35rem;
+    &.overlap {
+      margin: -1.6rem 0 0 1.5rem;
+    }
+    @include breakpoint(xs) {
+      display: none;
+    }
+  }
+  section {
+    @include flexbox(0 0 auto, column, flex-start, flex-start);
+    margin: 2rem 2rem 0 2rem;
+    @include breakpoint(xs) {
+      margin: 2rem 2rem 0 2rem;
+      &.detailed-right {
+        margin: 0 2rem 0 2rem;
+        header {
+          display: none;
+          margin: 2rem 2rem 0 2rem;
+        }
+      }
+    }
+    header {
+      @include flexbox(0 0 auto, row, flex-start, flex-start);
+      width: 100%;
+      opacity: 0.5;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .block {
+      @include flexbox(0 0 auto, row, flex-start, flex-start);
+      width: 100%;
+      margin-bottom: 1.5rem;
+      @include breakpoint(xs) {
+        margin-bottom: 3rem;
+        padding-bottom: 2rem;
+        border-bottom: 1px dotted lighten($textstandard, 35%);
+      }
+      .icon-col {
+        @include flexbox(0 0 auto, row, flex-start, center);
+        font-size: 0.8rem;
+      }
+      .data-fields {
+        width: 100%;
+        @include flexbox(0 0 auto, column, flex-start, flex-start);
+        .row {
+          width: 100%;
+          @include flexbox(0 0 auto, row, flex-start, flex-start);
+          // margin-bottom: 0.8rem;
+          &.sub-row {
+            @include flexbox(0 0 auto, row, flex-start, center);
+            margin-bottom: 0.2rem;
+            .adjustment-col,
+            .value-col {
+              font-size: 1rem;
+              font-weight: 500;
+            }
+          }
+          &.not-applied {
+            .adjustment-col,
+            .value-col {
+              text-decoration: line-through;
+            }
+          }
+        }
+        .description-col {
+          .title {
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+          }
+          .subrow-title {
+            @include flexbox(0 0 auto, row, flex-start, center);
+            font-size: 1.1rem;
+            margin-bottom: 0.4rem;
+            font-weight: 700;
+            // p{
+            //   @include flexbox(0 0 auto, row, flex-start, center);
+            //   font-size: 0.8rem;
+            // }
+          }
+          .subrow-sub-title {
+            font-size: 0.9rem;
+            padding-left: 1rem;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+          }
+          .icon {
+            font-size: 0.7rem;
+            margin-right: 0.3rem;
+          }
+          .small-divider {
+            border-left: 2px dotted lighten($textstandard, 15%);
+            height: 1rem;
+            width: 2px;
+            margin: 0.3rem;
+          }
+        }
+        .adjustment-col,
+        .value-col {
+          font-size: 1.2rem;
+          font-weight: 700;
+        }
+        .value-col {
+          font-size: 1.2rem;
+        }
+      }
+      &.group1 {
+        color: $price-group-color-1;
+      }
+      &.group2 {
+        color: $price-group-color-2;
+      }
+      &.group3 {
+        color: $price-group-color-3;
+      }
+      &.group4 {
+        color: $price-group-color-4;
+      }
+      &.group5 {
+        color: $syscogreen;
+      }
+    }
+  }
+  .value-table {
+    @include flexbox(0 0 auto, column, flex-start, center);
+    width: 100%;
+    border-left: 2px dotted lighten($textstandard, 15%);
+    padding-left: 1rem;
+    margin-left: 0.3rem;
+    li {
+      @include flexbox(0 0 auto, row, flex-start, center);
+      width: 100%;
+      padding: 0.4rem 0rem 0.4rem 0.5rem;
+      .description-col {
+        font-weight: 700;
+        width: $description-col-width - 2rem;
+        span {
+          font-weight: 400;
+        }
+      }
+      &.selected {
+        background: lighten($price-group-color-3, 45%);
+        border-radius: 0.4rem;
+        .value-col {
+          font-weight: 800 !important;
+        }
+        .tick-col {
+          @include flexbox(0 0 auto, row, flex-start, center);
+          .icon {
+            // margin-right: 0.6rem;
+            margin-left: 1rem;
+          }
+        }
+      }
+    }
+  }
+}

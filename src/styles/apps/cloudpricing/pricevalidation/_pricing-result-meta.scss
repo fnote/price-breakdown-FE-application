@@ -1,0 +1,105 @@
+.pricing-result-meta {
+  position: relative;
+  padding: 1.5rem 1.5rem 0 1.5rem;
+  @include flexbox(1 1 auto, row, flex-start, flex-start);
+  width: 100%;
+  @include breakpoint(xs) {
+    @include flexbox(1 1 auto, column, flex-start, flex-start);
+  }
+  section {
+    @include flexbox(1 1 auto, column, flex-start, flex-start);
+    border-left: 1px dashed lighten($textstandard, 15%);
+    padding:0 1.5rem 1rem 0;
+    min-height: 14rem;
+    @include breakpoint(xs) {
+      @include flexbox(0 0 auto, column, flex-start, flex-start);
+      // border-top: 1px dashed lighten($textstandard, 15%);
+      width: 100% !important;      
+      min-height: auto;
+      & + section{
+        padding-top: 1rem;
+      }
+    }
+    .block {
+      font-size: 1.5rem;
+      padding: 0 0 1.2rem 1.5rem;
+      width: 100%;
+      label {
+        text-transform: uppercase;
+        font-weight: 300;
+        font-size: 1.1rem;
+      }
+      .value {
+        font-weight: 500;
+        padding-top: 0.3rem;
+        &.bold {
+          font-weight: 800;
+        }
+        &.full-width-ellipsis {
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 19vw;
+          @include breakpoint(xs) {
+            max-width: 80vw;
+          }
+        }
+        &.brand{
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 10vw;
+          @include breakpoint(xs) {
+            max-width: 20vw;
+          }
+        }
+      }
+      &.row {
+        @include flexbox(0 0 auto, row, flex-start, flex-start);
+        .sub-block {
+          @include flexbox(1 1 auto, column, flex-start, flex-start);
+          padding-right: 0.4rem;
+        }
+      }
+    }
+
+    &.item-info {
+      @include flexbox(0 0 auto, row, flex-start, flex-start);
+      width: 45%;
+      .item-image {
+        @include flexbox(0 0 auto, row, flex-start, flex-start);
+        background: #fff;
+        background-position: center center !important;
+        background-repeat: no-repeat !important;
+        background-size: contain !important;
+        width: 30%;
+        height: 10rem;
+        background: #fff;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+        margin: 0 1rem 0 1rem;
+      }
+      .item-info-block {
+        @include flexbox(1 1 auto, column, flex-start, flex-start);
+      }
+      @include breakpoint(xs) {
+        @include flexbox(0 0 auto, row, flex-start, flex-start);
+        width: 100%;
+      }
+    }
+    &.site-info {
+      width: 30%;
+      .custname {
+        margin-top: -0.8rem;
+        .value {
+          padding-top: 0;
+        }
+      }
+    }
+    &.order-info{
+      @include breakpoint(xs) {
+        @include flexbox(0 0 auto, row, flex-start, flex-start);
+      }
+    }
+  }
+}
+

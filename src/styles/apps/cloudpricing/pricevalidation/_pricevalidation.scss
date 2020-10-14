@@ -1,0 +1,35 @@
+.content {
+  @include flexbox(1 1 auto, row, flex-start, flex-start);
+  width: 100%;
+  position: relative;
+}
+
+.pricing-results {
+  @include flexbox(1 1 auto, row, flex-start, flex-start);
+  margin: 0 2rem;
+  border-radius: 0.9rem;
+  background: $textalternative;
+  border: 1px solid rgba(98, 115, 126, 0.25);
+  overflow: auto;
+  height: 89vh;
+
+  .section-wrapper {
+    @include flexbox(1 1 auto, column, flex-start, flex-start);
+    overflow: hidden;
+  }
+
+  @import "_pricing-result-meta";
+  @import "_price-bar";
+  @import "_pricing-detailed";
+}
+
+.pricing-type-label {
+  position: absolute;
+  right: 3rem;
+  top: -1rem;
+  font-size: 1.3rem;
+  background: lighten($syscoyellow, 22%);
+  padding: 0.4rem 1.3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.15);
+}

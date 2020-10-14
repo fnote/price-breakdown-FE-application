@@ -1,0 +1,115 @@
+/***********************************************************
+    LOGIN PRIMARY SASS FILE - BUILT ON BT-UX-FRAMEWORK
+    Author: Michael Lu 
+    (Auto Compiled to CSS during runtime)
+***********************************************************/
+
+.login-wrapper {
+  @include flexbox();
+  background: url("../../../images/pagebg.png") no-repeat top center;
+  background-size: 100% auto;
+  justify-content: center;
+  align-items: center;
+  @include breakpoint(xs) {
+    background-size: cover;
+  }
+  @include breakpoint(sm) {
+    background-size: cover;
+  }
+  .login-panel {
+    @include flexbox(0 0 auto, column, flex-start, center);
+    background: $textalternative;
+    border-radius: 1.1rem;
+    opacity: 0.9;
+    box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.16);
+    padding: 2.7rem 3rem;
+    @include breakpoint(xs) {
+      padding: 2.7rem 5vw;
+    }
+    .logo {
+      width: 26rem;
+      margin-bottom: 1rem;
+      @include breakpoint(xs) {
+        width: 85vw;
+      }
+    }
+    .button-bar {
+      @include flexbox(0 0 auto, row, center, center);
+      width: 100%;
+      border-top: 2px dotted #e9e9e9;
+      padding-top: 1.5rem;
+      @include breakpoint(xs) {
+        @include flexbox(0 0 auto, column, center, center);
+      }
+    }
+    .title {
+      @include flexbox(1 1 auto, row, flex-start, center);
+      font-weight: 300;
+      font-size: 1.3rem;
+      // margin-right: 1.8rem;
+      color: $textstandard;
+      opacity: 0.8;
+      .bold {
+        font-weight: 600;
+      }
+    }
+
+    .loginbtn {
+      @include flexbox(0 0 auto, row, center, center);
+      background: #008ace;
+      color: $textalternative;
+      text-transform: uppercase;
+      font-weight: 500;
+      font-size: 1.1rem;
+      padding: 0.6rem 3.5rem 0.6rem 3rem;
+      border-radius: 1.5rem;
+      border: 2px solid $textalternative;
+      box-shadow: 0px 0px 1rem rgba(132, 176, 197, 0.74);
+      background: #eb01a5;
+      // background-image: url("IMAGE_URL"); /* fallback */
+      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAYAAACdKY9CAAAAAXNSR0IArs4c6QAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAADKADAAQAAAABAAAADQAAAAANpPHXAAAAkUlEQVQoFWP4//9/JhDLMhAJGIGK+4Fq/wPxBSDewsjI+A6fXhaoJCOQNgRiXaABR4H0HqDGL1A5FApmA4ogkPMDiPeDMFDjb2RJXBpgaj4AGTuB+BRQ4z+QICENIDUg8AqItwI1XSJWA1gXkNgL8zRMABcNt4GQBgw/4NKAM5TQNfwBuglvPMA0EB3TDKSmJQAQFEJ/h7HZXwAAAABJRU5ErkJggg==)
+          no-repeat 90% center/auto 30%,
+        linear-gradient(#9bc4d8 0%, #2990c2 100%);
+
+      @include flexbox(0 0 auto);
+      user-select: none;
+      outline: none;
+      cursor: pointer;
+      transition: all ease-in-out 200ms;
+      &:hover {
+        opacity: 0.8;
+      }
+      &:active {
+        opacity: 0.9;
+      }
+      @include breakpoint(xs) {
+        border-radius: 2.5rem;
+        width: 100%;
+        margin-top: 1.5rem;
+        padding: 0.6rem 3.5rem 0.6rem 3rem;
+        font-size: 1.5rem;
+      }
+    }
+
+    .validations {
+      @include flexbox();
+      text-align: center;
+      padding: 1rem 0;
+      color: $syscored;
+      max-width: 16rem;
+    }
+    .login-loader {
+      margin: 1.6rem 0;
+    }
+
+    .error-text {
+      color: darken($syscored, 20%);
+      font-size: 1.2rem;
+      // width: 38rem;
+      text-align: center;
+      .fi {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

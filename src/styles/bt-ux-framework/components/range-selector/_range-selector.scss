@@ -1,0 +1,13 @@
+.range-selector{
+    display: flex;
+    .divider{
+        line-height: 1.4rem;
+        margin: 0 5px;
+        font-size: .8rem;
+    }
+    .ant-dropdown-trigger{
+        margin-left: 5px;
+        color: $bluegrey;
+    }
+
+}

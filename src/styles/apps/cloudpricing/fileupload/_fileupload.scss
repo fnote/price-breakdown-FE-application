@@ -1,0 +1,253 @@
+.file-upload {
+  padding: 1rem 2rem;
+  @include flexbox(1 1 auto, row, flex-start, flex-start);
+
+  @include breakpoint(xs) {
+    @include flexbox(1 1 auto, column, flex-start, flex-start);
+  }
+  .drop-zone {
+    @include flexbox(0 0 auto, column, center, center);
+    width: 30%;
+    min-height: 40vh;
+    max-height: 80vh;
+    border-radius: 1rem;
+    background: $textalternative;
+    opacity: 0.9;
+    box-shadow: 0px 0px 0.8rem rgba(0, 0, 0, 0.16);
+    margin-right: 2rem;
+    padding: 2rem 0;
+    @include breakpoint(xs) {
+      width: 100%;
+      min-height: none;
+      max-height: none;
+      margin-bottom: 2rem;
+    }
+
+    .ant-upload.ant-upload-drag {
+      background: transparent;
+      height: auto;
+      border: none;
+      .ant-upload-drag-container {
+        @include flexbox(1 1 auto, column, center, center);
+      }
+    }
+
+    .icon {
+      font-size: 8rem;
+      color: $bluegrey;
+      opacity: 0.64;
+    }
+    .select-btn {
+      margin-top: 1rem;
+      font-size: 1rem;
+      background: linear-gradient(#9bc4d8 0%, #2990c2 100%);
+    }
+
+    .ant-upload-list {
+      color: $textstandard;
+      font-size: 1rem;
+      width: 100%;
+      // outline: 1px solid red;
+      max-height: 17vw;
+      overflow: auto;
+      padding: 1rem;
+      .ant-upload-list-item {
+        @include flexbox(0 0 auto, row, flex-start, center);
+        width: 25vw;
+        height: 3.5rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        background: #fff;
+        line-height: 1;
+        box-shadow: 0px 0.3rem 1rem rgba(0, 0, 0, 0.16);
+        .ant-upload-list-item-info {
+          @include flexbox(0 0 auto, row, flex-start, center);
+          padding: 0;
+          & > span {
+            height: auto;
+            display: flex;
+          }
+          .anticon-loading .anticon,
+          .ant-upload-text-icon .anticon {
+            top: 2px;
+            position: relative;
+            font-size: 1.2rem;
+            margin: 0 1rem;
+          }
+          .ant-upload-list-item-name-icon-count-1 {
+            padding: 0;
+          }
+
+          .ant-upload-list-item-card-actions {
+            right: 0.5rem;
+          }
+        }
+        @include breakpoint(xs) {
+          width: 70vw;
+          height: 3rem;
+        }
+      }
+      @include breakpoint(xs) {
+        max-height: none;
+      }
+    }
+  }
+
+  .file-list {
+    @include flexbox(0 0 auto, column, flex-start, flex-start);
+    background: $textalternative;
+    border-radius: 1.1rem;
+    height: 80vh;
+    width: 66vw;
+    border: 1px solid rgba(98, 115, 126, 0.25);
+    padding: 1.5rem;
+    @include breakpoint(xs) {
+      width: 100%;
+      height: auto;
+    }
+    .panel-header {
+      @include flexbox(0 0 auto, row, flex-start, center);
+      width: 100%;
+      @include breakpoint(xs) {
+        @include flexbox(0 0 auto, column, flex-start, flex-start);
+      }
+      .title {
+        @include flexbox(0 0 auto, row, flex-start, flex-start);
+        color: $bluegrey;
+        font-weight: 600;
+        font-size: 1.4rem;
+        margin-right: 1.5rem;
+        .icon {
+          margin-right: 0.5rem;
+        }
+      }
+      .search-list {
+        width: auto;
+        border-radius: 1.5rem;
+        @include breakpoint(xs) {
+          margin: 1rem 0;
+          width: 100%;
+        }
+      }
+      .refresh-btn {
+        color: $bluegrey;
+        font-size: 1.1rem;
+        .icon {
+          margin-right: 0.5rem;
+        }
+        &:active {
+          opacity: 0.4;
+        }
+        @include breakpoint(xs) {
+          padding: 0;
+          margin-left: auto;
+        }
+      }
+    }
+    .file-list-table-wrapper {
+      width: 100%;
+      margin-top: 1rem;
+      font-weight: 600;
+      .ant-table-thead > tr > th.ant-table-cell {
+        font-weight: 300 !important;
+      }
+      .submittime {
+        color: $textstandard;
+        min-width: 9rem;
+      }
+      .filename {
+        color: darken($syscoblue, 5%);
+        min-width: 10rem;
+      }
+      .download-file {
+        color: $syscogreen;
+      }
+      .cancel-process {
+        color: $syscored;
+      }
+      .processing-spinner {
+        color: $syscoblue;
+        font-size: 1.5rem;
+        animation: rotation 2s infinite linear;
+        margin: 0 0.5rem;
+      }
+      @include breakpoint(xs) {
+        .btn{
+          padding: 0.3rem 0.5rem 0 0;
+          height: auto;
+          margin-top: 1rem;
+          text-align: center;
+        }
+        .icon{
+          font-size: 1.8rem;
+        }
+      }
+      .action-bar {
+        @include flexbox(0 0 auto, row, flex-end, center);
+        @include breakpoint(xs) {
+          @include flexbox(1 1 auto, column, flex-end, flex-end);
+          width: 100%;
+        }
+        .file-process-status {
+          color: $syscoyellow;
+          margin-right: 1rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          @include breakpoint(xs) {
+            text-align: right;
+          }
+          &.success {
+            color: $syscogreen;
+          }
+          &.error {
+            @include flexbox(0 0 auto, row, flex-end, center);
+            color: $syscored;
+            @include breakpoint(xs) {
+              @include flexbox(0 0 auto, column, flex-end, flex-end);
+              .divider {
+                width: 100%;
+              }
+            }
+            .divider {
+              border-top: 1px dashed $syscored;
+              width: 2rem;
+              margin: 0 0.5rem;
+            }
+            .download-error-file {
+              color: $syscored;
+              font-size: 1rem;
+              .icon {
+                font-size: 1.2rem;
+                margin-right: 0.4rem;
+              }
+              @include breakpoint(xs) {
+                text-align: right;
+                padding: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.selected-item-status {
+  @include flexbox(0 0 auto, row, flex-start, center);
+  border-right: 1px solid lighten($textstandard, 45%);
+  p {
+    margin: 0 1rem 0 0;
+    color: $bluegrey;
+  }
+  .download-btn {
+    border-radius: 1.5rem;
+    @include flexbox(0 0 auto, row, flex-start, center);
+  }
+  @include breakpoint(xs) {
+    @include flexbox(0 0 auto, column, flex-start, flex-start);
+    border-right: none;
+    p {
+      margin: 1rem 0;
+    }
+  }
+}
