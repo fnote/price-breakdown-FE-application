@@ -9,10 +9,12 @@ import thunkMiddleware from 'redux-thunk';
 
 import app from './app';
 import search from './search';
+import authReducer from './authReducer';
 
 const rootReducer = combineReducers({
     app,
-    search
+    search,
+    userAuth: authReducer,
 });
 
 export default createStore(rootReducer, applyMiddleware(thunkMiddleware));

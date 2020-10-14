@@ -14,3 +14,6 @@ export const OPEN_DRAWER = 'OPEN_DRAWER';
 // Action types related to Price Validation
 export const SEARCH_BUTTON_CLICKED = 'SEARCH_BUTTON_CLICKED';
 export const RESPONSE_RECEIVED = 'RESPONSE_RECEIVED';
+
+// Action types related to Price Validation
+export const USER_AUTHENTICATION = 'USER_AUTHENTICATION';

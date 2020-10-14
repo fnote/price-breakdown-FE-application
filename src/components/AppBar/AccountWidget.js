@@ -6,12 +6,15 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import Navigation from "./Navigation";
+import {auth} from '../../utils/security/Auth';
 class AccountWidget extends React.Component {
   state = {
     visible: false,
   };
   logoutButtonClicked = async () => {
     // await Auth.signOut();
+    // auth.logOutRedirection();
+    auth.setUserLoggedInState(null);
   };
   toggleMenu = () => {
     const { visible } = this.state;

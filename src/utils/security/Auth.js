@@ -1,5 +1,5 @@
 import {getAuthConfig} from "../Configs";
-import temp from '../../reducers/temp.json';
+import {AUTH_STATE_COMPLETED, AUTH_STATE_PENDING} from '../Constants';
 
 class Auth {
     constructor() {
@@ -8,7 +8,7 @@ class Auth {
 
     getLoginPage = () => {
         window.location.assign(this.authConfig.loginRedirectionUrl);
-        localStorage.setItem('auth_user', 'pending');
+        localStorage.setItem('auth_user', AUTH_STATE_PENDING);
     }
 
     logOutRedirection = () => {
@@ -17,23 +17,27 @@ class Auth {
     }
 
     isUserLoggedIn = () => {
-        return localStorage.getItem('auth_user') !== null;
+        return localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED;
     }
 
     isUserLoginPending = () => {
-        return localStorage.getItem('auth_user') === 'pending';
+        return localStorage.getItem('auth_user') === AUTH_STATE_PENDING;
+    }
+
+    setUserLoggedInState = (state) => {
+        localStorage.setItem('auth_user', state);
     }
 
     callUserDetails = () => {
-        fetch('http://localhost:4000/exe/v1/pci-bff/auth/user-details', {
+        return fetch('http://localhost:4000/exe/v1/pci-bff/auth/user-details', {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         })
             .then(res => Promise.all([res.status, res.json()]))
-            .then(([status, jsonData]) => {
-                console.log(jsonData);
+            .then(([status, userDetailResponse]) => {
+                console.log(userDetailResponse);
                 console.log(status);
-                return {status, jsonData};
+                return {status, userDetailResponse};
             })
             .catch((err) => {
                 console.log(err)

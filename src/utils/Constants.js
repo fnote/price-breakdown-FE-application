@@ -50,3 +50,7 @@ export const EMPTY_ADJUSTMENT_VALUE_INDICATOR = '-';
 
 export const CURRENCY_SYMBOL_USD = '$';
 export const APPLICATION_LOCALE = 'en-US';
+
+export const AUTH_STATE_PENDING = 'pending';
+export const AUTH_STATE_COMPLETED = 'completed';
+export const AUTH_STATE_FAILED = 'failed';

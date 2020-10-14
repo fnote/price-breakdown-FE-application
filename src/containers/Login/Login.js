@@ -1,9 +1,9 @@
 import React, {Component} from "react";
 import logo from "../../styles/images/logo.svg";
 import {auth} from "../../utils/security/Auth";
-// import { Auth } from 'aws-amplify';
-// import config from "../../internal/config";
-import { SyncOutlined } from "@ant-design/icons";
+import {bindActionCreators} from 'redux';
+import {fetchUserDetails} from '../../actions';
+import {connect} from "react-redux";
 
 /**
  * Login page that shows the login button for SSO sign in
@@ -13,7 +13,7 @@ import { SyncOutlined } from "@ant-design/icons";
 class Login extends Component {
   componentDidMount() {
     if(auth.isUserLoginPending()) {
-      this.loadUserDetails();
+      this.props.fetchUserDetails();
     }
   }
 
@@ -24,11 +24,6 @@ class Login extends Component {
   loginButtonClicked = () => {
     auth.getLoginPage();
   };
-
-  loadUserDetails = () => {
-    const {status, userDetailResponse} = auth.callUserDetails();
-    console.log(userDetailResponse);
-  }
 
   render() {
     return (
@@ -51,4 +46,11 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) =>
+    bindActionCreators({fetchUserDetails}, dispatch);
+
+const mapStateToProps = state => ({
+  userAuth: state.userAuth
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
