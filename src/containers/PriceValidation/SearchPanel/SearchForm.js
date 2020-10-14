@@ -64,6 +64,7 @@ const SearchForm = () => {
             })
     };
 
+    // TODO: @sanjayaa remove temp response usage
   const priceRequestHandler = (requestData) => {
       fetch('http://internal-alb-cloud-pci-bff-exe-1912452817.us-east-1.elb.amazonaws.com/v1/pci-bff/pricing/pricing-data', {
           method: 'POST',
@@ -79,14 +80,16 @@ const SearchForm = () => {
               } else {
                   //
                   console.error("Found error", resp);
-                  priceValidationContext.setErrorData(resp.data);
+                  // priceValidationContext.setErrorData(resp.data);
+                  priceValidationContext.setPriceData(temp);
               }
 
               return null;
           })
           .catch((e) => {
               console.error("Found error 2", e);
-              priceValidationContext.setErrorData(e);
+              // priceValidationContext.setErrorData(e);
+              priceValidationContext.setPriceData(temp);
           });
   };
 

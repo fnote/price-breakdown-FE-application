@@ -6,7 +6,7 @@ import {
     extractSiteInfo,
     prepareDiscountPriceInfo,
     prepareLocalSegmentPriceInfo,
-    prepareNetPriceInfo,
+    prepareOrderUnitPriceInfo,
     prepareStrikeThroughPriceInfo,
     prepareVolumePricingInfo,
 } from "../../utils/PricingUtils";
@@ -38,7 +38,7 @@ const mapSuccessResponse = (data) => {
         localSegmentRefPriceSection: prepareLocalSegmentPriceInfo(product),
         strikeThroughPriceSection: prepareStrikeThroughPriceInfo(product),
         discountPriceSection: prepareDiscountPriceInfo(product),
-        orderNetPriceSection: prepareNetPriceInfo(product),
+        orderNetPriceSection: prepareOrderUnitPriceInfo(product),
         ...prepareVolumePricingInfo(product),
         ...extractItemInfo(product),
         ...extractPricePoints(product),

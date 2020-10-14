@@ -1,15 +1,14 @@
 .price-bar-detailed {
   $icon-col-width: 2rem;
-  $description-col-width: 15rem;
+  $description-col-width: 20rem;
   $adjustment-col-width: 8rem;
-  $calculated-col-width: 6rem;
-  $source-col-width: 9rem;
+  $value-col-width: 7rem;
+  $tick-col-width: 2rem;
 
   // $icon-col-width: 2rem;
   // $description-col-width: 13vw;
   // $adjustment-col-width: 4vw;
-  // $calculated-col-width: 5vw;
-  // $source-col-width: 5vw;
+  // $value-col-width: 5vw;
   @include flexbox(1 1 auto, row, flex-start, flex-start);
   width: 100%;
   padding-bottom: 1rem;
@@ -21,20 +20,21 @@
   .description-col {
     width: $description-col-width;
     &.colspan-2 {
-      width: $description-col-width + $adjustment-col-width;
+      width: $description-col-width + $value-col-width;
     }
     padding-right: 1rem;
   }
   .adjustment-col {
     width: $adjustment-col-width;
-  }
-  .calculated-col {
-    width: $calculated-col-width;
     text-align: right;
-    padding-right: 1rem;
   }
-  .source-col {
-    width: $source-col-width;
+  .value-col {
+    width: $value-col-width;
+    text-align: right;
+    padding-right: 2rem;
+  }
+  .tick-col {
+    width: $tick-col-width;
   }
 
   @include breakpoint(xs) {
@@ -76,7 +76,7 @@
     .block {
       @include flexbox(0 0 auto, row, flex-start, flex-start);
       width: 100%;
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
       @include breakpoint(xs) {
         margin-bottom: 3rem;
         padding-bottom: 2rem;
@@ -97,14 +97,14 @@
             @include flexbox(0 0 auto, row, flex-start, center);
             margin-bottom: 0.2rem;
             .adjustment-col,
-            .calculated-col {
+            .value-col {
               font-size: 1rem;
               font-weight: 500;
             }
           }
           &.not-applied {
             .adjustment-col,
-            .calculated-col {
+            .value-col {
               text-decoration: line-through;
             }
           }
@@ -143,11 +143,11 @@
           }
         }
         .adjustment-col,
-        .calculated-col {
+        .value-col {
           font-size: 1.2rem;
           font-weight: 700;
         }
-        .calculated-col {
+        .value-col {
           font-size: 1.2rem;
         }
       }
@@ -163,6 +163,9 @@
       &.group4 {
         color: $price-group-color-4;
       }
+      &.group5 {
+        color: $syscogreen;
+      }
     }
   }
   .value-table {
@@ -177,7 +180,7 @@
       padding: 0.4rem 0rem 0.4rem 0.5rem;
       .description-col {
         font-weight: 700;
-        width: calc($description-col-width - 2rem);
+        width: $description-col-width - 2rem;
         span {
           font-weight: 400;
         }
@@ -185,14 +188,14 @@
       &.selected {
         background: lighten($price-group-color-3, 45%);
         border-radius: 0.4rem;
-        .calculated-col {
+        .value-col {
           font-weight: 800 !important;
         }
-        .source-col {
+        .tick-col {
           @include flexbox(0 0 auto, row, flex-start, center);
           .icon {
-            margin-right: 0.6rem;
-            margin-left: -0.5rem;
+            // margin-right: 0.6rem;
+            margin-left: 1rem;
           }
         }
       }
