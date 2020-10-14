@@ -1,10 +1,11 @@
+export const LABEL_CUSTOMER_NET_PRICE = 'CUSTOMER NET PRICE';
 
 export const META_DATA_PRICE_BAR = [
     { label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1' },
     { label: 'STRIKE THROUGH PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2' },
     { label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3' },
     { label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right' },
-    { label: 'CUSTOMER NET PRICE', valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false }
+    { label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false }
 ];
 
 export const PRICE_UNIT_CASE = 'case';

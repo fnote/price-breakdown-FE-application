@@ -1,4 +1,5 @@
 import React from "react";
+import {LABEL_CUSTOMER_NET_PRICE} from "../../../utils/Constants"
 
 import { getPriceUnitBySplitFlag } from '../../../utils/PricingUtils';
 import { META_DATA_PRICE_BAR } from '../../../utils/Constants';
@@ -13,12 +14,7 @@ const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true },
                 <div className="unit">/ {getPriceUnitBySplitFlag(pricingData)}</div>
             </div>
         </div>
-        {label ==='CUSTOMER NET PRICE' ?
-            <div className="price-source">Source: <strong>Price Advisor</strong></div>
-            :
-            null
-        }
-
+        {label === LABEL_CUSTOMER_NET_PRICE ? <div className="price-source">Source: <strong>Price Advisor</strong></div> : null}
     </section>
 );
 

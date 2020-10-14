@@ -29,7 +29,6 @@ const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, v
       </div>
         {calculatedValue ? <div className="value-col">{calculatedValue}</div> : null}
         {adjustmentValue ? <div className="adjustment-col">{adjustmentValue}</div> : null}
-      {/*{source ? <div className="source-col">{source}</div> : null}*/}
     </div>
 );
 
