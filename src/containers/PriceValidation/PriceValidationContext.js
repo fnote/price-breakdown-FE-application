@@ -4,11 +4,6 @@ import {
     extractPricePoints,
     extractRequestInfo,
     extractSiteInfo,
-    prepareDiscountPriceInfo,
-    prepareLocalSegmentPriceInfo,
-    prepareOrderUnitPriceInfo,
-    prepareStrikeThroughPriceInfo,
-    prepareVolumePricingInfo,
 } from "../../utils/PricingUtils";
 
 export const PriceValidationContext = React.createContext({
@@ -19,12 +14,9 @@ export const PriceValidationContext = React.createContext({
 
 const initialState = {
     response: null,
+    product:null,
     recentSearches: [],
-    selectedBusinessUnit: {id: "067", name: "Philadelphia"},
-    localSegmentRefPriceSection: [],
-    strikeThroughPriceSection: [],
-    discountPriceSection: [],
-    orderNetPriceSection: [],
+    selectedBusinessUnit: {},
     item: null,
     pricePoints: null,
     site: null,
@@ -35,15 +27,11 @@ const mapSuccessResponse = (data) => {
 
     return {
         response: data,
-        localSegmentRefPriceSection: prepareLocalSegmentPriceInfo(product),
-        strikeThroughPriceSection: prepareStrikeThroughPriceInfo(product),
-        discountPriceSection: prepareDiscountPriceInfo(product),
-        orderNetPriceSection: prepareOrderUnitPriceInfo(product),
-        ...prepareVolumePricingInfo(product),
-        ...extractItemInfo(product),
-        ...extractPricePoints(product),
-        ...extractSiteInfo(data),
-        ...extractRequestInfo(data)
+        product: product,
+        item: extractItemInfo(product),
+        pricePoints: extractPricePoints(product),
+        site: extractSiteInfo(data),
+        order: extractRequestInfo(data)
     };
 };
 

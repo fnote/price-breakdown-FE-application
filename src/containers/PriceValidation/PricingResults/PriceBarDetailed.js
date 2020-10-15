@@ -1,6 +1,14 @@
 import React from "react";
 import PriceBarDetailedHeader from "./PriceBarDetailedHeader";
-import { prepareCustomerNetPriceInfo } from "../../../utils/PricingUtils"
+import {
+    prepareCustomerNetPriceInfo,
+    prepareDiscountPriceInfo,
+    prepareLocalSegmentPriceInfo,
+    prepareOrderUnitPriceInfo,
+    prepareStrikeThroughPriceInfo,
+    prepareVolumePricingHeaderRow,
+    prepareVolumePricingTiers
+} from "../../../utils/PricingUtils"
 
 const renderHeaderRow = ({ description, validityPeriod, adjustmentValue, calculatedValue }, { className }, showSmallDivider = true) => (
     <div className="row">
@@ -8,7 +16,7 @@ const renderHeaderRow = ({ description, validityPeriod, adjustmentValue, calcula
         <div className="title">
           {description}
         </div>
-        {validityPeriod ? <div className="sub-title">{validityPeriod}</div> : null}
+          {validityPeriod ? <div className="sub-title">{validityPeriod}</div> : null}
           {showSmallDivider ? <div className="small-divider"/> : null }
       </div>
         {calculatedValue? <div className="value-col">{calculatedValue}</div> : null}
@@ -39,8 +47,11 @@ const renderDetailedSection = (pricingDataList, additionalRows = null, styleMeta
         <i className="icon fi flaticon-diamond" />
       </div>
       <div className="data-fields">
-        {pricingDataList.map((dataRow, index) => index === 0 ? renderHeaderRow(dataRow, styleMetadataHeaderRow, (pricingDataList.length > 1))
-            : renderSubRow(dataRow, styleMetadataSubRow))}
+        {
+            pricingDataList.map((dataRow, index) => index === 0
+                ? renderHeaderRow(dataRow, styleMetadataHeaderRow, (pricingDataList.length > 1))
+                : renderSubRow(dataRow, styleMetadataSubRow))
+        }
         {additionalRows}
       </div>
     </React.Fragment>
@@ -66,8 +77,16 @@ const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
     </React.Fragment>
 );
 
-function PriceBarDetailed({ priceData: { localSegmentRefPriceSection, strikeThroughPriceSection, discountPriceSection, orderNetPriceSection,
-    volumePricingHeaderRow, volumePricingTiers, response }}) {
+function PriceBarDetailed({ priceData: { product }}) {
+    const customerNetPriceInfo = prepareCustomerNetPriceInfo(product);
+    const volumePricingTiers = prepareVolumePricingTiers(product);
+    const volumePricingHeaderRow = prepareVolumePricingHeaderRow(product);
+    const orderNetPriceSection = prepareOrderUnitPriceInfo(product);
+    const discountPriceSection = prepareDiscountPriceInfo(product);
+    const volumeTierRows = generateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers);
+    const strikeThroughPriceSection = prepareStrikeThroughPriceInfo(product);
+    const localSegmentRefPriceSection = prepareLocalSegmentPriceInfo(product);
+
   return (
     <div className="price-bar-detailed">
       <div className="price-bar-divider"/>
@@ -84,14 +103,13 @@ function PriceBarDetailed({ priceData: { localSegmentRefPriceSection, strikeThro
       <section className="detailed-right">
         <PriceBarDetailedHeader />
         <div className="block group3">
-          {renderDetailedSection(discountPriceSection, generateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers))}
+          {renderDetailedSection(discountPriceSection, volumeTierRows)}
         </div>
         <div className="block group4">
           {renderDetailedSection(orderNetPriceSection)}
         </div>
-          {/*TODO @sanjayaa: fix how data is retrieved here*/}
           <div className="block group5">
-              {renderDetailedSection(prepareCustomerNetPriceInfo(response.products[0]))}
+              {renderDetailedSection(customerNetPriceInfo)}
           </div>
       </section>
     </div>

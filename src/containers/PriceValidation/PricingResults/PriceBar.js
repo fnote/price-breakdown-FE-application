@@ -1,8 +1,6 @@
 import React from "react";
-import {LABEL_CUSTOMER_NET_PRICE} from "../../../constants/Constants"
-
 import { getPriceUnitBySplitFlag } from '../../../utils/PricingUtils';
-import { META_DATA_PRICE_BAR } from '../../../constants/Constants';
+import { META_DATA_PRICE_BAR, LABEL_CUSTOMER_NET_PRICE } from '../../../constants/Constants';
 
 const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true }, pricingData) => (
     <section className={styleClass}>
@@ -18,16 +16,15 @@ const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true },
     </section>
 );
 
-const renderPricePoints = (priceBarMetaData, pricingData) =>
-    priceBarMetaData.map(pricePointMetaData => renderPricePoint(pricePointMetaData, pricingData));
+const renderPricePoints = (priceBarMetaDataList, pricingData) =>
+    priceBarMetaDataList.map(pricePointMetaData => renderPricePoint(pricePointMetaData, pricingData));
 
 function PriceBar(props) {
-  const { priceData: { pricePoints, response } } = props;
+  const { priceData: { pricePoints, product: { splitFlag } } } = props;
   return (
     <div className="price-bar">
         <div className="price-bar-divider"/>
-        {/*TODO: sanjayaa Correct data retrieval here*/}
-        {renderPricePoints(META_DATA_PRICE_BAR, { ...pricePoints, isSplit: response.products[0].splitFlag })}
+        {renderPricePoints(META_DATA_PRICE_BAR, { ...pricePoints, isSplit: splitFlag })}
     </div>
   );
 }
