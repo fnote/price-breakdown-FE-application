@@ -32,7 +32,8 @@ import {
     CURRENCY_SYMBOL_USD,
     APPLICATION_LOCALE,
     SPLIT_STATUS_NO,
-    SPLIT_STATUS_YES
+    SPLIT_STATUS_YES,
+    DESCRIPTION_CUSTOMER_NET_PRICE
 } from './Constants';
 // TODO: change this
 // export const formatBusinessUnit = ({ name, id }) =>  `${id} - ${name}`;
@@ -43,6 +44,7 @@ export const formatPrice = value => value > 0 ? `${CURRENCY_SYMBOL_USD}${value.t
 
 export const convertFactorToPercentage = factor => `${(factor * 100).toFixed(2)}%`;
 
+// TODO: @sanjayaa are all the usages correct? And is this conversion correct?
 export const getFormattedPercentageValue = factor => convertFactorToPercentage(factor - 1);
 
 export const getReadableDiscountName = name => DISCOUNT_NAMES_MAP.get(name);
@@ -177,7 +179,7 @@ export const prepareDiscountPriceInfo = ({ agreements, customerPrequalifiedPrice
 
 export const isOfflineAgreement = ({ applicationCode }) => applicationCode === AGREEMENT_CODE_L || applicationCode === AGREEMENT_CODE_T;
 
-export const prepareNetPriceInfo = ({ agreements, netPrice }) => {
+export const prepareOrderUnitPriceInfo = ({ agreements, netPrice }) => {
     const headerRow = {
         description: DESCRIPTION_ORDER_NET_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
@@ -188,6 +190,16 @@ export const prepareNetPriceInfo = ({ agreements, netPrice }) => {
         .map(agreement => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS));
 
     return [headerRow, ...offlineAgreements]
+};
+
+export const prepareCustomerNetPriceInfo = ({ netPrice }) => {
+    const headerRow = {
+        description: DESCRIPTION_CUSTOMER_NET_PRICE,
+        adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
+        calculatedValue: formatPrice(netPrice)
+    };
+
+    return [headerRow]
 };
 
 export const prepareVolumePricingHeaderInfo = ({ discounts }) => {
