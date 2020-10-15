@@ -4,11 +4,14 @@ import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
 import {auth} from '../utils/security/Auth';
 import {connect} from 'react-redux';
+import AppLoader from "../components/AppLoader";
+
 
 class ApplicationBase extends Component {
   render() {
     return (
         auth.isUserLoggedIn() ? (<PriceValidation/>) : (<Login/>)
+    {/* <AppLoader /> */}
     );
   }
 }

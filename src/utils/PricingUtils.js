@@ -32,7 +32,8 @@ import {
     CURRENCY_SYMBOL_USD,
     APPLICATION_LOCALE,
     SPLIT_STATUS_NO,
-    SPLIT_STATUS_YES
+    SPLIT_STATUS_YES,
+    DESCRIPTION_CUSTOMER_NET_PRICE
 } from './Constants';
 // TODO: change this
 // export const formatBusinessUnit = ({ name, id }) =>  `${id} - ${name}`;
@@ -40,6 +41,11 @@ export const formatBusinessUnit = () => "067 - Philadelphia";
 
 export const formatPrice = value => value > 0 ? `${CURRENCY_SYMBOL_USD}${value.toFixed(2)}`
     : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(2)}`;
+
+export const convertFactorToPercentage = factor => `${(factor * 100).toFixed(2)}%`;
+
+// TODO: @sanjayaa are all the usages correct? And is this conversion correct?
+export const getFormattedPercentageValue = factor => convertFactorToPercentage(factor - 1);
 
 export const getReadableDiscountName = name => DISCOUNT_NAMES_MAP.get(name);
 
@@ -59,7 +65,7 @@ export const generateValidityPeriod = (effectiveFrom, effectiveTo) =>
 
 export const mapDiscountToDataRow = ({ name, amount, priceAdjustment, effectiveFrom, effectiveTo }, source) => ({
     description: getReadableDiscountName(name),
-    adjustmentValue: `${amount}`,
+    adjustmentValue: getFormattedPercentageValue(amount),
     calculatedValue: formatPrice(priceAdjustment),
     validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
     source
@@ -79,7 +85,7 @@ export const mapVolumeTierToTableRow = ({ eligibility: { operator, lowerBound, u
         rangeEnd: operator === VOLUME_TIER_OPERATOR_BETWEEN ? upperBound : VOLUME_TIER_RANGE_END_ABOVE,
         rangeConnector: operator === VOLUME_TIER_OPERATOR_BETWEEN ? VOLUME_TIER_RANGE_CONNECTOR_TO : VOLUME_TIER_RANGE_CONNECTOR_AND
     },
-    adjustmentValue: discounts[0].amount,
+    adjustmentValue: getFormattedPercentageValue(discounts[0].amount),
     calculatedValue: formatPrice(discounts[0].priceAdjustment),
     source: PRICE_SOURCE_DISCOUNT_SERVICE,
     isSelected: false // TODO: need to decide with the quantity
@@ -143,11 +149,11 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, rounding: { calculated
 
 };
 
-export const prepareStrikeThroughPriceInfo = ({ discounts, grossPrice, customerReferencePrice }) => {
+export const prepareStrikeThroughPriceInfo = ({ discounts, customerReferencePrice }) => {
     const headerRow = {
         description: DESCRIPTION_STRIKE_THROUGH_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
-        calculatedValue: formatPrice(customerReferencePrice - grossPrice)
+        calculatedValue: formatPrice(customerReferencePrice)
     };
 
     const preQualifiedDiscounts = discounts.filter(discount => discount.type === DISCOUNT_TYPE_PREQUALIFIED && discount.name !== DISCOUNT_CASE_VOLUME)
@@ -158,11 +164,11 @@ export const prepareStrikeThroughPriceInfo = ({ discounts, grossPrice, customerR
 
 export const isApplyToPriceOrBaseAgreement = ({ applicationCode }) => applicationCode === AGREEMENT_CODE_P || applicationCode === AGREEMENT_CODE_B;
 
-export const prepareDiscountPriceInfo = ({ agreements, customerReferencePrice, customerPrequalifiedPrice }) => {
+export const prepareDiscountPriceInfo = ({ agreements, customerPrequalifiedPrice }) => {
     const headerRow = {
         description: DESCRIPTION_DISCOUNT_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
-        calculatedValue: formatPrice(customerPrequalifiedPrice - customerReferencePrice)
+        calculatedValue: formatPrice(customerPrequalifiedPrice)
     };
 
     const appliedAgreements = agreements.filter(agreement => isApplyToPriceOrBaseAgreement(agreement))
@@ -173,17 +179,27 @@ export const prepareDiscountPriceInfo = ({ agreements, customerReferencePrice, c
 
 export const isOfflineAgreement = ({ applicationCode }) => applicationCode === AGREEMENT_CODE_L || applicationCode === AGREEMENT_CODE_T;
 
-export const prepareNetPriceInfo = ({ agreements, customerPrequalifiedPrice, netPrice }) => {
+export const prepareOrderUnitPriceInfo = ({ agreements, netPrice }) => {
     const headerRow = {
         description: DESCRIPTION_ORDER_NET_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
-        calculatedValue: formatPrice(netPrice - customerPrequalifiedPrice)
+        calculatedValue: formatPrice(netPrice)
     };
 
     const offlineAgreements = agreements.filter(agreement => isOfflineAgreement(agreement))
         .map(agreement => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS));
 
     return [headerRow, ...offlineAgreements]
+};
+
+export const prepareCustomerNetPriceInfo = ({ netPrice }) => {
+    const headerRow = {
+        description: DESCRIPTION_CUSTOMER_NET_PRICE,
+        adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
+        calculatedValue: formatPrice(netPrice)
+    };
+
+    return [headerRow]
 };
 
 export const prepareVolumePricingHeaderInfo = ({ discounts }) => {

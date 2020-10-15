@@ -5,8 +5,6 @@ import SearchStatuses from "./SearchPanel/SearchStatuses";
 import PricingResults from "./PricingResults/PricingResults";
 import PriceValidationContextProvider from './PriceValidationContext'
 
-
-
 function PriceValidation() {
   return (
     <div className="wrapper cloudpricing-wrapper">
@@ -15,7 +13,8 @@ function PriceValidation() {
           <PriceValidationContextProvider>
             <SearchPanel />
             <SearchStatuses />
-            <PricingResults />
+              <div className="pricing-type-label"><strong>PERISCOPE</strong> PRICING</div>
+              <PricingResults />
           </PriceValidationContextProvider>
       </div>
     </div>
