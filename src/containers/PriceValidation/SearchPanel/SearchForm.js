@@ -75,21 +75,21 @@ const SearchForm = () => {
           .then( resp => {
               if (resp.success) {
                   console.log("Response body", resp.data);
-                  // priceValidationContext.setPriceData(resp.data);
-                  priceValidationContext.setPriceData(temp);
+                  priceValidationContext.setPriceData(resp.data);
+                  // priceValidationContext.setPriceData(temp);
               } else {
                   //
                   console.error("Found error", resp);
-                  // priceValidationContext.setErrorData(resp.data);
-                  priceValidationContext.setPriceData(temp);
+                  priceValidationContext.setErrorData(resp.data);
+                  // priceValidationContext.setPriceData(temp);
               }
 
               return null;
           })
           .catch((e) => {
               console.error("Found error 2", e);
-              // priceValidationContext.setErrorData(e);
-              priceValidationContext.setPriceData(temp);
+              priceValidationContext.setErrorData(e);
+              // priceValidationContext.setPriceData(temp);
           });
   };
 
@@ -104,7 +104,7 @@ const SearchForm = () => {
             name="nest-messages"
             onFinish={onSubmit}
             validateMessages={validateMessages}
-            initialValues={{quantity:1, site:'002', supc: 1, customer: "1", date: moment()}}
+            initialValues={{quantity:10, site:'019', supc: 3183792, customer: "622548", date: moment(), split: false}}
         >
           <Form.Item
               name="site"
@@ -173,7 +173,7 @@ const SearchForm = () => {
             <InputNumber/>
           </Form.Item>
 
-          <Form.Item name="split" label="Split">
+          <Form.Item name="split" label="Split" valuePropName="checked">
             <Checkbox/>
           </Form.Item>
           <Form.Item className="search-btn-wrapper">

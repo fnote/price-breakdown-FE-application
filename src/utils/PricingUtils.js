@@ -82,7 +82,7 @@ export const mapAgreementToDataRow = ({description, percentageAdjustment, priceA
     source
 });
 
-export const mapVolumeTierToTableRow = ({eligibility: {operator, lowerBound, upperBound}, discounts}) => ({
+export const mapVolumeTierToTableRow = ({eligibility: {operator, lowerBound, upperBound}, discounts, isApplicable}) => ({
     description: {
         rangeStart: lowerBound,
         rangeEnd: operator === VOLUME_TIER_OPERATOR_BETWEEN ? upperBound : VOLUME_TIER_RANGE_END_ABOVE,
@@ -91,7 +91,7 @@ export const mapVolumeTierToTableRow = ({eligibility: {operator, lowerBound, upp
     adjustmentValue: getFormattedPercentageValue(discounts[0].amount),
     calculatedValue: formatPrice(discounts[0].priceAdjustment),
     source: PRICE_SOURCE_DISCOUNT_SERVICE,
-    isSelected: false // TODO: need to decide with the quantity
+    isSelected: !!isApplicable
 });
 
 export const extractPricePoints = ({grossPrice, customerReferencePrice, customerPrequalifiedPrice, unitPrice, netPrice}) => ({
@@ -106,7 +106,7 @@ export const extractItemInfo = ({id, name, brand, pack, size, stockIndicator, ca
     id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 });
 
-export const extractSiteInfo = ({customerAccount, customerName, customerType, priceZone, businessUnitNumber}) => ({
+export const extractSiteInfo = ({customerAccount, customerName, customerType, businessUnitNumber, product: { priceZone }} ) => ({
     site: formatBusinessUnit(businessUnitNumber),
     customerAccount,
     customerName: customerName,
@@ -114,15 +114,15 @@ export const extractSiteInfo = ({customerAccount, customerName, customerType, pr
     priceZone
 });
 
-export const getSplitStatusBySplitFlag = ({splitFlag}) => splitFlag === true ? SPLIT_STATUS_YES : SPLIT_STATUS_NO;
+export const getSplitStatusBySplitFlag = (splitFlag) => splitFlag === true ? SPLIT_STATUS_YES : SPLIT_STATUS_NO;
 
-export const extractRequestInfo = ({priceRequestDate, requestedQuantity, products}) => ({
+export const extractRequestInfo = ({priceRequestDate, requestedQuantity, product: { splitFlag, quantity }}) => ({
     priceRequestDate: generateReadableDate(priceRequestDate),
-    splitStatus: getSplitStatusBySplitFlag(products[0]),
-    requestedQuantity
+    splitStatus: getSplitStatusBySplitFlag(splitFlag),
+    quantity
 });
 
-export const prepareLocalSegmentPriceInfo = ({discounts, rounding: {calculatedAmount}, grossPrice}) => {
+export const prepareLocalSegmentPriceInfo = ({discounts, referencePriceRoundingAdjustment, grossPrice}) => {
     const headerRow = {
         description: DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
         calculatedValue: formatPrice(grossPrice)
@@ -133,11 +133,11 @@ export const prepareLocalSegmentPriceInfo = ({discounts, rounding: {calculatedAm
     const refPriceDiscountRows = discounts.filter(discount => discount.type === DISCOUNT_TYPE_REF_PRICE)
         .map(discount => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE));
 
-    // TODO: @sanjayaa: see whether this rounding row is correct
+    // TODO: @sanjayaa: reverify the number of decimal places here
     const roundingValueRow = {
         description: DESCRIPTION_ROUNDING,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
-        calculatedValue: formatPrice(calculatedAmount),
+        calculatedValue: formatPrice(referencePriceRoundingAdjustment),
         source: PRICE_SOURCE_SYSTEM
     };
 

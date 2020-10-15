@@ -23,7 +23,7 @@ const initialState = {
 };
 
 const mapSuccessResponse = (data) => {
-    const product = data.products[0];
+    const product = data.product;
 
     return {
         response: data,

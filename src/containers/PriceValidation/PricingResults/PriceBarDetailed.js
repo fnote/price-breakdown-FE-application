@@ -35,8 +35,8 @@ const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, v
           {zone ? <div className="subrow-sub-title">{zone}</div> : null}
           {validityPeriod ? <div className="subrow-sub-title">{validityPeriod}</div> : null}
       </div>
-        {calculatedValue ? <div className="value-col">{calculatedValue}</div> : null}
-        {adjustmentValue ? <div className="adjustment-col">{adjustmentValue}</div> : null}
+        {adjustmentValue ? <div className="value-col">{adjustmentValue}</div> : null}
+        {calculatedValue ? <div className="adjustment-col">{calculatedValue}</div> : null}
     </div>
 );
 
@@ -60,9 +60,10 @@ const renderDetailedSection = (pricingDataList, additionalRows = null, styleMeta
 const renderTableRow = ({ description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, source, isSelected }) => (
     <li className={isSelected ? "selected" : null}>
         <div className="description-col">{rangeStart} <span>{rangeConnector}</span> {rangeEnd}</div>
-        <div className="value-col">{calculatedValue}</div>
-        <div className="adjustment-col">{adjustmentValue}</div>
-        {isSelected ? <div className="source-col"><i className="icon fi flaticon-tick-1"/>{source}</div> : null}
+        <div className="value-col">{adjustmentValue}</div>
+        <div className="adjustment-col">{calculatedValue}</div>
+        {/*See whether we need to use source here*/}
+        {isSelected ? <div className="tick-col"><i className="icon fi flaticon-tick-1"/></div> : null}
     </li>
 );
 
@@ -81,9 +82,9 @@ function PriceBarDetailed({ priceData: { product }}) {
     const customerNetPriceInfo = prepareCustomerNetPriceInfo(product);
     const volumePricingTiers = prepareVolumePricingTiers(product);
     const volumePricingHeaderRow = prepareVolumePricingHeaderRow(product);
+    const volumeTierRows = generateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers);
     const orderNetPriceSection = prepareOrderUnitPriceInfo(product);
     const discountPriceSection = prepareDiscountPriceInfo(product);
-    const volumeTierRows = generateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers);
     const strikeThroughPriceSection = prepareStrikeThroughPriceInfo(product);
     const localSegmentRefPriceSection = prepareLocalSegmentPriceInfo(product);
 

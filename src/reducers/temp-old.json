@@ -1,0 +1,257 @@
+{
+    "businessUnitNumber": "001",
+    "customerAccount": "571549",
+    "customerName": "Mikes Seafood & Grill",
+    "customerType": "TRS",
+    "priceZone": "5",
+    "priceRequestDate": "20200724",
+    "requestedQuantity": 1,
+    "requestStatuses": [],
+    "products": [
+    {
+        "id": "3183792",
+        "name": "BEEF PATTY W/ MUSHROOMS",
+        "description": "Beef Patty with Mushrooms",
+        "lineDescription": "Allergen FreeNo Caramel ColorR educed FatReduced Sodium.",
+        "pack": "6",
+        "size": "5LB",
+        "brandId": "JTM",
+        "brand": "JTM",
+        "categoryId": 3,
+        "catMajId": 2,
+        "catIntId": 4,
+        "catMinId": 3,
+        "manufacturerCode": "CP5671",
+        "imageLink": null,
+        "categoryName": "MEATS",
+        "catMajName": "BEEF FROZEN",
+        "catIntName": "BEEF PRE-COOKED",
+        "catMinName": "PATTIES",
+        "taxonomy": {
+            "hierarchyId": 1053,
+            "businessCenter": "BEEF",
+            "itemGroup": "GROUND/DICED",
+            "attributeGroup": "BEEF PATTIES",
+            "attributes": null
+        },
+        "hasCNLabel": false,
+        "sizeUom": null,
+        "dimension": {
+            "uom": null,
+            "length": 0,
+            "width": 0,
+            "height": 0
+        },
+        "netWeight": null,
+        "grossWeight": null,
+        "weightUom": null,
+        "totalShelfLife": 0,
+        "gtin": 10049485056710,
+        "isSyscoBrand": false,
+        "isCatchWeight": false,
+        "fnbFlag": null,
+        "consumerInformation": {
+            "generalDescription": null,
+            "prepAndCookingInstructions": null,
+            "storageAndUsage": null
+        },
+        "opcoId": "058",
+        "statusCode": "D",
+        "stockIndicator": "N",
+        "asoh": 0,
+        "proprietaryCode": "L",
+        "internalUpc": null,
+        "externalUpc": 10049485056710,
+        "averageWeight": 30,
+        "storageCode": "F",
+        "hseBrandFlag": "N",
+        "phaseOtFlag": "N",
+        "catchWeightIndicator": "N",
+        "split": "N",
+        "minimumSplit": 0,
+        "shipSplitOnly": "N",
+        "buyMultiple": 0,
+        "unitPerCase": 6,
+        "brokerNumber": "729753",
+        "brokerContactName": "Michael Wilner",
+        "brokerContactPhone": "5864820233",
+        "brokerContactEmail": "mwilner@acosta.com",
+        "productSpecialistPhone": null,
+        "localDescription": null,
+        "active": false,
+        "category": "03002004003",
+        "isProprietary": true,
+        "isNonstock": true,
+        "isNonstockOrderable": false,
+        "isLeavingSoon": false,
+        "supc": "3183792",
+        "splitFlag": false,
+        "shipSplitsOnlyFlag": false,
+        "unitsPerCase": 1,
+        "perWeightFlag": false,
+        "averageNetWeight": 10.2500,
+        "grossPrice": 84.21,
+        "customerReferencePrice": 76.21,
+        "customerPrequalifiedPrice": 76.21,
+        "unitPrice": 73.80,
+        "netPrice": 73.80,
+        "agreementIndicators": [
+            "C"
+        ],
+        "priceSource": 97,
+        "minPrice": 67.53,
+        "minHandlingFlag": "N",
+        "grossCommissionBasis": 71.15,
+        "handPricingAllowedFlag": false,
+        "statuses": [
+            {
+                "code": 200,
+                "state": "INFO",
+                "message": "status message"
+            }
+        ],
+        "priceRule": {
+            "name": "&5STAR",
+            "baseValue": 64.2500,
+            "factorCalcMethod": "MGN",
+            "factorSign": "+",
+            "factorValue": 9.2500
+        },
+        "agreements": [
+            {
+                "id": "832120",
+                "type": "C",
+                "applicationCode": "P",
+                "description": "Dollars Off",
+                "priceAdjustment": -1.28,
+                "percentageAdjustment": 1.5,
+                "methodCode": "APPLY TO PRICE",
+                "effectiveFrom": "20191103",
+                "effectiveTo": "20291103"
+            },
+            {
+                "id": "832130",
+                "type": "CHEF",
+                "applicationCode": "L",
+                "description": "OFFL",
+                "priceAdjustment": -2.41,
+                "percentageAdjustment": 0,
+                "methodCode": "OFFLINE",
+                "effectiveFrom": "20191103",
+                "effectiveTo": "20291103"
+            }
+        ],
+        "exception": {
+            "id": "1234",
+            "price": 71.15,
+            "effectiveFrom": "20200523",
+            "effectiveTo": "20210530"
+        },
+        "discounts": [
+            {
+                "id": "243512",
+                "type": "REFERENCE_PRICE",
+                "name": "STRATEGIC_DISCOUNT",
+                "priceAdjustment": -8.00,
+                "amountType": "Factor",
+                "amount": 0.90,
+                "effectiveFrom": "20191103",
+                "effectiveTo": "20291103"
+            },
+            {
+                "id": "243514",
+                "type": "PREQUALIFIED",
+                "name": "NEW_CUSTOMER_DISCOUNT",
+                "priceAdjustment": -3.00,
+                "amountType": "Factor",
+                "amount": 0.30,
+                "effectiveFrom": "20191103",
+                "effectiveTo": "20291103"
+            },
+            {
+                "id": "243514",
+                "type": "PREQUALIFIED",
+                "name": "CASE_SPLIT_UPCHARGE",
+                "priceAdjustment": 3.00,
+                "amountType": "Factor",
+                "amount": 1.20,
+                "effectiveFrom": "20191103",
+                "effectiveTo": "20291103"
+            }
+        ],
+        "volumePricingTiers": [
+            {
+                "customerPrequalifiedPrice": 45.49,
+                "unitPrice": 45.49,
+                "netPrice": 45.49,
+                "eligibility": {
+                    "operator": "Between",
+                    "lowerBound": 10,
+                    "upperBound": 20
+                },
+                "agreements": [],
+                "discounts": [
+                    {
+                        "id": "901",
+                        "type": "PREQUALIFIED",
+                        "name": "CASE_VOLUME_DISCOUNT",
+                        "amountType": "Factor",
+                        "amount": 0.9,
+                        "priceAdjustment": -5.06,
+                        "effectiveFrom": "20200808",
+                        "effectiveTo": "20220731"
+                    }
+                ]
+            },
+            {
+                "customerPrequalifiedPrice": 40.44,
+                "unitPrice": 40.44,
+                "netPrice": 40.44,
+                "eligibility": {
+                    "operator": "Between",
+                    "lowerBound": 21,
+                    "upperBound": 30
+                },
+                "agreements": [],
+                "discounts": [
+                    {
+                        "id": "901",
+                        "type": "PREQUALIFIED",
+                        "name": "CASE_VOLUME_DISCOUNT",
+                        "amountType": "Factor",
+                        "amount": 0.8,
+                        "priceAdjustment": -10.11,
+                        "effectiveFrom": "20200808",
+                        "effectiveTo": "20220731"
+                    }
+                ]
+            },
+            {
+                "customerPrequalifiedPrice": 35.38,
+                "unitPrice": 35.38,
+                "netPrice": 35.38,
+                "eligibility": {
+                    "operator": ">=",
+                    "lowerBound": 31
+                },
+                "agreements": [],
+                "discounts": [
+                    {
+                        "id": "901",
+                        "type": "PREQUALIFIED",
+                        "name": "CASE_VOLUME_DISCOUNT",
+                        "amountType": "Factor",
+                        "amount": 0.7,
+                        "priceAdjustment": -15.17,
+                        "effectiveFrom": "20200808",
+                        "effectiveTo": "20220731"
+                    }
+                ]
+            }
+        ],
+        "rounding": {
+            "calculatedAmount": 0.0005
+        }
+    }
+]
+}
