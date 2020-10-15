@@ -20,7 +20,7 @@ const getBusinessUnits = () => {
   const businessUnitOptions = [];
   businessUnits.forEach((businessUnit => {
     businessUnitOptions.push(
-        <Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.name}</Option>
+        <Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.shortName}</Option>
     )
   }));
 
