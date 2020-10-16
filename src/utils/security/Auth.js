@@ -1,19 +1,19 @@
-import {getAuthConfig} from "../Configs";
+import {getBffUrlConfig} from "../Configs";
 import {AUTH_STATE_COMPLETED, AUTH_STATE_PENDING} from '../Constants';
 
 class Auth {
     constructor() {
-        this.authConfig = getAuthConfig();
+        this.bffUrlConfig = getBffUrlConfig();
     }
 
     getLoginPage = () => {
-        window.location.assign(this.authConfig.loginRedirectionUrl);
+        window.location.assign(this.bffUrlConfig.loginRedirectionUrl);
         localStorage.setItem('auth_user', AUTH_STATE_PENDING);
     }
 
     logOutRedirection = () => {
         localStorage.removeItem('auth_user');
-        window.location.assign(this.authConfig.logOutRedirectionUrl);
+        window.location.assign(this.bffUrlConfig.logOutRedirectionUrl);
     }
 
     isUserLoggedIn = () => {
@@ -29,7 +29,7 @@ class Auth {
     }
 
     callUserDetails = () => {
-        return fetch('http://localhost:4000/exe/v1/pci-bff/auth/user-details', {
+        return fetch(this.bffUrlConfig.userDetailsUrl, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         })
