@@ -104,7 +104,7 @@ const SearchForm = () => {
             name="nest-messages"
             onFinish={onSubmit}
             validateMessages={validateMessages}
-            initialValues={{quantity:10, site:'019', supc: 3183792, customer: "622548", date: moment(), split: false}}
+            initialValues={{quantity:10, site:'019', supc: '3183792', customer: '622548', date: moment(), split: false}}
         >
           <Form.Item
               name="site"
@@ -123,11 +123,11 @@ const SearchForm = () => {
               label="Customer"
               rules={[
                   {
-                      required: true,
+                      pattern: '^[a-zA-Z0-9]+$',
+                      message: "Not a valid Customer ID"
                   },
                   {
-                      whitespace: true,
-                      message: "Customer cannot be empty"
+                      required: true,
                   },
               ]}>
             <Input/>
@@ -137,15 +137,15 @@ const SearchForm = () => {
               label="Item #"
               rules={[
                   {
-                      type: "number",
-                      message : "Not a valid number"
+                      pattern: '^[0-9]+$',
+                      message: "Not a valid Item ID"
                   },
                   {
-                    required: true
-                  }
+                      required: true,
+                  },
               ]}
           >
-            <InputNumber/>
+            <Input/>
           </Form.Item>
           <Form.Item
               name="date"
@@ -170,7 +170,11 @@ const SearchForm = () => {
                       },
                   })
               ]}>
-            <InputNumber/>
+            <InputNumber
+                formatter={(value) => {
+                    return isNaN(value) ? value : Math.round(value);
+                }}
+            />
           </Form.Item>
 
           <Form.Item name="split" label="Split" valuePropName="checked">
