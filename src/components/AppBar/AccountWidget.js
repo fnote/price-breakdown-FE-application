@@ -11,11 +11,10 @@ class AccountWidget extends React.Component {
   state = {
     visible: false,
   };
-  logoutButtonClicked = async () => {
-    // await Auth.signOut();
-    // auth.logOutRedirection();
-    auth.setUserLoggedInState(null);
+  logoutButtonClicked = () => {
+    auth.logOutRedirection();
   };
+
   toggleMenu = () => {
     const { visible } = this.state;
     this.setState({ visible: !visible });

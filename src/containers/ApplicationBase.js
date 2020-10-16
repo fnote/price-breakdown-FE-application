@@ -9,13 +9,13 @@ import {LoginContext} from './Login/LoginContext';
 
 
 export default function ApplicationBase() {
-    // const login = useContext(LoginContext);
-    useContext(LoginContext);
+    const login = useContext(LoginContext);
+    // useContext(LoginContext);
 
   return (
       <React.Fragment>
         { auth.isUserLoggedIn() ? (<PriceValidation/>) : (<Login/>)}
-          {/*{console.log('Received user details' ,login.userDetailsData)}*/}
+          {console.log('Received user details' ,login.userDetailsData)}
       </React.Fragment>
 
       // <AppLoader />

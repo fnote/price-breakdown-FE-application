@@ -31,7 +31,10 @@ class Auth {
     callUserDetails = () => {
         return fetch(this.bffUrlConfig.userDetailsUrl, {
             method: 'GET',
-            headers: {'Content-Type': 'application/json'}
+            headers: {'Content-Type': 'application/json',
+                credentials: 'include'
+            },
+            credentials: 'include'
         })
             .then(res => Promise.all([res.status, res.json()]))
             .then(([status, userDetailResponse]) => {
