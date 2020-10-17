@@ -27,7 +27,7 @@ export const fetchUserDetails = () => {
                 } else if (data.status === 401) {
                     payloadData.isLoginSucceeded = false;
                     payloadData.error = data.userDetailResponse;
-                    auth.setUserLoggedInState();
+                    auth.setUserLoggedInState(AUTH_STATE_FAILED);
                 } else {
                     payloadData.isLoginSucceeded = false;
                     payloadData.error = {

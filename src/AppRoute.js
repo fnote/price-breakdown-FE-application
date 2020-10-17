@@ -8,6 +8,8 @@ import FileUpload from './containers/FileUpload/FileUpload';
 import PriceValidation from './containers/PriceValidation/PriceValidation';
 import store from './reducers';
 import LoginContextProvider from './containers/Login/LoginContext';
+import UserDetailContextProvider from './containers/UserDetailContext';
+import AppLoaderContextProvider from './components/AppLoderContext';
 
 function AppRoute() {
   return (
@@ -15,9 +17,11 @@ function AppRoute() {
         <Fragment>
           <Router>
                   <Switch>
-                      <LoginContextProvider>
+                      <UserDetailContextProvider>
+                          <AppLoaderContextProvider>
                       <Route path="/" component={ApplicationBase}/>
-                      </LoginContextProvider>
+                          </AppLoaderContextProvider>
+                      </UserDetailContextProvider>
                   </Switch>
           </Router>
         </Fragment>
