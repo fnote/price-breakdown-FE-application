@@ -17,9 +17,8 @@ class Auth {
     }
 
     logOutRedirection = () => {
-        console.log('logout')
         localStorage.removeItem('auth_user');
-        // window.location.assign(this.bffUrlConfig.logOutRedirectionUrl);
+        window.location.assign(this.bffUrlConfig.logOutRedirectionUrl);
     }
 
     //based on local storage value which preserved even after page refreshes
