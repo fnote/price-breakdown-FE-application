@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext} from "react";
 import logo from "../../styles/images/logo.svg";
 import {auth} from "../../utils/security/Auth";
 import {AUTH_FAILURE_TYPE_UNAUTHENTICATED} from '../../utils/Constants';
@@ -11,15 +11,15 @@ import {UserDetailContext} from '../UserDetailContext';
  */
 const Login = () => {
 
-    const loginContext = useContext(UserDetailContext);
+    const userDetailContext = useContext(UserDetailContext);
 
     return (
         <div className="wrapper login-wrapper">
             <div className="login-panel">
                 <img src={logo} alt="Sysco Cloud Pricing" className="logo"/>
-                <p className={loginContext.userDetailsData.error !== null ? "error-text": "error-text hide"}>
+                <p className={userDetailContext.userDetailsData.error !== null ? "error-text": "error-text hide"}>
                     <i className="fi flaticon-alert"/>
-                    {loginContext.userDetailsData.errorType === AUTH_FAILURE_TYPE_UNAUTHENTICATED ?
+                    {userDetailContext.userDetailsData.errorType === AUTH_FAILURE_TYPE_UNAUTHENTICATED ?
                     "User login failed.": "Unexpected Error occurred while authenticating"
                     }
                 </p>

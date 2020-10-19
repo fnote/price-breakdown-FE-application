@@ -3,7 +3,8 @@ import {
     AUTH_FAILURE_TYPE_UNAUTHENTICATED, AUTH_FAILURE_TYPE_UNEXPECTED_ERROR,
     AUTH_STATE_COMPLETED,
     AUTH_STATE_FAILED,
-    AUTH_STATE_PENDING
+    AUTH_STATE_PENDING,
+    UNEXPECTED_ERROR_CODE
 } from '../Constants';
 
 class Auth {
@@ -27,8 +28,6 @@ class Auth {
     }
 
     shouldFetchUserDetailsAgain = (userContext) => {
-        console.log(userContext.userDetailsData.isLoginSucceeded);
-
         return localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED && userContext.userDetailsData.isLoginSucceeded !== true;
     }
 
@@ -48,12 +47,10 @@ class Auth {
         })
             .then(res => Promise.all([res.status, res.json()]))
             .then(([status, userDetailResponse]) => {
-                console.log(userDetailResponse);
-                console.log(status);
                 return {status, userDetailResponse};
             })
-            .catch((err) => {
-                console.log(err)
+            .catch(() => {
+                return {status: UNEXPECTED_ERROR_CODE, userDetailResponse: {}}
             });
     }
 

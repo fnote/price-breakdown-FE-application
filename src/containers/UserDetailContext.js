@@ -1,6 +1,4 @@
 import React, {useState} from 'react';
-import {AUTH_FAILURE_TYPE_UNAUTHENTICATED} from '../utils/Constants';
-
 
 export const UserDetailContext = React.createContext({
     userDetailsData: {},
