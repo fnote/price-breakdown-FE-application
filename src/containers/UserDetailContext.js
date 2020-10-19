@@ -1,3 +1,9 @@
+/**
+ * Holds user context data.
+ *
+ * @author: adis0892 on 10/16/20
+ **/
+
 import React, {useState} from 'react';
 
 export const UserDetailContext = React.createContext({

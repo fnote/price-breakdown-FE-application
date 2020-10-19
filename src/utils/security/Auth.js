@@ -7,6 +7,12 @@ import {
     UNEXPECTED_ERROR_CODE
 } from '../Constants';
 
+/**
+ * Auth related functions.
+ *
+ * @author: adis0892 on 10/16/20
+ **/
+
 class Auth {
     constructor() {
         this.bffUrlConfig = getBffUrlConfig();

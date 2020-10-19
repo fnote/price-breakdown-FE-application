@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
 
+/**
+ * Holds app loader context state.
+ *
+ * @author: adis0892 on 10/16/20
+ **/
 
 export const AppLoaderContext = React.createContext({
     appLoadingState: false,
