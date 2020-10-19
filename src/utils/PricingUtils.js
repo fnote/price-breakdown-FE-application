@@ -74,13 +74,16 @@ export const mapDiscountToDataRow = ({name, amount, priceAdjustment, effectiveFr
     source
 });
 
-export const mapAgreementToDataRow = ({description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo}, source) => ({
-    description,
-    adjustmentValue: `${percentageAdjustment}`,
-    calculatedValue: formatPrice(priceAdjustment),
-    validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
-    source
-});
+export const mapAgreementToDataRow = ({description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo}, source) => {
+    const formattedPriceAdjustment = formatPrice(priceAdjustment);
+    return {
+        description,
+        adjustmentValue: percentageAdjustment ? `${percentageAdjustment}` : formattedPriceAdjustment,
+        calculatedValue: formattedPriceAdjustment,
+        validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
+        source
+    };
+};
 
 export const mapVolumeTierToTableRow = ({eligibility: {operator, lowerBound, upperBound}, discounts, isApplicable}) => ({
     description: {
@@ -106,12 +109,13 @@ export const extractItemInfo = ({id, name, brand, pack, size, stockIndicator, ca
     id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 });
 
-export const extractSiteInfo = ({customerAccount, customerName, customerType, businessUnitNumber, product: { priceZone }} ) => ({
+export const extractSiteInfo = ({customerAccount, customerName, customerType, businessUnitNumber, product: { priceZone, priceZoneId }} ) => ({
     site: formatBusinessUnit(businessUnitNumber),
     customerAccount,
     customerName: customerName,
     customerType,
-    priceZone
+    // @TODO: use the correct attribute below
+    priceZone: priceZone ? priceZone : priceZoneId
 });
 
 export const getSplitStatusBySplitFlag = (splitFlag) => splitFlag === true ? SPLIT_STATUS_YES : SPLIT_STATUS_NO;

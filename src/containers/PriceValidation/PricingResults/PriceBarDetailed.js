@@ -67,7 +67,11 @@ const renderTableRow = ({ description: { rangeStart, rangeEnd, rangeConnector },
     </li>
 );
 
-const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
+const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => {
+    return (volumePricingTiers && volumePricingTiers.size > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null;
+};
+
+const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
     <React.Fragment>
         {renderSubRow(volumePricingHeaderRow, { className: "description-col colspan-2" })}
         <div className="row sub-row">
@@ -97,14 +101,14 @@ function PriceBarDetailed({ priceData: { product }}) {
           {renderDetailedSection(localSegmentRefPriceSection, null, { className: "description-col" })}
         </div>
         <div className="block group2">
-          {renderDetailedSection(strikeThroughPriceSection)}
+          {renderDetailedSection(strikeThroughPriceSection, volumeTierRows)}
         </div>
       </section>
       <div className="price-bar-divider overlap"/>
       <section className="detailed-right">
         <PriceBarDetailedHeader />
         <div className="block group3">
-          {renderDetailedSection(discountPriceSection, volumeTierRows)}
+          {renderDetailedSection(discountPriceSection)}
         </div>
         <div className="block group4">
           {renderDetailedSection(orderNetPriceSection)}
