@@ -1,5 +1,10 @@
 import {getBffUrlConfig} from "../Configs";
-import {AUTH_STATE_COMPLETED, AUTH_STATE_FAILED, AUTH_STATE_PENDING} from '../Constants';
+import {
+    AUTH_FAILURE_TYPE_UNAUTHENTICATED, AUTH_FAILURE_TYPE_UNEXPECTED_ERROR,
+    AUTH_STATE_COMPLETED,
+    AUTH_STATE_FAILED,
+    AUTH_STATE_PENDING
+} from '../Constants';
 
 class Auth {
     constructor() {
@@ -54,10 +59,6 @@ class Auth {
     }
 
     userDetailContextHandler = (userDetailContext, appLoaderContext) => {
-
-
-        console.log('user detail call going')
-
         const generalErrorResponse = {
             "status": "Unauthorized",
             "message": "User cannot be authenticated",
@@ -69,7 +70,8 @@ class Auth {
                 let payloadData = {
                     isLoginSucceeded: false,
                     userDetails: {},
-                    error: null
+                    error: null,
+                    errorType: null
                 }
 
                 console.log(data)
@@ -81,10 +83,12 @@ class Auth {
                 } else if (data.status === 401) {
                     payloadData.isLoginSucceeded = false;
                     payloadData.error = data.userDetailResponse;
-                    auth.setUserLoggedInState(AUTH_STATE_FAILED);
+                    payloadData.errorType = AUTH_FAILURE_TYPE_UNAUTHENTICATED;
+                        auth.setUserLoggedInState(AUTH_STATE_FAILED);
                 } else {
                     payloadData.isLoginSucceeded = false;
                     payloadData.error = generalErrorResponse;
+                    payloadData.errorType = AUTH_FAILURE_TYPE_UNEXPECTED_ERROR;
                     auth.setUserLoggedInState(AUTH_STATE_FAILED);
                 }
 
@@ -95,6 +99,7 @@ class Auth {
                 const errorPayloadData = {};
                 errorPayloadData.isLoginSucceeded = false;
                 errorPayloadData.error = generalErrorResponse;
+                errorPayloadData.errorType = AUTH_FAILURE_TYPE_UNEXPECTED_ERROR;
                 auth.setUserLoggedInState(AUTH_STATE_FAILED);
 
                 userDetailContext.setUserDetails(errorPayloadData);
