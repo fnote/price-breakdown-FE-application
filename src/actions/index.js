@@ -6,7 +6,7 @@
 
 import {auth} from "../utils/security/Auth";
 import {USER_AUTHENTICATION} from './ActionType';
-import {AUTH_STATE_COMPLETED, AUTH_STATE_FAILED} from '../utils/Constants';
+import {AUTH_STATE_COMPLETED, AUTH_STATE_FAILED} from '../constants/Constants';
 
 export const fetchUserDetails = () => {
     return dispatch => {

@@ -1,7 +1,6 @@
-import React, {useContext, useEffect} from "react";
+import React, {useContext} from "react";
 import logo from "../../styles/images/logo.svg";
 import {auth} from "../../utils/security/Auth";
-import {AUTH_STATE_COMPLETED, AUTH_STATE_FAILED} from '../../utils/Constants';
 import {UserDetailContext} from '../UserDetailContext';
 
 /**

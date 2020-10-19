@@ -1,5 +1,5 @@
 import {getBffUrlConfig} from "../Configs";
-import {AUTH_STATE_COMPLETED, AUTH_STATE_FAILED, AUTH_STATE_PENDING} from '../Constants';
+import {AUTH_STATE_COMPLETED, AUTH_STATE_FAILED, AUTH_STATE_PENDING} from '../../constants/Constants';
 
 class Auth {
     constructor() {

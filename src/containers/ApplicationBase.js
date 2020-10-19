@@ -1,10 +1,8 @@
-import React, {Component, useContext, useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
-import FileUpload from './FileUpload/FileUpload';
 import {auth} from '../utils/security/Auth';
 import AppLoader from "../components/AppLoader";
-import {AUTH_STATE_COMPLETED, AUTH_STATE_FAILED} from '../utils/Constants';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
 

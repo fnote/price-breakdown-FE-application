@@ -1,6 +1,14 @@
 import React from "react";
 import PriceBarDetailedHeader from "./PriceBarDetailedHeader";
-import { prepareCustomerNetPriceInfo } from "../../../utils/PricingUtils"
+import {
+    prepareCustomerNetPriceInfo,
+    prepareDiscountPriceInfo,
+    prepareLocalSegmentPriceInfo,
+    prepareOrderUnitPriceInfo,
+    prepareStrikeThroughPriceInfo,
+    prepareVolumePricingHeaderRow,
+    prepareVolumePricingTiers
+} from "../../../utils/PricingUtils"
 
 const renderHeaderRow = ({ description, validityPeriod, adjustmentValue, calculatedValue }, { className }, showSmallDivider = true) => (
     <div className="row">
@@ -8,7 +16,7 @@ const renderHeaderRow = ({ description, validityPeriod, adjustmentValue, calcula
         <div className="title">
           {description}
         </div>
-        {validityPeriod ? <div className="sub-title">{validityPeriod}</div> : null}
+          {validityPeriod ? <div className="sub-title">{validityPeriod}</div> : null}
           {showSmallDivider ? <div className="small-divider"/> : null }
       </div>
         {calculatedValue? <div className="value-col">{calculatedValue}</div> : null}
@@ -27,8 +35,8 @@ const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, v
           {zone ? <div className="subrow-sub-title">{zone}</div> : null}
           {validityPeriod ? <div className="subrow-sub-title">{validityPeriod}</div> : null}
       </div>
-        {calculatedValue ? <div className="value-col">{calculatedValue}</div> : null}
-        {adjustmentValue ? <div className="adjustment-col">{adjustmentValue}</div> : null}
+        {adjustmentValue ? <div className="value-col">{adjustmentValue}</div> : null}
+        {calculatedValue ? <div className="adjustment-col">{calculatedValue}</div> : null}
     </div>
 );
 
@@ -39,8 +47,11 @@ const renderDetailedSection = (pricingDataList, additionalRows = null, styleMeta
         <i className="icon fi flaticon-diamond" />
       </div>
       <div className="data-fields">
-        {pricingDataList.map((dataRow, index) => index === 0 ? renderHeaderRow(dataRow, styleMetadataHeaderRow, (pricingDataList.length > 1))
-            : renderSubRow(dataRow, styleMetadataSubRow))}
+        {
+            pricingDataList.map((dataRow, index) => index === 0
+                ? renderHeaderRow(dataRow, styleMetadataHeaderRow, (pricingDataList.length > 1))
+                : renderSubRow(dataRow, styleMetadataSubRow))
+        }
         {additionalRows}
       </div>
     </React.Fragment>
@@ -49,13 +60,18 @@ const renderDetailedSection = (pricingDataList, additionalRows = null, styleMeta
 const renderTableRow = ({ description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, source, isSelected }) => (
     <li className={isSelected ? "selected" : null}>
         <div className="description-col">{rangeStart} <span>{rangeConnector}</span> {rangeEnd}</div>
-        <div className="value-col">{calculatedValue}</div>
-        <div className="adjustment-col">{adjustmentValue}</div>
-        {isSelected ? <div className="source-col"><i className="icon fi flaticon-tick-1"/>{source}</div> : null}
+        <div className="value-col">{adjustmentValue}</div>
+        <div className="adjustment-col">{calculatedValue}</div>
+        {/*See whether we need to use source here*/}
+        {isSelected ? <div className="tick-col"><i className="icon fi flaticon-tick-1"/></div> : null}
     </li>
 );
 
-const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
+const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => {
+    return (volumePricingTiers && volumePricingTiers.size > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null;
+};
+
+const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
     <React.Fragment>
         {renderSubRow(volumePricingHeaderRow, { className: "description-col colspan-2" })}
         <div className="row sub-row">
@@ -66,8 +82,16 @@ const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
     </React.Fragment>
 );
 
-function PriceBarDetailed({ priceData: { localSegmentRefPriceSection, strikeThroughPriceSection, discountPriceSection, orderNetPriceSection,
-    volumePricingHeaderRow, volumePricingTiers, response }}) {
+function PriceBarDetailed({ priceData: { product }}) {
+    const customerNetPriceInfo = prepareCustomerNetPriceInfo(product);
+    const volumePricingTiers = prepareVolumePricingTiers(product);
+    const volumePricingHeaderRow = prepareVolumePricingHeaderRow(product);
+    const volumeTierRows = generateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers);
+    const orderNetPriceSection = prepareOrderUnitPriceInfo(product);
+    const discountPriceSection = prepareDiscountPriceInfo(product);
+    const strikeThroughPriceSection = prepareStrikeThroughPriceInfo(product);
+    const localSegmentRefPriceSection = prepareLocalSegmentPriceInfo(product);
+
   return (
     <div className="price-bar-detailed">
       <div className="price-bar-divider"/>
@@ -77,21 +101,20 @@ function PriceBarDetailed({ priceData: { localSegmentRefPriceSection, strikeThro
           {renderDetailedSection(localSegmentRefPriceSection, null, { className: "description-col" })}
         </div>
         <div className="block group2">
-          {renderDetailedSection(strikeThroughPriceSection)}
+          {renderDetailedSection(strikeThroughPriceSection, volumeTierRows)}
         </div>
       </section>
       <div className="price-bar-divider overlap"/>
       <section className="detailed-right">
         <PriceBarDetailedHeader />
         <div className="block group3">
-          {renderDetailedSection(discountPriceSection, generateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers))}
+          {renderDetailedSection(discountPriceSection)}
         </div>
         <div className="block group4">
           {renderDetailedSection(orderNetPriceSection)}
         </div>
-          {/*TODO @sanjayaa: fix how data is retrieved here*/}
           <div className="block group5">
-              {renderDetailedSection(prepareCustomerNetPriceInfo(response.products[0]))}
+              {renderDetailedSection(customerNetPriceInfo)}
           </div>
       </section>
     </div>
