@@ -7,6 +7,7 @@ import {
 } from "@ant-design/icons";
 import Navigation from "./Navigation";
 import {auth} from '../../utils/security/Auth';
+import { LoginContext } from "../../containers/Login/LoginContext";
 class AccountWidget extends React.Component {
   state = {
     visible: false,
@@ -32,7 +33,8 @@ class AccountWidget extends React.Component {
 
   render() {
     const { visible } = this.state;
-
+    const userDetailsObj = this.context.userDetailsData.userDetails;
+    const displayName = Object.keys(userDetailsObj).length !== 0 ? `${userDetailsObj.lastName} ${userDetailsObj.firstName}` : "N/A";
     return (
       <div className={visible ? "account-widget open" : "account-widget"}>
         <div
@@ -40,7 +42,7 @@ class AccountWidget extends React.Component {
           className={visible ? "user-widget show" : "user-widget"}>
           <div className="user">
             <div className="name">
-              milu8609
+                {displayName}
               <div className="welcome">Signed In</div>
             </div>
           </div>
@@ -138,5 +140,5 @@ class AccountWidget extends React.Component {
     );
   }
 }
-
+AccountWidget.contextType = LoginContext;
 export default AccountWidget;
