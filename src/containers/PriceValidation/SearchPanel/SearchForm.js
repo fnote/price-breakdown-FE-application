@@ -66,7 +66,7 @@ const SearchForm = () => {
 
     // TODO: @sanjayaa remove temp response usage
   const priceRequestHandler = (requestData) => {
-      fetch('http://internal-alb-cloud-pci-bff-exe-1912452817.us-east-1.elb.amazonaws.com/v1/pci-bff/pricing/pricing-data', {
+      fetch('http://internal-alb-cloud-pci-bff-DEV-2043817689.us-east-1.elb.amazonaws.com/v1/pci-bff/pricing/pricing-data', {
           method: 'POST',
           body: formRequestBody(requestData),
           headers: {'Content-Type': 'application/json'}
