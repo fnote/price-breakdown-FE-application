@@ -1,5 +1,10 @@
-import React, {useState} from 'react';
+/**
+ * Holds user context data.
+ *
+ * @author: adis0892 on 10/16/20
+ **/
 
+import React, {useState} from 'react';
 
 export const UserDetailContext = React.createContext({
     userDetailsData: {},
@@ -10,7 +15,8 @@ export const UserDetailContext = React.createContext({
 const initialState = {
     isLoginSucceeded: false,
     userDetails: {},
-    error: null
+    error: null,
+    errorType: null
 };
 
 const UserDetailContextProvider = props => {
