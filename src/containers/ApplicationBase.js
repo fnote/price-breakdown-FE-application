@@ -14,11 +14,7 @@ export default function ApplicationBase() {
 
     useEffect(() => {
         if (auth.isUserLoginPending() || auth.shouldFetchUserDetailsAgain(userDetailContext)) {
-            console.log(userDetailContext)
             console.log('calling handler')
-
-
-            console.log('apploader', appLoaderContext)
 
             if(appLoaderContext.appLoadingState !== true) {
                 appLoaderContext.setAppLoadingState(true);
@@ -36,7 +32,5 @@ export default function ApplicationBase() {
         }
 
     </React.Fragment>
-
-      // <AppLoader />
   );
 }

@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import Navigation from "./Navigation";
 import {auth} from '../../utils/security/Auth';
-import { LoginContext } from "../../containers/Login/LoginContext";
+import { UserDetailContext } from "../../containers/UserDetailContext";
 class AccountWidget extends React.Component {
   state = {
     visible: false,
@@ -140,5 +140,5 @@ class AccountWidget extends React.Component {
     );
   }
 }
-AccountWidget.contextType = LoginContext;
+AccountWidget.contextType = UserDetailContext;
 export default AccountWidget;

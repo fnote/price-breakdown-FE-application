@@ -1,5 +1,17 @@
 import {getBffUrlConfig} from "../Configs";
-import {AUTH_STATE_COMPLETED, AUTH_STATE_FAILED, AUTH_STATE_PENDING} from '../../constants/Constants';
+import {
+    AUTH_FAILURE_TYPE_UNAUTHENTICATED, AUTH_FAILURE_TYPE_UNEXPECTED_ERROR,
+    AUTH_STATE_COMPLETED,
+    AUTH_STATE_FAILED,
+    AUTH_STATE_PENDING,
+    UNEXPECTED_ERROR_CODE
+} from '../../constants/Constants';
+
+/**
+ * Auth related functions.
+ *
+ * @author: adis0892 on 10/16/20
+ **/
 
 class Auth {
     constructor() {
@@ -12,9 +24,8 @@ class Auth {
     }
 
     logOutRedirection = () => {
-        console.log('logout')
         localStorage.removeItem('auth_user');
-        // window.location.assign(this.bffUrlConfig.logOutRedirectionUrl);
+        window.location.assign(this.bffUrlConfig.logOutRedirectionUrl);
     }
 
     //based on local storage value which preserved even after page refreshes
@@ -23,8 +34,6 @@ class Auth {
     }
 
     shouldFetchUserDetailsAgain = (userContext) => {
-        console.log(userContext.userDetailsData.isLoginSucceeded);
-
         return localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED && userContext.userDetailsData.isLoginSucceeded !== true;
     }
 
@@ -44,20 +53,14 @@ class Auth {
         })
             .then(res => Promise.all([res.status, res.json()]))
             .then(([status, userDetailResponse]) => {
-                console.log(userDetailResponse);
-                console.log(status);
                 return {status, userDetailResponse};
             })
-            .catch((err) => {
-                console.log(err)
+            .catch(() => {
+                return {status: UNEXPECTED_ERROR_CODE, userDetailResponse: {}}
             });
     }
 
     userDetailContextHandler = (userDetailContext, appLoaderContext) => {
-
-
-        console.log('user detail call going')
-
         const generalErrorResponse = {
             "status": "Unauthorized",
             "message": "User cannot be authenticated",
@@ -69,7 +72,8 @@ class Auth {
                 let payloadData = {
                     isLoginSucceeded: false,
                     userDetails: {},
-                    error: null
+                    error: null,
+                    errorType: null
                 }
 
                 console.log(data)
@@ -81,10 +85,12 @@ class Auth {
                 } else if (data.status === 401) {
                     payloadData.isLoginSucceeded = false;
                     payloadData.error = data.userDetailResponse;
-                    auth.setUserLoggedInState(AUTH_STATE_FAILED);
+                    payloadData.errorType = AUTH_FAILURE_TYPE_UNAUTHENTICATED;
+                        auth.setUserLoggedInState(AUTH_STATE_FAILED);
                 } else {
                     payloadData.isLoginSucceeded = false;
                     payloadData.error = generalErrorResponse;
+                    payloadData.errorType = AUTH_FAILURE_TYPE_UNEXPECTED_ERROR;
                     auth.setUserLoggedInState(AUTH_STATE_FAILED);
                 }
 
@@ -95,6 +101,7 @@ class Auth {
                 const errorPayloadData = {};
                 errorPayloadData.isLoginSucceeded = false;
                 errorPayloadData.error = generalErrorResponse;
+                errorPayloadData.errorType = AUTH_FAILURE_TYPE_UNEXPECTED_ERROR;
                 auth.setUserLoggedInState(AUTH_STATE_FAILED);
 
                 userDetailContext.setUserDetails(errorPayloadData);
