@@ -4,6 +4,7 @@ import { Form, Input, Checkbox, Select, InputNumber, DatePicker } from "antd";
 import businessUnits from "../../../constants/BusinessUnits";
 import { PriceValidationContext } from '../PriceValidationContext'
 import temp from './../../../reducers/temp'
+import {getBffUrlConfig} from "../../../utils/Configs";
 
 const { Option } = Select;
 const validateMessages = {
@@ -66,7 +67,7 @@ const SearchForm = () => {
 
     // TODO: @sanjayaa remove temp response usage
   const priceRequestHandler = (requestData) => {
-      fetch('https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data', {
+      fetch(getBffUrlConfig().priceDataEndpoint, {
           method: 'POST',
           body: formRequestBody(requestData),
           headers: {'Content-Type': 'application/json'}
