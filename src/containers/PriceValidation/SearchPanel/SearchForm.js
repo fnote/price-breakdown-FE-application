@@ -71,7 +71,8 @@ const SearchForm = () => {
           method: 'POST',
           body: formRequestBody(requestData),
           headers: {'Content-Type': 'application/json'},
-          credentials: 'include'
+          credentials: 'include',
+          mode: 'no-cors'
       })
           .then(handleResponse)
           .then( resp => {
