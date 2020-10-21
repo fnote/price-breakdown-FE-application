@@ -79,18 +79,18 @@ function renderSiteInfo({ site, customerAccount, customerName, customerType, pri
             <div className="value bold">{priceZone}</div>
           </div>
         </div>
-{/*        <div className="block custname">
+        <div className="block custname">
           <Tooltip title={customerName} color="blue">
             <div className="value full-width-ellipsis">
               {customerName}
             </div>
           </Tooltip>
-        </div>*/}
+        </div>
       </section>
   );
 }
 
-function renderOrderInfo({ priceRequestDate, requestedQuantity, splitStatus }) {
+function renderOrderInfo({ priceRequestDate, quantity, splitStatus }) {
   return (
       <section className="order-info">
         <div className="block">
@@ -99,7 +99,7 @@ function renderOrderInfo({ priceRequestDate, requestedQuantity, splitStatus }) {
         </div>
         <div className="block">
           <label>QTY</label>
-          <div className="value bold">{requestedQuantity}</div>
+          <div className="value bold">{quantity}</div>
         </div>
         <div className="block">
           <label>Split</label>

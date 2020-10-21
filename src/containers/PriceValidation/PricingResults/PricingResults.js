@@ -7,8 +7,9 @@ import { PriceValidationContext } from '../PriceValidationContext'
 function PricingResults() {
     const priceValidationContext = useContext(PriceValidationContext);
     const priceData = priceValidationContext.priceData;
+    const response = priceValidationContext.response;
 
-    if (priceData.response) {
+    if (response) {
         return (
             <div className="pricing-results">
                 <div className="section-wrapper">

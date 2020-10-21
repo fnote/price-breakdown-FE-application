@@ -2,83 +2,79 @@ import React, {useState} from 'react'
 import {
     extractItemInfo,
     extractPricePoints,
-    extractSiteInfo,
     extractRequestInfo,
-    prepareDiscountPriceInfo,
-    prepareLocalSegmentPriceInfo,
-    prepareOrderUnitPriceInfo,
-    prepareStrikeThroughPriceInfo,
-    prepareVolumePricingInfo,
+    extractSiteInfo,
 } from "../../utils/PricingUtils";
-import temp from "../../reducers/temp";
 
 export const PriceValidationContext = React.createContext({
     priceData: {},
-    setPriceData: () => {}
-
+    setPriceData: () => {
+    }
 });
 
 const initialState = {
     response: null,
+    product:null,
     recentSearches: [],
-    error: null,
-    isLoading: false,
-    selectedBusinessUnit: { id: "067", name: "Philadelphia"},
-    localSegmentRefPriceSection: [],
-    strikeThroughPriceSection: [],
-    discountPriceSection: [],
-    orderNetPriceSection: [],
+    selectedBusinessUnit: {},
     item: null,
     pricePoints: null,
     site: null,
 };
 
 const mapSuccessResponse = (data) => {
-    const product = data.products[0];
+    const product = data.product;
 
     return {
         response: data,
-        error: null,
-        isLoading: false,
-        localSegmentRefPriceSection: prepareLocalSegmentPriceInfo(product),
-        strikeThroughPriceSection: prepareStrikeThroughPriceInfo(product),
-        discountPriceSection: prepareDiscountPriceInfo(product),
-        orderNetPriceSection: prepareOrderUnitPriceInfo(product),
-        ...prepareVolumePricingInfo(product),
-        ...extractItemInfo(product),
-        ...extractPricePoints(product),
-        ...extractSiteInfo(data, { id: "067", name: "Philadelphia"}),
-        ...extractRequestInfo(data)
+        product: product,
+        item: extractItemInfo(product),
+        pricePoints: extractPricePoints(product),
+        site: extractSiteInfo(data),
+        order: extractRequestInfo(data)
     };
 };
 
 const PriceValidationContextProvider = props => {
 
     const [priceDataState, setPriceData] = useState(initialState);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const [response, setResponse] = useState(null);
 
     const priceDataUpdateHandler = (data) => {
         console.log("Received data to context", data);
+        console.log("Current state", priceDataState);
 
-        let processedState = {
-            recentSearches: [],
-            selectedBusinessUnit: { id: "067", name: "Philadelphia"}
-        };
+        const processedState = mapSuccessResponse(data);
 
-        if (data.isLoading === undefined) {
-            processedState = { ...processedState, ...mapSuccessResponse(data) };
-        } else {
-            processedState = {... processedState, ...data };
-        }
-
+        console.log(">>>> SETTING STATE", processedState);
+        setIsLoading(false);
+        setError(null);
         setPriceData(processedState);
+        setResponse(data);
+    };
+
+    const errorUpdateHandler = (data) => {
+        console.log("Received error data to context", data);
+        console.log("Current state", priceDataState);
+        setIsLoading(false);
+        setError(data);
+        setResponse(null)
     };
 
     return (
-        <PriceValidationContext.Provider value={{setPriceData: priceDataUpdateHandler, priceData: priceDataState}}>
+        <PriceValidationContext.Provider value={{
+            setPriceData: priceDataUpdateHandler,
+            priceData: priceDataState,
+            setErrorData: errorUpdateHandler,
+            setIsLoading, isLoading,
+            error, setError,
+            response, setResponse
+        }}>
             {props.children}
         </PriceValidationContext.Provider>
     )
 };
-
 
 export default PriceValidationContextProvider;

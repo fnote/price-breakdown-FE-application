@@ -1,10 +1,10 @@
-import React, { useReducer, useContext } from "react";
+import React, { useContext } from "react";
+import moment from 'moment';
 import { Form, Input, Checkbox, Select, InputNumber, DatePicker } from "antd";
 import businessUnits from "../../../constants/BusinessUnits";
 import { PriceValidationContext } from '../PriceValidationContext'
-import temp from './../../../reducers/temp'
+import { getBusinessUnits } from '../PricingHelper'
 
-const { Option } = Select;
 const validateMessages = {
   required: "${label} is required!",
   types: {
@@ -15,68 +15,70 @@ const validateMessages = {
   },
 };
 
-function getBusinessUnits() {
+// Sample:
+// const initialValues = {quantity:1, site:'019', supc: '3183792', customer: '622548', date: moment(), split: false};
+const initialValues = {quantity:1, date: moment(), split: false};
 
-  const businessUnitOptions = [];
-  businessUnits.forEach((businessUnit => {
-    businessUnitOptions.push(
-        <Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.name}</Option>
-    )
-  }));
+const formRequestBody = (requestData) => {
+    return JSON.stringify({
+        businessUnitNumber: requestData.site,
+        customerAccount: requestData.customer,
+        priceRequestDate: requestData.date.format("YYYYMMDD"),
+        requestedQuantity: requestData.quantity,
+        product:
+            {
+                supc: `${requestData.supc}`,
+                splitFlag: !!requestData.split
+            }
 
-  return businessUnitOptions;
-}
+    });
+};
 
 const SearchForm = () => {
     const priceValidationContext = useContext(PriceValidationContext);
 
-    // const priceReducer = (currentState, action) => {
-    //     switch (action.type) {
-    //         case 'SET_RESPONSE':
-    //         {
-    //             console.log("Action with resp: ", action);
-    //             // priceValidationContext.setPriceData(action.payload);
-    //             return action.payload;
-    //         }
-    //
-    //         default :
-    //             throw Error("Should not reach this!")
-    //     }
-    // };
-
-    // const [priceDetails, dispatch] = useReducer(priceReducer, []);
-
-
     const onSubmit = (values) => {
-        priceValidationContext.setPriceData({ ...priceValidationContext.priceData, isLoading: true, error: null, requestParams: values, response: null });
+        priceValidationContext.setIsLoading(true);
+        priceValidationContext.setResponse(null);
         console.log(values);
         return priceRequestHandler(values);
   };
 
+    const handleResponse = (response) => {
+        return response.json()
+            .then((json) => {
+                if (response.ok) {
+                    return {success: true, data: json};
+                } else {
+                    return {success: false, data: json}
+                }
+            })
+    };
+
+    // TODO: @sanjayaa remove temp response usage
   const priceRequestHandler = (requestData) => {
-      fetch('http://internal-alb-cloud-pci-bff-exe-1912452817.us-east-1.elb.amazonaws.com/v1/pci-bff/pricing/pricing-data', {
+      fetch('http://internal-alb-cloud-pci-bff-DEV-2043817689.us-east-1.elb.amazonaws.com/v1/pci-bff/pricing/pricing-data', {
           method: 'POST',
-          body: JSON.stringify({
-              "businessUnitNumber": "001",
-              "customerAccount": "571549",
-              "priceRequestDate": "20200724",
-              "requestedQuantity": 12.00,
-              "products": [
-                  {
-                      "supc": "3183792",
-                      "splitFlag": false
-                  }
-              ]
-          }),
+          body: formRequestBody(requestData),
           headers: {'Content-Type': 'application/json'}
       })
-          .then(response => response.json())
-          .then( responseBody => {
-              // priceValidationContext.setPriceData(responseBody);
-              priceValidationContext.setPriceData(temp);
-              return null;
-          });
+          .then(handleResponse)
+          .then( resp => {
+              if (resp.success) {
+                  console.log("Response body", resp.data);
+                  priceValidationContext.setPriceData(resp.data);
+              } else {
+                  //
+                  console.error("Found error", resp);
+                  priceValidationContext.setErrorData(resp.data);
+              }
 
+              return null;
+          })
+          .catch((e) => {
+              console.error("Found error 2", e);
+              priceValidationContext.setErrorData(e);
+          });
   };
 
   return (
@@ -90,7 +92,7 @@ const SearchForm = () => {
             name="nest-messages"
             onFinish={onSubmit}
             validateMessages={validateMessages}
-            initialValues={{quantity:1, site:'002', itemnum: 1, customer: "1"}}
+            initialValues={initialValues}
         >
           <Form.Item
               name="site"
@@ -101,7 +103,7 @@ const SearchForm = () => {
                 },
               ]}>
             <Select placeholder="Select Site">
-              {getBusinessUnits()}
+              {getBusinessUnits(businessUnits)}
             </Select>
           </Form.Item>
           <Form.Item
@@ -109,29 +111,37 @@ const SearchForm = () => {
               label="Customer"
               rules={[
                   {
+                      pattern: '^[a-zA-Z0-9]+$',
+                      message: "Not a valid Customer ID"
+                  },
+                  {
                       required: true,
                   },
                   {
-                      whitespace: true,
-                      message: "Customer cannot be empty"
-                  },
+                      max: 14,
+                      message: 'Should be 14 characters max'
+                  }
               ]}>
             <Input/>
           </Form.Item>
           <Form.Item
-              name="itemnum"
+              name="supc"
               label="Item #"
               rules={[
                   {
-                      type: "number",
-                      message : "Not a valid number"
+                      pattern: '^[0-9]+$',
+                      message: "Not a valid Item ID"
                   },
                   {
-                    required: true
+                      required: true,
+                  },
+                  {
+                      max: 9,
+                      message: 'Should be 9 characters max'
                   }
               ]}
           >
-            <InputNumber/>
+            <Input/>
           </Form.Item>
           <Form.Item
               name="date"
@@ -144,6 +154,7 @@ const SearchForm = () => {
             <DatePicker/>
           </Form.Item>
           <Form.Item
+
               name="quantity"
               label="Quantity"
               rules={[
@@ -156,10 +167,13 @@ const SearchForm = () => {
                       },
                   })
               ]}>
-            <InputNumber defaultValue="1"/>
+            <InputNumber
+                min={1}
+                formatter={(value) => (value && !isNaN(value) ? Math.round(value) : value)}
+            />
           </Form.Item>
 
-          <Form.Item name="split" label="Split">
+          <Form.Item name="split" label="Split" valuePropName="checked">
             <Checkbox/>
           </Form.Item>
           <Form.Item className="search-btn-wrapper">
