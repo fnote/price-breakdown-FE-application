@@ -70,7 +70,8 @@ const SearchForm = () => {
       fetch(getBffUrlConfig().priceDataEndpoint, {
           method: 'POST',
           body: formRequestBody(requestData),
-          headers: {'Content-Type': 'application/json'}
+          headers: {'Content-Type': 'application/json'},
+          credentials: 'include'
       })
           .then(handleResponse)
           .then( resp => {
