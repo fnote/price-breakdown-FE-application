@@ -3,9 +3,8 @@ import moment from 'moment';
 import { Form, Input, Checkbox, Select, InputNumber, DatePicker } from "antd";
 import businessUnits from "../../../constants/BusinessUnits";
 import { PriceValidationContext } from '../PriceValidationContext'
-import temp from './../../../reducers/temp'
+import { getBusinessUnits } from '../PricingHelper'
 
-const { Option } = Select;
 const validateMessages = {
   required: "${label} is required!",
   types: {
@@ -16,16 +15,9 @@ const validateMessages = {
   },
 };
 
-const getBusinessUnits = () => {
-  const businessUnitOptions = [];
-  businessUnits.forEach((businessUnit => {
-    businessUnitOptions.push(
-        <Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.shortName}</Option>
-    )
-  }));
-
-  return businessUnitOptions;
-};
+// Sample:
+// const initialValues = {quantity:1, site:'019', supc: '3183792', customer: '622548', date: moment(), split: false};
+const initialValues = {quantity:1, date: moment(), split: false};
 
 const formRequestBody = (requestData) => {
     return JSON.stringify({
@@ -48,7 +40,6 @@ const SearchForm = () => {
     const onSubmit = (values) => {
         priceValidationContext.setIsLoading(true);
         priceValidationContext.setResponse(null);
-        // priceValidationContext.setPriceData({ ...priceValidationContext.priceData, error: null, requestParams: values, response: null });
         console.log(values);
         return priceRequestHandler(values);
   };
@@ -76,12 +67,10 @@ const SearchForm = () => {
               if (resp.success) {
                   console.log("Response body", resp.data);
                   priceValidationContext.setPriceData(resp.data);
-                  // priceValidationContext.setPriceData(temp);
               } else {
                   //
                   console.error("Found error", resp);
                   priceValidationContext.setErrorData(resp.data);
-                  // priceValidationContext.setPriceData(temp);
               }
 
               return null;
@@ -89,7 +78,6 @@ const SearchForm = () => {
           .catch((e) => {
               console.error("Found error 2", e);
               priceValidationContext.setErrorData(e);
-              // priceValidationContext.setPriceData(temp);
           });
   };
 
@@ -104,7 +92,7 @@ const SearchForm = () => {
             name="nest-messages"
             onFinish={onSubmit}
             validateMessages={validateMessages}
-            initialValues={{quantity:10, site:'019', supc: '3183792', customer: '622548', date: moment(), split: false}}
+            initialValues={initialValues}
         >
           <Form.Item
               name="site"
@@ -115,7 +103,7 @@ const SearchForm = () => {
                 },
               ]}>
             <Select placeholder="Select Site">
-              {getBusinessUnits()}
+              {getBusinessUnits(businessUnits)}
             </Select>
           </Form.Item>
           <Form.Item
@@ -129,6 +117,10 @@ const SearchForm = () => {
                   {
                       required: true,
                   },
+                  {
+                      max: 14,
+                      message: 'Should be 14 characters max'
+                  }
               ]}>
             <Input/>
           </Form.Item>
@@ -143,6 +135,10 @@ const SearchForm = () => {
                   {
                       required: true,
                   },
+                  {
+                      max: 9,
+                      message: 'Should be 9 characters max'
+                  }
               ]}
           >
             <Input/>
@@ -158,6 +154,7 @@ const SearchForm = () => {
             <DatePicker/>
           </Form.Item>
           <Form.Item
+
               name="quantity"
               label="Quantity"
               rules={[
@@ -171,9 +168,8 @@ const SearchForm = () => {
                   })
               ]}>
             <InputNumber
-                formatter={(value) => {
-                    return isNaN(value) ? value : Math.round(value);
-                }}
+                min={1}
+                formatter={(value) => (value && !isNaN(value) ? Math.round(value) : value)}
             />
           </Form.Item>
 
