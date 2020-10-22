@@ -22,10 +22,10 @@ export const getBffUrlConfig = () => {
         CONFIG.logOutRedirectionUrl = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/auth/logout';
         CONFIG.userDetailsUrl = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/auth/user-details';
     } else {
-        CONFIG.priceDataEndpoint = 'http://localhost:4000/dev/v1/pci-bff/pricing/pricing-data';
-        CONFIG.loginRedirectionUrl = 'http://localhost:4000/dev/v1/pci-bff/auth/login';
-        CONFIG.logOutRedirectionUrl = 'http://localhost:4000/dev/v1/pci-bff/auth/logout';
-        CONFIG.userDetailsUrl = 'http://localhost:4000/dev/v1/pci-bff/auth/user-details';
+        CONFIG.priceDataEndpoint = 'http://localhost:4000/local/v1/pci-bff/pricing/pricing-data';
+        CONFIG.loginRedirectionUrl = 'http://localhost:4000/local/v1/pci-bff/auth/login';
+        CONFIG.logOutRedirectionUrl = 'http://localhost:4000/local/v1/pci-bff/auth/logout';
+        CONFIG.userDetailsUrl = 'http://localhost:4000/local/v1/pci-bff/auth/user-details';
 
     }
     return CONFIG;
