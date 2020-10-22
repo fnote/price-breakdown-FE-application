@@ -74,8 +74,7 @@ const SearchForm = () => {
               'Accept': 'application/json, text/plain, */*',
               'Content-Type': 'application/json'
           },
-          credentials: 'include',
-          mode: 'no-cors'
+          credentials: 'include'
       })
           .then(handleResponse)
           .then( resp => {
