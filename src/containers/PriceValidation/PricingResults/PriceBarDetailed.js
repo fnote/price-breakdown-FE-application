@@ -68,7 +68,7 @@ const renderTableRow = ({ description: { rangeStart, rangeEnd, rangeConnector },
 );
 
 const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => {
-    return (volumePricingTiers && volumePricingTiers.size > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null;
+    return (volumePricingTiers && volumePricingTiers.length > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null;
 };
 
 const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (

@@ -180,11 +180,11 @@ export const prepareDiscountPriceInfo = ({agreements, customerPrequalifiedPrice}
 
 export const isOfflineAgreement = ({applicationCode}) => applicationCode === AGREEMENT_CODE_L || applicationCode === AGREEMENT_CODE_T;
 
-export const prepareOrderUnitPriceInfo = ({agreements, netPrice}) => {
+export const prepareOrderUnitPriceInfo = ({agreements, unitPrice}) => {
     const headerRow = {
         description: DESCRIPTION_ORDER_NET_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
-        calculatedValue: formatPrice(netPrice)
+        calculatedValue: formatPrice(unitPrice)
     };
 
     const offlineAgreements = agreements.filter(agreement => isOfflineAgreement(agreement))

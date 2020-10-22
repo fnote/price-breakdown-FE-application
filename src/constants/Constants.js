@@ -16,7 +16,7 @@ export const PRICE_SOURCE_SYSTEM = 'System';
 export const PRICE_SOURCE_SUS = 'SUS';
 
 export const DESCRIPTION_LOCAL_SEGMENT_REF_PRICE = 'Local Segment Reference Price (Gross)';
-export const DESCRIPTION_STRIKE_THROUGH_PRICE = 'Strike Through Price';
+export const DESCRIPTION_STRIKE_THROUGH_PRICE = 'Customer Reference Price';
 export const DESCRIPTION_DISCOUNT_PRICE = 'Discount Price';
 export const DESCRIPTION_ORDER_NET_PRICE = 'Order Unit Price';
 export const DESCRIPTION_CUSTOMER_NET_PRICE = 'Customer Net Price';
