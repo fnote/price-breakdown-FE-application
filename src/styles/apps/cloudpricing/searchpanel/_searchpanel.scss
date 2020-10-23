@@ -103,6 +103,9 @@
         border-radius: 0.8rem;
       }
     }
+    .ant-input-number, .ant-picker{
+      width: 100%;
+    }
     @include breakpoint(xs) {
       .ant-select,
       .ant-select-selection-item {

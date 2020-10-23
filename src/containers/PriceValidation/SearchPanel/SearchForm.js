@@ -154,7 +154,6 @@ const SearchForm = () => {
             <DatePicker/>
           </Form.Item>
           <Form.Item
-
               name="quantity"
               label="Quantity"
               rules={[
