@@ -17,9 +17,9 @@ const SearchPanel = () => {
   return (
     <div
       className={openPanel ? "searchpanel show" : "searchpanel"}
-      onClick={mobilePanelToggle}>
+      >
       <SearchForm />
-      <div className="mobile-toggler"><CaretRightOutlined /></div>
+      <div className="mobile-toggler" onClick={mobilePanelToggle}><CaretRightOutlined /></div>
       {/*<RecentSearches />*/}
     </div>
   );
