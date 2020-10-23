@@ -23,6 +23,19 @@
     transition: ease-in-out 150ms all;
     &.show{
       left: 0;
+      .mobile-toggler{
+        right: 1rem;
+      }
+    }
+    .mobile-toggler{
+      position: absolute;
+      right: 0;
+      top: 2rem;
+      .anticon{
+        color: $textstandard;
+        font-size: 1.5rem;
+        margin-right: -0.4rem;
+      }
     }
   }
 

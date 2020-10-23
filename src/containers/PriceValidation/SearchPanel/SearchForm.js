@@ -86,7 +86,7 @@ const SearchForm = () => {
       <div className="panel-header">
         <i className="icon fi flaticon-list"/>
         Search
-      </div>
+      </div>      
       <div className="search-form">
         <Form
             name="nest-messages"
