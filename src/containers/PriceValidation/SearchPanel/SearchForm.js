@@ -102,7 +102,7 @@ const SearchForm = () => {
                   required: true,
                 },
               ]}>
-            <Select placeholder="Select Site">
+            <Select placeholder="Select Site" dropdownMatchSelectWidth={false} showSearch>
               {getBusinessUnits(businessUnits)}
             </Select>
           </Form.Item>
@@ -156,6 +156,7 @@ const SearchForm = () => {
           <Form.Item
               name="quantity"
               label="Quantity"
+              min="1"
               rules={[
                   () => ({
                       validator(rule, value) {
