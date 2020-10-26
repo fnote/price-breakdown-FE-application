@@ -34,7 +34,7 @@ class AccountWidget extends React.Component {
   render() {
     const { visible } = this.state;
     const userDetailsObj = this.context.userDetailsData.userDetails;
-    const displayName = Object.keys(userDetailsObj).length !== 0 ? `${userDetailsObj.lastName} ${userDetailsObj.firstName}` : "N/A";
+    const displayName = Object.keys(userDetailsObj).length !== 0 ? `${userDetailsObj.firstName} ${userDetailsObj.lastName}` : "N/A";
     return (
       <div className={visible ? "account-widget open" : "account-widget"}>
         <div
