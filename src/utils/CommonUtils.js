@@ -1,3 +1,9 @@
+/**
+ * @author Tharuka Jayalath
+ * (C) 2020, Sysco Corporation
+ * Created: 10/26/20. Mon 2020 15:00
+ */
+
 const extractNames = (bunit_name = '') => {
     const names = bunit_name.split('Sysco '); 
     if (names.length === 2) {
