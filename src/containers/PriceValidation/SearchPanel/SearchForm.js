@@ -40,8 +40,6 @@ const SearchForm = () => {
     const userDetailContext = useContext(UserDetailContext);
     const { userDetails: { businessUnitMap } } = userDetailContext.userDetailsData;
 
-    console.log(userDetailContext.userDetailsData);
-
     const onSubmit = (values) => {
         priceValidationContext.setIsLoading(true);
         priceValidationContext.setResponse(null);
