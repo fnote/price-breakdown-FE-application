@@ -1,21 +1,23 @@
 import React, {Fragment} from 'react';
-import {Provider} from "react-redux";
-import store from './reducers';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import PriceValidation from './containers/PriceValidation/PriceValidation';
+import ApplicationBase from './containers/ApplicationBase';
+import UserDetailContextProvider from './containers/UserDetailContext';
+import AppLoaderContextProvider from './components/AppLoderContext';
 
 function AppRoute() {
-    return (
-        <Provider store={store}>
-            <Fragment>
-                <Router>
-                    <Switch>
-                        <Route path="/" component={PriceValidation}/>
-                    </Switch>
-                </Router>
-            </Fragment>
-        </Provider>
-    );
+  return (
+        <Fragment>
+          <Router>
+                  <Switch>
+                      <UserDetailContextProvider>
+                          <AppLoaderContextProvider>
+                      <Route path="/" component={ApplicationBase}/>
+                          </AppLoaderContextProvider>
+                      </UserDetailContextProvider>
+                  </Switch>
+          </Router>
+        </Fragment>
+  );
 }
 
 export default AppRoute;
