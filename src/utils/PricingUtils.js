@@ -36,12 +36,6 @@ import {
     VOLUME_TIER_RANGE_END_ABOVE
 } from '../constants/Constants';
 
-import businessUnits from '../constants/BusinessUnits'
-
-export const formatBusinessUnit = (businessUnitId) => {
-    const businessUnit = businessUnits.get(businessUnitId);
-    return (businessUnit) ? `${businessUnit.id} - ${businessUnit.name}` : businessUnitId;
-};
 export const formatPrice = value => value > 0 ? `${CURRENCY_SYMBOL_USD}${value.toFixed(2)}`
     : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(2)}`;
 
@@ -110,7 +104,7 @@ export const extractItemInfo = ({id, name, brand, pack, size, stockIndicator, ca
 });
 
 export const extractSiteInfo = ({customerAccount, customerName, customerType, businessUnitNumber, product: { priceZone, priceZoneId }} ) => ({
-    site: formatBusinessUnit(businessUnitNumber),
+    businessUnitNumber,
     customerAccount,
     customerName: customerName,
     customerType,

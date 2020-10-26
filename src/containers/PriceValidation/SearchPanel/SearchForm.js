@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import moment from 'moment';
 import { Form, Input, Checkbox, Select, InputNumber, DatePicker } from "antd";
-import businessUnits from "../../../constants/BusinessUnits";
-import { PriceValidationContext } from '../PriceValidationContext'
+import { PriceValidationContext } from '../PriceValidationContext';
+import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper'
 import {getBffUrlConfig} from "../../../utils/Configs";
 
@@ -37,6 +37,10 @@ const formRequestBody = (requestData) => {
 
 const SearchForm = () => {
     const priceValidationContext = useContext(PriceValidationContext);
+    const userDetailContext = useContext(UserDetailContext);
+    const { userDetails: { businessUnitMap } } = userDetailContext.userDetailsData;
+
+    console.log(userDetailContext.userDetailsData);
 
     const onSubmit = (values) => {
         priceValidationContext.setIsLoading(true);
@@ -104,7 +108,7 @@ const SearchForm = () => {
                 },
               ]}>
             <Select placeholder="Select Site">
-              {getBusinessUnits(businessUnits)}
+              {getBusinessUnits(businessUnitMap)}
             </Select>
           </Form.Item>
           <Form.Item

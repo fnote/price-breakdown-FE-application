@@ -1,5 +1,6 @@
 import React from "react";
 import { Tooltip } from "antd";
+import { formatBusinessUnit } from "../../../utils/CommonUtils";
 // import sampleitemimage from "../../../styles/images/sampleitemimage.png";
 
 function renderItemInfo({ id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight }) {
@@ -54,7 +55,8 @@ function renderItemInfo({ id, name, brand, pack, size, stockIndicator, catchWeig
   );
 }
 
-function renderSiteInfo({ site, customerAccount, customerName, customerType, priceZone }) {
+function renderSiteInfo({ businessUnitNumber, customerAccount, customerName, customerType, priceZone }, { businessUnitMap }) {
+  const site = formatBusinessUnit(businessUnitNumber, businessUnitMap);
   return (
       <section className="site-info">
         <div className="block">
@@ -112,11 +114,11 @@ function renderOrderInfo({ priceRequestDate, quantity, splitStatus }) {
 function PricingResultsMeta(props) {
   console.log("########################");
   console.log(props);
-  const { priceData } = props;
+  const { priceData, userData } = props;
   return (
     <div className="pricing-result-meta">
       { renderItemInfo(priceData.item) }
-      { renderSiteInfo(priceData.site) }
+      { renderSiteInfo(priceData.site, userData) }
       { renderOrderInfo(priceData.order) }
     </div>
   );
