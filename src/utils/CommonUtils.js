@@ -5,7 +5,7 @@
  */
 
 const extractNames = (bunit_name = '') => {
-    const names = bunit_name.split('Sysco '); 
+    const names = bunit_name.split('Sysco ');
     if (names.length === 2) {
         return { name: bunit_name, shortName: names[1] };
     }
@@ -17,7 +17,7 @@ const mapBusinessUnit = ({ bunit_id, bunit_name }) => ({
     ...extractNames(bunit_name)
 });
 
-export const createBusinessUnitMap = ({ authorizedBunitList }) => {  
+export const createBusinessUnitMap = ({ authorizedBunitList }) => { 
     if (authorizedBunitList && authorizedBunitList instanceof Array) {
         const mappedBusinessUnits = authorizedBunitList.map(({ bunit_id, bunit_name }) => [
             bunit_id, mapBusinessUnit({ bunit_id, bunit_name })
