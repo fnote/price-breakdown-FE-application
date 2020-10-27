@@ -22,6 +22,8 @@ export const DESCRIPTION_ORDER_NET_PRICE = 'Order Unit Price';
 export const DESCRIPTION_CUSTOMER_NET_PRICE = 'Customer Net Price';
 export const DESCRIPTION_ROUNDING = 'Rounding';
 export const DESCRIPTION_VOLUME_TIERS = 'Item/Order Specific promotions';
+export const OFF_INVOICE_ADJUSTMENTS = 'Off-Invoice Adjustments';
+
 
 export const VOLUME_TIER_OPERATOR_BETWEEN = "Between";
 export const VOLUME_TIER_RANGE_END_ABOVE = "above";
@@ -62,5 +64,5 @@ export const AUTH_FAILURE_TYPE_UNEXPECTED_ERROR = 'UNEXPECTED_ERROR';
 
 export const UNEXPECTED_ERROR_CODE = 500;
 
-export const PRICE_FRACTION_DIGITS = 2;
-export const PERCENTAGE_FRACTION_DIGITS = 2;
+export const PRICE_FRACTION_DIGITS = 3;
+export const PERCENTAGE_FRACTION_DIGITS = 3;

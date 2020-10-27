@@ -35,7 +35,8 @@ import {
     VOLUME_TIER_RANGE_CONNECTOR_TO,
     VOLUME_TIER_RANGE_END_ABOVE,
     PRICE_FRACTION_DIGITS,
-    PERCENTAGE_FRACTION_DIGITS
+    PERCENTAGE_FRACTION_DIGITS,
+    OFF_INVOICE_ADJUSTMENTS
 } from '../constants/Constants';
 
 /**
@@ -87,6 +88,16 @@ export const mapAgreementToDataRow = ({id, description, percentageAdjustment, pr
         calculatedValue: formattedPriceAdjustment,
         validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
         source
+    };
+};
+
+export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}) => {
+    return {
+        id,
+        description: OFF_INVOICE_ADJUSTMENTS,
+        adjustmentValue: formatPrice(price),
+        calculatedValue: '',
+        validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
     };
 };
 
@@ -170,15 +181,22 @@ export const prepareStrikeThroughPriceInfo = ({discounts, customerReferencePrice
 
 export const isApplyToPriceOrBaseAgreement = ({applicationCode}) => applicationCode === AGREEMENT_CODE_P || applicationCode === AGREEMENT_CODE_B;
 
-export const prepareDiscountPriceInfo = ({agreements, customerPrequalifiedPrice}) => {
+export const prepareDiscountPriceInfo = ({agreements, customerPrequalifiedPrice, exception}) => {
     const headerRow = {
         description: DESCRIPTION_DISCOUNT_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
         calculatedValue: formatPrice(customerPrequalifiedPrice)
     };
 
-    const appliedAgreements = agreements.filter(agreement => isApplyToPriceOrBaseAgreement(agreement))
+    let appliedAgreements = agreements.filter(agreement => isApplyToPriceOrBaseAgreement(agreement))
         .map(agreement => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS));
+    appliedAgreements = appliedAgreements ? appliedAgreements : [];
+
+    const exceptionRow = mapExceptionToDataRow(exception);
+
+    if(exceptionRow) {
+        appliedAgreements.push(exceptionRow)
+    }
 
     return [headerRow, ...appliedAgreements];
 };
