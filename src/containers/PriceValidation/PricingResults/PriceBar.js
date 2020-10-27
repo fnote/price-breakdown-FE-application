@@ -1,12 +1,12 @@
 import React from "react";
-import { getPriceUnitBySplitFlag } from '../../../utils/PricingUtils';
+import { getPriceUnitBySplitFlag, formatPriceWithoutCurrency } from '../../../utils/PricingUtils';
 import { META_DATA_PRICE_BAR, LABEL_CUSTOMER_NET_PRICE } from '../../../constants/Constants';
 
 const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true }, pricingData) => (
     <section className={styleClass}>
         <label>{label}</label>
         <div className="price-block">
-            <div className="value">{pricingData[valueKey]}</div>
+            <div className="value">{formatPriceWithoutCurrency(pricingData[valueKey])}</div>
             <div className="unit-block">
                 { insertDivider && <div className="divider"/>}
                 <div className="unit">/ {getPriceUnitBySplitFlag(pricingData)}</div>
