@@ -4,6 +4,7 @@ import { Form, Input, Checkbox, Select, InputNumber, DatePicker } from "antd";
 import businessUnits from "../../../constants/BusinessUnits";
 import { PriceValidationContext } from '../PriceValidationContext'
 import { getBusinessUnits } from '../PricingHelper'
+import {getBffUrlConfig} from "../../../utils/Configs";
 
 const validateMessages = {
   required: "${label} is required!",
@@ -55,12 +56,15 @@ const SearchForm = () => {
             })
     };
 
-    // TODO: @sanjayaa remove temp response usage
   const priceRequestHandler = (requestData) => {
-      fetch('http://internal-alb-cloud-pci-bff-DEV-2043817689.us-east-1.elb.amazonaws.com/v1/pci-bff/pricing/pricing-data', {
+      fetch(getBffUrlConfig().priceDataEndpoint, {
           method: 'POST',
           body: formRequestBody(requestData),
-          headers: {'Content-Type': 'application/json'}
+          headers: {
+              'Accept': 'application/json, text/plain, */*',
+              'Content-Type': 'application/json'
+          },
+          credentials: 'include'
       })
           .then(handleResponse)
           .then( resp => {
@@ -68,15 +72,12 @@ const SearchForm = () => {
                   console.log("Response body", resp.data);
                   priceValidationContext.setPriceData(resp.data);
               } else {
-                  //
-                  console.error("Found error", resp);
                   priceValidationContext.setErrorData(resp.data);
               }
 
               return null;
           })
           .catch((e) => {
-              console.error("Found error 2", e);
               priceValidationContext.setErrorData(e);
           });
   };
