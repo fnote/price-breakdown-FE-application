@@ -87,7 +87,7 @@ const SearchForm = () => {
       <div className="panel-header">
         <i className="icon fi flaticon-list"/>
         Search
-      </div>
+      </div>      
       <div className="search-form">
         <Form
             name="nest-messages"
@@ -103,7 +103,7 @@ const SearchForm = () => {
                   required: true,
                 },
               ]}>
-            <Select placeholder="Select Site">
+            <Select placeholder="Select Site" dropdownMatchSelectWidth={false} showSearch>
               {getBusinessUnits(businessUnits)}
             </Select>
           </Form.Item>
@@ -155,9 +155,9 @@ const SearchForm = () => {
             <DatePicker/>
           </Form.Item>
           <Form.Item
-
               name="quantity"
               label="Quantity"
+              min="1"
               rules={[
                   () => ({
                       validator(rule, value) {

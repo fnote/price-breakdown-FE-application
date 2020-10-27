@@ -9,14 +9,14 @@
   section {
     @include flexbox(1 1 auto, column, flex-start, flex-start);
     border-left: 1px dashed lighten($textstandard, 15%);
-    padding:0 1.5rem 1rem 0;
+    padding: 0 1.5rem 1rem 0;
     min-height: 14rem;
     @include breakpoint(xs) {
       @include flexbox(0 0 auto, column, flex-start, flex-start);
       // border-top: 1px dashed lighten($textstandard, 15%);
-      width: 100% !important;      
+      width: 100% !important;
       min-height: auto;
-      & + section{
+      & + section {
         padding-top: 1rem;
       }
     }
@@ -44,21 +44,29 @@
             max-width: 80vw;
           }
         }
-        &.brand{
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          max-width: 10vw;
-          @include breakpoint(xs) {
-            max-width: 20vw;
-          }
-        }
+        
       }
       &.row {
         @include flexbox(0 0 auto, row, flex-start, flex-start);
         .sub-block {
           @include flexbox(1 1 auto, column, flex-start, flex-start);
           padding-right: 0.4rem;
+          width: 10vw;
+          @include breakpoint(xs) {
+            width: auto;
+          }
+          &.stock, &.brand  {
+            width: 15vw;
+          }
+          &.brand .value {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 13vw;
+            @include breakpoint(xs) {
+              max-width: 20vw;
+            }
+          }
         }
       }
     }
@@ -95,11 +103,10 @@
         }
       }
     }
-    &.order-info{
+    &.order-info {
       @include breakpoint(xs) {
         @include flexbox(0 0 auto, row, flex-start, flex-start);
       }
     }
   }
 }
-
