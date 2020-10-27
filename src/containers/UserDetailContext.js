@@ -25,9 +25,9 @@ const UserDetailContextProvider = props => {
     const [userDetails, setUserDetails] = useState(initialState);
 
     const fetchUserDetailsHandler = (newStateData) => {
-        const { userDetails } = newStateData;
-        if (userDetails && userDetails.authorizedBunitList) {
-            setUserDetails({ ...newStateData, businessUnitMap: createBusinessUnitMap(userDetails) })
+        const { userDetails: newUserDetails } = newStateData;
+        if (newUserDetails && newUserDetails.authorizedBunitList) {
+            setUserDetails({ ...newStateData, businessUnitMap: createBusinessUnitMap(newUserDetails) })
         } else {
             setUserDetails(newStateData);
         }

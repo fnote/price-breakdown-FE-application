@@ -63,7 +63,7 @@ const SearchStatuses = () => {
       const code = priceValidationContext.error.errorCode;
       const message = priceValidationContext.error.cause;
 
-      if(code && message) {
+      if (code && message) {
           return renderError({ code, message });
       }
 

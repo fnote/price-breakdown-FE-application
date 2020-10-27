@@ -1,15 +1,10 @@
 import React from "react";
 import { Tooltip } from "antd";
 import { formatBusinessUnit } from "../../../utils/CommonUtils";
-// import sampleitemimage from "../../../styles/images/sampleitemimage.png";
 
 function renderItemInfo({ id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight }) {
   return (
       <section className="item-info">
-{/*        <div
-            className="item-image"
-            style={{ backgroundImage: "url(" + sampleitemimage + ")" }}/>*/}
-
         <div className="item-info-block">
           <div className="block">
             <label>Item</label>

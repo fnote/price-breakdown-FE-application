@@ -4,12 +4,14 @@
  * Created: 10/26/20. Mon 2020 15:00
  */
 
-const extractNames = (bunit_name = '') => {
-    const names = bunit_name.split('Sysco ');
+const BUSINESS_UNIT_NAME_SPLITTER = 'Sysco ';
+
+const extractNames = (businessUnitName = '', splitter = BUSINESS_UNIT_NAME_SPLITTER) => {
+    const names = businessUnitName.split(splitter);
     if (names.length === 2) {
-        return { name: bunit_name, shortName: names[1] };
+        return { name: businessUnitName, shortName: names[1] };
     }
-    return { name: bunit_name, shortName: bunit_name };
+    return { name: businessUnitName, shortName: businessUnitName };
 };
 
 const mapBusinessUnit = ({ bunit_id, bunit_name }) => ({
