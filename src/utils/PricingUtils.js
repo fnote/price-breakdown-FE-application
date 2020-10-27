@@ -36,7 +36,7 @@ import {
     VOLUME_TIER_RANGE_END_ABOVE,
     PRICE_FRACTION_DIGITS,
     PERCENTAGE_FRACTION_DIGITS,
-    OFF_INVOICE_ADJUSTMENTS
+    DESCRIPTION_EXCEPTION
 } from '../constants/Constants';
 
 /**
@@ -91,15 +91,20 @@ export const mapAgreementToDataRow = ({id, description, percentageAdjustment, pr
     };
 };
 
-export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}) => {
+export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}, customerPrequalifiedPrice) => {
+    const formattedCalculatedAdjustment = formatPrice(calculateExceptionAdjustment(price, customerPrequalifiedPrice))
     return {
         id,
-        description: OFF_INVOICE_ADJUSTMENTS,
+        description: DESCRIPTION_EXCEPTION,
         adjustmentValue: formatPrice(price),
-        calculatedValue: '',
+        calculatedValue: formattedCalculatedAdjustment,
         validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
     };
 };
+
+const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => {
+    return  exceptionPrice - customerPrequalifiedPrice
+}
 
 export const mapVolumeTierToTableRow = ({eligibility: {operator, lowerBound, upperBound}, discounts, isApplicable}) => ({
     description: {
@@ -188,17 +193,19 @@ export const prepareDiscountPriceInfo = ({agreements, customerPrequalifiedPrice,
         calculatedValue: formatPrice(customerPrequalifiedPrice)
     };
 
-    let appliedAgreements = agreements.filter(agreement => isApplyToPriceOrBaseAgreement(agreement))
+    let appliedAgreementsOrException = agreements.filter(agreement => isApplyToPriceOrBaseAgreement(agreement))
         .map(agreement => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS));
-    appliedAgreements = appliedAgreements ? appliedAgreements : [];
+    appliedAgreementsOrException = appliedAgreementsOrException ? appliedAgreementsOrException : [];
 
-    const exceptionRow = mapExceptionToDataRow(exception);
+    if(exception) {
+        const exceptionRow = mapExceptionToDataRow(exception, customerPrequalifiedPrice);
 
-    if(exceptionRow) {
-        appliedAgreements.push(exceptionRow)
+        if (exceptionRow) {
+            appliedAgreementsOrException.push(exceptionRow)
+        }
     }
 
-    return [headerRow, ...appliedAgreements];
+    return [headerRow, ...appliedAgreementsOrException];
 };
 
 export const isOfflineAgreement = ({applicationCode}) => applicationCode === AGREEMENT_CODE_L || applicationCode === AGREEMENT_CODE_T;

@@ -22,7 +22,7 @@ export const DESCRIPTION_ORDER_NET_PRICE = 'Order Unit Price';
 export const DESCRIPTION_CUSTOMER_NET_PRICE = 'Customer Net Price';
 export const DESCRIPTION_ROUNDING = 'Rounding';
 export const DESCRIPTION_VOLUME_TIERS = 'Item/Order Specific promotions';
-export const OFF_INVOICE_ADJUSTMENTS = 'Off-Invoice Adjustments';
+export const DESCRIPTION_EXCEPTION = 'Exception Deal';
 
 
 export const VOLUME_TIER_OPERATOR_BETWEEN = "Between";
