@@ -4,11 +4,13 @@ const { Option } = Select;
 
 export const getBusinessUnits = (businessUnitsMap) => {
     const businessUnitOptions = [];
-    businessUnitsMap.forEach((businessUnit => {
-        businessUnitOptions.push(
-            <Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.shortName}</Option>
-        )
-    }));
+    if (businessUnitsMap) {
+        businessUnitsMap.forEach((businessUnit => {
+            businessUnitOptions.push(
+                <Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.shortName}</Option>
+            )
+        }));
+    }
 
     return businessUnitOptions;
 };
