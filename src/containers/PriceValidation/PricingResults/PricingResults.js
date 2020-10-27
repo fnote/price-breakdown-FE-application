@@ -11,13 +11,13 @@ function PricingResults() {
     const response = priceValidationContext.response;
 
     const userDetailContext = useContext(UserDetailContext);
-    const { userDetails } = userDetailContext.userDetailsData;
+    const { userDetailsData } = userDetailContext;
 
     if (response) {
         return (
             <div className="pricing-results">
                 <div className="section-wrapper">
-                    <PricingResultsMeta priceData={priceData} userData={userDetails}/>
+                    <PricingResultsMeta priceData={priceData} userData={userDetailsData}/>
                     <PriceBar priceData={priceData}/>
                     <PriceBarDetailed priceData={priceData}/>
                 </div>
