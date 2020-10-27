@@ -2,7 +2,7 @@ export const LABEL_CUSTOMER_NET_PRICE = 'CUSTOMER NET PRICE';
 
 export const META_DATA_PRICE_BAR = [
     { label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1' },
-    { label: 'STRIKE THROUGH PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2' },
+    { label: 'CUSTOMER REFERENCE PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2' },
     { label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3' },
     { label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right' },
     { label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false }
@@ -16,7 +16,7 @@ export const PRICE_SOURCE_SYSTEM = 'System';
 export const PRICE_SOURCE_SUS = 'SUS';
 
 export const DESCRIPTION_LOCAL_SEGMENT_REF_PRICE = 'Local Segment Reference Price (Gross)';
-export const DESCRIPTION_STRIKE_THROUGH_PRICE = 'Customer Reference Price';
+export const DESCRIPTION_CUSTOMER_REFERENCE_PRICE = 'Customer Reference Price';
 export const DESCRIPTION_DISCOUNT_PRICE = 'Discount Price';
 export const DESCRIPTION_ORDER_NET_PRICE = 'Order Unit Price';
 export const DESCRIPTION_CUSTOMER_NET_PRICE = 'Customer Net Price';
@@ -61,3 +61,6 @@ export const AUTH_FAILURE_TYPE_UNAUTHENTICATED = 'UNAUTHENTICATED';
 export const AUTH_FAILURE_TYPE_UNEXPECTED_ERROR = 'UNEXPECTED_ERROR';
 
 export const UNEXPECTED_ERROR_CODE = 500;
+
+export const PRICE_FRACTION_DIGITS = 2;
+export const PERCENTAGE_FRACTION_DIGITS = 2;

@@ -24,15 +24,16 @@ const renderHeaderRow = ({ description, validityPeriod, adjustmentValue, calcula
     </div>
 );
 
-const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, validityPeriod, zone }, { className }) => (
+const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, validityPeriod, zone, id }, { className }) => (
     <div className="row sub-row">
       <div className={className}>
         <div className="subrow-title">
           <i className="icon fi flaticon-circle" />
           {description}
         </div>
-          {/*TODO @sanjayaa: see whether this needs to be removed*/}
+          {/*TODO @sanjayaa: see whether zone needs to be removed*/}
           {zone ? <div className="subrow-sub-title">{zone}</div> : null}
+          {id ? <div className="subrow-sub-title">ID: {id}</div> : null}
           {validityPeriod ? <div className="subrow-sub-title">{validityPeriod}</div> : null}
       </div>
         {adjustmentValue ? <div className="value-col">{adjustmentValue}</div> : null}
@@ -87,7 +88,7 @@ function PriceBarDetailed({ priceData: { product }}) {
     const volumePricingTiers = prepareVolumePricingTiers(product);
     const volumePricingHeaderRow = prepareVolumePricingHeaderRow(product);
     const volumeTierRows = generateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers);
-    const orderNetPriceSection = prepareOrderUnitPriceInfo(product);
+    const orderUnitPriceSection = prepareOrderUnitPriceInfo(product);
     const discountPriceSection = prepareDiscountPriceInfo(product);
     const strikeThroughPriceSection = prepareStrikeThroughPriceInfo(product);
     const localSegmentRefPriceSection = prepareLocalSegmentPriceInfo(product);
@@ -111,7 +112,7 @@ function PriceBarDetailed({ priceData: { product }}) {
           {renderDetailedSection(discountPriceSection)}
         </div>
         <div className="block group4">
-          {renderDetailedSection(orderNetPriceSection)}
+          {renderDetailedSection(orderUnitPriceSection)}
         </div>
           <div className="block group5">
               {renderDetailedSection(customerNetPriceInfo)}
