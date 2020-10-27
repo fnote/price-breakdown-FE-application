@@ -16,7 +16,7 @@ function renderItemInfo({ id, name, brand, pack, size, stockIndicator, catchWeig
             </Tooltip>
           </div>
           <div className="block row">
-            <div className="sub-block">
+            <div className="sub-block brand">
               <label>BRAND</label>
               <Tooltip title={brand} color="blue">
                 <div className="value brand">{brand}</div>
@@ -32,7 +32,7 @@ function renderItemInfo({ id, name, brand, pack, size, stockIndicator, catchWeig
             </div>
           </div>
           <div className="block row">
-            <div className="sub-block">
+            <div className="sub-block stock">
               <label>STOCK</label>
               <div className="value">{stockIndicator}</div>
             </div>

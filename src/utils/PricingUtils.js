@@ -16,7 +16,7 @@ import {
     DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
     DESCRIPTION_ORDER_NET_PRICE,
     DESCRIPTION_ROUNDING,
-    DESCRIPTION_STRIKE_THROUGH_PRICE,
+    DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
     DESCRIPTION_VOLUME_TIERS,
     DISCOUNT_CASE_VOLUME,
     DISCOUNT_NAMES_MAP,
@@ -33,15 +33,25 @@ import {
     VOLUME_TIER_OPERATOR_BETWEEN,
     VOLUME_TIER_RANGE_CONNECTOR_AND,
     VOLUME_TIER_RANGE_CONNECTOR_TO,
-    VOLUME_TIER_RANGE_END_ABOVE
+    VOLUME_TIER_RANGE_END_ABOVE,
+    PRICE_FRACTION_DIGITS,
+    PERCENTAGE_FRACTION_DIGITS
 } from '../constants/Constants';
 
-export const formatPrice = value => value > 0 ? `${CURRENCY_SYMBOL_USD}${value.toFixed(2)}`
-    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(2)}`;
+/**
+ * Formats a given number into a String with decimal representation. To be used for displaying currency with currency symbol
+ * */
+export const formatPrice = value => value > 0
+    ? `${CURRENCY_SYMBOL_USD}${value.toFixed(PRICE_FRACTION_DIGITS)}`
+    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(PRICE_FRACTION_DIGITS)}`;
 
-export const convertFactorToPercentage = factor => `${(factor * 100).toFixed(2)}%`;
+/**
+ * Formats a given number into a String with decimal representation. To be used for displaying currency without currency symbol
+ * */
+export const formatPriceWithoutCurrency =  value => `${value.toFixed(PRICE_FRACTION_DIGITS)}`;
 
-// TODO: @sanjayaa are all the usages correct? And is this conversion correct?
+export const convertFactorToPercentage = factor => `${(factor * 100).toFixed(PERCENTAGE_FRACTION_DIGITS)}%`;
+
 export const getFormattedPercentageValue = factor => convertFactorToPercentage(factor - 1);
 
 export const getReadableDiscountName = name => DISCOUNT_NAMES_MAP.get(name);
@@ -68,9 +78,10 @@ export const mapDiscountToDataRow = ({name, amount, priceAdjustment, effectiveFr
     source
 });
 
-export const mapAgreementToDataRow = ({description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo}, source) => {
+export const mapAgreementToDataRow = ({id, description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo}, source) => {
     const formattedPriceAdjustment = formatPrice(priceAdjustment);
     return {
+        id,
         description,
         adjustmentValue: percentageAdjustment ? `${percentageAdjustment}` : formattedPriceAdjustment,
         calculatedValue: formattedPriceAdjustment,
@@ -145,7 +156,7 @@ export const prepareLocalSegmentPriceInfo = ({discounts, referencePriceRoundingA
 
 export const prepareStrikeThroughPriceInfo = ({discounts, customerReferencePrice}) => {
     const headerRow = {
-        description: DESCRIPTION_STRIKE_THROUGH_PRICE,
+        description: DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
         calculatedValue: formatPrice(customerReferencePrice)
     };
