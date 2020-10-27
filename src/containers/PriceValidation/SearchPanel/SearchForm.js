@@ -39,7 +39,7 @@ const SearchForm = () => {
   console.log('rendering search form');
     const priceValidationContext = useContext(PriceValidationContext);
     const userDetailContext = useContext(UserDetailContext);
-    const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
+    const { userDetailsData: { businessUnitMap = new Map() } } = userDetailContext;
 
     const onSubmit = (values) => {
         priceValidationContext.setIsLoading(true);
