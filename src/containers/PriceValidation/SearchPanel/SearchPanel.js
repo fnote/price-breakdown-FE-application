@@ -1,4 +1,5 @@
 import React from "react";
+import {CaretRightOutlined} from '@ant-design/icons';
 import SearchForm from "./SearchForm";
 import RecentSearches from "./RecentSearches";
 
@@ -16,8 +17,9 @@ const SearchPanel = () => {
   return (
     <div
       className={openPanel ? "searchpanel show" : "searchpanel"}
-      onClick={mobilePanelToggle}>
+      >
       <SearchForm />
+      <div className="mobile-toggler" onClick={mobilePanelToggle}><CaretRightOutlined /></div>
       {/*<RecentSearches />*/}
     </div>
   );
