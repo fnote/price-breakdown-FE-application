@@ -36,6 +36,7 @@ const formRequestBody = (requestData) => {
 };
 
 const SearchForm = () => {
+  console.log('rendering search form');
     const priceValidationContext = useContext(PriceValidationContext);
     const userDetailContext = useContext(UserDetailContext);
     const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
