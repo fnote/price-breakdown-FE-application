@@ -26,13 +26,8 @@ const UserDetailContextProvider = props => {
 
     const fetchUserDetailsHandler = (newStateData) => {
         const { userDetails: newUserDetails } = newStateData;
-        console.log('updating user details state');
         if (newUserDetails && newUserDetails.authorizedBunitList) {
-            const temp = { ...newStateData, businessUnitMap: createBusinessUnitMap(newUserDetails) };
-            console.log('******************************');
-            console.log(temp);
-            console.log('******************************');
-            setUserDetails(temp);
+            setUserDetails({ ...newStateData, businessUnitMap: createBusinessUnitMap(newUserDetails) })
         } else {
             setUserDetails(newStateData);
         }
