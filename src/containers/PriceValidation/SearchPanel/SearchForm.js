@@ -38,7 +38,7 @@ const formRequestBody = (requestData) => {
 const SearchForm = () => {
     const priceValidationContext = useContext(PriceValidationContext);
     const userDetailContext = useContext(UserDetailContext);
-    const { userDetailsData: { businessUnitMap } } = userDetailContext;
+    const { userDetailsData: { businessUnitMap = new Map() } } = userDetailContext;
 
     const onSubmit = (values) => {
         priceValidationContext.setIsLoading(true);
