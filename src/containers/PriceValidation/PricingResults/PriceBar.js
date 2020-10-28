@@ -1,5 +1,5 @@
 import React from "react";
-import { getPriceUnitBySplitFlag, formatPriceWithoutCurrency } from '../../../utils/PricingUtils';
+import { getPriceUnit, formatPriceWithoutCurrency } from '../../../utils/PricingUtils';
 import { META_DATA_PRICE_BAR, LABEL_CUSTOMER_NET_PRICE } from '../../../constants/Constants';
 
 const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true }, pricingData) => (
@@ -9,7 +9,7 @@ const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true },
             <div className="value">{formatPriceWithoutCurrency(pricingData[valueKey])}</div>
             <div className="unit-block">
                 { insertDivider && <div className="divider"/>}
-                <div className="unit">/ {getPriceUnitBySplitFlag(pricingData)}</div>
+                <div className="unit">/ {getPriceUnit(pricingData)}</div>
             </div>
         </div>
         {label === LABEL_CUSTOMER_NET_PRICE ? <div className="price-source">Source: <strong>{pricingData.priceSourceName}</strong></div> : null}
@@ -24,7 +24,7 @@ function PriceBar(props) {
   return (
     <div className="price-bar">
         <div className="price-bar-divider"/>
-        {renderPricePoints(META_DATA_PRICE_BAR, { ...pricePoints, isSplit: splitFlag, priceSourceName })}
+        {renderPricePoints(META_DATA_PRICE_BAR, { ...pricePoints, splitFlag, perWeightFlag, priceSourceName })}
     </div>
   );
 }

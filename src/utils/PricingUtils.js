@@ -35,7 +35,8 @@ import {
     VOLUME_TIER_RANGE_CONNECTOR_TO,
     VOLUME_TIER_RANGE_END_ABOVE,
     PRICE_FRACTION_DIGITS,
-    PERCENTAGE_FRACTION_DIGITS
+    PERCENTAGE_FRACTION_DIGITS,
+    PRICE_UNIT_POUND
 } from '../constants/Constants';
 
 /**
@@ -56,7 +57,12 @@ export const getFormattedPercentageValue = factor => convertFactorToPercentage(f
 
 export const getReadableDiscountName = name => DISCOUNT_NAMES_MAP.get(name);
 
-export const getPriceUnitBySplitFlag = ({isSplit}) => isSplit ? PRICE_UNIT_SPLIT : PRICE_UNIT_CASE;
+export const getPriceUnit = ({ splitFlag, perWeightFlag }) => {
+    if (perWeightFlag) {
+        return PRICE_UNIT_POUND;
+    }
+    return splitFlag ? PRICE_UNIT_SPLIT : PRICE_UNIT_CASE;
+};
 
 export const generateDateObject = dateString => new Date(`${dateString.slice(0, 4)} ${dateString.slice(4, 6)} ${dateString.slice(6, 8)}`);
 

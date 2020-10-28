@@ -10,6 +10,7 @@ export const META_DATA_PRICE_BAR = [
 
 export const PRICE_UNIT_CASE = 'case';
 export const PRICE_UNIT_SPLIT = 'split';
+export const PRICE_UNIT_POUND = 'pound';
 
 export const PRICE_SOURCE_DISCOUNT_SERVICE = 'Discount Service';
 export const PRICE_SOURCE_SYSTEM = 'System';
