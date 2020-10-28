@@ -28,6 +28,7 @@ import {
     PRICE_SOURCE_SYSTEM,
     PRICE_UNIT_CASE,
     PRICE_UNIT_SPLIT,
+    PRICE_UNIT_POUND,
     SPLIT_STATUS_NO,
     SPLIT_STATUS_YES,
     VOLUME_TIER_OPERATOR_BETWEEN,
@@ -36,7 +37,9 @@ import {
     VOLUME_TIER_RANGE_END_ABOVE,
     PRICE_FRACTION_DIGITS,
     PERCENTAGE_FRACTION_DIGITS,
-    PRICE_UNIT_POUND
+    DESCRIPTION_EXCEPTION,
+    AVAILABLE_PRICE_ZONES,
+    NOT_APPLICABLE_PRICE_ZONE
 } from '../constants/Constants';
 
 /**
@@ -96,6 +99,21 @@ export const mapAgreementToDataRow = ({id, description, percentageAdjustment, pr
     };
 };
 
+export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}, customerPrequalifiedPrice) => {
+    const formattedCalculatedAdjustment = formatPrice(calculateExceptionAdjustment(price, customerPrequalifiedPrice))
+    return {
+        id,
+        description: DESCRIPTION_EXCEPTION,
+        adjustmentValue: formatPrice(price),
+        calculatedValue: formattedCalculatedAdjustment,
+        validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
+    };
+};
+
+const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => {
+    return  exceptionPrice - customerPrequalifiedPrice
+}
+
 export const mapVolumeTierToTableRow = ({eligibility: {operator, lowerBound, upperBound}, discounts, isApplicable}) => ({
     description: {
         rangeStart: lowerBound,
@@ -120,13 +138,15 @@ export const extractItemInfo = ({id, name, brand, pack, size, stockIndicator, ca
     id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 });
 
-export const extractSiteInfo = ({customerAccount, customerName, customerType, businessUnitNumber, product: { priceZone, priceZoneId }} ) => ({
+export const getValidatedPriceZone = priceZoneId => AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_PRICE_ZONE; 
+
+export const extractSiteInfo = ({customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId }} ) => ({
     businessUnitNumber,
     customerAccount,
     customerName: customerName,
     customerType,
     // @TODO: use the correct attribute below
-    priceZone: priceZone ? priceZone : priceZoneId
+    priceZone: getValidatedPriceZone(priceZoneId)
 });
 
 export const getSplitStatusBySplitFlag = (splitFlag) => splitFlag === true ? SPLIT_STATUS_YES : SPLIT_STATUS_NO;
@@ -176,17 +196,26 @@ export const prepareStrikeThroughPriceInfo = ({discounts, customerReferencePrice
 
 export const isApplyToPriceOrBaseAgreement = ({applicationCode}) => applicationCode === AGREEMENT_CODE_P || applicationCode === AGREEMENT_CODE_B;
 
-export const prepareDiscountPriceInfo = ({agreements, customerPrequalifiedPrice}) => {
+export const prepareDiscountPriceInfo = ({agreements, customerPrequalifiedPrice, exception}) => {
     const headerRow = {
         description: DESCRIPTION_DISCOUNT_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
         calculatedValue: formatPrice(customerPrequalifiedPrice)
     };
 
-    const appliedAgreements = agreements.filter(agreement => isApplyToPriceOrBaseAgreement(agreement))
+    let appliedAgreementsOrException = agreements.filter(agreement => isApplyToPriceOrBaseAgreement(agreement))
         .map(agreement => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS));
+    appliedAgreementsOrException = appliedAgreementsOrException ? appliedAgreementsOrException : [];
 
-    return [headerRow, ...appliedAgreements];
+    if(exception) {
+        const exceptionRow = mapExceptionToDataRow(exception, customerPrequalifiedPrice);
+
+        if (exceptionRow) {
+            appliedAgreementsOrException.push(exceptionRow)
+        }
+    }
+
+    return [headerRow, ...appliedAgreementsOrException];
 };
 
 export const isOfflineAgreement = ({applicationCode}) => applicationCode === AGREEMENT_CODE_L || applicationCode === AGREEMENT_CODE_T;
