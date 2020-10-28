@@ -28,8 +28,10 @@ export const DESCRIPTION_EXCEPTION = 'Exception Deal';
 
 export const VOLUME_TIER_OPERATOR_BETWEEN = "Between";
 export const VOLUME_TIER_RANGE_END_ABOVE = "above";
+export const VOLUME_TIER_RANGE_END_EMPTY = '';
 export const VOLUME_TIER_RANGE_CONNECTOR_TO = "to";
 export const VOLUME_TIER_RANGE_CONNECTOR_AND = "and";
+export const VOLUME_TIER_RANGE_CONNECTOR_EMPTY = '';
 
 
 export const DISCOUNT_TYPE_REF_PRICE = 'REFERENCE_PRICE';

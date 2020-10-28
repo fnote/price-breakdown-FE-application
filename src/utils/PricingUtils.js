@@ -34,7 +34,9 @@ import {
     VOLUME_TIER_OPERATOR_BETWEEN,
     VOLUME_TIER_RANGE_CONNECTOR_AND,
     VOLUME_TIER_RANGE_CONNECTOR_TO,
+    VOLUME_TIER_RANGE_CONNECTOR_EMPTY,
     VOLUME_TIER_RANGE_END_ABOVE,
+    VOLUME_TIER_RANGE_END_EMPTY,
     PRICE_FRACTION_DIGITS,
     PERCENTAGE_FRACTION_DIGITS,
     DESCRIPTION_EXCEPTION,
@@ -114,11 +116,31 @@ const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice)
     return  exceptionPrice - customerPrequalifiedPrice
 }
 
-export const mapVolumeTierToTableRow = ({eligibility: {operator, lowerBound, upperBound}, discounts, isApplicable}) => ({
+const getRangeEndValue = (operator, lowerBound, upperBound) => {
+    if (operator === VOLUME_TIER_OPERATOR_BETWEEN) {
+        if (lowerBound === upperBound) {
+            return VOLUME_TIER_RANGE_END_EMPTY;
+        }
+        return upperBound;
+    }
+    return VOLUME_TIER_RANGE_END_ABOVE;
+};
+
+const getRangeConnectorValue = (operator, lowerBound, upperBound) => {
+    if (operator === VOLUME_TIER_OPERATOR_BETWEEN) {
+        if (lowerBound === upperBound) {
+            return VOLUME_TIER_RANGE_CONNECTOR_EMPTY;
+        }
+        return VOLUME_TIER_RANGE_CONNECTOR_TO;
+    }
+    return VOLUME_TIER_RANGE_CONNECTOR_AND;
+};
+
+export const mapVolumeTierToTableRow = ({ eligibility: {operator, lowerBound, upperBound}, discounts, isApplicable }) => ({
     description: {
         rangeStart: lowerBound,
-        rangeEnd: operator === VOLUME_TIER_OPERATOR_BETWEEN ? upperBound : VOLUME_TIER_RANGE_END_ABOVE,
-        rangeConnector: operator === VOLUME_TIER_OPERATOR_BETWEEN ? VOLUME_TIER_RANGE_CONNECTOR_TO : VOLUME_TIER_RANGE_CONNECTOR_AND
+        rangeEnd: getRangeEndValue(operator, lowerBound, upperBound),
+        rangeConnector: getRangeConnectorValue(operator, lowerBound, upperBound)
     },
     adjustmentValue: getFormattedPercentageValue(discounts[0].amount),
     calculatedValue: formatPrice(discounts[0].priceAdjustment),
