@@ -6,7 +6,7 @@ const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true },
     <section className={styleClass}>
         <label>{label}</label>
         <div className="price-block">
-            <div className="value">{formatPriceWithoutCurrency(pricingData[valueKey])}</div>
+            <div className="value">{formatPriceWithoutCurrency(pricingData[valueKey], pricingData.perWeightFlag)}</div>
             <div className="unit-block">
                 { insertDivider && <div className="divider"/>}
                 <div className="unit">/ {getPriceUnit(pricingData)}</div>
