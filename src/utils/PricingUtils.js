@@ -145,7 +145,6 @@ export const extractSiteInfo = ({customerAccount, customerName, customerType, bu
     customerAccount,
     customerName: customerName,
     customerType,
-    // @TODO: use the correct attribute below
     priceZone: getValidatedPriceZone(priceZoneId)
 });
 
