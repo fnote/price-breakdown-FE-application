@@ -105,7 +105,17 @@ const SearchForm = () => {
                   required: true,
                 },
               ]}>
-            <Select placeholder="Select Site" dropdownMatchSelectWidth={false} showSearch>
+            <Select
+              placeholder="Select Site"
+              dropdownMatchSelectWidth={false}
+              filterOption={(inputValue, option) => {
+                if (inputValue && option.props && option.props.children) {
+                  return option.props.children.join('').toLowerCase().match(inputValue.toLowerCase());
+                }
+                return true;
+              }}
+              showSearch
+            >
               {getBusinessUnits(businessUnitMap)}
             </Select>
           </Form.Item>
