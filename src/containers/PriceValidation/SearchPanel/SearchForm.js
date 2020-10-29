@@ -110,7 +110,8 @@ const SearchForm = () => {
               dropdownMatchSelectWidth={false}
               filterOption={(inputValue, option) => {
                 if (inputValue && option.props && option.props.children) {
-                  return option.props.children.join('').toLowerCase().match(inputValue.toLowerCase());
+                  const pattern = inputValue.replace(/\\/g, '').toLowerCase();
+                  return option.props.children.join('').toLowerCase().match(pattern);
                 }
                 return true;
               }}
