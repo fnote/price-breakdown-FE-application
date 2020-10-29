@@ -81,7 +81,8 @@ export const generateReadableDate = dateString => generateDateObject(dateString)
 export const generateValidityPeriod = (effectiveFrom, effectiveTo) =>
     `Valid ${generateReadableDate(effectiveFrom)} - ${generateReadableDate(effectiveTo)}`;
 
-export const mapDiscountToDataRow = ({name, amount, priceAdjustment, effectiveFrom, effectiveTo}, source) => ({
+export const mapDiscountToDataRow = ({ id, name, amount, priceAdjustment, effectiveFrom, effectiveTo}, source) => ({
+    id,
     description: getReadableDiscountName(name),
     adjustmentValue: getFormattedPercentageValue(amount),
     calculatedValue: formatPrice(priceAdjustment),
@@ -264,8 +265,9 @@ export const prepareCustomerNetPriceInfo = ({netPrice}) => {
     return [headerRow]
 };
 
-export const prepareVolumePricingHeaderInfo = ({discounts}) => {
+export const prepareVolumePricingHeaderInfo = ({ discounts }) => {
     return {
+        id: discounts[0].id,
         description: DESCRIPTION_VOLUME_TIERS,
         validityPeriod: generateValidityPeriod(discounts[0].effectiveFrom, discounts[0].effectiveTo)
     };
