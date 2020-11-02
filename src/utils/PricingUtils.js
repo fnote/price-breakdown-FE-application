@@ -83,7 +83,9 @@ export const generateReadableDate = dateString => generateDateObject(dateString)
 export const generateValidityPeriod = (effectiveFrom, effectiveTo) =>
     `Valid ${generateReadableDate(effectiveFrom)} - ${generateReadableDate(effectiveTo)}`;
 
-export const mapDiscountToDataRow = ({name, amount, priceAdjustment, effectiveFrom, effectiveTo}, source, perWeightFlag) => ({
+
+export const mapDiscountToDataRow = ({ id, name, amount, priceAdjustment, effectiveFrom, effectiveTo }, source, perWeightFlag) => ({
+    id,
     description: getReadableDiscountName(name),
     adjustmentValue: getFormattedPercentageValue(amount),
     calculatedValue: formatPrice(priceAdjustment, perWeightFlag),
@@ -103,8 +105,12 @@ export const mapAgreementToDataRow = ({id, description, percentageAdjustment, pr
     };
 };
 
-export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}, customerPrequalifiedPrice, perWeightFlag) => {
-    const formattedCalculatedAdjustment = formatPrice(calculateExceptionAdjustment(price, customerPrequalifiedPrice), perWeightFlag)
+const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => {
+    return  exceptionPrice - customerPrequalifiedPrice
+}
+
+export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}, customerPrequalifiedPrice) => {
+    const formattedCalculatedAdjustment = formatPrice(calculateExceptionAdjustment(price, customerPrequalifiedPrice))
     return {
         id,
         description: DESCRIPTION_EXCEPTION,
@@ -113,10 +119,6 @@ export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}, c
         validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
     };
 };
-
-const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => {
-    return  exceptionPrice - customerPrequalifiedPrice
-}
 
 const getRangeEndValue = (operator, lowerBound, upperBound) => {
     if (operator === VOLUME_TIER_OPERATOR_BETWEEN) {
@@ -162,7 +164,7 @@ export const extractItemInfo = ({id, name, brand, pack, size, stockIndicator, ca
     id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 });
 
-export const getValidatedPriceZone = priceZoneId => AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_PRICE_ZONE; 
+export const getValidatedPriceZone = priceZoneId => AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_PRICE_ZONE;
 
 export const extractSiteInfo = ({customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId }} ) => ({
     businessUnitNumber,
@@ -185,8 +187,6 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
         description: DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
         calculatedValue: formatPrice(grossPrice, perWeightFlag)
     };
-    console.log('discounts');
-    console.log(discounts);
 
     const refPriceDiscountRows = discounts.filter(discount => discount.type === DISCOUNT_TYPE_REF_PRICE)
         .map(discount => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE, perWeightFlag));
@@ -266,8 +266,9 @@ export const prepareCustomerNetPriceInfo = ({ netPrice, perWeightFlag }) => {
     return [headerRow]
 };
 
-export const prepareVolumePricingHeaderInfo = ({discounts}) => {
+export const prepareVolumePricingHeaderInfo = ({ discounts }) => {
     return {
+        id: discounts[0].id,
         description: DESCRIPTION_VOLUME_TIERS,
         validityPeriod: generateValidityPeriod(discounts[0].effectiveFrom, discounts[0].effectiveTo)
     };
