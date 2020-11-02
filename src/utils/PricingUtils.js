@@ -102,6 +102,10 @@ export const mapAgreementToDataRow = ({id, description, percentageAdjustment, pr
     };
 };
 
+const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => {
+    return  exceptionPrice - customerPrequalifiedPrice
+}
+
 export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}, customerPrequalifiedPrice) => {
     const formattedCalculatedAdjustment = formatPrice(calculateExceptionAdjustment(price, customerPrequalifiedPrice))
     return {
@@ -112,10 +116,6 @@ export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}, c
         validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
     };
 };
-
-const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => {
-    return  exceptionPrice - customerPrequalifiedPrice
-}
 
 const getRangeEndValue = (operator, lowerBound, upperBound) => {
     if (operator === VOLUME_TIER_OPERATOR_BETWEEN) {
@@ -161,7 +161,7 @@ export const extractItemInfo = ({id, name, brand, pack, size, stockIndicator, ca
     id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 });
 
-export const getValidatedPriceZone = priceZoneId => AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_PRICE_ZONE; 
+export const getValidatedPriceZone = priceZoneId => AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_PRICE_ZONE;
 
 export const extractSiteInfo = ({customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId }} ) => ({
     businessUnitNumber,
