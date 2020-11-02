@@ -1,11 +1,10 @@
 import {
     convertFactorToPercentage,
-    formatBusinessUnit,
     formatPrice,
     formatPriceWithoutCurrency,
     generateDateObject,
     getFormattedPercentageValue,
-    getPriceUnitBySplitFlag,
+    getPriceUnit,
     getReadableDiscountName,
     generateReadableDate,
     generateValidityPeriod,
@@ -30,59 +29,49 @@ import {
     prepareVolumePricingInfo,
 } from '../PricingUtils';
 
-describe('formatBusinessUnit', () => {
-    test('should return formatted business unit name for valid OpCo Id', () => {
-        expect(formatBusinessUnit('001')).toEqual('001 - Sysco Jackson');
-    });
-
-    test('should return formatted business unit name for invalid OpCo Id', () => {
-        expect(formatBusinessUnit('9999')).toEqual('9999');
-    });
-});
-
 describe('formatPrice', () => {
     test('should return correct value for positive amounts', () => {
-        expect(formatPrice(1.23)).toEqual('$1.23');
-        expect(formatPrice(10)).toEqual('$10.00');
-        expect(formatPrice(0.2)).toEqual('$0.20');
-        expect(formatPrice(10.23456)).toEqual('$10.23');
+        expect(formatPrice(1.23)).toEqual('$1.230');
+        expect(formatPrice(10)).toEqual('$10.000');
+        expect(formatPrice(0.2)).toEqual('$0.200');
+        expect(formatPrice(10.23456)).toEqual('$10.235');
     });
 
     test('should return correct value for negative amounts', () => {
-        expect(formatPrice(-1.23)).toEqual('-$1.23');
+        expect(formatPrice(-1.23)).toEqual('-$1.230');
     });
 
     test('should return correct value for 0', () => {
-        expect(formatPrice(0)).toEqual('-$0.00');
+        expect(formatPrice(0)).toEqual('-$0.000');
     });
 });
 
 describe('formatPriceWithoutCurrency', () => {
     test('should return correctly formatted values', () => {
-        expect(formatPriceWithoutCurrency(1)).toEqual('1.00');
-        expect(formatPriceWithoutCurrency(1.23342)).toEqual('1.23');
-        expect(formatPriceWithoutCurrency(0)).toEqual('0.00');
-        expect(formatPriceWithoutCurrency(-0.1)).toEqual('-0.10');
+        expect(formatPriceWithoutCurrency(1)).toEqual('1.000');
+        expect(formatPriceWithoutCurrency(1.23342)).toEqual('1.233');
+        expect(formatPriceWithoutCurrency(0)).toEqual('0.000');
+        expect(formatPriceWithoutCurrency(-0.1)).toEqual('-0.100');
     });
 });
 
 describe('convertFactorToPercentage', () => {
     test('should return correctly formatted values', () => {
-        expect(convertFactorToPercentage(1)).toEqual('100.00%');
-        expect(convertFactorToPercentage(0.8)).toEqual('80.00%');
-        expect(convertFactorToPercentage(0.876312)).toEqual('87.63%');
-        expect(convertFactorToPercentage(0.0)).toEqual('0.00%');
-        expect(convertFactorToPercentage(-999)).toEqual('-99900.00%');
+        expect(convertFactorToPercentage(1)).toEqual('100.000%');
+        expect(convertFactorToPercentage(0.8)).toEqual('80.000%');
+        expect(convertFactorToPercentage(0.876312)).toEqual('87.631%');
+        expect(convertFactorToPercentage(0.0)).toEqual('0.000%');
+        expect(convertFactorToPercentage(-999)).toEqual('-99900.000%');
     });
 });
 
 describe('getFormattedPercentageValue', () => {
     test('should return correctly formatted values', () => {
-        expect(getFormattedPercentageValue(1)).toEqual('0.00%');
-        expect(getFormattedPercentageValue(0.8)).toEqual('-20.00%');
-        expect(getFormattedPercentageValue(0.876312)).toEqual('-12.37%');
-        expect(getFormattedPercentageValue(0.0)).toEqual('-100.00%');
-        expect(getFormattedPercentageValue(-999)).toEqual('-100000.00%');
+        expect(getFormattedPercentageValue(1)).toEqual('0.000%');
+        expect(getFormattedPercentageValue(0.8)).toEqual('-20.000%');
+        expect(getFormattedPercentageValue(0.876312)).toEqual('-12.369%');
+        expect(getFormattedPercentageValue(0.0)).toEqual('-100.000%');
+        expect(getFormattedPercentageValue(-999)).toEqual('-100000.000%');
     });
 });
 
@@ -95,11 +84,13 @@ describe('getReadableDiscountName', () => {
     });
 });
 
-describe('getPriceUnitBySplitFlag', () => {
+describe('getPriceUnit', () => {
     test('should return the correct value', () => {
-        expect(getPriceUnitBySplitFlag({ isSplit: true })).toEqual('split');
-        expect(getPriceUnitBySplitFlag({ isSplit: false })).toEqual('case');
-        expect(getPriceUnitBySplitFlag({})).toEqual('case');
+        expect(getPriceUnit({ splitFlag: true, perWeightFlag: true })).toEqual('pound');
+        expect(getPriceUnit({ splitFlag: false, perWeightFlag: true })).toEqual('pound');
+        expect(getPriceUnit({ splitFlag: true, perWeightFlag: false })).toEqual('split');
+        expect(getPriceUnit({ splitFlag: false, perWeightFlag: false })).toEqual('case');
+        expect(getPriceUnit({})).toEqual('case');
     });
 });
 
@@ -130,8 +121,8 @@ describe('mapDiscountToDataRow', () => {
             effectiveFrom: '20201005',
             effectiveTo: '20201111' };
         expect(mapDiscountToDataRow(data,'something')).toEqual({
-            adjustmentValue: '-8.00%',
-            calculatedValue: '$72.23',
+            adjustmentValue: '-8.000%',
+            calculatedValue: '$72.230',
             description: 'New Customer Discount',
             source: 'something',
             validityPeriod: 'Valid Oct 5, 2020 - Nov 11, 2020'
@@ -151,7 +142,7 @@ describe('mapAgreementToDataRow', () => {
         expect(mapAgreementToDataRow(data,'something')).toEqual({
             id: '1234',
             adjustmentValue: '$1.23',
-            calculatedValue: '$72.23',
+            calculatedValue: '$72.230',
             description: 'A sample description',
             source: 'something',
             validityPeriod: 'Valid Oct 5, 2020 - Nov 11, 2020'
@@ -167,8 +158,8 @@ describe('mapAgreementToDataRow', () => {
             effectiveTo: '20201111' };
         expect(mapAgreementToDataRow(data,'something')).toEqual({
             id: '1234',
-            adjustmentValue: '$72.23',
-            calculatedValue: '$72.23',
+            adjustmentValue: '$72.230',
+            calculatedValue: '$72.230',
             description: 'A sample description',
             source: 'something',
             validityPeriod: 'Valid Oct 5, 2020 - Nov 11, 2020'
@@ -191,8 +182,8 @@ describe('mapVolumeTierToTableRow', () => {
             isApplicable: true
         }
         expect(mapVolumeTierToTableRow(data)).toEqual({
-            adjustmentValue: '1100.00%',
-            calculatedValue: '$2.00',
+            adjustmentValue: '1100.000%',
+            calculatedValue: '$2.000',
             description: { rangeConnector: 'to', rangeEnd: 10, rangeStart: 5},
             isSelected: true,
             source: 'Discount Service'
@@ -213,8 +204,8 @@ describe('mapVolumeTierToTableRow', () => {
             isApplicable: true
         }
         expect(mapVolumeTierToTableRow(data)).toEqual({
-            adjustmentValue: '1100.00%',
-            calculatedValue: '$2.00',
+            adjustmentValue: '1100.000%',
+            calculatedValue: '$2.000',
             description: { rangeConnector: 'and', rangeEnd: 'above', rangeStart: 5},
             isSelected: true,
             source: 'Discount Service'
@@ -318,31 +309,31 @@ describe('extractSiteInfo', () => {
             customerName: 'aName',
             customerType: 'aType',
             businessUnitNumber: '001',
-            product: { priceZone: '01', priceZoneId: '11' }
+            product: { priceZoneId: 1 }
         };
         expect(extractSiteInfo(data)).toEqual({
+            "businessUnitNumber": "001",
             "customerAccount": "anAccount",
             "customerName": "aName",
             "customerType": "aType",
-            "priceZone": "01",
-            "site": "001 - Sysco Jackson"
+            "priceZone": 1
         });
     });
 
-    test('should return correct value when price zone is not present', () => {
+    test('should return N/A when price zone is not present', () => {
         const data = {
             customerAccount: 'anAccount',
             customerName: 'aName',
             customerType: 'aType',
             businessUnitNumber: '001',
-            product: { priceZoneId: '11' }
+            product: { priceZoneId: null }
         };
         expect(extractSiteInfo(data)).toEqual({
+            "businessUnitNumber": "001",
             "customerAccount": "anAccount",
             "customerName": "aName",
             "customerType": "aType",
-            "priceZone": "11",
-            "site": "001 - Sysco Jackson"
+            "priceZone": "N/A"
         });
     });
 });
@@ -369,6 +360,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
         const data = {
             discounts: [
                 {
+                    id: 1111,
                     type: 'REFERENCE_PRICE',
                     name: 'NEW_CUSTOMER_DISCOUNT',
                     amount: 0.99,
@@ -376,7 +368,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
                     effectiveFrom: '20201025',
                     effectiveTo: '20201113'
                 },
-                {
+                {   id: 2222,
                     type: 'PREQUALIFIED',
                     name: 'STRATERGIC_DISCOUNT',
                     amount: 0.92,
@@ -388,15 +380,16 @@ describe('prepareLocalSegmentPriceInfo', () => {
             grossPrice: 5.28 };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
-            "calculatedValue": "$5.28",
+            "calculatedValue": "$5.280",
             "description": "Local Segment Reference Price (Gross)"
         }, {
-            "adjustmentValue": "-1.00%",
-            "calculatedValue": "$72.23",
+            "id": 1111,
+            "adjustmentValue": "-1.000%",
+            "calculatedValue": "$72.230",
             "description": "New Customer Discount",
             "source": "Discount Service",
             "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
-        }, {"adjustmentValue": " ", "calculatedValue": "$1.23", "description": "Rounding", "source": "System"}]);
+        }, {"adjustmentValue": " ", "calculatedValue": "$1.230", "description": "Rounding", "source": "System"}]);
     });
 });
 
@@ -432,11 +425,11 @@ describe('prepareStrikeThroughPriceInfo', () => {
 
         expect(prepareStrikeThroughPriceInfo(data)).toEqual([{
             "adjustmentValue": " ",
-            "calculatedValue": "$1.23",
+            "calculatedValue": "$1.230",
             "description": "Customer Reference Price"
         }, {
-            "adjustmentValue": "-6.00%",
-            "calculatedValue": "$82.33",
+            "adjustmentValue": "-6.000%",
+            "calculatedValue": "$82.330",
             "description": "Split Up Charge",
             "source": "Discount Service",
             "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
@@ -479,11 +472,11 @@ describe('prepareDiscountPriceInfo', () => {
             customerPrequalifiedPrice: 1.53}
         expect(prepareDiscountPriceInfo(data)).toEqual([{
             "adjustmentValue": " ",
-            "calculatedValue": "$1.53",
+            "calculatedValue": "$1.530",
             "description": "Discount Price"
         }, {
             "adjustmentValue": "$1.23",
-            "calculatedValue": "$72.23",
+            "calculatedValue": "$72.230",
             "description": "A sample description1",
             "id": "1234",
             "source": "SUS",
@@ -527,11 +520,11 @@ describe('prepareOrderUnitPriceInfo', () => {
             unitPrice: 2.53}
         expect(prepareOrderUnitPriceInfo(data)).toEqual([{
             "adjustmentValue": " ",
-            "calculatedValue": "$2.53",
+            "calculatedValue": "$2.530",
             "description": "Order Unit Price"
         }, {
             "adjustmentValue": "$132.23",
-            "calculatedValue": "$92.13",
+            "calculatedValue": "$92.130",
             "description": "A sample description2",
             "id": "432",
             "source": "SUS",
@@ -544,7 +537,7 @@ describe('prepareCustomerNetPriceInfo', () => {
     test('should return the correct value', () => {
         expect(prepareCustomerNetPriceInfo({ netPrice: 32.3})).toEqual([{
             "adjustmentValue": " ",
-            "calculatedValue": "$32.30",
+            "calculatedValue": "$32.300",
             "description": "Customer Net Price"
         }]);
     });
@@ -595,8 +588,8 @@ describe('prepareVolumePricingTiers', () => {
             }
         ]
         expect(prepareVolumePricingTiers({ volumePricingTiers })).toEqual([{
-            "adjustmentValue": "1100.00%",
-            "calculatedValue": "$2.00",
+            "adjustmentValue": "1100.000%",
+            "calculatedValue": "$2.000",
             "description": {"rangeConnector": "to", "rangeEnd": 10, "rangeStart": 5},
             "isSelected": true,
             "source": "Discount Service"
@@ -666,8 +659,8 @@ describe('prepareVolumePricingInfo', () => {
                 "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
             },
             "volumePricingTiers": [{
-                "adjustmentValue": "1100.00%",
-                "calculatedValue": "$2.00",
+                "adjustmentValue": "1100.000%",
+                "calculatedValue": "$2.000",
                 "description": {"rangeConnector": "to", "rangeEnd": 10, "rangeStart": 5},
                 "isSelected": true,
                 "source": "Discount Service"
