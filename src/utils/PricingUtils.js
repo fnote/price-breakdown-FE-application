@@ -184,8 +184,6 @@ export const prepareLocalSegmentPriceInfo = ({discounts, referencePriceRoundingA
         description: DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
         calculatedValue: formatPrice(grossPrice)
     };
-    console.log('discounts');
-    console.log(discounts);
 
     const refPriceDiscountRows = discounts.filter(discount => discount.type === DISCOUNT_TYPE_REF_PRICE)
         .map(discount => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE));
