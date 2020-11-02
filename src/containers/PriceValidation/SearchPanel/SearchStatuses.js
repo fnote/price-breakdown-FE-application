@@ -60,11 +60,11 @@ const SearchStatuses = () => {
   }
 
   if (priceValidationContext.error) {
-      const errorCode = priceValidationContext.error.code;
-      const errorMessage = priceValidationContext.error.message;
+      const code = priceValidationContext.error.errorCode;
+      const message = priceValidationContext.error.cause;
 
-      if(errorCode && errorMessage) {
-          return renderError({code: errorCode, message: errorMessage });
+      if (code && message) {
+          return renderError({ code, message });
       }
 
     return renderError({code: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });

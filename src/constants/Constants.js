@@ -10,6 +10,7 @@ export const META_DATA_PRICE_BAR = [
 
 export const PRICE_UNIT_CASE = 'case';
 export const PRICE_UNIT_SPLIT = 'split';
+export const PRICE_UNIT_POUND = 'pound';
 
 export const PRICE_SOURCE_DISCOUNT_SERVICE = 'Discount Service';
 export const PRICE_SOURCE_SYSTEM = 'System';
@@ -22,11 +23,15 @@ export const DESCRIPTION_ORDER_NET_PRICE = 'Order Unit Price';
 export const DESCRIPTION_CUSTOMER_NET_PRICE = 'Customer Net Price';
 export const DESCRIPTION_ROUNDING = 'Rounding';
 export const DESCRIPTION_VOLUME_TIERS = 'Item/Order Specific promotions';
+export const DESCRIPTION_EXCEPTION = 'Exception Deal';
+
 
 export const VOLUME_TIER_OPERATOR_BETWEEN = "Between";
 export const VOLUME_TIER_RANGE_END_ABOVE = "above";
+export const VOLUME_TIER_RANGE_END_EMPTY = '';
 export const VOLUME_TIER_RANGE_CONNECTOR_TO = "to";
 export const VOLUME_TIER_RANGE_CONNECTOR_AND = "and";
+export const VOLUME_TIER_RANGE_CONNECTOR_EMPTY = '';
 
 
 export const DISCOUNT_TYPE_REF_PRICE = 'REFERENCE_PRICE';
@@ -62,5 +67,8 @@ export const AUTH_FAILURE_TYPE_UNEXPECTED_ERROR = 'UNEXPECTED_ERROR';
 
 export const UNEXPECTED_ERROR_CODE = 500;
 
-export const PRICE_FRACTION_DIGITS = 2;
-export const PERCENTAGE_FRACTION_DIGITS = 2;
+export const PRICE_FRACTION_DIGITS = 3;
+export const PERCENTAGE_FRACTION_DIGITS = 3;
+
+export const AVAILABLE_PRICE_ZONES = [1, 2, 3 ,4 ,5];
+export const NOT_APPLICABLE_PRICE_ZONE = 'N/A';

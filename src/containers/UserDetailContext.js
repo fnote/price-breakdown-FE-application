@@ -5,6 +5,7 @@
  **/
 
 import React, {useState} from 'react';
+import { createBusinessUnitMap } from '../utils/CommonUtils';
 
 export const UserDetailContext = React.createContext({
     userDetailsData: {},
@@ -24,7 +25,14 @@ const UserDetailContextProvider = props => {
     const [userDetails, setUserDetails] = useState(initialState);
 
     const fetchUserDetailsHandler = (newStateData) => {
-        setUserDetails(newStateData)
+        const newUserDetails = newStateData.userDetails;
+        if (newUserDetails && newUserDetails.authorizedBunitList) {
+            const modifiedUserDetails = { ...newUserDetails,  businessUnitMap: createBusinessUnitMap(newUserDetails)};
+            const modifiedState = { ...newStateData, userDetails: modifiedUserDetails };
+            setUserDetails(modifiedState);
+        } else {
+            setUserDetails(newStateData);
+        }
     };
 
     return (

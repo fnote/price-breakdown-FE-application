@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import moment from 'moment';
 import { Form, Input, Checkbox, Select, InputNumber, DatePicker } from "antd";
-import businessUnits from "../../../constants/BusinessUnits";
-import { PriceValidationContext } from '../PriceValidationContext'
+import { PriceValidationContext } from '../PriceValidationContext';
+import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper'
 import {getBffUrlConfig} from "../../../utils/Configs";
 
@@ -37,6 +37,8 @@ const formRequestBody = (requestData) => {
 
 const SearchForm = () => {
     const priceValidationContext = useContext(PriceValidationContext);
+    const userDetailContext = useContext(UserDetailContext);
+    const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
 
     const onSubmit = (values) => {
         priceValidationContext.setIsLoading(true);
@@ -87,7 +89,7 @@ const SearchForm = () => {
       <div className="panel-header">
         <i className="icon fi flaticon-list"/>
         Search
-      </div>      
+      </div>
       <div className="search-form">
         <Form
             name="nest-messages"
@@ -104,7 +106,7 @@ const SearchForm = () => {
                 },
               ]}>
             <Select placeholder="Select Site" dropdownMatchSelectWidth={false} showSearch>
-              {getBusinessUnits(businessUnits)}
+              {getBusinessUnits(businessUnitMap)}
             </Select>
           </Form.Item>
           <Form.Item
