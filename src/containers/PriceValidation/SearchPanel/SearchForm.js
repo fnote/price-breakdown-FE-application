@@ -110,6 +110,7 @@ const SearchForm = () => {
               dropdownMatchSelectWidth={false}
               filterOption={(inputValue, option) => {
                 if (inputValue && option.children) {
+                  // creating pattern by escaping backslash(\), unless end up with a syntax error 
                   const pattern = inputValue.replace(/\\/g, '').toLowerCase();
                   if (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/)) {
                     return false;
