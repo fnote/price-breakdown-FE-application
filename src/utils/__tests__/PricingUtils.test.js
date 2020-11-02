@@ -683,9 +683,3 @@ describe('prepareVolumePricingInfo', () => {
         });
     });
 });
-
-describe('test', () => {
-    test('should return the correct value', () => {
-        expect().toEqual();
-    });
-});
