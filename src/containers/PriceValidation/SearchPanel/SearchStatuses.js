@@ -1,7 +1,7 @@
 import React, {useContext} from "react";
 import { SyncOutlined } from "@ant-design/icons";
 import { PriceValidationContext } from '../PriceValidationContext';
-import {ErrorCodes, ErrorMessages} from "../../../constants/Errors";
+import { ErrorCodes, ErrorMessages, ErrorsMap } from "../../../constants/Errors";
 
 const renderWelcomeMessage = () => (
     <div className="search-statuses">
@@ -61,10 +61,12 @@ const SearchStatuses = () => {
 
   if (priceValidationContext.error) {
       const code = priceValidationContext.error.errorCode;
-      const message = priceValidationContext.error.cause;
 
-      if (code && message) {
+      if (code) {
+        const message = ErrorsMap.get(code);
+        if (message) {
           return renderError({ code, message });
+        }
       }
 
     return renderError({code: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
