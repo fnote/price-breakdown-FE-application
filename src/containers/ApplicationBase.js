@@ -19,18 +19,23 @@ export default function ApplicationBase() {
             if(appLoaderContext.appLoadingState !== true) {
                 appLoaderContext.setAppLoadingState(true);
             } else {
-                return auth.userDetailContextHandler(userDetailContext, appLoaderContext);
+                auth.userDetailContextHandler(userDetailContext, appLoaderContext);
             }
         }
     });
 
+    let component;
+    if (appLoaderContext.appLoadingState) {
+        component = <AppLoader/>;
+    } else {
+        component = auth.isUserLoginCompleted() ? <PriceValidation/> : <Login/>
+    }
+
+
   return (
 
     <React.Fragment>
-        {appLoaderContext.appLoadingState === true ? (<AppLoader/>) :
-            (auth.isUserLoginCompleted() ? (<PriceValidation/>) : (<Login/>))
-        }
-
+        {component}
     </React.Fragment>
   );
 }

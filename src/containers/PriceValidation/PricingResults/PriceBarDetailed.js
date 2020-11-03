@@ -41,8 +41,11 @@ const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, v
     </div>
 );
 
-const renderDetailedSection = (pricingDataList, additionalRows = null, styleMetadataHeaderRow = { className: "description-col" },
-                               styleMetadataSubRow = { className: "description-col" }) => (
+
+const DESCRIPTION_COL_CLASSNAME = "description-col";
+
+const renderDetailedSection = (pricingDataList, additionalRows = null, styleMetadataHeaderRow = { className: DESCRIPTION_COL_CLASSNAME },
+                                                                    styleMetadataSubRow = { className: DESCRIPTION_COL_CLASSNAME }) => (
     <React.Fragment>
       <div className="icon-col">
         <i className="icon fi flaticon-diamond" />
@@ -68,10 +71,6 @@ const renderTableRow = ({ description: { rangeStart, rangeEnd, rangeConnector },
     </li>
 );
 
-const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => {
-    return (volumePricingTiers && volumePricingTiers.length > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null;
-};
-
 const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
     <React.Fragment>
         {renderSubRow(volumePricingHeaderRow, { className: "description-col colspan-2" })}
@@ -82,6 +81,10 @@ const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) =>
         </div>
     </React.Fragment>
 );
+
+const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => {
+    return (volumePricingTiers && volumePricingTiers.length > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null;
+};
 
 function PriceBarDetailed({ priceData: { product }}) {
     const customerNetPriceInfo = prepareCustomerNetPriceInfo(product);
@@ -99,7 +102,7 @@ function PriceBarDetailed({ priceData: { product }}) {
       <section className="detailed-left">
         <PriceBarDetailedHeader />
         <div className="block group1">
-          {renderDetailedSection(localSegmentRefPriceSection, null, { className: "description-col" })}
+          {renderDetailedSection(localSegmentRefPriceSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
         </div>
         <div className="block group2">
           {renderDetailedSection(strikeThroughPriceSection, volumeTierRows)}

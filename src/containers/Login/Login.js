@@ -4,6 +4,10 @@ import {auth} from "../../utils/security/Auth";
 import {AUTH_FAILURE_TYPE_UNAUTHENTICATED} from '../../constants/Constants';
 import {UserDetailContext} from '../UserDetailContext';
 
+const loginButtonClicked = () => {
+    auth.getLoginPage();
+};
+
 /**
  * Login page that shows the login button for SSO sign in
  *
@@ -35,10 +39,5 @@ const Login = () => {
     );
 
 }
-
-const loginButtonClicked = () => {
-    auth.getLoginPage();
-};
-
 
 export default Login;
