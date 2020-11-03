@@ -96,7 +96,11 @@ describe('getPriceUnit', () => {
 
 describe('generateDateObject', () => {
     test('should return the correct value', () => {
-        expect(generateDateObject('20201025').getTime()).toEqual(1603564200000);
+        const generatedDate = generateDateObject('20201025');
+        expect(generatedDate.getFullYear()).toEqual(2020);
+        // month is zero indexed
+        expect(generatedDate.getMonth() + 1).toEqual(10);
+        expect(generatedDate.getDate()).toEqual(25);
     });
 });
 
