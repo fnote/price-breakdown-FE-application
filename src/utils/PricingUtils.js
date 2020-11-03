@@ -47,7 +47,7 @@ import {
     FRACTION_DIGITS_CHANGING_MARGIN_VALUE,
 } from '../constants/Constants';
 
-const getFractionDigits = ({ perWeightFlag = false, useFixFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => {
+const getFractionDigits = ({ perWeightFlag, useFixFractionDigits, digits }) => {
     if (useFixFractionDigits) {
         return digits;
     }
@@ -56,14 +56,16 @@ const getFractionDigits = ({ perWeightFlag = false, useFixFractionDigits = false
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency with currency symbol
  * */
-export const formatPrice = (value, { perWeightFlag, useFixFractionDigits })=> value > 0
-    ? `${CURRENCY_SYMBOL_USD}${value.toFixed(getFractionDigits({ perWeightFlag, useFixFractionDigits }))}`
-    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(getFractionDigits({ perWeightFlag, useFixFractionDigits }))}`;
+export const formatPrice = (value, { perWeightFlag = false, useFixFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO })=> value > 0
+    ? `${CURRENCY_SYMBOL_USD}${value.toFixed(getFractionDigits({ perWeightFlag, useFixFractionDigits, digits }))}`
+    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(getFractionDigits({ perWeightFlag, useFixFractionDigits, digits }))}`;
 
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency without currency symbol
  * */
-export const formatPriceWithoutCurrency =  (value, { perWeightFlag, useFixFractionDigits }) => `${value.toFixed(getFractionDigits({ perWeightFlag, useFixFractionDigits }))}`;
+export const formatPriceWithoutCurrency =  (value, { perWeightFlag = false, useFixFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => {
+    return `${value.toFixed(getFractionDigits({ perWeightFlag, useFixFractionDigits, digits }))}`;
+};
 
 export const convertFactorToPercentage = factor => `${(factor * 100).toFixed(PERCENTAGE_FRACTION_DIGITS)}%`;
 
@@ -208,7 +210,8 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
         const roundingValueRow = {
             description: DESCRIPTION_ROUNDING,
             adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
-            calculatedValue: referencePriceRoundingAdjustment,
+            calculatedValue: formatPrice(referencePriceRoundingAdjustment,
+                { perWeightFlag, useFixFractionDigits: isFixFractionDigits(perWeightFlag, priceSource, grossPrice) }),
             source: PRICE_SOURCE_SYSTEM
         };
         dataRows.push(roundingValueRow);
@@ -267,7 +270,7 @@ export const prepareOrderUnitPriceInfo = ({agreements, unitPrice, perWeightFlag}
     };
 
     const offlineAgreements = agreements.filter(agreement => isOfflineAgreement(agreement))
-        .map(agreement => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS));
+        .map(agreement => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS, { perWeightFlag }));
 
     return [headerRow, ...offlineAgreements]
 };
