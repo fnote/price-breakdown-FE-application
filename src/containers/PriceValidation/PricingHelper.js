@@ -7,7 +7,7 @@ export const getBusinessUnits = (businessUnitsMap) => {
     if (businessUnitsMap) {
         businessUnitsMap.forEach((businessUnit => {
             businessUnitOptions.push(
-                <Option value={businessUnit.id}>{businessUnit.id} - {businessUnit.shortName}</Option>
+                <Option key={businessUnit.id} value={businessUnit.id}>{businessUnit.id} - {businessUnit.shortName}</Option>
             )
         }));
     }
