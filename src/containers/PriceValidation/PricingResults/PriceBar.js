@@ -1,12 +1,16 @@
 import React from "react";
-import { getPriceUnit, formatPriceWithoutCurrency } from '../../../utils/PricingUtils';
-import { META_DATA_PRICE_BAR, LABEL_CUSTOMER_NET_PRICE } from '../../../constants/Constants';
+import { getPriceUnit, formatPriceWithoutCurrency, isFixFractionDigits } from '../../../utils/PricingUtils';
+import { META_DATA_PRICE_BAR, LABEL_CUSTOMER_NET_PRICE, VALUE_KEY_CUSTOMER_REF_PRICE } from '../../../constants/Constants';
 
 const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true }, pricingData) => (
     <section className={styleClass}>
         <label>{label}</label>
         <div className="price-block">
-            <div className="value">{formatPriceWithoutCurrency(pricingData[valueKey], pricingData.perWeightFlag)}</div>
+            <div className="value">{formatPriceWithoutCurrency(pricingData[valueKey], {
+                perWeightFlag: pricingData.perWeightFlag,
+                useFixFractionDigits: valueKey === VALUE_KEY_CUSTOMER_REF_PRICE ?
+                isFixFractionDigits(pricingData.perWeightFlag, pricingData.priceSource, pricingData.grossPrice) : false
+            })}</div>
             <div className="unit-block">
                 { insertDivider && <div className="divider"/>}
                 <div className="unit">/ {getPriceUnit(pricingData)}</div>

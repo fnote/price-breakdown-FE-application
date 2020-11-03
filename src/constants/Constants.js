@@ -1,5 +1,6 @@
 export const LABEL_CUSTOMER_NET_PRICE = 'CUSTOMER NET PRICE';
 
+export const VALUE_KEY_CUSTOMER_REF_PRICE = 'customerReferencePrice';
 export const META_DATA_PRICE_BAR = [
     { label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1' },
     { label: 'CUSTOMER REFERENCE PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2' },
@@ -73,3 +74,7 @@ export const PERCENTAGE_FRACTION_DIGITS = 2;
 
 export const AVAILABLE_PRICE_ZONES = [1, 2, 3 ,4 ,5];
 export const NOT_APPLICABLE_PRICE_ZONE = 'N/A';
+
+export const PRICE_SOURCE_PA_ID = 97;
+export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
+
