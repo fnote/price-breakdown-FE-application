@@ -96,7 +96,7 @@ describe('getPriceUnit', () => {
 
 describe('generateDateObject', () => {
     test('should return the correct value', () => {
-        expect(generateDateObject('20201025').toLocaleDateString()).toEqual('10/25/2020');
+        expect(generateDateObject('20201025').getTime()).toEqual(1603564200000);
     });
 });
 
