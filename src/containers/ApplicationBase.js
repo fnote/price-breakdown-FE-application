@@ -14,23 +14,26 @@ export default function ApplicationBase() {
 
     useEffect(() => {
         if (auth.isUserLoginPending() || auth.shouldFetchUserDetailsAgain(userDetailContext)) {
-            console.log('calling handler')
-
             if(appLoaderContext.appLoadingState !== true) {
                 appLoaderContext.setAppLoadingState(true);
             } else {
-                return auth.userDetailContextHandler(userDetailContext, appLoaderContext);
+                auth.userDetailContextHandler(userDetailContext, appLoaderContext);
             }
         }
     });
 
+    let component;
+    if (appLoaderContext.appLoadingState) {
+        component = <AppLoader/>;
+    } else {
+        component = auth.isUserLoginCompleted() ? <PriceValidation/> : <Login/>
+    }
+
+
   return (
 
     <React.Fragment>
-        {appLoaderContext.appLoadingState === true ? (<AppLoader/>) :
-            (auth.isUserLoginCompleted() ? (<PriceValidation/>) : (<Login/>))
-        }
-
+        {component}
     </React.Fragment>
   );
 }
