@@ -27,7 +27,6 @@ class AccountWidget extends React.Component {
   };
 
   logOut = async () => {
-    // await Auth.signOut();
     window.location.reload();
   };
 

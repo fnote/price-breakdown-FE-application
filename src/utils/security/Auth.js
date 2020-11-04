@@ -79,17 +79,17 @@ class Auth {
                 if (data.status === 200) {
                     payloadData.isLoginSucceeded = true;
                     payloadData.userDetails = data.userDetailResponse;
-                    auth.setUserLoggedInState(AUTH_STATE_COMPLETED);
+                    this.setUserLoggedInState(AUTH_STATE_COMPLETED);
                 } else if (data.status === 401) {
                     payloadData.isLoginSucceeded = false;
                     payloadData.error = data.userDetailResponse;
                     payloadData.errorType = AUTH_FAILURE_TYPE_UNAUTHENTICATED;
-                        auth.setUserLoggedInState(AUTH_STATE_FAILED);
+                    this.setUserLoggedInState(AUTH_STATE_FAILED);
                 } else {
                     payloadData.isLoginSucceeded = false;
                     payloadData.error = generalErrorResponse;
                     payloadData.errorType = AUTH_FAILURE_TYPE_UNEXPECTED_ERROR;
-                    auth.setUserLoggedInState(AUTH_STATE_FAILED);
+                    this.setUserLoggedInState(AUTH_STATE_FAILED);
                 }
 
                 userDetailContext.setUserDetails(payloadData);
@@ -101,7 +101,7 @@ class Auth {
                     error: generalErrorResponse,
                     errorType: AUTH_FAILURE_TYPE_UNEXPECTED_ERROR,
                 };
-                auth.setUserLoggedInState(AUTH_STATE_FAILED);
+                this.setUserLoggedInState(AUTH_STATE_FAILED);
 
                 userDetailContext.setUserDetails(errorPayloadData);
                 appLoaderContext.setAppLoadingState(false);

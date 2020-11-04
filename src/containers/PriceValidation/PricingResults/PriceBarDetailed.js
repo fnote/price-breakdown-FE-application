@@ -31,7 +31,6 @@ const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, v
           <i className="icon fi flaticon-circle" />
           {description}
         </div>
-          {/*TODO @sanjayaa: see whether zone needs to be removed*/}
           {zone ? <div className="subrow-sub-title">{zone}</div> : null}
           {id ? <div className="subrow-sub-title">ID: {id}</div> : null}
           {validityPeriod ? <div className="subrow-sub-title">{validityPeriod}</div> : null}
