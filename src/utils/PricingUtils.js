@@ -69,7 +69,7 @@ export const getPriceUnit = ({ splitFlag, perWeightFlag }) => {
     return splitFlag ? PRICE_UNIT_SPLIT : PRICE_UNIT_CASE;
 };
 
-export const generateDateObject = dateString => new Date(`${dateString.slice(0, 4)} ${dateString.slice(4, 6)} ${dateString.slice(6, 8)}`);
+export const generateDateObject = dateString => new Date(dateString.slice(0, 4), dateString.slice(4, 6)-1, dateString.slice(6, 8));
 
 export const generateReadableDate = dateString => generateDateObject(dateString)
     .toLocaleDateString(APPLICATION_LOCALE, {
