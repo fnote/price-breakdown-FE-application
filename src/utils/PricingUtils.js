@@ -47,8 +47,8 @@ import {
     FRACTION_DIGITS_CHANGING_MARGIN_VALUE,
 } from '../constants/Constants';
 
-const getFractionDigits = ({ perWeightFlag, useFixFractionDigits, digits }) => {
-    if (useFixFractionDigits) {
+const getFractionDigits = ({ perWeightFlag, useFixedFractionDigits, digits }) => {
+    if (useFixedFractionDigits) {
         return digits;
     }
     return perWeightFlag ? PRICE_FRACTION_DIGITS_THREE : PRICE_FRACTION_DIGITS_TWO;
@@ -56,15 +56,15 @@ const getFractionDigits = ({ perWeightFlag, useFixFractionDigits, digits }) => {
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency with currency symbol
  * */
-export const formatPrice = (value, { perWeightFlag = false, useFixFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO })=> value > 0
-    ? `${CURRENCY_SYMBOL_USD}${value.toFixed(getFractionDigits({ perWeightFlag, useFixFractionDigits, digits }))}`
-    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(getFractionDigits({ perWeightFlag, useFixFractionDigits, digits }))}`;
+export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO })=> value > 0
+    ? `${CURRENCY_SYMBOL_USD}${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`
+    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
 
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency without currency symbol
  * */
-export const formatPriceWithoutCurrency =  (value, { perWeightFlag = false, useFixFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => {
-    return `${value.toFixed(getFractionDigits({ perWeightFlag, useFixFractionDigits, digits }))}`;
+export const formatPriceWithoutCurrency =  (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => {
+    return `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
 };
 
 export const convertFactorToPercentage = factor => `${(factor * 100).toFixed(PERCENTAGE_FRACTION_DIGITS)}%`;
@@ -93,11 +93,11 @@ export const generateValidityPeriod = (effectiveFrom, effectiveTo) =>
     `Valid ${generateReadableDate(effectiveFrom)} - ${generateReadableDate(effectiveTo)}`;
 
 
-export const mapDiscountToDataRow = ({ id, name, amount, priceAdjustment, effectiveFrom, effectiveTo }, source, { perWeightFlag, useFixFractionDigits }) => ({
+export const mapDiscountToDataRow = ({ id, name, amount, priceAdjustment, effectiveFrom, effectiveTo }, source, { perWeightFlag, useFixedFractionDigits }) => ({
     id,
     description: getReadableDiscountName(name),
     adjustmentValue: getFormattedPercentageValue(amount),
-    calculatedValue: formatPrice(priceAdjustment, { perWeightFlag, useFixFractionDigits }),
+    calculatedValue: formatPrice(priceAdjustment, { perWeightFlag, useFixedFractionDigits }),
     validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
     source
 });
@@ -202,7 +202,7 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
 
     const refPriceDiscountRows = discounts.filter(discount => discount.type === DISCOUNT_TYPE_REF_PRICE)
         .map(discount => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE,
-            { perWeightFlag, useFixFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }));
+            { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }));
 
     const dataRows = [headerRow, ...refPriceDiscountRows];
 
@@ -211,7 +211,7 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
             description: DESCRIPTION_ROUNDING,
             adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
             calculatedValue: formatPrice(referencePriceRoundingAdjustment,
-                { perWeightFlag, useFixFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }),
+                { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }),
             source: PRICE_SOURCE_SYSTEM
         };
         dataRows.push(roundingValueRow);
@@ -226,7 +226,7 @@ export const prepareStrikeThroughPriceInfo = ({ discounts, customerReferencePric
         description: DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
         calculatedValue: formatPrice(customerReferencePrice,
-            { perWeightFlag, useFixFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) })
+            { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) })
     };
 
     const preQualifiedDiscounts = discounts
