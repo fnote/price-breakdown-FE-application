@@ -191,6 +191,11 @@ export const extractRequestInfo = ({ priceRequestDate, product: { splitFlag, qua
     quantity
 });
 
+/**
+ * Decides whether to use a fixed number of fraction digits for a value
+ * Returns true only when the item is priced through Price Advisor component and
+ * the item is catch weight item and its gross price value is greater than or equal to $10   
+ */
 export const isFixedFractionDigits = (perWeightFlag, priceSource, grossPrice) => (perWeightFlag &&
     priceSource === PRICE_SOURCE_PA_ID && grossPrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
 
