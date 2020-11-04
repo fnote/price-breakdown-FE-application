@@ -3,17 +3,19 @@ import AppBar from "../../components/AppBar/AppBar";
 import SearchPanel from "./SearchPanel/SearchPanel";
 import SearchStatuses from "./SearchPanel/SearchStatuses";
 import PricingResults from "./PricingResults/PricingResults";
-
+import PriceValidationContextProvider from './PriceValidationContext'
 
 function PriceValidation() {
   return (
     <div className="wrapper cloudpricing-wrapper">
       <AppBar />
       <div className="content">
-        <SearchPanel />
-        {/* <SearchStatuses />     Status message collection. */}
-        <div className="pricing-type-label"><strong>PERISCOPE</strong> PRICING</div>
-        <PricingResults />        
+          <PriceValidationContextProvider>
+            <SearchPanel />
+            <SearchStatuses />
+              <div className="pricing-type-label"><strong>PERISCOPE</strong> PRICING</div>
+              <PricingResults />
+          </PriceValidationContextProvider>
       </div>
     </div>
   );

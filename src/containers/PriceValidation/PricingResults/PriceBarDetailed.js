@@ -1,201 +1,125 @@
 import React from "react";
 import PriceBarDetailedHeader from "./PriceBarDetailedHeader";
+import {
+    prepareCustomerNetPriceInfo,
+    prepareDiscountPriceInfo,
+    prepareLocalSegmentPriceInfo,
+    prepareOrderUnitPriceInfo,
+    prepareStrikeThroughPriceInfo,
+    prepareVolumePricingHeaderRow,
+    prepareVolumePricingTiers
+} from "../../../utils/PricingUtils"
 
-function PriceBarDetailed() {
+const renderHeaderRow = ({ description, validityPeriod, adjustmentValue, calculatedValue }, { className }, showSmallDivider = true) => (
+    <div className="row">
+      <div className={className}>
+        <div className="title">
+          {description}
+        </div>
+          {validityPeriod ? <div className="sub-title">{validityPeriod}</div> : null}
+          {showSmallDivider ? <div className="small-divider"/> : null }
+      </div>
+        {calculatedValue? <div className="value-col">{calculatedValue}</div> : null}
+        {adjustmentValue ? <div className="adjustment-col">{adjustmentValue}</div> : null}
+    </div>
+);
+
+const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, validityPeriod, zone, id }, { className }) => (
+    <div className="row sub-row">
+      <div className={className}>
+        <div className="subrow-title">
+          <i className="icon fi flaticon-circle" />
+          {description}
+        </div>
+          {/*TODO @sanjayaa: see whether zone needs to be removed*/}
+          {zone ? <div className="subrow-sub-title">{zone}</div> : null}
+          {id ? <div className="subrow-sub-title">ID: {id}</div> : null}
+          {validityPeriod ? <div className="subrow-sub-title">{validityPeriod}</div> : null}
+      </div>
+        {adjustmentValue ? <div className="value-col">{adjustmentValue}</div> : null}
+        {calculatedValue ? <div className="adjustment-col">{calculatedValue}</div> : null}
+    </div>
+);
+
+
+const DESCRIPTION_COL_CLASSNAME = "description-col";
+
+const renderDetailedSection = (pricingDataList, additionalRows = null, styleMetadataHeaderRow = { className: DESCRIPTION_COL_CLASSNAME },
+                                                                    styleMetadataSubRow = { className: DESCRIPTION_COL_CLASSNAME }) => (
+    <React.Fragment>
+      <div className="icon-col">
+        <i className="icon fi flaticon-diamond" />
+      </div>
+      <div className="data-fields">
+        {
+            pricingDataList.map((dataRow, index) => index === 0
+                ? renderHeaderRow(dataRow, styleMetadataHeaderRow, (pricingDataList.length > 1))
+                : renderSubRow(dataRow, styleMetadataSubRow))
+        }
+        {additionalRows}
+      </div>
+    </React.Fragment>
+);
+
+const renderTableRow = ({ description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, source, isSelected }) => (
+    <li className={isSelected ? "selected" : null}>
+        <div className="description-col">{rangeStart} <span>{rangeConnector}</span> {rangeEnd}</div>
+        <div className="value-col">{adjustmentValue}</div>
+        <div className="adjustment-col">{calculatedValue}</div>
+        {/*See whether we need to use source here*/}
+        {isSelected ? <div className="tick-col"><i className="icon fi flaticon-tick-1"/></div> : null}
+    </li>
+);
+
+const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
+    <React.Fragment>
+        {renderSubRow(volumePricingHeaderRow, { className: "description-col colspan-2" })}
+        <div className="row sub-row">
+            <ul className="value-table">
+                {volumePricingTiers.map(tier => renderTableRow(tier))}
+            </ul>
+        </div>
+    </React.Fragment>
+);
+
+const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => {
+    return (volumePricingTiers && volumePricingTiers.length > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null;
+};
+
+function PriceBarDetailed({ priceData: { product }}) {
+    const customerNetPriceInfo = prepareCustomerNetPriceInfo(product);
+    const volumePricingTiers = prepareVolumePricingTiers(product);
+    const volumePricingHeaderRow = prepareVolumePricingHeaderRow(product);
+    const volumeTierRows = generateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers);
+    const orderUnitPriceSection = prepareOrderUnitPriceInfo(product);
+    const discountPriceSection = prepareDiscountPriceInfo(product);
+    const strikeThroughPriceSection = prepareStrikeThroughPriceInfo(product);
+    const localSegmentRefPriceSection = prepareLocalSegmentPriceInfo(product);
+
   return (
     <div className="price-bar-detailed">
-      <div className="price-bar-divider"></div>
-
+      <div className="price-bar-divider"/>
       <section className="detailed-left">
         <PriceBarDetailedHeader />
         <div className="block group1">
-          <div className="icon-col">
-            <i className="icon fi flaticon-diamond" />
-          </div>
-          <div className="data-fields">
-            <div className="row">
-              <div className="description-col">
-                <div className="title">
-                  Local Segment Reference Price (Gross)
-                </div>
-                <div className="small-divider"></div>
-              </div>
-              <div className="value-col">$22.00</div>
-            </div>
-            <div className="row sub-row">
-              <div className="description-col">
-                <div className="subrow-title">
-                  <i className="icon fi flaticon-circle" />
-                  Strategic Discount
-                </div>
-                <div className="subrow-sub-title">Zone 02-04 </div>
-                <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
-              </div>
-              <div className="value-col">$21.975</div>              
-              <div className="adjustment-col">- $0.220</div>              
-            </div>
-            <div className="row sub-row">
-              <div className="description-col">
-                <div className="subrow-title">
-                  <i className="icon fi flaticon-circle" />
-                  Rounding
-                </div>
-              </div>
-              <div className="value-col">-</div>
-              <div className="adjustment-col">$0.005</div>
-              
-            </div>
-          </div>
+          {renderDetailedSection(localSegmentRefPriceSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
         </div>
         <div className="block group2">
-          <div className="icon-col">
-            <i className="icon fi flaticon-diamond" />
-          </div>
-          <div className="data-fields">
-            <div className="row">
-              <div className="description-col">
-                <div className="title">Strike Through Price</div>
-                <div className="small-divider"></div>
-              </div>
-              <div className="value-col">$21.980</div>
-              <div className="adjustment-col"></div>              
-            </div>
-            <div className="row sub-row not-applied">
-              <div className="description-col">
-                <div className="subrow-title">
-                  <i className="icon fi flaticon-close" />
-                  Pre-Qualified Discounts (Not Applied)
-                </div>
-                <div className="subrow-sub-title">NEW customer</div>
-                <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
-              </div>
-              <div className="value-col">- $3.00</div>                     
-              <div className="adjustment-col">- $3.00</div>             
-            </div>
-            <div className="row sub-row">
-              <div className="description-col">
-                <div className="subrow-title">
-                  <i className="icon fi flaticon-circle" />
-                  Behavioral Discounts
-                </div>
-              </div>        
-            </div>
-            <div className="row sub-row">
-              <ul className="value-table">
-                <li>
-                  <div className="description-col">0 <span>to</span> 3</div>
-                  <div className="value-col"> 0.000%</div>
-                  <div className="adjustment-col"> $0.000</div>                  
-                </li>
-                <li className="selected">
-                  <div className="description-col">4 <span>to</span> 8</div>
-                  <div className="value-col">- 0.250% </div>
-                  <div className="adjustment-col">- $0.055</div>                 
-                  <div className="tick-col"><i className="icon fi flaticon-tick-1"/></div>
-                </li>
-                <li>
-                  <div className="description-col">9 <span>to</span> 12</div>
-                  <div className="value-col">- 0.500%</div>
-                  <div className="adjustment-col">- $0.110</div>                  
-                </li>
-                <li>
-                  <div className="description-col">13 <span>and</span> above</div>
-                  <div className="value-col">- 0.750%</div>
-                  <div className="adjustment-col">- $0.165</div>                  
-                </li>
-              </ul>
-            </div>
-          </div>
+          {renderDetailedSection(strikeThroughPriceSection, volumeTierRows)}
         </div>
       </section>
-
-      <div className="price-bar-divider overlap"></div>
-
+      <div className="price-bar-divider overlap"/>
       <section className="detailed-right">
         <PriceBarDetailedHeader />
         <div className="block group3">
-          <div className="icon-col">
-            <i className="icon fi flaticon-diamond" />
-          </div>
-          <div className="data-fields">
-            <div className="row">
-              <div className="description-col">
-                <div className="title">Discount Price</div>
-                <div className="small-divider"></div>
-              </div>
-              <div className="value-col">$18.925</div>
-              <div className="adjustment-col"></div>
-            </div>           
-
-            <div className="row sub-row">
-              <div className="description-col">
-                <div className="subrow-title">
-                  <i className="icon fi flaticon-circle" />
-                  Item/Order Specific promotions
-                </div>
-                <div className="subrow-sub-title">123948 Bottle</div>
-                <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
-              </div>
-              <div className="value-col">- 1.200%</div>
-              <div className="adjustment-col">- $0.227</div>
-            </div>
-            <div className="row sub-row">
-              <div className="description-col">
-                <div className="subrow-title">
-                  <i className="icon fi flaticon-circle" />
-                  Post processing / Legal
-                </div>
-                <div className="subrow-sub-title">51478 complmentary item</div>
-                <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
-              </div>
-              <div className="value-col">$2.000</div>
-              <div className="adjustment-col">$2.000</div>
-            </div>           
-          </div>
+          {renderDetailedSection(discountPriceSection)}
         </div>
-
         <div className="block group4">
-          <div className="icon-col">
-            <i className="icon fi flaticon-diamond" />
-          </div>
-          <div className="data-fields">
-            <div className="row">
-              <div className="description-col">
-                <div className="title">Order Unit Price</div>
-                <div className="small-divider"></div>
-              </div>
-              <div className="value-col">$20.698</div>
-              <div className="adjustment-col"></div>              
-            </div>
-            <div className="row sub-row">
-              <div className="description-col">
-                <div className="subrow-title">
-                  <i className="icon fi flaticon-circle" />
-                  Off-invoice Adjustment
-                </div>
-                <div className="subrow-sub-title">129343 Line Discount</div>
-                <div className="subrow-sub-title">Valid 01 Jul 2020 - 7 Jul 2020 </div>
-              </div>
-              <div className="value-col">- $2.012</div>
-              <div className="adjustment-col">- $2.012</div>              
-            </div>
-          </div>
+          {renderDetailedSection(orderUnitPriceSection)}
         </div>
-
-        <div className="block group5">
-          <div className="icon-col">
-            <i className="icon fi flaticon-diamond" />
+          <div className="block group5">
+              {renderDetailedSection(customerNetPriceInfo)}
           </div>
-          <div className="data-fields">
-            <div className="row">
-              <div className="description-col">
-                <div className="title">Customer Net Price</div>                
-              </div>
-              <div className="value-col">$18.686</div>
-              <div className="adjustment-col"></div>              
-            </div>
-          </div>
-        </div>
       </section>
     </div>
   );

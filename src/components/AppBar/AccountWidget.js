@@ -6,13 +6,16 @@ import {
   LogoutOutlined,
 } from "@ant-design/icons";
 import Navigation from "./Navigation";
+import {auth} from '../../utils/security/Auth';
+import { UserDetailContext } from "../../containers/UserDetailContext";
 class AccountWidget extends React.Component {
   state = {
     visible: false,
   };
-  logoutButtonClicked = async () => {
-    // await Auth.signOut();
+  logoutButtonClicked = () => {
+    auth.logOutRedirection();
   };
+
   toggleMenu = () => {
     const { visible } = this.state;
     this.setState({ visible: !visible });
@@ -30,7 +33,8 @@ class AccountWidget extends React.Component {
 
   render() {
     const { visible } = this.state;
-
+    const userDetailsObj = this.context.userDetailsData.userDetails;
+    const displayName = Object.keys(userDetailsObj).length !== 0 ? `${userDetailsObj.firstName} ${userDetailsObj.lastName}` : "N/A";
     return (
       <div className={visible ? "account-widget open" : "account-widget"}>
         <div
@@ -38,7 +42,7 @@ class AccountWidget extends React.Component {
           className={visible ? "user-widget show" : "user-widget"}>
           <div className="user">
             <div className="name">
-              milu8609
+                {displayName}
               <div className="welcome">Signed In</div>
             </div>
           </div>
@@ -136,5 +140,5 @@ class AccountWidget extends React.Component {
     );
   }
 }
-
+AccountWidget.contextType = UserDetailContext;
 export default AccountWidget;
