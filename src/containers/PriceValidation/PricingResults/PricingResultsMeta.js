@@ -107,8 +107,6 @@ function renderOrderInfo({ priceRequestDate, quantity, splitStatus }) {
 }
 
 function PricingResultsMeta(props) {
-  console.log("########################");
-  console.log(props);
   const { priceData, userData } = props;
   return (
     <div className="pricing-result-meta">

@@ -1,4 +1,3 @@
-import React from 'react';
 import { configure, mount } from 'enzyme';
 import { getBusinessUnits } from '../PricingHelper';
 import Adapter from 'enzyme-adapter-react-16';

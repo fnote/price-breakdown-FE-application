@@ -43,12 +43,8 @@ const PriceValidationContextProvider = props => {
     const [response, setResponse] = useState(null);
 
     const priceDataUpdateHandler = (data) => {
-        console.log("Received data to context", data);
-        console.log("Current state", priceDataState);
 
         const processedState = mapSuccessResponse(data);
-
-        console.log(">>>> SETTING STATE", processedState);
         setIsLoading(false);
         setError(null);
         setPriceData(processedState);
@@ -56,8 +52,6 @@ const PriceValidationContextProvider = props => {
     };
 
     const errorUpdateHandler = (data) => {
-        console.log("Received error data to context", data);
-        console.log("Current state", priceDataState);
         setIsLoading(false);
         setError(data);
         setResponse(null)

@@ -76,7 +76,6 @@ class Auth {
                     errorType: null
                 }
 
-                console.log(data)
 
                 if (data.status === 200) {
                     payloadData.isLoginSucceeded = true;

@@ -6,6 +6,7 @@ import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper'
 import {getBffUrlConfig} from "../../../utils/Configs";
 
+/* eslint-disable no-template-curly-in-string */
 const validateMessages = {
   required: "${label} is required!",
   types: {
@@ -43,7 +44,6 @@ const SearchForm = () => {
     const onSubmit = (values) => {
         priceValidationContext.setIsLoading(true);
         priceValidationContext.setResponse(null);
-        console.log(values);
         return priceRequestHandler(values);
   };
 
@@ -71,7 +71,6 @@ const SearchForm = () => {
           .then(handleResponse)
           .then( resp => {
               if (resp.success) {
-                  console.log("Response body", resp.data);
                   priceValidationContext.setPriceData(resp.data);
               } else {
                   priceValidationContext.setErrorData(resp.data);

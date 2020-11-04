@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, Button, Table, Tag } from "antd";
+import { Input, Button, Table } from "antd";
 import { SyncOutlined } from "@ant-design/icons";
 const { Search } = Input;
 
@@ -20,10 +20,10 @@ const columns = [
     width: 'auto',
     render: (text) => (
       <div className="action-bar">
-        {text[0] == "processing" && (
+        {text[0] === "processing" && (
           <div className="file-process-status">FILE IS BEING PROCESSED</div>
         )}
-        {text[0] == "error" && (
+        {text[0] === "error" && (
           <div className="file-process-status error">
             File Contained errors
             <div className="divider"></div>
@@ -33,12 +33,12 @@ const columns = [
             </Button>
           </div>
         )}
-        {text[0] == "success" && (
+        {text[0] === "success" && (
           <div className="file-process-status success">
             File processed successfully
           </div>
         )}
-        {text[0] != "processing" ? (
+        {text[0] !== "processing" ? (
           <>
             <Button className="btn icon-only empty-btn">
               <i className="icon fi flaticon-bin" />
@@ -48,7 +48,7 @@ const columns = [
             </Button>
           </>
         ) : (
-          <>           
+          <>
             <Button className="btn icon-only empty-btn cancel-process">
               <i className="icon fi flaticon-close" />
             </Button>
@@ -107,7 +107,6 @@ class FileList extends React.Component {
   };
 
   onSelectChange = (selectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
 
