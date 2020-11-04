@@ -98,10 +98,11 @@ class Auth {
                 appLoaderContext.setAppLoadingState(false);
             })
             .catch(() => {
-                const errorPayloadData = {};
-                errorPayloadData.isLoginSucceeded = false;
-                errorPayloadData.error = generalErrorResponse;
-                errorPayloadData.errorType = AUTH_FAILURE_TYPE_UNEXPECTED_ERROR;
+                const errorPayloadData = {
+                    isLoginSucceeded: false,
+                    error: generalErrorResponse,
+                    errorType: AUTH_FAILURE_TYPE_UNEXPECTED_ERROR,
+                };
                 auth.setUserLoggedInState(AUTH_STATE_FAILED);
 
                 userDetailContext.setUserDetails(errorPayloadData);

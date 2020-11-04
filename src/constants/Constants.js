@@ -77,4 +77,3 @@ export const NOT_APPLICABLE_PRICE_ZONE = 'N/A';
 
 export const PRICE_SOURCE_PA_ID = 97;
 export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
-
