@@ -90,7 +90,7 @@ describe('getPriceUnit', () => {
     test('should return the correct value', () => {
         expect(getPriceUnit({ splitFlag: true, perWeightFlag: true })).toEqual('pound');
         expect(getPriceUnit({ splitFlag: false, perWeightFlag: true })).toEqual('pound');
-        expect(getPriceUnit({ splitFlag: true, perWeightFlag: false })).toEqual('split');
+        expect(getPriceUnit({ splitFlag: true, perWeightFlag: false })).toEqual('each');
         expect(getPriceUnit({ splitFlag: false, perWeightFlag: false })).toEqual('case');
         expect(getPriceUnit({})).toEqual('case');
     });
