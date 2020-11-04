@@ -40,13 +40,6 @@ const SearchForm = () => {
     const userDetailContext = useContext(UserDetailContext);
     const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
 
-    const onSubmit = (values) => {
-        priceValidationContext.setIsLoading(true);
-        priceValidationContext.setResponse(null);
-        console.log(values);
-        return priceRequestHandler(values);
-  };
-
     const handleResponse = (response) => {
         return response.json()
             .then((json) => {
@@ -82,6 +75,12 @@ const SearchForm = () => {
           .catch((e) => {
               priceValidationContext.setErrorData(e);
           });
+  };
+
+  const onSubmit = (values) => {
+    priceValidationContext.setIsLoading(true);
+    priceValidationContext.setResponse(null);
+    return priceRequestHandler(values);
   };
 
   return (
