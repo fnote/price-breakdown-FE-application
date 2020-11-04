@@ -191,7 +191,7 @@ export const extractRequestInfo = ({ priceRequestDate, product: { splitFlag, qua
     quantity
 });
 
-export const isFixFractionDigits = (perWeightFlag, priceSource, grossPrice) => (perWeightFlag &&
+export const isFixedFractionDigits = (perWeightFlag, priceSource, grossPrice) => (perWeightFlag &&
     priceSource === PRICE_SOURCE_PA_ID && grossPrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
 
 export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, priceSource }) => {
@@ -202,7 +202,7 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
 
     const refPriceDiscountRows = discounts.filter(discount => discount.type === DISCOUNT_TYPE_REF_PRICE)
         .map(discount => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE,
-            { perWeightFlag, useFixFractionDigits: isFixFractionDigits(perWeightFlag, priceSource, grossPrice) }));
+            { perWeightFlag, useFixFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }));
 
     const dataRows = [headerRow, ...refPriceDiscountRows];
 
@@ -211,7 +211,7 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
             description: DESCRIPTION_ROUNDING,
             adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
             calculatedValue: formatPrice(referencePriceRoundingAdjustment,
-                { perWeightFlag, useFixFractionDigits: isFixFractionDigits(perWeightFlag, priceSource, grossPrice) }),
+                { perWeightFlag, useFixFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }),
             source: PRICE_SOURCE_SYSTEM
         };
         dataRows.push(roundingValueRow);
@@ -226,7 +226,7 @@ export const prepareStrikeThroughPriceInfo = ({ discounts, customerReferencePric
         description: DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
         calculatedValue: formatPrice(customerReferencePrice,
-            { perWeightFlag, useFixFractionDigits: isFixFractionDigits(perWeightFlag, priceSource, grossPrice) })
+            { perWeightFlag, useFixFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) })
     };
 
     const preQualifiedDiscounts = discounts
