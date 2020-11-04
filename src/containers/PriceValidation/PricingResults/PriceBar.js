@@ -1,5 +1,5 @@
 import React from "react";
-import { getPriceUnit, formatPriceWithoutCurrency, isFixFractionDigits } from '../../../utils/PricingUtils';
+import { getPriceUnit, formatPriceWithoutCurrency, isFixedFractionDigits } from '../../../utils/PricingUtils';
 import { META_DATA_PRICE_BAR, LABEL_CUSTOMER_NET_PRICE, VALUE_KEY_CUSTOMER_REF_PRICE } from '../../../constants/Constants';
 
 const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true }, pricingData) => (
@@ -8,8 +8,8 @@ const renderPricePoint = ({ label, valueKey, styleClass, insertDivider = true },
         <div className="price-block">
             <div className="value">{formatPriceWithoutCurrency(pricingData[valueKey], {
                 perWeightFlag: pricingData.perWeightFlag,
-                useFixFractionDigits: valueKey === VALUE_KEY_CUSTOMER_REF_PRICE ?
-                isFixFractionDigits(pricingData.perWeightFlag, pricingData.priceSource, pricingData.grossPrice) : false
+                useFixedFractionDigits: valueKey === VALUE_KEY_CUSTOMER_REF_PRICE ?
+                isFixedFractionDigits(pricingData.perWeightFlag, pricingData.priceSource, pricingData.grossPrice) : false
             })}</div>
             <div className="unit-block">
                 { insertDivider && <div className="divider"/>}

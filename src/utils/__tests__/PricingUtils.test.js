@@ -52,8 +52,8 @@ describe('formatPriceWithoutCurrency', () => {
         expect(formatPriceWithoutCurrency(1.23342, { perWeightFlag: false })).toEqual('1.23');
         expect(formatPriceWithoutCurrency(0, { perWeightFlag: false })).toEqual('0.00');
         expect(formatPriceWithoutCurrency(-0.1, { perWeightFlag: false })).toEqual('-0.10');
-        expect(formatPriceWithoutCurrency(1, { perWeightFlag: true, useFixFractionDigits: false })).toEqual('1.000');
-        expect(formatPriceWithoutCurrency(1, { perWeightFlag: true, useFixFractionDigits: true })).toEqual('1.00');
+        expect(formatPriceWithoutCurrency(1, { perWeightFlag: true, useFixedFractionDigits: false })).toEqual('1.000');
+        expect(formatPriceWithoutCurrency(1, { perWeightFlag: true, useFixedFractionDigits: true })).toEqual('1.00');
     });
 });
 
@@ -98,7 +98,11 @@ describe('getPriceUnit', () => {
 
 describe('generateDateObject', () => {
     test('should return the correct value', () => {
-        expect(generateDateObject('20201025').toLocaleDateString()).toEqual('10/25/2020');
+        const generatedDate = generateDateObject('20201025');
+        expect(generatedDate.getFullYear()).toEqual(2020);
+        // month is zero indexed
+        expect(generatedDate.getMonth() + 1).toEqual(10);
+        expect(generatedDate.getDate()).toEqual(25);
     });
 });
 
