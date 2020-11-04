@@ -14,8 +14,6 @@ export default function ApplicationBase() {
 
     useEffect(() => {
         if (auth.isUserLoginPending() || auth.shouldFetchUserDetailsAgain(userDetailContext)) {
-            console.log('calling handler')
-
             if(appLoaderContext.appLoadingState !== true) {
                 appLoaderContext.setAppLoadingState(true);
             } else {

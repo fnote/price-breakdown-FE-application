@@ -51,8 +51,6 @@ const renderError = ({ code, message }) => (
 const SearchStatuses = () => {
   const priceValidationContext = useContext(PriceValidationContext);
 
-  console.log("State in search statuses",  priceValidationContext.priceData);
-
   const { response } = priceValidationContext.priceData;
 
   if (priceValidationContext.isLoading) {

@@ -64,7 +64,6 @@ const SearchForm = () => {
           .then(handleResponse)
           .then( resp => {
               if (resp.success) {
-                  console.log("Response body", resp.data);
                   priceValidationContext.setPriceData(resp.data);
               } else {
                   priceValidationContext.setErrorData(resp.data);
