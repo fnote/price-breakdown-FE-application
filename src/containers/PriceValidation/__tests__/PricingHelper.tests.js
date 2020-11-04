@@ -5,6 +5,7 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({adapter: new Adapter()});
 
 describe.only('formatBusinessUnit', () => {
+
     test('should return formatted business unit name for valid OpCo Id', () => {
         expect(getBusinessUnits([])).toEqual([]);
         const businessUnitsMap = [{
