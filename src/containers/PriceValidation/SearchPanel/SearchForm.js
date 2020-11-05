@@ -1,9 +1,11 @@
 import React, { useContext } from "react";
 import moment from 'moment';
-import { Form, Input, Checkbox, Select, InputNumber, DatePicker } from "antd";
+import {
+ Form, Input, Checkbox, Select, InputNumber, DatePicker 
+} from "antd";
 import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
-import { getBusinessUnits } from '../PricingHelper'
+import { getBusinessUnits } from '../PricingHelper';
 import {getBffUrlConfig} from "../../../utils/Configs";
 
 /* eslint-disable no-template-curly-in-string */
@@ -19,10 +21,9 @@ const validateMessages = {
 
 // Sample:
 // const initialValues = {quantity:1, site:'019', supc: '3183792', customer: '622548', date: moment(), split: false};
-const initialValues = {quantity:1, date: moment(), split: false};
+const initialValues = {quantity: 1, date: moment(), split: false};
 
-const formRequestBody = (requestData) => {
-    return JSON.stringify({
+const formRequestBody = (requestData) => JSON.stringify({
         businessUnitNumber: requestData.site,
         customerAccount: requestData.customer,
         priceRequestDate: requestData.date.format("YYYYMMDD"),
@@ -34,23 +35,19 @@ const formRequestBody = (requestData) => {
             }
 
     });
-};
 
 const SearchForm = () => {
     const priceValidationContext = useContext(PriceValidationContext);
     const userDetailContext = useContext(UserDetailContext);
     const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
 
-    const handleResponse = (response) => {
-        return response.json()
+    const handleResponse = (response) => response.json()
             .then((json) => {
                 if (response.ok) {
                     return {success: true, data: json};
-                } else {
-                    return {success: false, data: json}
-                }
-            })
-    };
+                } 
+                    return {success: false, data: json};
+            });
 
   const priceRequestHandler = (requestData) => {
       fetch(getBffUrlConfig().priceDataEndpoint, {
@@ -63,7 +60,7 @@ const SearchForm = () => {
           credentials: 'include'
       })
           .then(handleResponse)
-          .then( resp => {
+          .then((resp) => {
               if (resp.success) {
                   priceValidationContext.setPriceData(resp.data);
               } else {
@@ -177,7 +174,7 @@ const SearchForm = () => {
               rules={[
                   () => ({
                       validator(rule, value) {
-                          if (value && !isNaN(value) && 1 <= value && value <= 1000) {
+                          if (value && !isNaN(value) && value >= 1 && value <= 1000) {
                               return Promise.resolve();
                           }
                           return Promise.reject('Quantity must be a valid number between 1 and 1000');

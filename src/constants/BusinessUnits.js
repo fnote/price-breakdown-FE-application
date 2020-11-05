@@ -76,6 +76,7 @@ const businessUnits = new Map(
         ["344", {id: "344", name: "Sysco IFG - Jacksonville", shortName: "IFG - Jacksonville"}],
         ["429", {id: "429", name: "Sysco Doerle", shortName: "Doerle"}],
         ["450", {id: "450", name: "Sysco Alaska", shortName: "Alaska"}]
-    ]);
+    ]
+);
 
 export default businessUnits;

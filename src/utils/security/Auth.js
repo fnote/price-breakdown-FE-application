@@ -21,29 +21,29 @@ class Auth {
     getLoginPage = () => {
         window.location.assign(this.bffUrlConfig.loginRedirectionUrl);
         this.setUserLoggedInState(AUTH_STATE_PENDING);
-    }
+    };
 
     logOutRedirection = () => {
         localStorage.removeItem('auth_user');
         window.location.assign(this.bffUrlConfig.logOutRedirectionUrl);
-    }
+    };
 
     //based on local storage value which preserved even after page refreshes
     isUserLoginCompleted = () => {
         return localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED;
-    }
+    };
 
     shouldFetchUserDetailsAgain = (userContext) => {
         return localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED && userContext.userDetailsData.isLoginSucceeded !== true;
-    }
+    };
 
     isUserLoginPending = () => {
         return localStorage.getItem('auth_user') === AUTH_STATE_PENDING;
-    }
+    };
 
     setUserLoggedInState = (state) => {
         localStorage.setItem('auth_user', state);
-    }
+    };
 
     callUserDetails = () => {
         return fetch(this.bffUrlConfig.userDetailsUrl, {
@@ -58,7 +58,7 @@ class Auth {
             .catch(() => {
                 return {status: UNEXPECTED_ERROR_CODE, userDetailResponse: {}}
             });
-    }
+    };
 
     userDetailContextHandler = (userDetailContext, appLoaderContext) => {
         const generalErrorResponse = {

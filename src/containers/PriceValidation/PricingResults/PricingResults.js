@@ -26,7 +26,6 @@ function PricingResults() {
     }
 
     return null;
-
 }
 
 export default PricingResults;

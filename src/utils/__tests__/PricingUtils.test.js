@@ -120,13 +120,14 @@ describe('generateValidityPeriod', () => {
 
 describe('mapDiscountToDataRow', () => {
     test('should return the correct value', () => {
-
-        const data = { name: 'NEW_CUSTOMER_DISCOUNT',
+        const data = {
+            name: 'NEW_CUSTOMER_DISCOUNT',
             amount: 0.92,
             priceAdjustment: 72.23,
             effectiveFrom: '20201005',
-            effectiveTo: '20201111' };
-        expect(mapDiscountToDataRow(data,'something', { perWeightFlag: false })).toEqual({
+            effectiveTo: '20201111'
+};
+        expect(mapDiscountToDataRow(data, 'something', { perWeightFlag: false })).toEqual({
             adjustmentValue: '-8.00%',
             calculatedValue: '$72.23',
             description: 'New Customer Discount',
@@ -144,8 +145,9 @@ describe('mapAgreementToDataRow', () => {
             percentageAdjustment: '$1.23',
             priceAdjustment: 72.23,
             effectiveFrom: '20201005',
-            effectiveTo: '20201111' };
-        expect(mapAgreementToDataRow(data,'something', { perWeightFlag: false })).toEqual({
+            effectiveTo: '20201111'
+};
+        expect(mapAgreementToDataRow(data, 'something', { perWeightFlag: false })).toEqual({
             id: '1234',
             adjustmentValue: '$1.23',
             calculatedValue: '$72.23',
@@ -161,8 +163,9 @@ describe('mapAgreementToDataRow', () => {
             description: 'A sample description',
             priceAdjustment: 72.23,
             effectiveFrom: '20201005',
-            effectiveTo: '20201111' };
-        expect(mapAgreementToDataRow(data,'something', { perWeightFlag: false })).toEqual({
+            effectiveTo: '20201111'
+};
+        expect(mapAgreementToDataRow(data, 'something', { perWeightFlag: false })).toEqual({
             id: '1234',
             adjustmentValue: '$72.23',
             calculatedValue: '$72.23',
@@ -175,7 +178,7 @@ describe('mapAgreementToDataRow', () => {
 
 describe('mapVolumeTierToTableRow', () => {
     test('should return the correct when Between operator is used', () => {
-        const data =  {
+        const data = {
             eligibility: {
                 operator: 'Between',
                 lowerBound: 5,
@@ -186,7 +189,7 @@ describe('mapVolumeTierToTableRow', () => {
                 priceAdjustment: 2
             }],
             isApplicable: true
-        }
+        };
         expect(mapVolumeTierToTableRow(data, { perWeightFlag: false })).toEqual({
             adjustmentValue: '1100.00%',
             calculatedValue: '$2.00',
@@ -197,7 +200,7 @@ describe('mapVolumeTierToTableRow', () => {
     });
 
     test('should return the correct when Between operator is not used', () => {
-        const data =  {
+        const data = {
             eligibility: {
                 operator: '=',
                 lowerBound: 5,
@@ -208,7 +211,7 @@ describe('mapVolumeTierToTableRow', () => {
                 priceAdjustment: 2
             }],
             isApplicable: true
-        }
+        };
         expect(mapVolumeTierToTableRow(data, { perWeightFlag: false })).toEqual({
             adjustmentValue: '1100.00%',
             calculatedValue: '$2.00',
@@ -219,7 +222,7 @@ describe('mapVolumeTierToTableRow', () => {
     });
 
     test('should return the correct value when different values are used for isApplicable field', () => {
-        const inputData1 =  {
+        const inputData1 = {
             eligibility: {
                 operator: '=',
                 lowerBound: 5,
@@ -230,9 +233,9 @@ describe('mapVolumeTierToTableRow', () => {
                 priceAdjustment: 2
             }],
             isApplicable: false
-        }
+        };
         expect(mapVolumeTierToTableRow(inputData1, { perWeightFlag: false }).isSelected).toEqual(false);
-        const inputData2 =  {
+        const inputData2 = {
             eligibility: {
                 operator: '=',
                 lowerBound: 5,
@@ -243,10 +246,10 @@ describe('mapVolumeTierToTableRow', () => {
                 priceAdjustment: 2
             }],
             isApplicable: true
-        }
+        };
         expect(mapVolumeTierToTableRow(inputData2, { perWeightFlag: false }).isSelected).toEqual(true);
 
-        const inputData3 =  {
+        const inputData3 = {
             eligibility: {
                 operator: '=',
                 lowerBound: 5,
@@ -256,12 +259,12 @@ describe('mapVolumeTierToTableRow', () => {
                 amount: 12,
                 priceAdjustment: 2
             }],
-        }
+        };
         expect(mapVolumeTierToTableRow(inputData3, { perWeightFlag: false }).isSelected).toEqual(false);
     });
 
     test('should return the correct when Between operator is used and lower and upper bound are equal', () => {
-        const data =  {
+        const data = {
             eligibility: {
                 operator: 'Between',
                 lowerBound: 5,
@@ -272,7 +275,7 @@ describe('mapVolumeTierToTableRow', () => {
                 priceAdjustment: 2
             }],
             isApplicable: true
-        }
+        };
         expect(mapVolumeTierToTableRow(data, { perWeightFlag: false })).toEqual({
             adjustmentValue: '1100.00%',
             calculatedValue: '$2.00',
@@ -282,7 +285,6 @@ describe('mapVolumeTierToTableRow', () => {
         });
     });
 });
-
 
 describe('extractPricePoints', () => {
     test('should return the object only with the defined set of fields', () => {
@@ -396,7 +398,8 @@ describe('prepareLocalSegmentPriceInfo', () => {
                     effectiveFrom: '20201025',
                     effectiveTo: '20201113'
                 },
-                {   id: 2222,
+                {
+                    id: 2222,
                     type: 'PREQUALIFIED',
                     name: 'STRATERGIC_DISCOUNT',
                     amount: 0.92,
@@ -420,7 +423,9 @@ describe('prepareLocalSegmentPriceInfo', () => {
             "description": "New Customer Discount",
             "source": "Discount Service",
             "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
-        }, {"adjustmentValue": " ", "calculatedValue": "$1.23", "description": "Rounding", "source": "System"}]);
+        }, {
+            "adjustmentValue": " ", "calculatedValue": "$1.23", "description": "Rounding", "source": "System"
+        }]);
     });
 
     test('should return the correct value when priced with PA, catch-weight item, gross price < $10', () => {
@@ -435,8 +440,9 @@ describe('prepareLocalSegmentPriceInfo', () => {
                     effectiveFrom: '20201025',
                     effectiveTo: '20201113'
                 },
-                {   id: 2222,
-                    type: 'PREQUALIFIED',                    
+                {
+                    id: 2222,
+                    type: 'PREQUALIFIED',
                     name: 'NEW_CUSTOMER_DISCOUNT',
                     amount: 0.92,
                     priceAdjustment: 72.23,
@@ -459,7 +465,9 @@ describe('prepareLocalSegmentPriceInfo', () => {
             "description": "Strategic Discount",
             "source": "Discount Service",
             "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
-        }, {"adjustmentValue": " ", "calculatedValue": "$0.002", "description": "Rounding", "source": "System"}]);
+        }, {
+"adjustmentValue": " ", "calculatedValue": "$0.002", "description": "Rounding", "source": "System"
+}]);
     });
 
     test('should return the correct value when priced with PA, catch-weight item, gross price = $10', () => {
@@ -474,8 +482,9 @@ describe('prepareLocalSegmentPriceInfo', () => {
                     effectiveFrom: '20201025',
                     effectiveTo: '20201113'
                 },
-                {   id: 2222,
-                    type: 'PREQUALIFIED',                    
+                {
+                    id: 2222,
+                    type: 'PREQUALIFIED',
                     name: 'NEW_CUSTOMER_DISCOUNT',
                     amount: 0.92,
                     priceAdjustment: 72.23,
@@ -498,9 +507,10 @@ describe('prepareLocalSegmentPriceInfo', () => {
             "description": "Strategic Discount",
             "source": "Discount Service",
             "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
-        }, {"adjustmentValue": " ", "calculatedValue": "$0.02", "description": "Rounding", "source": "System"}]);
+        }, {
+"adjustmentValue": " ", "calculatedValue": "$0.02", "description": "Rounding", "source": "System"
+}]);
     });
-
 
     test('should return the correct value when priced with PA, catch-weight item, gross price > $10', () => {
         const data = {
@@ -514,8 +524,9 @@ describe('prepareLocalSegmentPriceInfo', () => {
                     effectiveFrom: '20201025',
                     effectiveTo: '20201113'
                 },
-                {   id: 2222,
-                    type: 'PREQUALIFIED',                    
+                {
+                    id: 2222,
+                    type: 'PREQUALIFIED',
                     name: 'NEW_CUSTOMER_DISCOUNT',
                     amount: 0.92,
                     priceAdjustment: 72.23,
@@ -538,7 +549,9 @@ describe('prepareLocalSegmentPriceInfo', () => {
             "description": "Strategic Discount",
             "source": "Discount Service",
             "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
-        }, {"adjustmentValue": " ", "calculatedValue": "$0.02", "description": "Rounding", "source": "System"}]);
+        }, {
+"adjustmentValue": " ", "calculatedValue": "$0.02", "description": "Rounding", "source": "System"
+}]);
     });
 
     test('should return the correct value when priced with non PA, catch-weight item, gross price > $10', () => {
@@ -555,7 +568,6 @@ describe('prepareLocalSegmentPriceInfo', () => {
             "description": "Local Segment Reference Price (Gross)"
         }]);
     });
-
 });
 
 describe('prepareStrikeThroughPriceInfo', () => {
@@ -654,7 +666,6 @@ describe('prepareStrikeThroughPriceInfo', () => {
             "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
         }]);
     });
-
 
     test('should return correct values when priced with PA, catch-weight item, gross price < $10', () => {
         const data = {
@@ -855,8 +866,6 @@ describe('prepareStrikeThroughPriceInfo', () => {
             "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
         }]);
     });
-
-
 });
 
 describe('isApplyToPriceOrBaseAgreement', () => {
@@ -894,7 +903,7 @@ describe('prepareDiscountPriceInfo', () => {
             customerPrequalifiedPrice: 1.53,
             perWeightFlag: false
 
-        }
+        };
         expect(prepareDiscountPriceInfo(data)).toEqual([{
             "adjustmentValue": " ",
             "calculatedValue": "$1.53",
@@ -939,8 +948,8 @@ describe('prepareDiscountPriceInfo', () => {
                 effectiveFrom: '20201005',
                 effectiveTo: '20201111'
             }
-            
-        }
+
+        };
         expect(prepareDiscountPriceInfo(data)).toEqual([{
             "adjustmentValue": " ",
             "calculatedValue": "$15.53",
@@ -952,7 +961,7 @@ describe('prepareDiscountPriceInfo', () => {
             "id": "1234",
             "source": "SUS",
             "validityPeriod": "Valid Oct 5, 2020 - Nov 11, 2020"
-        }, 
+        },
         {
             "adjustmentValue": "$10.03",
             "calculatedValue": "-$5.50",
@@ -962,7 +971,6 @@ describe('prepareDiscountPriceInfo', () => {
         }
     ]);
     });
-
 });
 
 describe('isOfflineAgreement', () => {
@@ -999,7 +1007,7 @@ describe('prepareOrderUnitPriceInfo', () => {
             ],
             unitPrice: 2.53,
             perWeightFlag: false
-        }
+        };
         expect(prepareOrderUnitPriceInfo(data)).toEqual([{
             "adjustmentValue": " ",
             "calculatedValue": "$2.53",
@@ -1049,7 +1057,7 @@ describe('prepareVolumePricingHeaderInfo', () => {
         expect(prepareVolumePricingHeaderInfo(data)).toEqual({
             "description": "Item/Order Specific promotions",
             "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
-        })
+        });
     });
 });
 
@@ -1068,7 +1076,7 @@ describe('prepareVolumePricingTiers', () => {
                 }],
                 isApplicable: true
             }
-        ]
+        ];
         expect(prepareVolumePricingTiers({ volumePricingTiers })).toEqual([{
             "adjustmentValue": "1100.00%",
             "calculatedValue": "$2.00",
@@ -1117,7 +1125,7 @@ describe('prepareVolumePricingHeaderRow', () => {
 
 describe('prepareVolumePricingInfo', () => {
     test('should return the correct value when volumePricingTiers is not empty', () => {
-        const data =  {
+        const data = {
             eligibility: {
                 operator: 'Between',
                 lowerBound: 5,
@@ -1132,7 +1140,7 @@ describe('prepareVolumePricingInfo', () => {
                 effectiveTo: '20201113'
             }],
             isApplicable: true
-        }
+        };
 
         const volumePricingTiers = [data];
         expect(prepareVolumePricingInfo({ volumePricingTiers, perWeightFlag: false })).toEqual({

@@ -1,9 +1,9 @@
-import React from "react";
-import AppBar from "../../components/AppBar/AppBar";
-import SearchPanel from "./SearchPanel/SearchPanel";
-import SearchStatuses from "./SearchPanel/SearchStatuses";
-import PricingResults from "./PricingResults/PricingResults";
-import PriceValidationContextProvider from './PriceValidationContext'
+import React from 'react';
+import AppBar from '../../components/AppBar/AppBar';
+import SearchPanel from './SearchPanel/SearchPanel';
+import SearchStatuses from './SearchPanel/SearchStatuses';
+import PricingResults from './PricingResults/PricingResults';
+import PriceValidationContextProvider from './PriceValidationContext';
 
 function PriceValidation() {
   return (

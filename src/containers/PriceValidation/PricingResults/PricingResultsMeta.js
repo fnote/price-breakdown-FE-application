@@ -2,7 +2,9 @@ import React from "react";
 import { Tooltip } from "antd";
 import { formatBusinessUnit } from "../../../utils/CommonUtils";
 
-function renderItemInfo({ id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight }) {
+function renderItemInfo({
+ id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight 
+}) {
   return (
       <section className="item-info">
         <div className="item-info-block">
@@ -50,7 +52,9 @@ function renderItemInfo({ id, name, brand, pack, size, stockIndicator, catchWeig
   );
 }
 
-function renderSiteInfo({ businessUnitNumber, customerAccount, customerName, customerType, priceZone }, { businessUnitMap }) {
+function renderSiteInfo({
+ businessUnitNumber, customerAccount, customerName, customerType, priceZone 
+}, { businessUnitMap }) {
   const site = formatBusinessUnit(businessUnitNumber, businessUnitMap);
   return (
       <section className="site-info">

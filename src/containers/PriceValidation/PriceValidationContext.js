@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState} from 'react';
 import {
     extractItemInfo,
     extractPricePoints,
@@ -14,7 +14,7 @@ export const PriceValidationContext = React.createContext({
 
 const initialState = {
     response: null,
-    product:null,
+    product: null,
     recentSearches: [],
     selectedBusinessUnit: {},
     item: null,
@@ -27,7 +27,7 @@ const mapSuccessResponse = (data) => {
 
     return {
         response: data,
-        product: product,
+        product,
         item: extractItemInfo(product),
         pricePoints: extractPricePoints(product),
         site: extractSiteInfo(data),
@@ -35,15 +35,13 @@ const mapSuccessResponse = (data) => {
     };
 };
 
-const PriceValidationContextProvider = props => {
-
+const PriceValidationContextProvider = (props) => {
     const [priceDataState, setPriceData] = useState(initialState);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
 
     const priceDataUpdateHandler = (data) => {
-
         const processedState = mapSuccessResponse(data);
         setIsLoading(false);
         setError(null);
@@ -54,7 +52,7 @@ const PriceValidationContextProvider = props => {
     const errorUpdateHandler = (data) => {
         setIsLoading(false);
         setError(data);
-        setResponse(null)
+        setResponse(null);
     };
 
     return (
@@ -62,13 +60,16 @@ const PriceValidationContextProvider = props => {
             setPriceData: priceDataUpdateHandler,
             priceData: priceDataState,
             setErrorData: errorUpdateHandler,
-            setIsLoading, isLoading,
-            error, setError,
-            response, setResponse
+            setIsLoading,
+            isLoading,
+            error,
+            setError,
+            response,
+            setResponse
         }}>
             {props.children}
         </PriceValidationContext.Provider>
-    )
+    );
 };
 
 export default PriceValidationContextProvider;

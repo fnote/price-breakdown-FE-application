@@ -5,7 +5,8 @@ const businessUnits = new Map(
         ["001", {id: "001", name: "Sysco Jackson", shortName: "Jackson"}],
         ["002", {id: "002", name: "Sysco Atlanta", shortName: "Atlanta"}],
         ["003", {id: "003", name: "Sysco Jacksonville", shortName: "Jacksonville"}]
-    ]);
+    ]
+);
 
 describe('formatBusinessUnit', () => {
     test('should return formatted business unit name for valid OpCo Id', () => {
@@ -30,7 +31,7 @@ const userDetails = {
           "periscope_on": "Y"
         }
       ]
-}
+};
 
 describe('createBusinessUnitMap', () => {
     const businessUnitMap = createBusinessUnitMap(userDetails);
@@ -38,15 +39,12 @@ describe('createBusinessUnitMap', () => {
     test('should return formatted business unit name for valid OpCo Id 1', () => {
         const businessUnit = businessUnitMap.get("011");
         expect(businessUnit.name).toEqual("Sysco Louisville");
-        expect(businessUnit.shortName).toEqual("Louisville")
+        expect(businessUnit.shortName).toEqual("Louisville");
     });
 
     test('should return formatted business unit name for valid OpCo Id 2', () => {
         const businessUnit = businessUnitMap.get("038");
         expect(businessUnit.name).toEqual("Indianapolis");
-        expect(businessUnit.shortName).toEqual("Indianapolis")
+        expect(businessUnit.shortName).toEqual("Indianapolis");
     });
-    
 });
-
-

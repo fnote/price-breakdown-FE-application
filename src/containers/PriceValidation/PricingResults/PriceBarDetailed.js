@@ -8,9 +8,11 @@ import {
     prepareStrikeThroughPriceInfo,
     prepareVolumePricingHeaderRow,
     prepareVolumePricingTiers
-} from "../../../utils/PricingUtils"
+} from "../../../utils/PricingUtils";
 
-const renderHeaderRow = ({ description, validityPeriod, adjustmentValue, calculatedValue }, { className }, showSmallDivider = true) => (
+const renderHeaderRow = ({
+ description, validityPeriod, adjustmentValue, calculatedValue 
+}, { className }, showSmallDivider = true) => (
     <div className="row">
       <div className={className}>
         <div className="title">
@@ -19,19 +21,21 @@ const renderHeaderRow = ({ description, validityPeriod, adjustmentValue, calcula
           {validityPeriod ? <div className="sub-title">{validityPeriod}</div> : null}
           {showSmallDivider ? <div className="small-divider"/> : null }
       </div>
-        {calculatedValue? <div className="value-col">{calculatedValue}</div> : null}
+        {calculatedValue ? <div className="value-col">{calculatedValue}</div> : null}
         {adjustmentValue ? <div className="adjustment-col">{adjustmentValue}</div> : null}
     </div>
 );
 
-const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, validityPeriod, zone, id }, { className }) => (
+const renderSubRow = ({
+ description, adjustmentValue, calculatedValue, source, validityPeriod, zone, id 
+}, { className }) => (
     <div className="row sub-row">
       <div className={className}>
         <div className="subrow-title">
           <i className="icon fi flaticon-circle" />
           {description}
         </div>
-          {/*TODO @sanjayaa: see whether zone needs to be removed*/}
+          {/* TODO @sanjayaa: see whether zone needs to be removed */}
           {zone ? <div className="subrow-sub-title">{zone}</div> : null}
           {id ? <div className="subrow-sub-title">ID: {id}</div> : null}
           {validityPeriod ? <div className="subrow-sub-title">{validityPeriod}</div> : null}
@@ -40,7 +44,6 @@ const renderSubRow = ({ description, adjustmentValue, calculatedValue, source, v
         {calculatedValue ? <div className="adjustment-col">{calculatedValue}</div> : null}
     </div>
 );
-
 
 const DESCRIPTION_COL_CLASSNAME = "description-col";
 
@@ -52,21 +55,23 @@ const renderDetailedSection = (pricingDataList, additionalRows = null, styleMeta
       </div>
       <div className="data-fields">
         {
-            pricingDataList.map((dataRow, index) => index === 0
+            pricingDataList.map((dataRow, index) => (index === 0
                 ? renderHeaderRow(dataRow, styleMetadataHeaderRow, (pricingDataList.length > 1))
-                : renderSubRow(dataRow, styleMetadataSubRow))
+                : renderSubRow(dataRow, styleMetadataSubRow)))
         }
         {additionalRows}
       </div>
     </React.Fragment>
 );
 
-const renderTableRow = ({ description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, source, isSelected }) => (
+const renderTableRow = ({
+ description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, source, isSelected 
+}) => (
     <li className={isSelected ? "selected" : null}>
         <div className="description-col">{rangeStart} <span>{rangeConnector}</span> {rangeEnd}</div>
         <div className="value-col">{adjustmentValue}</div>
         <div className="adjustment-col">{calculatedValue}</div>
-        {/*See whether we need to use source here*/}
+        {/* See whether we need to use source here */}
         {isSelected ? <div className="tick-col"><i className="icon fi flaticon-tick-1"/></div> : null}
     </li>
 );
@@ -76,15 +81,13 @@ const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) =>
         {renderSubRow(volumePricingHeaderRow, { className: "description-col colspan-2" })}
         <div className="row sub-row">
             <ul className="value-table">
-                {volumePricingTiers.map(tier => renderTableRow(tier))}
+                {volumePricingTiers.map((tier) => renderTableRow(tier))}
             </ul>
         </div>
     </React.Fragment>
 );
 
-const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => {
-    return (volumePricingTiers && volumePricingTiers.length > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null;
-};
+const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => ((volumePricingTiers && volumePricingTiers.length > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null);
 
 function PriceBarDetailed({ priceData: { product }}) {
     const customerNetPriceInfo = prepareCustomerNetPriceInfo(product);
