@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import moment from 'moment';
 import {
- Form, Input, Checkbox, Select, InputNumber, DatePicker 
+ Form, Input, Checkbox, Select, InputNumber, DatePicker
 } from "antd";
 import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
@@ -44,9 +44,9 @@ const SearchForm = () => {
     const handleResponse = (response) => response.json()
             .then((json) => {
                 if (response.ok) {
-                    return {success: true, data: json};
-                } 
-                    return {success: false, data: json};
+                  return { success: true, data: json };
+                }
+                return { success: false, data: json };
             });
 
   const priceRequestHandler = (requestData) => {

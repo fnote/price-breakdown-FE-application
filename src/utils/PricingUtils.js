@@ -63,7 +63,10 @@ export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigi
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency without currency symbol
  * */
-export const formatPriceWithoutCurrency = (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
+export const formatPriceWithoutCurrency = (
+    value,
+    { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }
+    ) => `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
 
 export const convertFactorToPercentage = (factor) => `${(factor * 100).toFixed(PERCENTAGE_FRACTION_DIGITS)}%`;
 
@@ -90,7 +93,7 @@ export const generateReadableDate = (dateString) => generateDateObject(dateStrin
 export const generateValidityPeriod = (effectiveFrom, effectiveTo) => `Valid ${generateReadableDate(effectiveFrom)} - ${generateReadableDate(effectiveTo)}`;
 
 export const mapDiscountToDataRow = ({
- id, name, amount, priceAdjustment, effectiveFrom, effectiveTo 
+ id, name, amount, priceAdjustment, effectiveFrom, effectiveTo
 }, source, { perWeightFlag, useFixedFractionDigits }) => ({
     id,
     description: getReadableDiscountName(name),
@@ -206,7 +209,7 @@ export const isFixedFractionDigits = (perWeightFlag, priceSource, grossPrice) =>
     && priceSource === PRICE_SOURCE_PA_ID && grossPrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
 
 export const prepareLocalSegmentPriceInfo = ({
- discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, priceSource 
+ discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, priceSource
 }) => {
     const headerRow = {
         description: DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
@@ -234,7 +237,7 @@ export const prepareLocalSegmentPriceInfo = ({
 };
 
 export const prepareStrikeThroughPriceInfo = ({
- discounts, customerReferencePrice, perWeightFlag, priceSource, grossPrice 
+ discounts, customerReferencePrice, perWeightFlag, priceSource, grossPrice
 }) => {
     const headerRow = {
         description: DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
@@ -253,7 +256,7 @@ export const prepareStrikeThroughPriceInfo = ({
 export const isApplyToPriceOrBaseAgreement = ({applicationCode}) => applicationCode === AGREEMENT_CODE_P || applicationCode === AGREEMENT_CODE_B;
 
 export const prepareDiscountPriceInfo = ({
- agreements, customerPrequalifiedPrice, exception, perWeightFlag 
+ agreements, customerPrequalifiedPrice, exception, perWeightFlag
 }) => {
     const headerRow = {
         description: DESCRIPTION_DISCOUNT_PRICE,
