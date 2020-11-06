@@ -19,8 +19,6 @@ const validateMessages = {
   },
 };
 
-// Sample:
-// const initialValues = {quantity:1, site:'019', supc: '3183792', customer: '622548', date: moment(), split: false};
 const initialValues = {quantity: 1, date: moment(), split: false};
 
 const formRequestBody = (requestData) => JSON.stringify({
