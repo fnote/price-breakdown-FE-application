@@ -31,7 +31,8 @@ class Auth {
     // based on local storage value which preserved even after page refreshes
     isUserLoginCompleted = () => localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED;
 
-    shouldFetchUserDetailsAgain = (userContext) => localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED && userContext.userDetailsData.isLoginSucceeded !== true;
+    shouldFetchUserDetailsAgain = (userContext) => localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED
+        && userContext.userDetailsData.isLoginSucceeded !== true;
 
     isUserLoginPending = () => localStorage.getItem('auth_user') === AUTH_STATE_PENDING;
 

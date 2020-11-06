@@ -307,7 +307,8 @@ export const prepareVolumePricingHeaderInfo = ({ discounts }) => ({
         validityPeriod: generateValidityPeriod(discounts[0].effectiveFrom, discounts[0].effectiveTo)
     });
 
-export const prepareVolumePricingTiers = ({ volumePricingTiers, perWeightFlag }) => volumePricingTiers.map((tier) => mapVolumeTierToTableRow(tier, { perWeightFlag }));
+export const prepareVolumePricingTiers = ({ volumePricingTiers, perWeightFlag }) => volumePricingTiers
+    .map((tier) => mapVolumeTierToTableRow(tier, { perWeightFlag }));
 
 export const prepareVolumePricingHeaderRow = ({volumePricingTiers}) => (volumePricingTiers.length > 0
         ? prepareVolumePricingHeaderInfo(volumePricingTiers[0])

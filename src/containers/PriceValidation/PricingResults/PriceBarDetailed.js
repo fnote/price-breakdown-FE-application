@@ -86,7 +86,8 @@ const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) =>
     </React.Fragment>
 );
 
-const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => ((volumePricingTiers && volumePricingTiers.length > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null);
+const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => ((volumePricingTiers && volumePricingTiers.length > 0)
+? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null);
 
 function PriceBarDetailed({ priceData: { product }}) {
     const customerNetPriceInfo = prepareCustomerNetPriceInfo(product);
