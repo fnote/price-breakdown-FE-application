@@ -117,7 +117,7 @@ const SearchForm = () => {
               }}
               showSearch
             >
-              {getBusinessUnits(b)}
+              {getBusinessUnits(businessUnitMap)}
             </Select>
           </Form.Item>
           <Form.Item
