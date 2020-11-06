@@ -27,7 +27,7 @@ const renderHeaderRow = ({
 );
 
 const renderSubRow = ({
- description, adjustmentValue, calculatedValue, source, validityPeriod, zone, id 
+ description, adjustmentValue, calculatedValue, validityPeriod, zone, id 
 }, { className }) => (
     <div className="row sub-row">
       <div className={className}>
@@ -64,7 +64,7 @@ const renderDetailedSection = (pricingDataList, additionalRows = null, styleMeta
 );
 
 const renderTableRow = ({
- description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, source, isSelected 
+ description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, isSelected 
 }) => (
     <li className={isSelected ? "selected" : null}>
         <div className="description-col">{rangeStart} <span>{rangeConnector}</span> {rangeEnd}</div>
