@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import { getPriceUnit, formatPriceWithoutCurrency, isFixedFractionDigits } from '../../../utils/PricingUtils';
 import { META_DATA_PRICE_BAR, LABEL_CUSTOMER_NET_PRICE, VALUE_KEY_CUSTOMER_REF_PRICE } from '../../../constants/Constants';
 
 const renderPricePoint = ({
- label, valueKey, styleClass, insertDivider = true 
+ label, valueKey, styleClass, insertDivider = true
 }, pricingData) => (
     <section className={styleClass}>
         <label>{label}</label>
@@ -22,7 +22,9 @@ const renderPricePoint = ({
     </section>
 );
 
-const renderPricePoints = (priceBarMetaDataList, pricingData) => priceBarMetaDataList.map((pricePointMetaData) => renderPricePoint(pricePointMetaData, pricingData));
+const renderPricePoints = (priceBarMetaDataList, pricingData) => {
+    priceBarMetaDataList.map((pricePointMetaData) => renderPricePoint(pricePointMetaData, pricingData));
+};
 
 function PriceBar(props) {
   const { priceData: { pricePoints, product: { splitFlag, perWeightFlag, priceSourceName } } } = props;
@@ -30,7 +32,7 @@ function PriceBar(props) {
     <div className="price-bar">
         <div className="price-bar-divider"/>
         {renderPricePoints(META_DATA_PRICE_BAR, {
- ...pricePoints, splitFlag, perWeightFlag, priceSourceName 
+ ...pricePoints, splitFlag, perWeightFlag, priceSourceName
 })}
     </div>
   );

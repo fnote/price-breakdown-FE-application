@@ -1,17 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   MenuOutlined,
   CloseOutlined,
   QuestionCircleOutlined,
   LogoutOutlined,
-} from "@ant-design/icons";
-import Navigation from "./Navigation";
+} from '@ant-design/icons';
+import Navigation from './Navigation';
 import {auth} from '../../utils/security/Auth';
-import { UserDetailContext } from "../../containers/UserDetailContext";
+import { UserDetailContext } from '../../containers/UserDetailContext';
+
 class AccountWidget extends React.Component {
   state = {
     visible: false,
   };
+
   logoutButtonClicked = () => {
     auth.logOutRedirection();
   };
@@ -34,12 +36,12 @@ class AccountWidget extends React.Component {
   render() {
     const { visible } = this.state;
     const userDetailsObj = this.context.userDetailsData.userDetails;
-    const displayName = Object.keys(userDetailsObj).length !== 0 ? `${userDetailsObj.firstName} ${userDetailsObj.lastName}` : "N/A";
+    const displayName = Object.keys(userDetailsObj).length !== 0 ? `${userDetailsObj.firstName} ${userDetailsObj.lastName}` : 'N/A';
     return (
-      <div className={visible ? "account-widget open" : "account-widget"}>
+      <div className={visible ? 'account-widget open' : 'account-widget'}>
         <div
           id="user-widget"
-          className={visible ? "user-widget show" : "user-widget"}>
+          className={visible ? 'user-widget show' : 'user-widget'}>
           <div className="user">
             <div className="name">
                 {displayName}
@@ -132,7 +134,7 @@ class AccountWidget extends React.Component {
           role="button"
           tabIndex="-5"
           onKeyPress={() => {}}
-          className={visible ? "sidemenu-closer show" : "sidemenu-closer"}
+          className={visible ? 'sidemenu-closer show' : 'sidemenu-closer'}
           onClick={this.toggleMenu}>
           <CloseOutlined />
         </div>

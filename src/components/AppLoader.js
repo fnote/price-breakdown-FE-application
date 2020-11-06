@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 function AppLoader({ show }) {
   return (
-    <div className={show ? "app-loader show" : "app-loader"}>
+    <div className={show ? 'app-loader show' : 'app-loader'}>
       <div className="loader-wrapper">
         <div className="loader">
           <div className="roller"></div>

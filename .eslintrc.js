@@ -6,7 +6,7 @@ module.exports = {
     browser: true,
   },
   rules: {
-    // quotes: [2, 'single', { avoidEscape: true }],
+    quotes: [2, 'single', { avoidEscape: true }],
     'max-len': ['error', { code: 160, ignoreUrls: true, ignoreTemplateLiterals: true }],
     'no-param-reassign': ['error', { props: false }],
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }],
@@ -19,10 +19,11 @@ module.exports = {
     'no-trailing-spaces': 'off',
     'object-curly-spacing': 'off',
     'comma-dangle': 'off',
-    'quotes':'off',
+    // 'quotes':'off',
     'quote-props':'off',
     'react/prop-types':'off',
     'prefer-destructuring':'off',
+    'import/no-extraneous-dependencies':'off',
   },
   extends: [
     'airbnb-base',

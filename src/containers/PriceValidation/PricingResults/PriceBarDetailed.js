@@ -1,5 +1,5 @@
-import React from "react";
-import PriceBarDetailedHeader from "./PriceBarDetailedHeader";
+import React from 'react';
+import PriceBarDetailedHeader from './PriceBarDetailedHeader';
 import {
     prepareCustomerNetPriceInfo,
     prepareDiscountPriceInfo,
@@ -8,7 +8,7 @@ import {
     prepareStrikeThroughPriceInfo,
     prepareVolumePricingHeaderRow,
     prepareVolumePricingTiers
-} from "../../../utils/PricingUtils";
+} from '../../../utils/PricingUtils';
 
 const renderHeaderRow = ({
  description, validityPeriod, adjustmentValue, calculatedValue 
@@ -45,7 +45,7 @@ const renderSubRow = ({
     </div>
 );
 
-const DESCRIPTION_COL_CLASSNAME = "description-col";
+const DESCRIPTION_COL_CLASSNAME = 'description-col';
 
 const renderDetailedSection = (pricingDataList, additionalRows = null, styleMetadataHeaderRow = { className: DESCRIPTION_COL_CLASSNAME },
                                                                     styleMetadataSubRow = { className: DESCRIPTION_COL_CLASSNAME }) => (
@@ -67,7 +67,7 @@ const renderDetailedSection = (pricingDataList, additionalRows = null, styleMeta
 const renderTableRow = ({
  description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, source, isSelected 
 }) => (
-    <li className={isSelected ? "selected" : null}>
+    <li className={isSelected ? 'selected' : null}>
         <div className="description-col">{rangeStart} <span>{rangeConnector}</span> {rangeEnd}</div>
         <div className="value-col">{adjustmentValue}</div>
         <div className="adjustment-col">{calculatedValue}</div>
@@ -78,7 +78,7 @@ const renderTableRow = ({
 
 const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => (
     <React.Fragment>
-        {renderSubRow(volumePricingHeaderRow, { className: "description-col colspan-2" })}
+        {renderSubRow(volumePricingHeaderRow, { className: 'description-col colspan-2' })}
         <div className="row sub-row">
             <ul className="value-table">
                 {volumePricingTiers.map((tier) => renderTableRow(tier))}

@@ -1,4 +1,4 @@
-import {getBffUrlConfig} from "../Configs";
+import {getBffUrlConfig} from '../Configs';
 import {
     AUTH_FAILURE_TYPE_UNAUTHENTICATED, AUTH_FAILURE_TYPE_UNEXPECTED_ERROR,
     AUTH_STATE_COMPLETED,
@@ -11,7 +11,7 @@ import {
  * Auth related functions.
  *
  * @author: adis0892 on 10/16/20
- **/
+ * */
 
 class Auth {
     constructor() {
@@ -28,54 +28,41 @@ class Auth {
         window.location.assign(this.bffUrlConfig.logOutRedirectionUrl);
     };
 
-    //based on local storage value which preserved even after page refreshes
-    isUserLoginCompleted = () => {
-        return localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED;
-    };
+    // based on local storage value which preserved even after page refreshes
+    isUserLoginCompleted = () => localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED;
 
-    shouldFetchUserDetailsAgain = (userContext) => {
-        return localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED && userContext.userDetailsData.isLoginSucceeded !== true;
-    };
+    shouldFetchUserDetailsAgain = (userContext) => localStorage.getItem('auth_user') === AUTH_STATE_COMPLETED && userContext.userDetailsData.isLoginSucceeded !== true;
 
-    isUserLoginPending = () => {
-        return localStorage.getItem('auth_user') === AUTH_STATE_PENDING;
-    };
+    isUserLoginPending = () => localStorage.getItem('auth_user') === AUTH_STATE_PENDING;
 
     setUserLoggedInState = (state) => {
         localStorage.setItem('auth_user', state);
     };
 
-    callUserDetails = () => {
-        return fetch(this.bffUrlConfig.userDetailsUrl, {
+    callUserDetails = () => fetch(this.bffUrlConfig.userDetailsUrl, {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
             credentials: 'include'
         })
-            .then(res => Promise.all([res.status, res.json()]))
-            .then(([status, userDetailResponse]) => {
-                return {status, userDetailResponse};
-            })
-            .catch(() => {
-                return {status: UNEXPECTED_ERROR_CODE, userDetailResponse: {}}
-            });
-    };
+            .then((res) => Promise.all([res.status, res.json()]))
+            .then(([status, userDetailResponse]) => ({status, userDetailResponse}))
+            .catch(() => ({status: UNEXPECTED_ERROR_CODE, userDetailResponse: {}}));
 
     userDetailContextHandler = (userDetailContext, appLoaderContext) => {
         const generalErrorResponse = {
-            "status": "Unauthorized",
-            "message": "User cannot be authenticated",
-            "cause": "Unexpected error occurred"
+            'status': 'Unauthorized',
+            'message': 'User cannot be authenticated',
+            'cause': 'Unexpected error occurred'
         };
 
         this.callUserDetails()
             .then((data) => {
-                let payloadData = {
+                const payloadData = {
                     isLoginSucceeded: false,
                     userDetails: {},
                     error: null,
                     errorType: null
                 };
-
 
                 if (data.status === 200) {
                     payloadData.isLoginSucceeded = true;
@@ -106,8 +93,7 @@ class Auth {
 
                 userDetailContext.setUserDetails(errorPayloadData);
                 appLoaderContext.setAppLoadingState(false);
-            })
+            });
     }
-
 }
 export const auth = new Auth();
