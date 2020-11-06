@@ -22,9 +22,8 @@ const renderPricePoint = ({
     </section>
 );
 
-const renderPricePoints = (priceBarMetaDataList, pricingData) => {
-    priceBarMetaDataList.map((pricePointMetaData) => renderPricePoint(pricePointMetaData, pricingData));
-};
+const renderPricePoints = (priceBarMetaDataList, pricingData) => priceBarMetaDataList
+    .map((pricePointMetaData) => renderPricePoint(pricePointMetaData, pricingData));
 
 function PriceBar(props) {
   const { priceData: { pricePoints, product: { splitFlag, perWeightFlag, priceSourceName } } } = props;
@@ -32,8 +31,8 @@ function PriceBar(props) {
     <div className="price-bar">
         <div className="price-bar-divider"/>
         {renderPricePoints(META_DATA_PRICE_BAR, {
- ...pricePoints, splitFlag, perWeightFlag, priceSourceName
-})}
+            ...pricePoints, splitFlag, perWeightFlag, priceSourceName
+        })}
     </div>
   );
 }
