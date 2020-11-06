@@ -27,7 +27,7 @@ const renderHeaderRow = ({
 );
 
 const renderSubRow = ({
- description, adjustmentValue, calculatedValue, source, validityPeriod, zone, id 
+ description, adjustmentValue, calculatedValue, validityPeriod, zone, id 
 }, { className }) => (
     <div className="row sub-row">
       <div className={className}>
@@ -35,7 +35,6 @@ const renderSubRow = ({
           <i className="icon fi flaticon-circle" />
           {description}
         </div>
-          {/* TODO @sanjayaa: see whether zone needs to be removed */}
           {zone ? <div className="subrow-sub-title">{zone}</div> : null}
           {id ? <div className="subrow-sub-title">ID: {id}</div> : null}
           {validityPeriod ? <div className="subrow-sub-title">{validityPeriod}</div> : null}
@@ -65,7 +64,7 @@ const renderDetailedSection = (pricingDataList, additionalRows = null, styleMeta
 );
 
 const renderTableRow = ({
- description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, source, isSelected 
+ description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, isSelected 
 }) => (
     <li className={isSelected ? 'selected' : null}>
         <div className="description-col">{rangeStart} <span>{rangeConnector}</span> {rangeEnd}</div>
@@ -87,7 +86,8 @@ const doGenerateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) =>
     </React.Fragment>
 );
 
-const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => ((volumePricingTiers && volumePricingTiers.length > 0) ? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null);
+const generateVolumeTierRows = (volumePricingHeaderRow, volumePricingTiers) => ((volumePricingTiers && volumePricingTiers.length > 0)
+? doGenerateVolumeTierRows(volumePricingHeaderRow, volumePricingTiers) : null);
 
 function PriceBarDetailed({ priceData: { product }}) {
     const customerNetPriceInfo = prepareCustomerNetPriceInfo(product);
