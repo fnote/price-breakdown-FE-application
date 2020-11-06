@@ -63,7 +63,9 @@ export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigi
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency without currency symbol
  * */
-export const formatPriceWithoutCurrency = (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
+export const formatPriceWithoutCurrency = (
+    value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }
+    ) => `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
 
 export const convertFactorToPercentage = (factor) => `${(factor * 100).toFixed(PERCENTAGE_FRACTION_DIGITS)}%`;
 
