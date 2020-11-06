@@ -23,6 +23,8 @@ module.exports = {
     'quote-props':'off',
     'react/prop-types':'off',
     'prefer-destructuring':'off',
+    'camelcase': 'off',
+    'no-restricted-globals': 'off',
   },
   extends: [
     'airbnb-base',

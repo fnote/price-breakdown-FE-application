@@ -117,7 +117,7 @@ const SearchForm = () => {
               }}
               showSearch
             >
-              {getBusinessUnits(businessUnitMap)}
+              {getBusinessUnits(b)}
             </Select>
           </Form.Item>
           <Form.Item
@@ -177,7 +177,7 @@ const SearchForm = () => {
                           if (value && !isNaN(value) && value >= 1 && value <= 1000) {
                               return Promise.resolve();
                           }
-                          return Promise.reject('Quantity must be a valid number between 1 and 1000');
+                          return Promise.reject(new Error('Quantity must be a valid number between 1 and 1000'));
                       },
                   })
               ]}>
