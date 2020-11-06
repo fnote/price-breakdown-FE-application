@@ -8,10 +8,12 @@ import {
 import Navigation from "./Navigation";
 import {auth} from '../../utils/security/Auth';
 import { UserDetailContext } from "../../containers/UserDetailContext";
+
 class AccountWidget extends React.Component {
   state = {
     visible: false,
   };
+
   logoutButtonClicked = () => {
     auth.logOutRedirection();
   };

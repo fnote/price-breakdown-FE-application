@@ -21,8 +21,8 @@ const Login = () => {
                 <img src={logo} alt="Sysco Cloud Pricing" className="logo"/>
                 <p className={userDetailContext.userDetailsData.error !== null ? "error-text" : "error-text hide"}>
                     <i className="fi flaticon-alert"/>
-                    {userDetailContext.userDetailsData.errorType === AUTH_FAILURE_TYPE_UNAUTHENTICATED ?
-                    "User login failed." : "Unexpected error occurred while authenticating user"
+                    {userDetailContext.userDetailsData.errorType === AUTH_FAILURE_TYPE_UNAUTHENTICATED
+                    ? "User login failed." : "Unexpected error occurred while authenticating user"
                     }
                 </p>
                 <div className="button-bar">
