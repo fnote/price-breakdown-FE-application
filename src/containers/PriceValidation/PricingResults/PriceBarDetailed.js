@@ -70,7 +70,6 @@ const renderTableRow = ({
         <div className="description-col">{rangeStart} <span>{rangeConnector}</span> {rangeEnd}</div>
         <div className="value-col">{adjustmentValue}</div>
         <div className="adjustment-col">{calculatedValue}</div>
-        {/* See whether we need to use source here */}
         {isSelected ? <div className="tick-col"><i className="icon fi flaticon-tick-1"/></div> : null}
     </li>
 );
