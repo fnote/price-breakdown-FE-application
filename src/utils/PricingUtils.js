@@ -92,7 +92,7 @@ export const generateReadableDate = (dateString) => generateDateObject(dateStrin
 export const generateValidityPeriod = (effectiveFrom, effectiveTo) => `Valid ${generateReadableDate(effectiveFrom)} - ${generateReadableDate(effectiveTo)}`;
 
 export const mapDiscountToDataRow = ({
- id, name, amount, priceAdjustment, effectiveFrom, effectiveTo
+    id, name, amount, priceAdjustment, effectiveFrom, effectiveTo
 }, source, { perWeightFlag, useFixedFractionDigits }) => ({
     id,
     description: getReadableDiscountName(name),
@@ -103,7 +103,7 @@ export const mapDiscountToDataRow = ({
 });
 
 export const mapAgreementToDataRow = ({
-id, description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo
+    id, description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo
 }, source, { perWeightFlag }) => {
     const formattedPriceAdjustment = formatPrice(priceAdjustment, { perWeightFlag });
     return {
@@ -119,7 +119,7 @@ id, description, percentageAdjustment, priceAdjustment, effectiveFrom, effective
 const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => exceptionPrice - customerPrequalifiedPrice;
 
 export const mapExceptionToDataRow = ({
-id, price, effectiveFrom, effectiveTo
+    id, price, effectiveFrom, effectiveTo
 }, customerPrequalifiedPrice, { perWeightFlag }) => {
     const formattedCalculatedAdjustment = formatPrice(calculateExceptionAdjustment(price, customerPrequalifiedPrice), { perWeightFlag });
     return {
@@ -164,7 +164,7 @@ export const mapVolumeTierToTableRow = ({ eligibility: {operator, lowerBound, up
 });
 
 export const extractPricePoints = ({
-grossPrice, customerReferencePrice, customerPrequalifiedPrice, unitPrice, netPrice
+    grossPrice, customerReferencePrice, customerPrequalifiedPrice, unitPrice, netPrice
 }) => ({
     grossPrice,
     customerReferencePrice,
@@ -174,7 +174,7 @@ grossPrice, customerReferencePrice, customerPrequalifiedPrice, unitPrice, netPri
 });
 
 export const extractItemInfo = ({
-id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
+    id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 }) => ({
     id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 });
@@ -182,7 +182,7 @@ id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 export const getValidatedPriceZone = (priceZoneId) => (AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_PRICE_ZONE);
 
 export const extractSiteInfo = ({
-customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId }
+    customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId }
 }) => ({
     businessUnitNumber,
     customerAccount,
@@ -236,7 +236,7 @@ export const prepareLocalSegmentPriceInfo = ({
 };
 
 export const prepareStrikeThroughPriceInfo = ({
- discounts, customerReferencePrice, perWeightFlag, priceSource, grossPrice
+    discounts, customerReferencePrice, perWeightFlag, priceSource, grossPrice
 }) => {
     const headerRow = {
         description: DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
