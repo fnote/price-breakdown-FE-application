@@ -11,7 +11,7 @@ import {
 } from '../../../utils/PricingUtils';
 
 const renderHeaderRow = ({
- description, validityPeriod, adjustmentValue, calculatedValue
+  description, validityPeriod, adjustmentValue, calculatedValue
 }, { className }, showSmallDivider = true) => (
     <div className="row">
       <div className={className}>
@@ -27,7 +27,7 @@ const renderHeaderRow = ({
 );
 
 const renderSubRow = ({
- description, adjustmentValue, calculatedValue, validityPeriod, zone, id
+  description, adjustmentValue, calculatedValue, validityPeriod, zone, id
 }, { className }) => (
     <div className="row sub-row">
       <div className={className}>
@@ -64,7 +64,7 @@ const renderDetailedSection = (pricingDataList, additionalRows = null, styleMeta
 );
 
 const renderTableRow = ({
- description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, isSelected
+  description: { rangeStart, rangeEnd, rangeConnector }, adjustmentValue, calculatedValue, isSelected
 }) => (
     <li className={isSelected ? 'selected' : null}>
         <div className="description-col">{rangeStart} <span>{rangeConnector}</span> {rangeEnd}</div>
