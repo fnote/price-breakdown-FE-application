@@ -20,7 +20,6 @@ module.exports = {
     'object-curly-spacing': 'off',
     'object-curly-newline': 'off',
     'comma-dangle': 'off',
-    // 'quotes':'off',
     'quote-props':'off',
     'react/prop-types':'off',
     'prefer-destructuring':'off',
