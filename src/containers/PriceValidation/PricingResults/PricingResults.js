@@ -1,7 +1,7 @@
-import React, {useContext} from "react";
-import PricingResultsMeta from "./PricingResultsMeta";
-import PriceBar from "./PriceBar";
-import PriceBarDetailed from "./PriceBarDetailed";
+import React, {useContext} from 'react';
+import PricingResultsMeta from './PricingResultsMeta';
+import PriceBar from './PriceBar';
+import PriceBarDetailed from './PriceBarDetailed';
 import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
 
@@ -26,7 +26,6 @@ function PricingResults() {
     }
 
     return null;
-
 }
 
 export default PricingResults;

@@ -2,7 +2,7 @@
  * List of action types.
  *
  * @author: adis0892 on 6/21/18
- **/
+ * */
 
 export const UPLOAD_FILE = 'UPLOAD_FILE';
 export const NAVIGATE = 'NAVIGATE';

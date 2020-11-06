@@ -1,29 +1,30 @@
-import React from "react";
-import { Input, Button, Table, Tag } from "antd";
-import { SyncOutlined } from "@ant-design/icons";
+import React from 'react';
+import { Input, Button, Table } from 'antd';
+import { SyncOutlined } from '@ant-design/icons';
+
 const { Search } = Input;
 
 const columns = [
   {
-    title: "SUBMIT TIME",
-    dataIndex: "submittime",
-    className: "submittime"
+    title: 'SUBMIT TIME',
+    dataIndex: 'submittime',
+    className: 'submittime'
   },
   {
-    title: "FILE NAME",
-    dataIndex: "filename",
-    className: "filename",
+    title: 'FILE NAME',
+    dataIndex: 'filename',
+    className: 'filename',
   },
   {
-    dataIndex: "action",
-    className: "action",
+    dataIndex: 'action',
+    className: 'action',
     width: 'auto',
     render: (text) => (
       <div className="action-bar">
-        {text[0] == "processing" && (
+        {text[0] === 'processing' && (
           <div className="file-process-status">FILE IS BEING PROCESSED</div>
         )}
-        {text[0] == "error" && (
+        {text[0] === 'error' && (
           <div className="file-process-status error">
             File Contained errors
             <div className="divider"></div>
@@ -33,12 +34,12 @@ const columns = [
             </Button>
           </div>
         )}
-        {text[0] == "success" && (
+        {text[0] === 'success' && (
           <div className="file-process-status success">
             File processed successfully
           </div>
         )}
-        {text[0] != "processing" ? (
+        {text[0] !== 'processing' ? (
           <>
             <Button className="btn icon-only empty-btn">
               <i className="icon fi flaticon-bin" />
@@ -48,7 +49,7 @@ const columns = [
             </Button>
           </>
         ) : (
-          <>           
+          <>
             <Button className="btn icon-only empty-btn cancel-process">
               <i className="icon fi flaticon-close" />
             </Button>
@@ -63,21 +64,21 @@ const columns = [
 const data = [
   {
     key: 1,
-    submittime: "01 July 2020 10:15 AM",
-    filename: `2841202-075.XLS`,
-    action: ["processing"],
+    submittime: '01 July 2020 10:15 AM',
+    filename: '2841202-075.XLS',
+    action: ['processing'],
   },
   {
     key: 1,
-    submittime: "01 July 2020 10:15 AM",
-    filename: `2841202-075.XLS`,
-    action: ["error"],
+    submittime: '01 July 2020 10:15 AM',
+    filename: '2841202-075.XLS',
+    action: ['error'],
   },
   {
     key: 1,
-    submittime: "01 July 2020 10:15 AM",
-    filename: `2841202-075.XLS`,
-    action: ["success"],
+    submittime: '01 July 2020 10:15 AM',
+    filename: '2841202-075.XLS',
+    action: ['success'],
   },
 ];
 for (let i = 1; i < 26; i++) {
@@ -107,7 +108,6 @@ class FileList extends React.Component {
   };
 
   onSelectChange = (selectedRowKeys) => {
-    console.log("selectedRowKeys changed: ", selectedRowKeys);
     this.setState({ selectedRowKeys });
   };
 
@@ -134,7 +134,7 @@ class FileList extends React.Component {
           <div className="spacer"></div>
           <div className="selected-item-status">
             <p>
-              {hasSelected ? `Selected ${selectedRowKeys.length} items` : ""}
+              {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
             </p>
             {hasSelected && (
               <Button
@@ -143,7 +143,7 @@ class FileList extends React.Component {
                 onClick={this.start}
                 disabled={!hasSelected}
                 loading={loading}
-                scroll={{ x: "auto", y: 300 }}>
+                scroll={{ x: 'auto', y: 300 }}>
                 <i className="icon fi flaticon-download" /> Download Selected
               </Button>
             )}

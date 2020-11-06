@@ -52,26 +52,26 @@ const getFractionDigits = ({ perWeightFlag, useFixedFractionDigits, digits }) =>
         return digits;
     }
     return perWeightFlag ? PRICE_FRACTION_DIGITS_THREE : PRICE_FRACTION_DIGITS_TWO;
-}
+};
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency with currency symbol
  * */
-export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO })=> value > 0
+export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => (value > 0
     ? `${CURRENCY_SYMBOL_USD}${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`
-    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
+    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`);
 
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency without currency symbol
  * */
-export const formatPriceWithoutCurrency =  (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => {
-    return `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
-};
+export const formatPriceWithoutCurrency = (
+    value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }
+    ) => `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
 
-export const convertFactorToPercentage = factor => `${(factor * 100).toFixed(PERCENTAGE_FRACTION_DIGITS)}%`;
+export const convertFactorToPercentage = (factor) => `${(factor * 100).toFixed(PERCENTAGE_FRACTION_DIGITS)}%`;
 
-export const getFormattedPercentageValue = factor => convertFactorToPercentage(factor - 1);
+export const getFormattedPercentageValue = (factor) => convertFactorToPercentage(factor - 1);
 
-export const getReadableDiscountName = name => DISCOUNT_NAMES_MAP.get(name);
+export const getReadableDiscountName = (name) => DISCOUNT_NAMES_MAP.get(name);
 
 export const getPriceUnit = ({ splitFlag, perWeightFlag }) => {
     if (perWeightFlag) {
@@ -80,20 +80,20 @@ export const getPriceUnit = ({ splitFlag, perWeightFlag }) => {
     return splitFlag ? PRICE_UNIT_SPLIT : PRICE_UNIT_CASE;
 };
 
-export const generateDateObject = dateString => new Date(dateString.slice(0, 4), dateString.slice(4, 6)-1, dateString.slice(6, 8));
+export const generateDateObject = (dateString) => new Date(dateString.slice(0, 4), dateString.slice(4, 6) - 1, dateString.slice(6, 8));
 
-export const generateReadableDate = dateString => generateDateObject(dateString)
+export const generateReadableDate = (dateString) => generateDateObject(dateString)
     .toLocaleDateString(APPLICATION_LOCALE, {
         day: 'numeric',
         month: 'short',
         year: 'numeric'
     });
 
-export const generateValidityPeriod = (effectiveFrom, effectiveTo) =>
-    `Valid ${generateReadableDate(effectiveFrom)} - ${generateReadableDate(effectiveTo)}`;
+export const generateValidityPeriod = (effectiveFrom, effectiveTo) => `Valid ${generateReadableDate(effectiveFrom)} - ${generateReadableDate(effectiveTo)}`;
 
-
-export const mapDiscountToDataRow = ({ id, name, amount, priceAdjustment, effectiveFrom, effectiveTo }, source, { perWeightFlag, useFixedFractionDigits }) => ({
+export const mapDiscountToDataRow = ({
+    id, name, amount, priceAdjustment, effectiveFrom, effectiveTo
+}, source, { perWeightFlag, useFixedFractionDigits }) => ({
     id,
     description: getReadableDiscountName(name),
     adjustmentValue: getFormattedPercentageValue(amount),
@@ -102,7 +102,9 @@ export const mapDiscountToDataRow = ({ id, name, amount, priceAdjustment, effect
     source
 });
 
-export const mapAgreementToDataRow = ({id, description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo}, source, { perWeightFlag }) => {
+export const mapAgreementToDataRow = ({
+    id, description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo
+}, source, { perWeightFlag }) => {
     const formattedPriceAdjustment = formatPrice(priceAdjustment, { perWeightFlag });
     return {
         id,
@@ -114,12 +116,12 @@ export const mapAgreementToDataRow = ({id, description, percentageAdjustment, pr
     };
 };
 
-const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => {
-    return  exceptionPrice - customerPrequalifiedPrice
-}
+const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => exceptionPrice - customerPrequalifiedPrice;
 
-export const mapExceptionToDataRow = ({id, price, effectiveFrom, effectiveTo}, customerPrequalifiedPrice, { perWeightFlag }) => {
-    const formattedCalculatedAdjustment = formatPrice(calculateExceptionAdjustment(price, customerPrequalifiedPrice), { perWeightFlag })
+export const mapExceptionToDataRow = ({
+    id, price, effectiveFrom, effectiveTo
+}, customerPrequalifiedPrice, { perWeightFlag }) => {
+    const formattedCalculatedAdjustment = formatPrice(calculateExceptionAdjustment(price, customerPrequalifiedPrice), { perWeightFlag });
     return {
         id,
         description: DESCRIPTION_EXCEPTION,
@@ -161,7 +163,9 @@ export const mapVolumeTierToTableRow = ({ eligibility: {operator, lowerBound, up
     isSelected: !!isApplicable
 });
 
-export const extractPricePoints = ({grossPrice, customerReferencePrice, customerPrequalifiedPrice, unitPrice, netPrice}) => ({
+export const extractPricePoints = ({
+    grossPrice, customerReferencePrice, customerPrequalifiedPrice, unitPrice, netPrice
+}) => ({
     grossPrice,
     customerReferencePrice,
     customerPrequalifiedPrice,
@@ -169,21 +173,25 @@ export const extractPricePoints = ({grossPrice, customerReferencePrice, customer
     netPrice
 });
 
-export const extractItemInfo = ({id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight}) => ({
+export const extractItemInfo = ({
+    id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
+}) => ({
     id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 });
 
-export const getValidatedPriceZone = priceZoneId => AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_PRICE_ZONE;
+export const getValidatedPriceZone = (priceZoneId) => (AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_PRICE_ZONE);
 
-export const extractSiteInfo = ({customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId }} ) => ({
+export const extractSiteInfo = ({
+    customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId }
+}) => ({
     businessUnitNumber,
     customerAccount,
-    customerName: customerName,
+    customerName,
     customerType,
     priceZone: getValidatedPriceZone(priceZoneId)
 });
 
-export const getSplitStatusBySplitFlag = (splitFlag) => splitFlag === true ? SPLIT_STATUS_YES : SPLIT_STATUS_NO;
+export const getSplitStatusBySplitFlag = (splitFlag) => (splitFlag === true ? SPLIT_STATUS_YES : SPLIT_STATUS_NO);
 
 export const extractRequestInfo = ({ priceRequestDate, product: { splitFlag, quantity }}) => ({
     priceRequestDate: generateReadableDate(priceRequestDate),
@@ -196,17 +204,19 @@ export const extractRequestInfo = ({ priceRequestDate, product: { splitFlag, qua
  * Returns true only when the item is priced through Price Advisor component and
  * the item is catch weight item and its gross price value is greater than or equal to $10
  */
-export const isFixedFractionDigits = (perWeightFlag, priceSource, grossPrice) => (perWeightFlag &&
-    priceSource === PRICE_SOURCE_PA_ID && grossPrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
+export const isFixedFractionDigits = (perWeightFlag, priceSource, grossPrice) => (perWeightFlag
+    && priceSource === PRICE_SOURCE_PA_ID && grossPrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
 
-export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, priceSource }) => {
+export const prepareLocalSegmentPriceInfo = ({
+ discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, priceSource
+}) => {
     const headerRow = {
         description: DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
         calculatedValue: formatPrice(grossPrice, { perWeightFlag })
     };
 
-    const refPriceDiscountRows = discounts.filter(discount => discount.type === DISCOUNT_TYPE_REF_PRICE)
-        .map(discount => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE,
+    const refPriceDiscountRows = discounts.filter((discount) => discount.type === DISCOUNT_TYPE_REF_PRICE)
+        .map((discount) => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE,
             { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }));
 
     const dataRows = [headerRow, ...refPriceDiscountRows];
@@ -223,10 +233,11 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
     }
 
     return dataRows;
-
 };
 
-export const prepareStrikeThroughPriceInfo = ({ discounts, customerReferencePrice, perWeightFlag, priceSource, grossPrice }) => {
+export const prepareStrikeThroughPriceInfo = ({
+    discounts, customerReferencePrice, perWeightFlag, priceSource, grossPrice
+}) => {
     const headerRow = {
         description: DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
@@ -235,30 +246,32 @@ export const prepareStrikeThroughPriceInfo = ({ discounts, customerReferencePric
     };
 
     const preQualifiedDiscounts = discounts
-        .filter(discount => discount.type === DISCOUNT_TYPE_PREQUALIFIED && discount.name !== DISCOUNT_CASE_VOLUME)
-        .map(discount => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE, { perWeightFlag }));
+        .filter((discount) => discount.type === DISCOUNT_TYPE_PREQUALIFIED && discount.name !== DISCOUNT_CASE_VOLUME)
+        .map((discount) => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE, { perWeightFlag }));
 
     return [headerRow, ...preQualifiedDiscounts];
 };
 
 export const isApplyToPriceOrBaseAgreement = ({applicationCode}) => applicationCode === AGREEMENT_CODE_P || applicationCode === AGREEMENT_CODE_B;
 
-export const prepareDiscountPriceInfo = ({ agreements, customerPrequalifiedPrice, exception, perWeightFlag }) => {
+export const prepareDiscountPriceInfo = ({
+ agreements, customerPrequalifiedPrice, exception, perWeightFlag
+}) => {
     const headerRow = {
         description: DESCRIPTION_DISCOUNT_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
         calculatedValue: formatPrice(customerPrequalifiedPrice, { perWeightFlag })
     };
 
-    let appliedAgreementsOrException = agreements.filter(agreement => isApplyToPriceOrBaseAgreement(agreement))
-        .map(agreement => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS, { perWeightFlag }));
-    appliedAgreementsOrException = appliedAgreementsOrException ? appliedAgreementsOrException : [];
+    let appliedAgreementsOrException = agreements.filter((agreement) => isApplyToPriceOrBaseAgreement(agreement))
+        .map((agreement) => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS, { perWeightFlag }));
+    appliedAgreementsOrException = appliedAgreementsOrException || [];
 
     if (exception) {
         const exceptionRow = mapExceptionToDataRow(exception, customerPrequalifiedPrice, { perWeightFlag });
 
         if (exceptionRow) {
-            appliedAgreementsOrException.push(exceptionRow)
+            appliedAgreementsOrException.push(exceptionRow);
         }
     }
 
@@ -274,10 +287,10 @@ export const prepareOrderUnitPriceInfo = ({agreements, unitPrice, perWeightFlag}
         calculatedValue: formatPrice(unitPrice, { perWeightFlag })
     };
 
-    const offlineAgreements = agreements.filter(agreement => isOfflineAgreement(agreement))
-        .map(agreement => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS, { perWeightFlag }));
+    const offlineAgreements = agreements.filter((agreement) => isOfflineAgreement(agreement))
+        .map((agreement) => mapAgreementToDataRow(agreement, PRICE_SOURCE_SUS, { perWeightFlag }));
 
-    return [headerRow, ...offlineAgreements]
+    return [headerRow, ...offlineAgreements];
 };
 
 export const prepareCustomerNetPriceInfo = ({ netPrice, perWeightFlag }) => {
@@ -287,29 +300,24 @@ export const prepareCustomerNetPriceInfo = ({ netPrice, perWeightFlag }) => {
         calculatedValue: formatPrice(netPrice, { perWeightFlag })
     };
 
-    return [headerRow]
+    return [headerRow];
 };
 
-export const prepareVolumePricingHeaderInfo = ({ discounts }) => {
-    return {
+export const prepareVolumePricingHeaderInfo = ({ discounts }) => ({
         id: discounts[0].id,
         description: DESCRIPTION_VOLUME_TIERS,
         validityPeriod: generateValidityPeriod(discounts[0].effectiveFrom, discounts[0].effectiveTo)
-    };
-};
+    });
 
-export const prepareVolumePricingTiers = ({ volumePricingTiers, perWeightFlag }) => {
-    return volumePricingTiers.map(tier => mapVolumeTierToTableRow(tier, { perWeightFlag }))
-};
+export const prepareVolumePricingTiers = ({ volumePricingTiers, perWeightFlag }) => volumePricingTiers
+    .map((tier) => mapVolumeTierToTableRow(tier, { perWeightFlag }));
 
-export const prepareVolumePricingHeaderRow = ({volumePricingTiers}) => {
-    return volumePricingTiers.length > 0
+export const prepareVolumePricingHeaderRow = ({volumePricingTiers}) => (volumePricingTiers.length > 0
         ? prepareVolumePricingHeaderInfo(volumePricingTiers[0])
-        : null;
-};
+        : null);
 
 export const prepareVolumePricingInfo = ({ volumePricingTiers, perWeightFlag }) => ({
-    volumePricingTiers: volumePricingTiers.map(tier => mapVolumeTierToTableRow(tier, { perWeightFlag })),
+    volumePricingTiers: volumePricingTiers.map((tier) => mapVolumeTierToTableRow(tier, { perWeightFlag })),
     volumePricingHeaderRow: volumePricingTiers.length > 0
         ? prepareVolumePricingHeaderInfo(volumePricingTiers[0])
         : null

@@ -26,14 +26,12 @@ export const DESCRIPTION_ROUNDING = 'Rounding';
 export const DESCRIPTION_VOLUME_TIERS = 'Item/Order Specific promotions';
 export const DESCRIPTION_EXCEPTION = 'Exception Deal';
 
-
-export const VOLUME_TIER_OPERATOR_BETWEEN = "Between";
-export const VOLUME_TIER_RANGE_END_ABOVE = "above";
+export const VOLUME_TIER_OPERATOR_BETWEEN = 'Between';
+export const VOLUME_TIER_RANGE_END_ABOVE = 'above';
 export const VOLUME_TIER_RANGE_END_EMPTY = '';
-export const VOLUME_TIER_RANGE_CONNECTOR_TO = "to";
-export const VOLUME_TIER_RANGE_CONNECTOR_AND = "and";
+export const VOLUME_TIER_RANGE_CONNECTOR_TO = 'to';
+export const VOLUME_TIER_RANGE_CONNECTOR_AND = 'and';
 export const VOLUME_TIER_RANGE_CONNECTOR_EMPTY = '';
-
 
 export const DISCOUNT_TYPE_REF_PRICE = 'REFERENCE_PRICE';
 export const DISCOUNT_TYPE_PREQUALIFIED = 'PREQUALIFIED';
@@ -72,7 +70,7 @@ export const PRICE_FRACTION_DIGITS_THREE = 3;
 export const PRICE_FRACTION_DIGITS_TWO = 2;
 export const PERCENTAGE_FRACTION_DIGITS = 2;
 
-export const AVAILABLE_PRICE_ZONES = [1, 2, 3 ,4 ,5];
+export const AVAILABLE_PRICE_ZONES = [1, 2, 3, 4, 5];
 export const NOT_APPLICABLE_PRICE_ZONE = 'N/A';
 
 export const PRICE_SOURCE_PA_ID = 97;

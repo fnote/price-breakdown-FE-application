@@ -40,5 +40,4 @@ const ErrorsMap = new Map([
     [ErrorCodes.PRODUCT_INFO_API_ERROR, ErrorMessages.PRODUCT_INFO_API_ERROR]
 ]);
 
-export { ErrorCodes, ErrorMessages, ErrorsMap }
-
+export { ErrorCodes, ErrorMessages, ErrorsMap };

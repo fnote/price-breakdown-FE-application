@@ -1,7 +1,7 @@
-import React from "react";
-import logo from "../../styles/images/logo.svg";
-import AccountWidget from "./AccountWidget";
-import Navigation from "./Navigation";
+import React from 'react';
+import logo from '../../styles/images/logo.svg';
+import AccountWidget from './AccountWidget';
+import Navigation from './Navigation';
 
 function AppBar() {
   return (
