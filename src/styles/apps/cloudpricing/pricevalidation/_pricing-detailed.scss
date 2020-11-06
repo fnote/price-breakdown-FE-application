@@ -98,7 +98,7 @@
             margin-bottom: 0.2rem;
             .adjustment-col,
             .value-col {
-              font-size: 1rem;
+              font-size: 1.2rem;
               font-weight: 500;
             }
           }
@@ -112,12 +112,12 @@
         .description-col {
           .title {
             font-weight: 800;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             margin-bottom: 0.3rem;
           }
           .subrow-title {
             @include flexbox(0 0 auto, row, flex-start, center);
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             margin-bottom: 0.4rem;
             font-weight: 700;
             // p{
@@ -126,7 +126,7 @@
             // }
           }
           .subrow-sub-title {
-            font-size: 0.9rem;
+            font-size: 1rem;
             padding-left: 1rem;
             margin-bottom: 0.5rem;
             font-style: italic;
@@ -180,6 +180,7 @@
       padding: 0.4rem 0rem 0.4rem 0.5rem;
       .description-col {
         font-weight: 700;
+        font-size: 1.2rem;
         width: $description-col-width - 2rem;
         span {
           font-weight: 400;
