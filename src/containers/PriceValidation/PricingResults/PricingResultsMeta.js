@@ -3,7 +3,7 @@ import { Tooltip } from "antd";
 import { formatBusinessUnit } from "../../../utils/CommonUtils";
 
 function renderItemInfo({
- id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
+ id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight 
 }) {
   return (
       <section className="item-info">
@@ -53,7 +53,7 @@ function renderItemInfo({
 }
 
 function renderSiteInfo({
- businessUnitNumber, customerAccount, customerName, customerType, priceZone
+ businessUnitNumber, customerAccount, customerName, customerType, priceZone 
 }, { businessUnitMap }) {
   const site = formatBusinessUnit(businessUnitNumber, businessUnitMap);
   return (

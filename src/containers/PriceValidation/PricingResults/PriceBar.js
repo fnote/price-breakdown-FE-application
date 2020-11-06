@@ -3,7 +3,7 @@ import { getPriceUnit, formatPriceWithoutCurrency, isFixedFractionDigits } from 
 import { META_DATA_PRICE_BAR, LABEL_CUSTOMER_NET_PRICE, VALUE_KEY_CUSTOMER_REF_PRICE } from '../../../constants/Constants';
 
 const renderPricePoint = ({
- label, valueKey, styleClass, insertDivider = true
+ label, valueKey, styleClass, insertDivider = true 
 }, pricingData) => (
     <section className={styleClass}>
         <label>{label}</label>
@@ -31,8 +31,8 @@ function PriceBar(props) {
     <div className="price-bar">
         <div className="price-bar-divider"/>
         {renderPricePoints(META_DATA_PRICE_BAR, {
-            ...pricePoints, splitFlag, perWeightFlag, priceSourceName
-        })}
+ ...pricePoints, splitFlag, perWeightFlag, priceSourceName 
+})}
     </div>
   );
 }
