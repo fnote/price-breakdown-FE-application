@@ -4,7 +4,7 @@ import {
     extractPricePoints,
     extractRequestInfo,
     extractSiteInfo,
-} from "../../utils/PricingUtils";
+} from '../../utils/PricingUtils';
 
 export const PriceValidationContext = React.createContext({
     priceData: {},

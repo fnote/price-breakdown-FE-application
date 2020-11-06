@@ -297,11 +297,11 @@ describe('extractPricePoints', () => {
             anotherField: '112233',
         };
         expect(extractPricePoints(data)).toEqual({
-            customerPrequalifiedPrice: "211",
-            customerReferencePrice: "122",
-            grossPrice: "123",
-            netPrice: "124",
-            unitPrice: "12"
+            customerPrequalifiedPrice: '211',
+            customerReferencePrice: '122',
+            grossPrice: '123',
+            netPrice: '124',
+            unitPrice: '12'
         });
     });
 });
@@ -320,14 +320,14 @@ describe('extractItemInfo', () => {
             anotherField: '123',
         };
         expect(extractItemInfo(data)).toEqual({
-            averageWeight: "22",
-            brand: "aBrand",
-            catchWeightIndicator: "C",
+            averageWeight: '22',
+            brand: 'aBrand',
+            catchWeightIndicator: 'C',
             id: 1234,
-            name: "aName",
-            pack: "val",
-            size: "size",
-            stockIndicator: "P"
+            name: 'aName',
+            pack: 'val',
+            size: 'size',
+            stockIndicator: 'P'
         });
     });
 });
@@ -342,11 +342,11 @@ describe('extractSiteInfo', () => {
             product: { priceZoneId: 1 }
         };
         expect(extractSiteInfo(data)).toEqual({
-            "businessUnitNumber": "001",
-            "customerAccount": "anAccount",
-            "customerName": "aName",
-            "customerType": "aType",
-            "priceZone": 1
+            'businessUnitNumber': '001',
+            'customerAccount': 'anAccount',
+            'customerName': 'aName',
+            'customerType': 'aType',
+            'priceZone': 1
         });
     });
 
@@ -359,11 +359,11 @@ describe('extractSiteInfo', () => {
             product: { priceZoneId: null }
         };
         expect(extractSiteInfo(data)).toEqual({
-            "businessUnitNumber": "001",
-            "customerAccount": "anAccount",
-            "customerName": "aName",
-            "customerType": "aType",
-            "priceZone": "N/A"
+            'businessUnitNumber': '001',
+            'customerAccount': 'anAccount',
+            'customerName': 'aName',
+            'customerType': 'aType',
+            'priceZone': 'N/A'
         });
     });
 });
@@ -381,7 +381,7 @@ describe('extractRequestInfo', () => {
             priceRequestDate: '20201028',
             product: { splitFlag: true, quantity: 5 }
         };
-        expect(extractRequestInfo(data)).toEqual({"priceRequestDate": "Oct 28, 2020", "quantity": 5, "splitStatus": "Y"});
+        expect(extractRequestInfo(data)).toEqual({'priceRequestDate': 'Oct 28, 2020', 'quantity': 5, 'splitStatus': 'Y'});
     });
 });
 
@@ -414,17 +414,17 @@ describe('prepareLocalSegmentPriceInfo', () => {
         };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
-            "calculatedValue": "$5.28",
-            "description": "Local Segment Reference Price (Gross)"
+            'calculatedValue': '$5.28',
+            'description': 'Local Segment Reference Price (Gross)'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-1.00%",
-            "calculatedValue": "$72.23",
-            "description": "New Customer Discount",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-1.00%',
+            'calculatedValue': '$72.23',
+            'description': 'New Customer Discount',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
-            "adjustmentValue": " ", "calculatedValue": "$1.23", "description": "Rounding", "source": "System"
+            'adjustmentValue': ' ', 'calculatedValue': '$1.23', 'description': 'Rounding', 'source': 'System'
         }]);
     });
 
@@ -456,17 +456,17 @@ describe('prepareLocalSegmentPriceInfo', () => {
         };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
-            "calculatedValue": "$5.280",
-            "description": "Local Segment Reference Price (Gross)"
+            'calculatedValue': '$5.280',
+            'description': 'Local Segment Reference Price (Gross)'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-1.00%",
-            "calculatedValue": "$72.230",
-            "description": "Strategic Discount",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-1.00%',
+            'calculatedValue': '$72.230',
+            'description': 'Strategic Discount',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
-"adjustmentValue": " ", "calculatedValue": "$0.002", "description": "Rounding", "source": "System"
+'adjustmentValue': ' ', 'calculatedValue': '$0.002', 'description': 'Rounding', 'source': 'System'
 }]);
     });
 
@@ -498,17 +498,17 @@ describe('prepareLocalSegmentPriceInfo', () => {
         };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
-            "calculatedValue": "$10.000",
-            "description": "Local Segment Reference Price (Gross)"
+            'calculatedValue': '$10.000',
+            'description': 'Local Segment Reference Price (Gross)'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-1.00%",
-            "calculatedValue": "$72.23",
-            "description": "Strategic Discount",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-1.00%',
+            'calculatedValue': '$72.23',
+            'description': 'Strategic Discount',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
-"adjustmentValue": " ", "calculatedValue": "$0.02", "description": "Rounding", "source": "System"
+'adjustmentValue': ' ', 'calculatedValue': '$0.02', 'description': 'Rounding', 'source': 'System'
 }]);
     });
 
@@ -540,17 +540,17 @@ describe('prepareLocalSegmentPriceInfo', () => {
         };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
-            "calculatedValue": "$10.010",
-            "description": "Local Segment Reference Price (Gross)"
+            'calculatedValue': '$10.010',
+            'description': 'Local Segment Reference Price (Gross)'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-1.00%",
-            "calculatedValue": "$72.23",
-            "description": "Strategic Discount",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-1.00%',
+            'calculatedValue': '$72.23',
+            'description': 'Strategic Discount',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
-"adjustmentValue": " ", "calculatedValue": "$0.02", "description": "Rounding", "source": "System"
+'adjustmentValue': ' ', 'calculatedValue': '$0.02', 'description': 'Rounding', 'source': 'System'
 }]);
     });
 
@@ -564,8 +564,8 @@ describe('prepareLocalSegmentPriceInfo', () => {
         };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
-            "calculatedValue": "$10.010",
-            "description": "Local Segment Reference Price (Gross)"
+            'calculatedValue': '$10.010',
+            'description': 'Local Segment Reference Price (Gross)'
         }]);
     });
 });
@@ -606,16 +606,16 @@ describe('prepareStrikeThroughPriceInfo', () => {
         };
 
         expect(prepareStrikeThroughPriceInfo(data)).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$1.23",
-            "description": "Customer Reference Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$1.23',
+            'description': 'Customer Reference Price'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-6.00%",
-            "calculatedValue": "$82.33",
-            "description": "Split Up Charge",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-6.00%',
+            'calculatedValue': '$82.33',
+            'description': 'Split Up Charge',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }]);
     });
 
@@ -654,16 +654,16 @@ describe('prepareStrikeThroughPriceInfo', () => {
         };
 
         expect(prepareStrikeThroughPriceInfo(data)).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$1.23",
-            "description": "Customer Reference Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$1.23',
+            'description': 'Customer Reference Price'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-6.00%",
-            "calculatedValue": "$82.33",
-            "description": "Split Up Charge",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-6.00%',
+            'calculatedValue': '$82.33',
+            'description': 'Split Up Charge',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }]);
     });
 
@@ -704,16 +704,16 @@ describe('prepareStrikeThroughPriceInfo', () => {
         };
 
         expect(prepareStrikeThroughPriceInfo(data)).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$1.230",
-            "description": "Customer Reference Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$1.230',
+            'description': 'Customer Reference Price'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-6.00%",
-            "calculatedValue": "$82.330",
-            "description": "Split Up Charge",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-6.00%',
+            'calculatedValue': '$82.330',
+            'description': 'Split Up Charge',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }]);
     });
 
@@ -754,16 +754,16 @@ describe('prepareStrikeThroughPriceInfo', () => {
         };
 
         expect(prepareStrikeThroughPriceInfo(data)).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$10.23",
-            "description": "Customer Reference Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$10.23',
+            'description': 'Customer Reference Price'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-6.00%",
-            "calculatedValue": "$82.330",
-            "description": "Split Up Charge",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-6.00%',
+            'calculatedValue': '$82.330',
+            'description': 'Split Up Charge',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }]);
     });
 
@@ -804,16 +804,16 @@ describe('prepareStrikeThroughPriceInfo', () => {
         };
 
         expect(prepareStrikeThroughPriceInfo(data)).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$10.25",
-            "description": "Customer Reference Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$10.25',
+            'description': 'Customer Reference Price'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-6.00%",
-            "calculatedValue": "$82.330",
-            "description": "Split Up Charge",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-6.00%',
+            'calculatedValue': '$82.330',
+            'description': 'Split Up Charge',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }]);
     });
 
@@ -854,16 +854,16 @@ describe('prepareStrikeThroughPriceInfo', () => {
         };
 
         expect(prepareStrikeThroughPriceInfo(data)).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$10.250",
-            "description": "Customer Reference Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$10.250',
+            'description': 'Customer Reference Price'
         }, {
-            "id": 1111,
-            "adjustmentValue": "-6.00%",
-            "calculatedValue": "$82.330",
-            "description": "Split Up Charge",
-            "source": "Discount Service",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'id': 1111,
+            'adjustmentValue': '-6.00%',
+            'calculatedValue': '$82.330',
+            'description': 'Split Up Charge',
+            'source': 'Discount Service',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }]);
     });
 });
@@ -905,16 +905,16 @@ describe('prepareDiscountPriceInfo', () => {
 
         };
         expect(prepareDiscountPriceInfo(data)).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$1.53",
-            "description": "Discount Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$1.53',
+            'description': 'Discount Price'
         }, {
-            "adjustmentValue": "$1.23",
-            "calculatedValue": "$72.23",
-            "description": "A sample description1",
-            "id": "1234",
-            "source": "SUS",
-            "validityPeriod": "Valid Oct 5, 2020 - Nov 11, 2020"
+            'adjustmentValue': '$1.23',
+            'calculatedValue': '$72.23',
+            'description': 'A sample description1',
+            'id': '1234',
+            'source': 'SUS',
+            'validityPeriod': 'Valid Oct 5, 2020 - Nov 11, 2020'
         }]);
     });
 
@@ -951,23 +951,23 @@ describe('prepareDiscountPriceInfo', () => {
 
         };
         expect(prepareDiscountPriceInfo(data)).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$15.53",
-            "description": "Discount Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$15.53',
+            'description': 'Discount Price'
         }, {
-            "adjustmentValue": "$1.23",
-            "calculatedValue": "$72.23",
-            "description": "A sample description1",
-            "id": "1234",
-            "source": "SUS",
-            "validityPeriod": "Valid Oct 5, 2020 - Nov 11, 2020"
+            'adjustmentValue': '$1.23',
+            'calculatedValue': '$72.23',
+            'description': 'A sample description1',
+            'id': '1234',
+            'source': 'SUS',
+            'validityPeriod': 'Valid Oct 5, 2020 - Nov 11, 2020'
         },
         {
-            "adjustmentValue": "$10.03",
-            "calculatedValue": "-$5.50",
-            "description": "Exception Deal",
-            "id": 1111,
-            "validityPeriod": "Valid Oct 5, 2020 - Nov 11, 2020"
+            'adjustmentValue': '$10.03',
+            'calculatedValue': '-$5.50',
+            'description': 'Exception Deal',
+            'id': 1111,
+            'validityPeriod': 'Valid Oct 5, 2020 - Nov 11, 2020'
         }
     ]);
     });
@@ -1009,16 +1009,16 @@ describe('prepareOrderUnitPriceInfo', () => {
             perWeightFlag: false
         };
         expect(prepareOrderUnitPriceInfo(data)).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$2.53",
-            "description": "Order Unit Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$2.53',
+            'description': 'Order Unit Price'
         }, {
-            "adjustmentValue": "$132.23",
-            "calculatedValue": "$92.13",
-            "description": "A sample description2",
-            "id": "432",
-            "source": "SUS",
-            "validityPeriod": "Valid Oct 1, 2020 - Nov 18, 2020"
+            'adjustmentValue': '$132.23',
+            'calculatedValue': '$92.13',
+            'description': 'A sample description2',
+            'id': '432',
+            'source': 'SUS',
+            'validityPeriod': 'Valid Oct 1, 2020 - Nov 18, 2020'
         }]);
     });
 });
@@ -1026,9 +1026,9 @@ describe('prepareOrderUnitPriceInfo', () => {
 describe('prepareCustomerNetPriceInfo', () => {
     test('should return the correct value', () => {
         expect(prepareCustomerNetPriceInfo({ netPrice: 32.3})).toEqual([{
-            "adjustmentValue": " ",
-            "calculatedValue": "$32.30",
-            "description": "Customer Net Price"
+            'adjustmentValue': ' ',
+            'calculatedValue': '$32.30',
+            'description': 'Customer Net Price'
         }]);
     });
 });
@@ -1055,8 +1055,8 @@ describe('prepareVolumePricingHeaderInfo', () => {
                 }]
         };
         expect(prepareVolumePricingHeaderInfo(data)).toEqual({
-            "description": "Item/Order Specific promotions",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'description': 'Item/Order Specific promotions',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         });
     });
 });
@@ -1078,11 +1078,11 @@ describe('prepareVolumePricingTiers', () => {
             }
         ];
         expect(prepareVolumePricingTiers({ volumePricingTiers })).toEqual([{
-            "adjustmentValue": "1100.00%",
-            "calculatedValue": "$2.00",
-            "description": {"rangeConnector": "to", "rangeEnd": 10, "rangeStart": 5},
-            "isSelected": true,
-            "source": "Discount Service"
+            'adjustmentValue': '1100.00%',
+            'calculatedValue': '$2.00',
+            'description': {'rangeConnector': 'to', 'rangeEnd': 10, 'rangeStart': 5},
+            'isSelected': true,
+            'source': 'Discount Service'
         }]);
     });
 });
@@ -1117,8 +1117,8 @@ describe('prepareVolumePricingHeaderRow', () => {
                     }]
             }];
         expect(prepareVolumePricingHeaderRow({ volumePricingTiers })).toEqual({
-            "description": "Item/Order Specific promotions",
-            "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'description': 'Item/Order Specific promotions',
+            'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         });
     });
 });
@@ -1144,16 +1144,16 @@ describe('prepareVolumePricingInfo', () => {
 
         const volumePricingTiers = [data];
         expect(prepareVolumePricingInfo({ volumePricingTiers, perWeightFlag: false })).toEqual({
-            "volumePricingHeaderRow": {
-                "description": "Item/Order Specific promotions",
-                "validityPeriod": "Valid Oct 25, 2020 - Nov 13, 2020"
+            'volumePricingHeaderRow': {
+                'description': 'Item/Order Specific promotions',
+                'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
             },
-            "volumePricingTiers": [{
-                "adjustmentValue": "1100.00%",
-                "calculatedValue": "$2.00",
-                "description": {"rangeConnector": "to", "rangeEnd": 10, "rangeStart": 5},
-                "isSelected": true,
-                "source": "Discount Service"
+            'volumePricingTiers': [{
+                'adjustmentValue': '1100.00%',
+                'calculatedValue': '$2.00',
+                'description': {'rangeConnector': 'to', 'rangeEnd': 10, 'rangeStart': 5},
+                'isSelected': true,
+                'source': 'Discount Service'
             }]
         });
     });
@@ -1161,8 +1161,8 @@ describe('prepareVolumePricingInfo', () => {
     test('should return the correct value when volumePricingTiers is empty', () => {
         const volumePricingTiers = [];
         expect(prepareVolumePricingInfo({volumePricingTiers})).toEqual({
-            "volumePricingHeaderRow": null,
-            "volumePricingTiers": []
+            'volumePricingHeaderRow': null,
+            'volumePricingTiers': []
         });
     });
 });

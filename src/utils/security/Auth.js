@@ -1,4 +1,4 @@
-import {getBffUrlConfig} from "../Configs";
+import {getBffUrlConfig} from '../Configs';
 import {
     AUTH_FAILURE_TYPE_UNAUTHENTICATED, AUTH_FAILURE_TYPE_UNEXPECTED_ERROR,
     AUTH_STATE_COMPLETED,
@@ -51,9 +51,9 @@ class Auth {
 
     userDetailContextHandler = (userDetailContext, appLoaderContext) => {
         const generalErrorResponse = {
-            "status": "Unauthorized",
-            "message": "User cannot be authenticated",
-            "cause": "Unexpected error occurred"
+            'status': 'Unauthorized',
+            'message': 'User cannot be authenticated',
+            'cause': 'Unexpected error occurred'
         };
 
         this.callUserDetails()

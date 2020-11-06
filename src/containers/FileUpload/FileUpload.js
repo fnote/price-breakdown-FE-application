@@ -1,7 +1,7 @@
-import React from "react";
-import AppBar from "../../components/AppBar/AppBar";
-import DropZone from "./DropZone";
-import FileList from "./FileList";
+import React from 'react';
+import AppBar from '../../components/AppBar/AppBar';
+import DropZone from './DropZone';
+import FileList from './FileList';
 
 function FileUpload() {
   return (

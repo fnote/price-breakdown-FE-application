@@ -2,7 +2,7 @@ import React, {useContext, useEffect} from 'react';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import {auth} from '../utils/security/Auth';
-import AppLoader from "../components/AppLoader";
+import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
 

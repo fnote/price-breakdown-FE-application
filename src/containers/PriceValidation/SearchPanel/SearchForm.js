@@ -1,21 +1,21 @@
-import React, { useContext } from "react";
+import React, { useContext } from 'react';
 import moment from 'moment';
 import {
  Form, Input, Checkbox, Select, InputNumber, DatePicker 
-} from "antd";
+} from 'antd';
 import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper';
-import {getBffUrlConfig} from "../../../utils/Configs";
+import {getBffUrlConfig} from '../../../utils/Configs';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
-  required: "${label} is required!",
+  required: '${label} is required!',
   types: {
-    number: "${label} is not a valid number!",
+    number: '${label} is not a valid number!',
   },
   number: {
-    range: "${label} must be between ${min} and ${max}",
+    range: '${label} must be between ${min} and ${max}',
   },
 };
 
@@ -26,7 +26,7 @@ const initialValues = {quantity: 1, date: moment(), split: false};
 const formRequestBody = (requestData) => JSON.stringify({
         businessUnitNumber: requestData.site,
         customerAccount: requestData.customer,
-        priceRequestDate: requestData.date.format("YYYYMMDD"),
+        priceRequestDate: requestData.date.format('YYYYMMDD'),
         requestedQuantity: requestData.quantity,
         product:
             {
@@ -126,7 +126,7 @@ const SearchForm = () => {
               rules={[
                   {
                       pattern: '^[a-zA-Z0-9]+$',
-                      message: "Not a valid Customer ID"
+                      message: 'Not a valid Customer ID'
                   },
                   {
                       required: true,
@@ -144,7 +144,7 @@ const SearchForm = () => {
               rules={[
                   {
                       pattern: '^[0-9]+$',
-                      message: "Not a valid Item ID"
+                      message: 'Not a valid Item ID'
                   },
                   {
                       required: true,

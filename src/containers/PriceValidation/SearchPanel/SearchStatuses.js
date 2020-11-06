@@ -1,7 +1,7 @@
-import React, {useContext} from "react";
-import { SyncOutlined } from "@ant-design/icons";
+import React, {useContext} from 'react';
+import { SyncOutlined } from '@ant-design/icons';
 import { PriceValidationContext } from '../PriceValidationContext';
-import { ErrorCodes, ErrorMessages, ErrorsMap } from "../../../constants/Errors";
+import { ErrorCodes, ErrorMessages, ErrorsMap } from '../../../constants/Errors';
 
 const renderWelcomeMessage = () => (
     <div className="search-statuses">
