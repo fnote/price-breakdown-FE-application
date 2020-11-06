@@ -18,6 +18,7 @@ module.exports = {
     indent: 'off',
     'no-trailing-spaces': 'off',
     'object-curly-spacing': 'off',
+    'object-curly-newline': 'off',
     'comma-dangle': 'off',
     // 'quotes':'off',
     'quote-props':'off',

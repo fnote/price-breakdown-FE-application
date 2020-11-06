@@ -6,9 +6,7 @@ export const META_DATA_PRICE_BAR = [
     { label: 'CUSTOMER REFERENCE PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2' },
     { label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3' },
     { label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right' },
-    {
- label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false 
-}
+    { label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false }
 ];
 
 export const PRICE_UNIT_CASE = 'case';

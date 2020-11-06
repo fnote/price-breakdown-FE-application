@@ -31,7 +31,6 @@ export const getBffUrlConfig = () => {
         CONFIG.loginRedirectionUrl = 'http://localhost:4000/local/v1/pci-bff/auth/login';
         CONFIG.logOutRedirectionUrl = 'http://localhost:4000/local/v1/pci-bff/auth/logout';
         CONFIG.userDetailsUrl = 'http://localhost:4000/local/v1/pci-bff/auth/user-details';
-
     }
     return CONFIG;
 };
