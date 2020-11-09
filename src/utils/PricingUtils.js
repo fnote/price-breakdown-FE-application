@@ -217,7 +217,7 @@ export const prepareLocalSegmentPriceInfo = ({
 
     const refPriceDiscountRows = discounts.filter((discount) => discount.type === DISCOUNT_TYPE_REF_PRICE)
         .map((discount) => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE,
-            { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }));
+            { perWeightFlag }));
 
     const dataRows = [headerRow, ...refPriceDiscountRows];
 
@@ -226,7 +226,7 @@ export const prepareLocalSegmentPriceInfo = ({
             description: DESCRIPTION_ROUNDING,
             adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
             calculatedValue: formatPrice(referencePriceRoundingAdjustment,
-                { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }),
+                { perWeightFlag }),
             source: PRICE_SOURCE_SYSTEM
         };
         dataRows.push(roundingValueRow);
