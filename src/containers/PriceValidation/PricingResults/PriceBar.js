@@ -11,7 +11,7 @@ const renderPricePoint = ({
             <div className="value">{formatPriceWithoutCurrency(pricingData[valueKey], {
                 perWeightFlag: pricingData.perWeightFlag,
                 useFixedFractionDigits: valueKey === VALUE_KEY_CUSTOMER_REF_PRICE
-                ? isFixedFractionDigits(pricingData.perWeightFlag, pricingData.priceSource, pricingData.grossPrice) : false
+                ? isFixedFractionDigits(pricingData.perWeightFlag, pricingData.priceSource, pricingData[valueKey]) : false
             })}</div>
             <div className="unit-block">
                 { insertDivider && <div className="divider"/>}
