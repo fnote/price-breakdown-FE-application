@@ -2,7 +2,6 @@ import React from 'react';
 import {
   MenuOutlined,
   CloseOutlined,
-  QuestionCircleOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
 import Navigation from './Navigation';
@@ -98,10 +97,6 @@ class AccountWidget extends React.Component {
               <li className="hide">
                 <div className="menulabel">Manage Users</div>
                 <span className="icon fi flaticon-user" />
-              </li>
-              <li>
-                <QuestionCircleOutlined className="icon" />
-                <div className="menulabel">Help &amp; Training</div>
               </li>
               <li onClick={() => this.logoutButtonClicked()}>
                 <LogoutOutlined className="icon" />
