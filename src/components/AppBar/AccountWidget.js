@@ -2,7 +2,6 @@ import React from 'react';
 import {
   MenuOutlined,
   CloseOutlined,
-  QuestionCircleOutlined,
   LogoutOutlined,
 } from '@ant-design/icons';
 import Navigation from './Navigation';
