@@ -4,7 +4,6 @@
  * Created: 10/26/20. Mon 2020 15:00
  */
 
- import b from '../constants/BusinessUnits';
 const BUSINESS_UNIT_NAME_SPLITTER = 'Sysco ';
 
 const extractNames = (businessUnitName = '', splitter = BUSINESS_UNIT_NAME_SPLITTER) => {
@@ -32,6 +31,6 @@ export const createBusinessUnitMap = ({ authorizedBunitList }) => {
 };
 
 export const formatBusinessUnit = (businessUnitId, businessUnits) => {
-    const businessUnit = b.get(businessUnitId);
+    const businessUnit = businessUnits.get(businessUnitId);
     return (businessUnit) ? `${businessUnit.id} - ${businessUnit.name}` : businessUnitId;
 };
