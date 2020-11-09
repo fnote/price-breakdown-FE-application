@@ -99,10 +99,6 @@ class AccountWidget extends React.Component {
                 <div className="menulabel">Manage Users</div>
                 <span className="icon fi flaticon-user" />
               </li>
-              <li>
-                <QuestionCircleOutlined className="icon" />
-                <div className="menulabel">Help &amp; Training</div>
-              </li>
               <li onClick={() => this.logoutButtonClicked()}>
                 <LogoutOutlined className="icon" />
                 <div className="menulabel">Logout</div>
