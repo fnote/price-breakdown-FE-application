@@ -7,6 +7,7 @@ import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
+import b from '../../../constants/BusinessUnits';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -115,7 +116,7 @@ const SearchForm = () => {
               }}
               showSearch
             >
-              {getBusinessUnits(businessUnitMap)}
+              {getBusinessUnits(b)}
             </Select>
           </Form.Item>
           <Form.Item
