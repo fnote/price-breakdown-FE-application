@@ -204,8 +204,8 @@ export const extractRequestInfo = ({ priceRequestDate, product: { splitFlag, qua
  * Returns true only when the item is priced through Price Advisor component and
  * the item is catch weight item and its gross price value is greater than or equal to $10
  */
-export const isFixedFractionDigits = (perWeightFlag, priceSource, grossPrice) => (perWeightFlag
-    && priceSource === PRICE_SOURCE_PA_ID && grossPrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
+export const isFixedFractionDigits = (perWeightFlag, priceSource, customerReferencePrice) => (perWeightFlag
+    && priceSource === PRICE_SOURCE_PA_ID && customerReferencePrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
 
 export const prepareLocalSegmentPriceInfo = ({
  discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, priceSource
@@ -217,7 +217,7 @@ export const prepareLocalSegmentPriceInfo = ({
 
     const refPriceDiscountRows = discounts.filter((discount) => discount.type === DISCOUNT_TYPE_REF_PRICE)
         .map((discount) => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE,
-            { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }));
+            { perWeightFlag }));
 
     const dataRows = [headerRow, ...refPriceDiscountRows];
 
@@ -226,7 +226,7 @@ export const prepareLocalSegmentPriceInfo = ({
             description: DESCRIPTION_ROUNDING,
             adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
             calculatedValue: formatPrice(referencePriceRoundingAdjustment,
-                { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) }),
+                { perWeightFlag }),
             source: PRICE_SOURCE_SYSTEM
         };
         dataRows.push(roundingValueRow);
@@ -236,13 +236,13 @@ export const prepareLocalSegmentPriceInfo = ({
 };
 
 export const prepareStrikeThroughPriceInfo = ({
-    discounts, customerReferencePrice, perWeightFlag, priceSource, grossPrice
+    discounts, customerReferencePrice, perWeightFlag, priceSource
 }) => {
     const headerRow = {
         description: DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
         calculatedValue: formatPrice(customerReferencePrice,
-            { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, grossPrice) })
+            { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, customerReferencePrice) })
     };
 
     const preQualifiedDiscounts = discounts
