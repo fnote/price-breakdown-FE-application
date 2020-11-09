@@ -503,12 +503,12 @@ describe('prepareLocalSegmentPriceInfo', () => {
         }, {
             'id': 1111,
             'adjustmentValue': '-1.00%',
-            'calculatedValue': '$72.23',
+            'calculatedValue': '$72.230',
             'description': 'Strategic Discount',
             'source': 'Discount Service',
             'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
-'adjustmentValue': ' ', 'calculatedValue': '$0.02', 'description': 'Rounding', 'source': 'System'
+'adjustmentValue': ' ', 'calculatedValue': '$0.020', 'description': 'Rounding', 'source': 'System'
 }]);
     });
 
@@ -545,12 +545,12 @@ describe('prepareLocalSegmentPriceInfo', () => {
         }, {
             'id': 1111,
             'adjustmentValue': '-1.00%',
-            'calculatedValue': '$72.23',
+            'calculatedValue': '$72.230',
             'description': 'Strategic Discount',
             'source': 'Discount Service',
             'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
-'adjustmentValue': ' ', 'calculatedValue': '$0.02', 'description': 'Rounding', 'source': 'System'
+'adjustmentValue': ' ', 'calculatedValue': '$0.020', 'description': 'Rounding', 'source': 'System'
 }]);
     });
 
