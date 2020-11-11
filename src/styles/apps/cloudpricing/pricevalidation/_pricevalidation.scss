@@ -16,11 +16,19 @@
   .section-wrapper {
     @include flexbox(1 1 auto, column, flex-start, flex-start);
     overflow: hidden;
+    padding-bottom: 1rem;
   }
 
   @import "_pricing-result-meta";
   @import "_price-bar";
   @import "_pricing-detailed";
+
+  .request-id {
+    text-align: right;
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
+  }
 }
 
 .pricing-type-label {
@@ -32,4 +40,14 @@
   padding: 0.4rem 1.3rem;
   border-radius: 1.5rem;
   box-shadow: 0 0 0.8rem rgba(0, 0, 0, 0.15);
+}
+
+.request-id {
+  font-size: 1rem;
+  margin: 1rem 0;
+  width: 100%;
+  opacity: 0.8;
+  .anticon {
+    margin-left: 0.5rem;
+  }
 }
