@@ -7,7 +7,7 @@ function RequestId(props) {
   return (
     <div className="request-id">
       Request Id - {requestId}
-      <Tooltip title="This is a unique ID for your request. You maybe requested to provide this for support purposes.">
+      <Tooltip title="This is a unique ID for your request. You may be requested to provide this for support purposes.">
         <InfoCircleOutlined />
       </Tooltip>
     </div>
