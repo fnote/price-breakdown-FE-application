@@ -4,6 +4,7 @@ import PriceBar from './PriceBar';
 import PriceBarDetailed from './PriceBarDetailed';
 import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
+import RequestId from "../../../components/RequestId";
 
 function PricingResults() {
     const priceValidationContext = useContext(PriceValidationContext);
@@ -20,6 +21,7 @@ function PricingResults() {
                     <PricingResultsMeta priceData={priceData} userData={userDetails}/>
                     <PriceBar priceData={priceData}/>
                     <PriceBarDetailed priceData={priceData}/>
+                    <RequestId />
                 </div>
             </div>
         );

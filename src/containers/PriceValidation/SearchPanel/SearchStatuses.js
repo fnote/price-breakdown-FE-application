@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import { SyncOutlined } from '@ant-design/icons';
 import { PriceValidationContext } from '../PriceValidationContext';
 import { ErrorCodes, ErrorMessages, ErrorsMap } from '../../../constants/Errors';
+import RequestId from "../../../components/RequestId";
 
 const renderWelcomeMessage = () => (
     <div className="search-statuses">
@@ -43,6 +44,7 @@ const renderError = ({ code, message }) => (
           <div className="subitle-title">
             Error {code} - {message}
           </div>
+          <RequestId />
         </div>
       </div>
     </div>
