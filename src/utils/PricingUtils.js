@@ -56,7 +56,7 @@ const getFractionDigits = ({ perWeightFlag, useFixedFractionDigits, digits }) =>
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency with currency symbol
  * */
-export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => (value > 0
+export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => (value >= 0
     ? `${CURRENCY_SYMBOL_USD}${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`
     : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`);
 
