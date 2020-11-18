@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { SyncOutlined } from '@ant-design/icons';
 import { PriceValidationContext } from '../PriceValidationContext';
 import { ErrorCodes, ErrorMessages, ErrorsMap } from '../../../constants/Errors';
-import RequestId from "../../../components/RequestId";
+import RequestId from '../../../components/RequestId';
 
 const renderWelcomeMessage = () => (
     <div className="search-statuses">
@@ -34,7 +34,7 @@ const renderLoader = () => (
     </div>
 );
 
-const renderError = ({ code, message }) => (
+const renderError = ({ errorCode, message, correlationId }) => (
     <div className="search-statuses">
       <div className="section-wrapper">
         <div className="error message-block">
@@ -42,9 +42,9 @@ const renderError = ({ code, message }) => (
             <i className="icon fi flaticon-error-1" /> Sorry we could not retrieve this item.
           </div>
           <div className="subitle-title">
-            Error {code} - {message}
+            Error {errorCode} - {message}
           </div>
-          <RequestId />
+          <RequestId requestId={correlationId} />
         </div>
       </div>
     </div>
@@ -60,16 +60,15 @@ const SearchStatuses = () => {
   }
 
   if (priceValidationContext.error) {
-      const code = priceValidationContext.error.errorCode;
-
-      if (code) {
-        const message = ErrorsMap.get(code);
+    const { errorCode, correlationId } = priceValidationContext.error;
+      if (errorCode) {
+        const message = ErrorsMap.get(errorCode);
         if (message) {
-          return renderError({ code, message });
+          return renderError({ errorCode, message, correlationId });
         }
       }
 
-    return renderError({code: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
+    return renderError({errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
   }
 
   if (!response) {
