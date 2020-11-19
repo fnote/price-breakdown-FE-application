@@ -7,10 +7,10 @@
   top: 0.5rem;
   @include flexbox(0 0 auto, column, flex-end, center);
   padding: 0.5rem 0;
-  z-index: 2;
+  z-index: 3;
   &.open {
     box-shadow: 0px 2px 14px rgba(0, 0, 0, 0.35);
     border-radius: 0.6rem;
-  }  
+  }
 }
 
