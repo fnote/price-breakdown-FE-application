@@ -42,7 +42,7 @@ describe('formatPrice', () => {
     });
 
     test('should return correct value for 0', () => {
-        expect(formatPrice(0, {})).toEqual('-$0.00');
+        expect(formatPrice(0, {})).toEqual('$0.00');
     });
 });
 
