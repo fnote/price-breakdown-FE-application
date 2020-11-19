@@ -42,7 +42,7 @@ import {
     PERCENTAGE_FRACTION_DIGITS,
     DESCRIPTION_EXCEPTION,
     AVAILABLE_PRICE_ZONES,
-    NOT_APPLICABLE_PRICE_ZONE,
+    NOT_APPLICABLE_LABEL,
     PRICE_SOURCE_PA_ID,
     FRACTION_DIGITS_CHANGING_MARGIN_VALUE,
 } from '../constants/Constants';
@@ -179,7 +179,7 @@ export const extractItemInfo = ({
     id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 });
 
-export const getValidatedPriceZone = (priceZoneId) => (AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_PRICE_ZONE);
+export const getValidatedPriceZone = (priceZoneId) => (AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_LABEL);
 
 export const extractSiteInfo = ({
     customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId }

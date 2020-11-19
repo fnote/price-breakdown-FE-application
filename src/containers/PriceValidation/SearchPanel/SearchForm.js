@@ -7,6 +7,7 @@ import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
+import { CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL } from '../../../constants/Constants';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -39,13 +40,15 @@ const SearchForm = () => {
     const userDetailContext = useContext(UserDetailContext);
     const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
 
-    const handleResponse = (response) => response.json()
-            .then((json) => {
-              if (response.ok) {
-                return { success: true, data: json };
-              }
-              return { success: false, data: json };
-            });
+  const handleResponse = (response) => {
+    const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
+    return response.json().then((json) => {
+      if (response.ok) {
+        return { success: true, data: json, headers: { [CORRELATION_ID_HEADER]: correlationId } };
+      }
+      return { success: false, data: json, headers: { [CORRELATION_ID_HEADER]: correlationId } };
+    });
+  };
 
   const priceRequestHandler = (requestData) => {
       fetch(getBffUrlConfig().priceDataEndpoint, {
@@ -60,9 +63,9 @@ const SearchForm = () => {
           .then(handleResponse)
           .then((resp) => {
               if (resp.success) {
-                  priceValidationContext.setPriceData(resp.data);
+                priceValidationContext.setPriceData({ ...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER] });
               } else {
-                  priceValidationContext.setErrorData(resp.data);
+                priceValidationContext.setErrorData({ ...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER] });
               }
 
               return null;
