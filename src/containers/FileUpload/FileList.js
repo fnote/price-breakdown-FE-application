@@ -1,6 +1,7 @@
 import React from 'react';
-import { Input, Button, Table } from 'antd';
-import { SyncOutlined } from '@ant-design/icons';
+import {Button, Input, Table} from 'antd';
+import {SyncOutlined} from '@ant-design/icons';
+import {getBffUrlConfig} from "../../utils/Configs";
 
 const { Search } = Input;
 
@@ -51,9 +52,9 @@ const columns = [
         ) : (
           <>
             <Button className="btn icon-only empty-btn cancel-process">
-              <i className="icon fi flaticon-close" />
+              <i className="icon fi flaticon-close"/>
             </Button>
-            <SyncOutlined spin className="icon processing-spinner" />
+            <SyncOutlined spin className="icon processing-spinner"/>
           </>
         )}
       </div>
@@ -61,43 +62,58 @@ const columns = [
   },
 ];
 
-const data = [
-  {
-    key: 1,
-    submittime: '01 July 2020 10:15 AM',
-    filename: '2841202-075.XLS',
-    action: ['processing'],
-  },
-  {
-    key: 1,
-    submittime: '01 July 2020 10:15 AM',
-    filename: '2841202-075.XLS',
-    action: ['error'],
-  },
-  {
-    key: 1,
-    submittime: '01 July 2020 10:15 AM',
-    filename: '2841202-075.XLS',
-    action: ['success'],
-  },
-];
-for (let i = 1; i < 26; i++) {
-  data.push({
-    key: i,
-    submittime: `${i} July 2020 10:15 AM `,
-    filename: `284${i}02-075.XLS`,
-    action: [],
+const handleResponse = (response) => {
+  const files = []
+  return response.json().then((json) => {
+    const responseData = json.data;
+    if (response.ok && responseData) {
+      responseData.forEach((file, index) => {
+        files.push({
+          key: index + 1,
+          submittime: file.date,
+          filename: file.fileName,
+          action: ['success'],
+        });
+      });
+      return { success: true, data: files};
+    }
+    return { success: false, data: files};
   });
-}
+};
+
+const fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndpoint, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json, text/plain, */*',
+      'Content-Type': 'application/json'
+    },
+    credentials: 'include'
+  }).then(handleResponse);
 
 class FileList extends React.Component {
-  state = {
-    selectedRowKeys: [], // Check here to configure the default column
-    loading: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedRowKeys: [], // Check here to configure the default column
+      loading: false,
+      data: [],
+      dataIsReturned : false
+    };
+  }
+
+  componentDidMount() {
+    fileListRequestHandler().then((res) => {
+      if(res.success) {
+        this.setState({
+          data: res.data,
+          dataIsReturned : true
+        })
+      }
+    });
+  }
 
   start = () => {
-    this.setState({ loading: true });
+    this.setState({loading: true});
     // ajax request after empty completing
     setTimeout(() => {
       this.setState({
@@ -112,56 +128,56 @@ class FileList extends React.Component {
   };
 
   render() {
-    const { loading, selectedRowKeys } = this.state;
+    const {loading, selectedRowKeys, data, dataIsReturned} = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
 
-    return (
-      <div className="file-list">
-        <div className="panel-header">
-          <div className="title">
-            <i className="icon fi flaticon-history" />
-            File List
+    return dataIsReturned ? (
+        <div className="file-list">
+          <div className="panel-header">
+            <div className="title">
+              <i className="icon fi flaticon-history"/>
+              File List
+            </div>
+            <Search
+                placeholder="Search"
+                className="search-list"
+                // loading
+            />
+            <div className="spacer"></div>
+            <div className="selected-item-status">
+              <p>
+                {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
+              </p>
+              {hasSelected && (
+                  <Button
+                      type="primary"
+                      className="btn green-action-btn rounded download-btn"
+                      onClick={this.start}
+                      disabled={!hasSelected}
+                      loading={loading}
+                      scroll={{x: 'auto', y: 300}}>
+                    <i className="icon fi flaticon-download"/> Download Selected
+                  </Button>
+              )}
+            </div>
+            <Button type="link" className="refresh-btn">
+              <i className="icon fi flaticon-refresh-1"/> Refresh
+            </Button>
           </div>
-          <Search
-            placeholder="Search"
-            className="search-list"
-            // loading
-          />
-          <div className="spacer"></div>
-          <div className="selected-item-status">
-            <p>
-              {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-            </p>
-            {hasSelected && (
-              <Button
-                type="primary"
-                className="btn green-action-btn rounded download-btn"
-                onClick={this.start}
-                disabled={!hasSelected}
-                loading={loading}
-                scroll={{ x: 'auto', y: 300 }}>
-                <i className="icon fi flaticon-download" /> Download Selected
-              </Button>
-            )}
+          <div className="file-list-table-wrapper">
+            <Table
+                rowSelection={rowSelection}
+                columns={columns}
+                dataSource={data}
+                scroll={{x: 'auto', y: '60vh'}}
+            />
           </div>
-          <Button type="link" className="refresh-btn">
-            <i className="icon fi flaticon-refresh-1" /> Refresh
-          </Button>
         </div>
-        <div className="file-list-table-wrapper">
-          <Table
-            rowSelection={rowSelection}
-            columns={columns}
-            dataSource={data}
-            scroll={{x: 'auto', y: '60vh'}}
-          />
-        </div>
-      </div>
-    );
+    ) : null;
   }
 }
 
