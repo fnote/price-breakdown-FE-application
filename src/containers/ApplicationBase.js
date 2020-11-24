@@ -38,7 +38,7 @@ export default function ApplicationBase() {
     if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = auth.isUserLoginCompleted() ? <PriceValidation/> : <Login/>;
+        component = auth.isUserLoginCompleted() ? Application() : <Login/>;
     }
 
   return (
