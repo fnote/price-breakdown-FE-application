@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, Input, Table} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 import {getBffUrlConfig} from "../../utils/Configs";
+import {ERROR_FILE_EXTENSION, FILE_ERROR, FILE_PROCESSING, FILE_SUCCESS} from "../../constants/Constants";
 
 const { Search } = Input;
 
@@ -22,10 +23,10 @@ const columns = [
     width: 'auto',
     render: (text) => (
       <div className="action-bar">
-        {text[0] === 'processing' && (
+        {text[0] === FILE_PROCESSING && (
           <div className="file-process-status">FILE IS BEING PROCESSED</div>
         )}
-        {text[0] === 'error' && (
+        {text[0] === FILE_ERROR && (
           <div className="file-process-status error">
             File Contained errors
             <div className="divider"></div>
@@ -35,12 +36,12 @@ const columns = [
             </Button>
           </div>
         )}
-        {text[0] === 'success' && (
+        {text[0] === FILE_SUCCESS && (
           <div className="file-process-status success">
             File processed successfully
           </div>
         )}
-        {text[0] !== 'processing' ? (
+        {text[0] !== FILE_PROCESSING ? (
           <>
             <Button className="btn icon-only empty-btn">
               <i className="icon fi flaticon-bin" />
@@ -68,11 +69,15 @@ const handleResponse = (response) => {
     const responseData = json.data;
     if (response.ok && responseData) {
       responseData.forEach((file, index) => {
+        let action = [FILE_SUCCESS];
+        if (file.fileName.endsWith(ERROR_FILE_EXTENSION)) {
+          action = [FILE_ERROR];
+        }
         files.push({
           key: index + 1,
           submittime: file.date,
           filename: file.fileName,
-          action: ['success'],
+          action: action,
         });
       });
       return { success: true, data: files};
@@ -101,7 +106,10 @@ class FileList extends React.Component {
     };
   }
 
-  componentDidMount() {
+  loadDataFiles = () => {
+    this.setState({
+      dataIsReturned : false
+    })
     fileListRequestHandler().then((res) => {
       if(res.success) {
         this.setState({
@@ -110,6 +118,10 @@ class FileList extends React.Component {
         })
       }
     });
+  }
+
+  componentDidMount() {
+    this.loadDataFiles();
   }
 
   start = () => {
@@ -135,7 +147,7 @@ class FileList extends React.Component {
     };
     const hasSelected = selectedRowKeys.length > 0;
 
-    return dataIsReturned ? (
+    return (
         <div className="file-list">
           <div className="panel-header">
             <div className="title">
@@ -164,20 +176,26 @@ class FileList extends React.Component {
                   </Button>
               )}
             </div>
-            <Button type="link" className="refresh-btn">
+            <Button
+                type="link"
+                className="refresh-btn"
+                onClick={this.loadDataFiles}
+            >
               <i className="icon fi flaticon-refresh-1"/> Refresh
             </Button>
           </div>
           <div className="file-list-table-wrapper">
-            <Table
-                rowSelection={rowSelection}
-                columns={columns}
-                dataSource={data}
-                scroll={{x: 'auto', y: '60vh'}}
-            />
+            {dataIsReturned ?
+              <Table
+                  rowSelection={rowSelection}
+                  columns={columns}
+                  dataSource={data}
+                  scroll={{x: 'auto', y: '60vh'}}
+              />
+              : <Table loading={!dataIsReturned}/>}
           </div>
         </div>
-    ) : null;
+    );
   }
 }
 
