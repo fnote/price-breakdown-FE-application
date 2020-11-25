@@ -7,6 +7,7 @@
 export const getBffUrlConfig = () => {
     const CONFIG = {};
     if (process.env.REACT_APP_ENV === 'dev') {
+        CONFIG.listOutputFilesEndpoint = 'http://localhost:4000/local/v1/pci-bff/batch/files/output';
         CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
         CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
         CONFIG.logOutRedirectionUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/logout';
