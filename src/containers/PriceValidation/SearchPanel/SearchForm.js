@@ -7,7 +7,7 @@ import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
-import { CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL } from '../../../constants/Constants';
+import { CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL, ORDER_PRICE_TYPE_HAND } from '../../../constants/Constants';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -31,9 +31,10 @@ const formRequestBody = (requestData) => JSON.stringify({
             {
                 supc: `${requestData.supc}`,
                 splitFlag: !!requestData.split
-            }
-
-    });
+            },
+        orderPrice: requestData.handPrice,
+        orderPriceType: ORDER_PRICE_TYPE_HAND
+});
 
 const SearchForm = () => {
     const priceValidationContext = useContext(PriceValidationContext);
