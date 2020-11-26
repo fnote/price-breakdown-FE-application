@@ -189,6 +189,13 @@ const SearchForm = () => {
             />
           </Form.Item>
 
+            <Form.Item
+                name="handPrice"
+                label="Hand Price"
+            >
+                <Input type={'number'}/>
+            </Form.Item>
+
           <Form.Item name="split" label="Split" valuePropName="checked">
             <Checkbox/>
           </Form.Item>
