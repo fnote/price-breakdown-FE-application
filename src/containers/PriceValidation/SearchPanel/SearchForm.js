@@ -22,19 +22,25 @@ const validateMessages = {
 
 const initialValues = {quantity: 1, date: moment(), split: false};
 
-const formRequestBody = (requestData) => JSON.stringify({
+const formRequestBody = (requestData) => {
+    const product = {
+        supc: `${requestData.supc}`,
+        splitFlag: !!requestData.split
+    };
+
+    if (requestData.handPrice) {
+        product.orderPrice = requestData.handPrice;
+        product.orderPriceType = ORDER_PRICE_TYPE_HAND;
+    }
+
+    return JSON.stringify({
         businessUnitNumber: requestData.site,
         customerAccount: requestData.customer,
         priceRequestDate: requestData.date.format('YYYYMMDD'),
         requestedQuantity: requestData.quantity,
-        product:
-            {
-                supc: `${requestData.supc}`,
-                splitFlag: !!requestData.split
-            },
-        orderPrice: requestData.handPrice,
-        orderPriceType: ORDER_PRICE_TYPE_HAND
-});
+        product,
+    });
+};
 
 const SearchForm = () => {
     const priceValidationContext = useContext(PriceValidationContext);
@@ -192,8 +198,21 @@ const SearchForm = () => {
             <Form.Item
                 name="handPrice"
                 label="Hand Price"
+                rules={[
+                    () => ({
+                        validator(rule, value) {
+                            if (value && !isNaN(value) && value >= 0) {
+                                return Promise.resolve();
+                            }
+                            return Promise.reject(new Error('Hand price must be a valid non-negative number'));
+                        },
+                    })
+                ]}
             >
-                <Input type={'number'}/>
+                <InputNumber
+                    min={0}
+                    precision={3}
+                />
             </Form.Item>
 
           <Form.Item name="split" label="Split" valuePropName="checked">
