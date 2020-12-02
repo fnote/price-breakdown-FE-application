@@ -227,7 +227,6 @@ const SearchForm = () => {
 
                         return value;
                     }}
-                    step={0.001}
                 />
             </Form.Item>
 
