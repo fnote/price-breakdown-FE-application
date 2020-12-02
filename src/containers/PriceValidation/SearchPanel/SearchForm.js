@@ -7,6 +7,7 @@ import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
+import { formatNumberInput } from '../../../utils/CommonUtils'
 import { CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL, ORDER_PRICE_TYPE_HAND } from '../../../constants/Constants';
 
 /* eslint-disable no-template-curly-in-string */
@@ -214,19 +215,7 @@ const SearchForm = () => {
                 ]}
             >
                 <InputNumber
-                    formatter={(value) => {
-                        const formatterRegex = /^-?\d+(?:\.\d{0,3})?/;
-
-                        if (value && !isNaN(value)) {
-                            const strVal = `${value}`;
-                            const matcherResult = strVal.match(formatterRegex);
-                            if (matcherResult) {
-                                return matcherResult[0];
-                            }
-                        }
-
-                        return value;
-                    }}
+                    formatter={formatNumberInput}
                 />
             </Form.Item>
 
