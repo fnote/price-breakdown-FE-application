@@ -201,17 +201,33 @@ const SearchForm = () => {
                 rules={[
                     () => ({
                         validator(rule, value) {
-                            if (value && !isNaN(value) && value >= 0) {
-                                return Promise.resolve();
+                            if (value) {
+                                if (!isNaN(value) && value >= 0) {
+                                    return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('Hand price must be a valid non-negative number'));
                             }
-                            return Promise.reject(new Error('Hand price must be a valid non-negative number'));
+
+                            return Promise.resolve();
                         },
                     })
                 ]}
             >
                 <InputNumber
-                    min={0}
-                    precision={3}
+                    formatter={(value) => {
+                        const formatterRegex = /^-?\d+(?:\.\d{0,3})?/;
+
+                        if (value && !isNaN(value)) {
+                            const strVal = `${value}`;
+                            const matcherResult = strVal.match(formatterRegex);
+                            if (matcherResult) {
+                                return matcherResult[0];
+                            }
+                        }
+
+                        return value;
+                    }}
+                    step={0.001}
                 />
             </Form.Item>
 
