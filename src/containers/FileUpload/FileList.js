@@ -77,20 +77,20 @@ handleResponse = (response) => {
     const responseData = json.data;
     if (response.ok && responseData) {
       responseData.forEach((file, index) => {
-        let action = {
-          status: FILE_SUCCESS,
-          fileName: file.fileName
-        };
-        if (file.fileName.endsWith(ERROR_FILE_EXTENSION)) {
-          action = {
-            status: FILE_ERROR,
-          }
-        }
+        // let action = {
+        //   status: FILE_SUCCESS,
+        //   fileName: file.fileName
+        // };
+        // if (file.fileName.endsWith(ERROR_FILE_EXTENSION)) {
+        //   action = {
+        //     status: FILE_ERROR,
+        //   }
+        // }
         files.push({
           key: index + 1,
           submittime: file.date,
           filename: file.fileName,
-          action: action,
+          action: [file.action],
         });
       });
       return { success: true, data: files};
@@ -107,6 +107,13 @@ fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndpoint, 
     },
   }).then(this.handleResponse);
 
+const fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+}).then(handleResponse);
 
 generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFilesSignedUrlEndpoint, {
       method: 'POST',
@@ -184,13 +191,15 @@ downloadFromSignedUrl = (fileNameUrlArray) => {
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
       data: [],
-      dataIsReturned : false
+      dataIsReturned : false,
+      searchString: ''
     };
   }
 
   loadDataFiles = () => {
     this.setState({
-      dataIsReturned : false
+      dataIsReturned : false,
+      searchString: ''
     })
     this.fileListRequestHandler().then((res) => {
       if(res.success) {
@@ -200,6 +209,29 @@ downloadFromSignedUrl = (fileNameUrlArray) => {
         })
       }
     });
+  }
+
+  getListSearchFilesEndpoint = (source, prefix) => {
+    return getBffUrlConfig().listSearchFilesEndpoint + source + "/" + prefix;
+  }
+
+  loadSearchDataFiles = (value) => {
+    if(value !== ''){
+      this.setState({
+        dataIsReturned : false,
+      })
+
+      fileSearchListRequestHandler(this.getListSearchFilesEndpoint("output", value)).then((res) => {
+        if(res.success) {
+          this.setState({
+            data: res.data,
+            dataIsReturned : true
+          })
+        }
+      });
+    }else{
+      this.loadDataFiles();
+    }
   }
 
   componentDidMount() {
@@ -221,8 +253,12 @@ downloadFromSignedUrl = (fileNameUrlArray) => {
     this.setState({ selectedRowKeys });
   };
 
+  onSearchStringChange = (searchBox) => {
+    this.setState({ searchString: searchBox.target.value });
+  };
+
   render() {
-    const {loading, selectedRowKeys, data, dataIsReturned} = this.state;
+    const {loading, selectedRowKeys, data, dataIsReturned, searchString} = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -239,7 +275,9 @@ downloadFromSignedUrl = (fileNameUrlArray) => {
             <Search
                 placeholder="Search"
                 className="search-list"
-                // loading
+                value={searchString}
+                onChange={this.onSearchStringChange}
+                onSearch={this.loadSearchDataFiles}
             />
             <div className="spacer"></div>
             <div className="selected-item-status">
