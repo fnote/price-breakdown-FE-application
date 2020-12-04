@@ -77,20 +77,15 @@ handleResponse = (response) => {
     const responseData = json.data;
     if (response.ok && responseData) {
       responseData.forEach((file, index) => {
-        // let action = {
-        //   status: FILE_SUCCESS,
-        //   fileName: file.fileName
-        // };
-        // if (file.fileName.endsWith(ERROR_FILE_EXTENSION)) {
-        //   action = {
-        //     status: FILE_ERROR,
-        //   }
-        // }
+        const action = {
+          status: file.action,
+          fileName: file.fileName
+        };
         files.push({
           key: index + 1,
           submittime: file.date,
           filename: file.fileName,
-          action: [file.action],
+          action: action,
         });
       });
       return { success: true, data: files};
