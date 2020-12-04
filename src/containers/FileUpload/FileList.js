@@ -107,13 +107,13 @@ fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndpoint, 
     },
   }).then(this.handleResponse);
 
-const fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
+fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
   method: 'GET',
   headers: {
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json'
   },
-}).then(handleResponse);
+}).then(this.handleResponse);
 
 generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFilesSignedUrlEndpoint, {
       method: 'POST',
@@ -221,7 +221,7 @@ downloadFromSignedUrl = (fileNameUrlArray) => {
         dataIsReturned : false,
       })
 
-      fileSearchListRequestHandler(this.getListSearchFilesEndpoint("output", value)).then((res) => {
+      this.fileSearchListRequestHandler(this.getListSearchFilesEndpoint("output", value)).then((res) => {
         if(res.success) {
           this.setState({
             data: res.data,
