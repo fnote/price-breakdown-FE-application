@@ -45,6 +45,5 @@ export const formatNumberInput = (value) => {
             return matcherResult[0];
         }
     }
-
     return value;
 };
