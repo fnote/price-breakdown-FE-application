@@ -76,15 +76,11 @@ const handleResponse = (response) => {
     const responseData = json.data;
     if (response.ok && responseData) {
       responseData.forEach((file, index) => {
-        let action = [FILE_SUCCESS];
-        if (file.fileName.endsWith(ERROR_FILE_EXTENSION)) {
-          action = [FILE_ERROR];
-        }
         files.push({
           key: index + 1,
           submittime: file.date,
           filename: file.fileName,
-          action: action,
+          action: [file.action],
         });
       });
       return { success: true, data: files};
