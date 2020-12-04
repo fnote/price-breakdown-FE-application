@@ -97,6 +97,13 @@ const fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndp
     },
   }).then(handleResponse);
 
+const fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+  },
+}).then(handleResponse);
 
 const downloadFile  =  (url) => {
   fetch(url, {
@@ -122,13 +129,15 @@ class FileList extends React.Component {
       selectedRowKeys: [], // Check here to configure the default column
       loading: false,
       data: [],
-      dataIsReturned : false
+      dataIsReturned : false,
+      searchString: ''
     };
   }
 
   loadDataFiles = () => {
     this.setState({
-      dataIsReturned : false
+      dataIsReturned : false,
+      searchString: ''
     })
     fileListRequestHandler().then((res) => {
       if(res.success) {
@@ -138,6 +147,29 @@ class FileList extends React.Component {
         })
       }
     });
+  }
+
+  getListSearchFilesEndpoint = (source, prefix) => {
+    return getBffUrlConfig().listSearchFilesEndpoint + source + "/" + prefix;
+  }
+
+  loadSearchDataFiles = (value) => {
+    if(value !== ''){
+      this.setState({
+        dataIsReturned : false,
+      })
+
+      fileSearchListRequestHandler(this.getListSearchFilesEndpoint("output", value)).then((res) => {
+        if(res.success) {
+          this.setState({
+            data: res.data,
+            dataIsReturned : true
+          })
+        }
+      });
+    }else{
+      this.loadDataFiles();
+    }
   }
 
   componentDidMount() {
@@ -159,8 +191,12 @@ class FileList extends React.Component {
     this.setState({ selectedRowKeys });
   };
 
+  onSearchStringChange = (searchBox) => {
+    this.setState({ searchString: searchBox.target.value });
+  };
+
   render() {
-    const {loading, selectedRowKeys, data, dataIsReturned} = this.state;
+    const {loading, selectedRowKeys, data, dataIsReturned, searchString} = this.state;
     const rowSelection = {
       selectedRowKeys,
       onChange: this.onSelectChange,
@@ -177,7 +213,9 @@ class FileList extends React.Component {
             <Search
                 placeholder="Search"
                 className="search-list"
-                // loading
+                value={searchString}
+                onChange={this.onSearchStringChange}
+                onSearch={this.loadSearchDataFiles}
             />
             <div className="spacer"></div>
             <div className="selected-item-status">
