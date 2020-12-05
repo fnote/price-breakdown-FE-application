@@ -9,6 +9,7 @@ phases:
       - echo "_auth = ${JFROG_AUTH}" >> .npmrc
       - echo "email = 000-BT-PricingPlatform@Corp.sysco.com" >> .npmrc
       - echo "always-auth = true" >> .npmrc
+      - cat .npmrc
       # Install dependencies needed for running tests
       - npm install
       # Upgrade AWS CLI to the latest version
