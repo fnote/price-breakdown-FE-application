@@ -6,7 +6,6 @@ phases:
     commands:
       # Create the custom .npmrc file with auth
       - echo "registry=https://syscobt.jfrog.io/artifactory/api/npm/npm/" >> .npmrc
-      - echo "_auth = ${JFROG_AUTH}"
       - echo "_auth = ${JFROG_AUTH}" >> .npmrc
       - echo "email = 000-BT-PricingPlatform@Corp.sysco.com" >> .npmrc
       - echo "always-auth = true" >> .npmrc
