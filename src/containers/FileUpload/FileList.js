@@ -1,12 +1,20 @@
 import React from 'react';
-import {Button, Input, Table} from 'antd';
+import {Button, Input, Table, notification} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 import {getBffUrlConfig} from "../../utils/Configs";
-import {ERROR_FILE_EXTENSION, FILE_ERROR, FILE_PROCESSING, FILE_SUCCESS} from "../../constants/Constants";
+import {
+  BATCH_MINOR_ERROR_FOLDER_NAME,
+  ERROR_FILE_EXTENSION,
+  FILE_ERROR,
+  FILE_PROCESSING,
+  FILE_SUCCESS
+} from "../../constants/Constants";
 
 const { Search } = Input;
 
-const columns = [
+class FileList extends React.Component {
+
+columns = [
   {
     title: 'SUBMIT TIME',
     dataIndex: 'submittime',
@@ -21,36 +29,41 @@ const columns = [
     dataIndex: 'action',
     className: 'action',
     width: 'auto',
-    render: (text) => (
+    render: (data) => (
       <div className="action-bar">
-        {text[0] === FILE_PROCESSING && (
+        {data.status === FILE_PROCESSING && (
           <div className="file-process-status">FILE IS BEING PROCESSED</div>
         )}
-        {text[0] === FILE_ERROR && (
+        {data.status === FILE_ERROR && (
           <div className="file-process-status error">
             File Contained errors
             <div className="divider"></div>
-            <Button className="btn empty-btn download-error-file">
+            <Button className="btn empty-btn download-error-file"
+                    onClick={() => {
+                      const minorErrorFileNameWithFolderPath = BATCH_MINOR_ERROR_FOLDER_NAME + data.minorErrorFileName;
+                      this.downloadFile([minorErrorFileNameWithFolderPath]);
+
+                    }}
+            >
               <i className="icon fi flaticon-cloud-computing" />
               View error file
             </Button>
           </div>
         )}
-        {text[0] === FILE_SUCCESS && (
+        {data.status === FILE_SUCCESS && (
           <div className="file-process-status success">
             File processed successfully
           </div>
         )}
-        {text[0] !== FILE_PROCESSING ? (
+        {data.status !== FILE_PROCESSING ? (
           <>
             <Button className="btn icon-only empty-btn">
               <i className="icon fi flaticon-bin" />
             </Button>
             <Button className="btn icon-only empty-btn download-file"
                     onClick={() => {
-                      downloadFile(
-'https://sysco-us-east-1-prcp-dev-batch-output.s3.amazonaws.com/C01C_066_000041_20201124_A.txt?AWSAccessKeyId=ASIAQRLXWZJ2LLLMGGFX&Expires=1606271044&Signature=fEXqJ0t5tfVkaGcPOFiYSlbqB3M%3D&x-amz-security-token=IQoJb3JpZ2luX2VjEGgaCXVzLWVhc3QtMSJHMEUCIFG%2BBchlV48bGulCYeJqUTa3NFr0I%2BIKFlcBQzHIurtFAiEAwrFJf9zcD0D5gDRse%2By0k%2FV9GmFHEWfFSP4b%2F6%2FvLTsqlgMI4f%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARABGgwwMzcyOTUxNDc2MzYiDJ5Sj8JgC5EA%2BQjOpCrqAsdWZTqAyo7HvTtbFQmiOAhNizaOCCClV5dDuKzpyUCwqWjvWy4eWJPUnNUYKxPeaO%2FuYeBg%2BlfSVT8UNsKbLvKQNUtbDVQp4i1wu6%2FEqz2Yft1x6L2vuLtEYnmmJAOJEmAiFoYLoop8sU9hHt2ab1C4wkwkZfE2AvdFfgm9zQ3nEOy1meU9HUW0Wj8r4cbuZNmt2JaTrYkAPrNz1Tf8luSPZtLJxjPTTFsKQPcV51%2FsrHVOZoT0bo5wgK4Ap9dwY2BjSGm%2FDe9JI6doWMSEf2svfK3RtUtMKo34PQKx6V%2FE8Jm8qhpa24kSLPgqHww2qdzlD3oB31O32V0auAjp9kqz9aLE1L0BxAzDiXSPId7Ae4mZIJMJw7X1LRKf3nZQ729Dt%2FOk5qyZIHWbcZWcBmSYkpbWeI4OrbGYG0G0P18%2BVE6nvMYi5CbMqgDbIPmpW6XIQ%2BaPBMv6NXoNwbu6xF9KQbYf831oBfJGMOe79v0FOqYBZJsqnU9cvt%2BE3EAvfzGOqh%2F0iI8xnSy8lDDU%2Be1ewZ%2BANMpCG%2Fn6Z00D%2FV2Q%2Bpsr%2BKM7egs4hB7X7BaiyjirK3YOFbwbmhxN5CDaMLoKuogpLDDaQ0y%2BTvXZA4bPZl%2Fxg3x7cocCH%2F7pt2tBQVYzF%2BDv5Yo7yGB3%2F1mKbonM2H1mcmI2INOf8z9cI4mhaPbg1kg9BzovmJBf58kqdffF%2BfP%2BUqKddw%3D%3D'
-                      )
+                      this.downloadFile([data.fileName]);
+
                     }}
             >
               <i className="icon fi flaticon-cloud-computing" />
@@ -70,17 +83,22 @@ const columns = [
   },
 ];
 
-const handleResponse = (response) => {
+handleResponse = (response) => {
   const files = []
   return response.json().then((json) => {
     const responseData = json.data;
     if (response.ok && responseData) {
       responseData.forEach((file, index) => {
+        const action = {
+          status: file.action,
+          fileName: file.fileName,
+          minorErrorFileName: file.minorErrorFileName
+        };
         files.push({
           key: index + 1,
           submittime: file.date,
           filename: file.fileName,
-          action: [file.action],
+          action: action,
         });
       });
       return { success: true, data: files};
@@ -89,40 +107,105 @@ const handleResponse = (response) => {
   });
 };
 
-const fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndpoint, {
+fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndpoint, {
     method: 'GET',
     headers: {
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json'
     },
-  }).then(handleResponse);
+  }).then(this.handleResponse);
 
-const fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
+fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
   method: 'GET',
   headers: {
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json'
   },
-}).then(handleResponse);
+}).then(this.handleResponse);
 
-const downloadFile  =  (url) => {
-  fetch(url, {
-        headers: {
-          'Accept': 'application/json, text/plain, */*',
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-        },
-      }
-      )
-      .then((response) =>
-          console.log('Downloaded successfully'))
-      .catch(error => {
-        console.log('error in downloading', error.message);
+generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFilesSignedUrlEndpoint, {
+      method: 'POST',
+      body: JSON.stringify({
+          'fileNames': fileNamesArray
+        }),
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    });
+
+downloadFile  =  (fileNamesArray, isMinorErrorFile = false) => {
+
+  console.log('fileNamesArray', fileNamesArray);
+
+  this.setState({
+    dataIsReturned : false
+  });
+
+  this.generateSignedUrls(fileNamesArray)
+      .then(response => {
+        if(!response.ok) {
+          throw Error(response.statusText);
+        }
+        return response.json()
       })
+      .then(response => {
+          const fileNameUrlArray = response.data;
+          this.downloadFromSignedUrl(fileNameUrlArray)
+        }).catch(error => {
+    this.setState({
+      dataIsReturned : true
+    })
+  console.log(error)
+});
 };
 
-class FileList extends React.Component {
+downloadFromSignedUrl = (fileNameUrlArray) => {
+  fileNameUrlArray.forEach(({fileName, readUrl}) => {
+    console.log('filename', fileName)
+    console.log('readUrl', readUrl)
+    fetch(readUrl)
+        .then(response => {
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          return response;
+        })
+        .then(response => response.blob())
+        .then(blob => URL.createObjectURL(blob))
+        .then(uril => {
+          console.log(uril)
+          let link = document.createElement("a");
+          link.href = uril;
+          link.download = fileName;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          this.setState({
+            dataIsReturned : true
+          });
+        })
+        .catch(error => {
+          this.openNotificationWithIcon('error');
+          this.setState({
+            dataIsReturned : true
+          });
+          console.log(error);
+        });
+
+  });
+};
+
+openNotificationWithIcon = type => {
+    notification[type]({
+      message: 'Failed to download the file',
+      description:
+          'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+    });
+  };
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -139,7 +222,7 @@ class FileList extends React.Component {
       dataIsReturned : false,
       searchString: ''
     })
-    fileListRequestHandler().then((res) => {
+    this.fileListRequestHandler().then((res) => {
       if(res.success) {
         this.setState({
           data: res.data,
@@ -159,7 +242,7 @@ class FileList extends React.Component {
         dataIsReturned : false,
       })
 
-      fileSearchListRequestHandler(this.getListSearchFilesEndpoint("output", value)).then((res) => {
+      this.fileSearchListRequestHandler(this.getListSearchFilesEndpoint("output", value)).then((res) => {
         if(res.success) {
           this.setState({
             data: res.data,
@@ -187,7 +270,8 @@ class FileList extends React.Component {
     }, 1000);
   };
 
-  onSelectChange = (selectedRowKeys) => {
+  onSelectChange = (selectedRowKeys, selectedRowValues) => {
+    console.log('selected', selectedRowValues)
     this.setState({ selectedRowKeys });
   };
 
@@ -220,6 +304,7 @@ class FileList extends React.Component {
             <div className="spacer"></div>
             <div className="selected-item-status">
               <p>
+                {console.log(selectedRowKeys)}
                 {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
               </p>
               {hasSelected && (
@@ -246,7 +331,7 @@ class FileList extends React.Component {
             {dataIsReturned ?
               <Table
                   rowSelection={rowSelection}
-                  columns={columns}
+                  columns={this.columns}
                   dataSource={data}
                   scroll={{x: 'auto', y: '60vh'}}
               />
