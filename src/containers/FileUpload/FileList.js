@@ -1,8 +1,14 @@
 import React from 'react';
-import {Button, Input, Table} from 'antd';
+import {Button, Input, Table, notification} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 import {getBffUrlConfig} from "../../utils/Configs";
-import {ERROR_FILE_EXTENSION, FILE_ERROR, FILE_PROCESSING, FILE_SUCCESS} from "../../constants/Constants";
+import {
+  BATCH_MINOR_ERROR_FOLDER_NAME,
+  ERROR_FILE_EXTENSION,
+  FILE_ERROR,
+  FILE_PROCESSING,
+  FILE_SUCCESS
+} from "../../constants/Constants";
 
 const { Search } = Input;
 
@@ -32,7 +38,13 @@ columns = [
           <div className="file-process-status error">
             File Contained errors
             <div className="divider"></div>
-            <Button className="btn empty-btn download-error-file">
+            <Button className="btn empty-btn download-error-file"
+                    onClick={() => {
+                      const minorErrorFileNameWithFolderPath = BATCH_MINOR_ERROR_FOLDER_NAME + data.minorErrorFileName;
+                      this.downloadFile([minorErrorFileNameWithFolderPath]);
+
+                    }}
+            >
               <i className="icon fi flaticon-cloud-computing" />
               View error file
             </Button>
@@ -79,7 +91,8 @@ handleResponse = (response) => {
       responseData.forEach((file, index) => {
         const action = {
           status: file.action,
-          fileName: file.fileName
+          fileName: file.fileName,
+          minorErrorFileName: file.minorErrorFileName
         };
         files.push({
           key: index + 1,
@@ -122,7 +135,9 @@ generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFil
       credentials: 'include'
     });
 
-downloadFile  =  (fileNamesArray) => {
+downloadFile  =  (fileNamesArray, isMinorErrorFile = false) => {
+
+  console.log('fileNamesArray', fileNamesArray);
 
   this.setState({
     dataIsReturned : false
@@ -169,17 +184,28 @@ downloadFromSignedUrl = (fileNameUrlArray) => {
           document.body.removeChild(link);
           this.setState({
             dataIsReturned : true
-          })
+          });
         })
         .catch(error => {
+          this.openNotificationWithIcon('error');
           this.setState({
             dataIsReturned : true
-          })
+          });
           console.log(error);
         });
 
   });
-}
+};
+
+openNotificationWithIcon = type => {
+    notification[type]({
+      message: 'Failed to download the file',
+      description:
+          'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+    });
+  };
+
+
   constructor(props) {
     super(props);
     this.state = {
@@ -244,7 +270,8 @@ downloadFromSignedUrl = (fileNameUrlArray) => {
     }, 1000);
   };
 
-  onSelectChange = (selectedRowKeys) => {
+  onSelectChange = (selectedRowKeys, selectedRowValues) => {
+    console.log('selected', selectedRowValues)
     this.setState({ selectedRowKeys });
   };
 
@@ -277,6 +304,7 @@ downloadFromSignedUrl = (fileNameUrlArray) => {
             <div className="spacer"></div>
             <div className="selected-item-status">
               <p>
+                {console.log(selectedRowKeys)}
                 {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
               </p>
               {hasSelected && (
