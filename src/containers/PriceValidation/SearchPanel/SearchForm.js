@@ -1,14 +1,19 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
 import {
- Form, Input, Checkbox, Select, InputNumber, DatePicker
+  Form, Input, Checkbox, Select, InputNumber, DatePicker
 } from 'antd';
 import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import { formatNumberInput } from '../../../utils/CommonUtils'
-import { CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL, ORDER_PRICE_TYPE_HAND } from '../../../constants/Constants';
+import {
+  CORRELATION_ID_HEADER,
+  NOT_APPLICABLE_LABEL,
+  ORDER_PRICE_TYPE_HAND,
+  MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT
+} from '../../../constants/Constants';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -204,7 +209,10 @@ const SearchForm = () => {
                         validator(rule, value) {
                             if (value) {
                                 if (!isNaN(value) && value >= 0) {
-                                    return Promise.resolve();
+                                  if (value > MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT) {
+                                    return Promise.reject(new Error(`Hand price must not be greater than ${MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT}`));
+                                  }
+                                  return Promise.resolve();
                                 }
                                 return Promise.reject(new Error('Hand price must be a valid non-negative number'));
                             }
