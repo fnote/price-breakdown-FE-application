@@ -40,8 +40,7 @@ columns = [
             <div className="divider"></div>
             <Button className="btn empty-btn download-error-file"
                     onClick={() => {
-                      const minorErrorFileNameWithFolderPath = BATCH_MINOR_ERROR_FOLDER_NAME + data.minorErrorFileName;
-                      this.downloadFile([minorErrorFileNameWithFolderPath]);
+                      this.downloadFile([data.minorErrorFileName]);
 
                     }}
             >
@@ -135,7 +134,7 @@ generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFil
       credentials: 'include'
     });
 
-downloadFile  =  (fileNamesArray, isMinorErrorFile = false) => {
+downloadFile  =  (fileNamesArray) => {
 
   console.log('fileNamesArray', fileNamesArray);
 
@@ -261,18 +260,45 @@ openNotificationWithIcon = type => {
 
   start = () => {
     this.setState({loading: true});
-    // ajax request after empty completing
-    setTimeout(() => {
-      this.setState({
-        selectedRowKeys: [],
-        loading: false,
-      });
-    }, 1000);
+
+    console.log('from button click', this.state.selectedRowValues)
+
+    const selectedRowValues = this.state.selectedRowValues;
+    const toDownloadFiles = [];
+
+    selectedRowValues.forEach(row => {
+      console.log('action', row.action)
+      console.log('row', row)
+
+      if(row.action.fileName) {
+        toDownloadFiles.push(row.action.fileName);
+      }
+
+      if(row.action.minorErrorFileName) {
+        toDownloadFiles.push(row.action.minorErrorFileName);
+      }
+    });
+
+    this.downloadFile(toDownloadFiles);
+
+    // // ajax request after empty completing
+    // setTimeout(() => {
+    //   this.setState({
+    //     selectedRowKeys: [],
+    //     loading: false,
+    //   });
+    // }, 1000);
+
+    this.setState({
+      selectedRowKeys: [],
+      loading: false,
+    });
+
   };
 
   onSelectChange = (selectedRowKeys, selectedRowValues) => {
     console.log('selected', selectedRowValues)
-    this.setState({ selectedRowKeys });
+    this.setState({ selectedRowKeys, selectedRowValues });
   };
 
   onSearchStringChange = (searchBox) => {

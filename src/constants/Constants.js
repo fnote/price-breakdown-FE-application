@@ -85,4 +85,3 @@ export const ERROR_FILE_EXTENSION = "_errors.txt"
 export const FILE_PROCESSING = 'processing'
 export const FILE_ERROR = 'error'
 export const FILE_SUCCESS = 'success'
-export const BATCH_MINOR_ERROR_FOLDER_NAME = 'minor-errors/';
