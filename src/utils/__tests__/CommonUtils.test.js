@@ -1,4 +1,4 @@
-import { formatBusinessUnit, createBusinessUnitMap } from '../CommonUtils';
+import { formatBusinessUnit, createBusinessUnitMap, formatNumberInput } from '../CommonUtils';
 
 const businessUnits = new Map(
     [
@@ -46,5 +46,43 @@ describe('createBusinessUnitMap', () => {
         const businessUnit = businessUnitMap.get('038');
         expect(businessUnit.name).toEqual('Indianapolis');
         expect(businessUnit.shortName).toEqual('Indianapolis');
+    });
+});
+
+describe('formatNumberInput', () => {
+    test('Should return a number with no decimals as it is', () => {
+        expect(formatNumberInput('10')).toEqual('10');
+    });
+
+    test('Should return a number with no decimals as it is', () => {
+        expect(formatNumberInput('12345678')).toEqual('12345678');
+    });
+
+    test('Should return a number with 1 decimals as it is', () => {
+        expect(formatNumberInput('0.1')).toEqual('0.1');
+    });
+
+    test('Should return a number with 2 decimals as it is', () => {
+        expect(formatNumberInput('0.12')).toEqual('0.12');
+    });
+
+    test('Should return a number with 3 decimals as it is', () => {
+        expect(formatNumberInput('0.123')).toEqual('0.123');
+    });
+
+    test('Should only keep 3 decimal places max ', () => {
+        expect(formatNumberInput('0.1234')).toEqual('0.123');
+    });
+
+    test('Should only keep 3 decimal places max ', () => {
+        expect(formatNumberInput('0.12345')).toEqual('0.123');
+    });
+
+    test('Should not return an error when having decimal places only ', () => {
+        expect(formatNumberInput('.1')).toEqual('.1');
+    });
+
+    test('Should not return an error when having decimal places only ', () => {
+        expect(formatNumberInput('10.')).toEqual('10.');
     });
 });
