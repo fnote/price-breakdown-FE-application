@@ -44,10 +44,26 @@
             max-width: 80vw;
           }
         }
-        
+
       }
       &.row {
         @include flexbox(0 0 auto, row, flex-start, flex-start);
+        .sub-block-customer-name {
+          @include flexbox(1 1 auto, column, flex-start, flex-start);
+          padding-right: 0.4rem;
+          max-width: 20vw;
+          min-width: 10vw;
+          &.brand .customer {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 20vw;
+            padding-right: 3vw;
+            @include breakpoint(xs) {
+              max-width: 20vw;
+            }
+          }
+        }
         .sub-block {
           @include flexbox(1 1 auto, column, flex-start, flex-start);
           padding-right: 0.4rem;
