@@ -17,7 +17,29 @@ class FileList extends React.Component {
             dataIsReturned: false,
             searchString: ''
         };
-    }
+    };
+
+    componentDidMount() {
+        this.loadDataFiles();
+    };
+
+    fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndpoint, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    }).then(this.handleResponse);
+
+    fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    }).then(this.handleResponse);
 
     handleResponse = (response) => {
         const files = []
@@ -42,36 +64,6 @@ class FileList extends React.Component {
             return {success: false, data: files};
         });
     };
-
-    fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndpoint, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-    }).then(this.handleResponse);
-
-    fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-    }).then(this.handleResponse);
-
-    generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFilesSignedUrlEndpoint, {
-        method: 'POST',
-        body: JSON.stringify({
-            'fileNames': fileNamesArray
-        }),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-    });
 
     downloadFile = (fileNamesArray) => {
         this.setState({
@@ -108,73 +100,17 @@ class FileList extends React.Component {
         });
     };
 
-    columns = [
-        {
-            title: 'SUBMIT TIME',
-            dataIndex: 'submittime',
-            className: 'submittime'
+    generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFilesSignedUrlEndpoint, {
+        method: 'POST',
+        body: JSON.stringify({
+            'fileNames': fileNamesArray
+        }),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
         },
-        {
-            title: 'FILE NAME',
-            dataIndex: 'filename',
-            className: 'filename',
-        },
-        {
-            dataIndex: 'action',
-            className: 'action',
-            width: 'auto',
-            render: (data) => (
-                <div className="action-bar">
-                    {data.status === FILE_PROCESSING && (
-                        <div className="file-process-status">FILE IS BEING PROCESSED</div>
-                    )}
-                    {data.status === FILE_ERROR && (
-                        <div className="file-process-status error">
-                            File Contained errors
-                            <div className="divider"></div>
-                            <Button className="btn empty-btn download-error-file"
-                                    onClick={() => {
-                                        this.downloadFile([data.minorErrorFileName]);
-
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                                View error file
-                            </Button>
-                        </div>
-                    )}
-                    {data.status === FILE_SUCCESS && (
-                        <div className="file-process-status success">
-                            File processed successfully
-                        </div>
-                    )}
-                    {data.status !== FILE_PROCESSING ? (
-                        <>
-                            <Button className="btn icon-only empty-btn">
-                                <i className="icon fi flaticon-bin"/>
-                            </Button>
-                            <Button className="btn icon-only empty-btn download-file"
-                                    onClick={() => {
-                                        this.downloadFile([data.fileName]);
-
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                            </Button>
-                        </>
-
-                    ) : (
-                        <>
-                            <Button className="btn icon-only empty-btn cancel-process">
-                                <i className="icon fi flaticon-close"/>
-                            </Button>
-                            <SyncOutlined spin className="icon processing-spinner"/>
-                        </>
-                    )}
-                </div>
-            ),
-        },
-    ];
+        credentials: 'include'
+    });
 
     downloadFromSignedUrl = (fileNameUrlArray) => {
         console.log('filenames array length', fileNameUrlArray.length);
@@ -275,11 +211,7 @@ class FileList extends React.Component {
         } else {
             this.loadDataFiles();
         }
-    }
-
-    componentDidMount() {
-        this.loadDataFiles();
-    }
+    };
 
     start = () => {
         if (this.state.selectedRowValues.length > MAX_DOWNLOAD_ALLOWED) {
@@ -317,6 +249,74 @@ class FileList extends React.Component {
     onSearchStringChange = (searchBox) => {
         this.setState({searchString: searchBox.target.value});
     };
+
+    columns = [
+        {
+            title: 'SUBMIT TIME',
+            dataIndex: 'submittime',
+            className: 'submittime'
+        },
+        {
+            title: 'FILE NAME',
+            dataIndex: 'filename',
+            className: 'filename',
+        },
+        {
+            dataIndex: 'action',
+            className: 'action',
+            width: 'auto',
+            render: (data) => (
+                <div className="action-bar">
+                    {data.status === FILE_PROCESSING && (
+                        <div className="file-process-status">FILE IS BEING PROCESSED</div>
+                    )}
+                    {data.status === FILE_ERROR && (
+                        <div className="file-process-status error">
+                            File Contained errors
+                            <div className="divider"></div>
+                            <Button className="btn empty-btn download-error-file"
+                                    onClick={() => {
+                                        this.downloadFile([data.minorErrorFileName]);
+
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                                View error file
+                            </Button>
+                        </div>
+                    )}
+                    {data.status === FILE_SUCCESS && (
+                        <div className="file-process-status success">
+                            File processed successfully
+                        </div>
+                    )}
+                    {data.status !== FILE_PROCESSING ? (
+                        <>
+                            <Button className="btn icon-only empty-btn">
+                                <i className="icon fi flaticon-bin"/>
+                            </Button>
+                            <Button className="btn icon-only empty-btn download-file"
+                                    onClick={() => {
+                                        this.downloadFile([data.fileName]);
+
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                            </Button>
+                        </>
+
+                    ) : (
+                        <>
+                            <Button className="btn icon-only empty-btn cancel-process">
+                                <i className="icon fi flaticon-close"/>
+                            </Button>
+                            <SyncOutlined spin className="icon processing-spinner"/>
+                        </>
+                    )}
+                </div>
+            ),
+        },
+    ];
 
     render() {
         const {loading, selectedRowKeys, data, dataIsReturned, searchString} = this.state;
