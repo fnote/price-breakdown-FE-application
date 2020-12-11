@@ -113,6 +113,7 @@ fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndpoint, 
       'Accept': 'application/json, text/plain, */*',
       'Content-Type': 'application/json'
     },
+  credentials: 'include'
   }).then(this.handleResponse);
 
 fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
@@ -121,6 +122,7 @@ fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEnd
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json'
   },
+  credentials: 'include'
 }).then(this.handleResponse);
 
 generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFilesSignedUrlEndpoint, {
