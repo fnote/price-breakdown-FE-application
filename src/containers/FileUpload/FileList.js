@@ -2,7 +2,13 @@ import React from 'react';
 import {Button, Input, notification, Table} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 import {getBffUrlConfig} from "../../utils/Configs";
-import {FILE_ERROR, FILE_PROCESSING, FILE_SUCCESS, MAX_DOWNLOAD_ALLOWED} from "../../constants/Constants";
+import {
+    FILE_ERROR,
+    FILE_PROCESSING,
+    FILE_SUCCESS,
+    MAX_DOWNLOAD_ALLOWED,
+    TIMEOUT_DURING_DOWNLOAD_CLICKS
+} from "../../constants/Constants";
 
 const {Search} = Input;
 
@@ -81,7 +87,6 @@ class FileList extends React.Component {
                 const fileNameUrlArray = response.data;
                 Promise.all(this.downloadFromSignedUrl(fileNameUrlArray))
                     .then(() => {
-                        console.log('all over..')
                         this.setState({
                             dataIsReturned: true
                         });
@@ -92,11 +97,10 @@ class FileList extends React.Component {
                         });
                     });
 
-            }).catch(error => {
+            }).catch(() => {
             this.setState({
                 dataIsReturned: true
-            })
-            console.log(error)
+            });
         });
     };
 
@@ -114,15 +118,8 @@ class FileList extends React.Component {
 
     downloadFromSignedUrl = (fileNameUrlArray) => {
         console.log('filenames array length', fileNameUrlArray.length);
-        let downloadurlarray = [];
-        let filenames = [];
-        let filenamescomb = [];
-
         let iteration = 0;
         return fileNameUrlArray.map(({fileName, readUrl}) => {
-            // console.log('filename', fileName)
-            // console.log('readUrl', readUrl)
-
             return new Promise((resolve, reject) => {
                 iteration += 1;
                 setTimeout(() => {
@@ -135,35 +132,21 @@ class FileList extends React.Component {
                         })
                         .then(response => response.blob())
                         .then(blob => URL.createObjectURL(blob))
-                        .then(uril => {
+                        .then(uri => {
                             let link = document.createElement("a");
-                            link.href = uril;
+                            link.href = uri;
                             link.download = fileName;
                             document.body.appendChild(link);
                             link.click();
-                            // document.body.removeChild(link);
-                            link.remove();
+                            document.body.removeChild(link);
 
-
-                            downloadurlarray.push(uril);
-                            filenames.push(fileName);
-                            filenamescomb.push({fileName, uril});
-
-                            console.log('downloaded', downloadurlarray.length);
-                            console.log(filenames.sort());
-                            console.log(filenamescomb);
-
-                            // this.setState({
-                            //   dataIsReturned : true
-                            // });
                             resolve();
                         })
                         .catch(() => {
                             this.openNotificationWithIcon('error', 'Failed to download the file.');
-                            console.log('error');
                             reject();
                         });
-                }, 1000 * iteration);
+                }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
             });
         });
     };

@@ -87,3 +87,4 @@ export const FILE_ERROR = 'error';
 export const FILE_SUCCESS = 'success';
 
 export const MAX_DOWNLOAD_ALLOWED = 25;
+export const TIMEOUT_DURING_DOWNLOAD_CLICKS = 1000;
