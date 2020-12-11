@@ -7,7 +7,8 @@ import {
   ERROR_FILE_EXTENSION,
   FILE_ERROR,
   FILE_PROCESSING,
-  FILE_SUCCESS
+  FILE_SUCCESS,
+  MAX_DOWNLOAD_ALLOWED
 } from "../../constants/Constants";
 
 const { Search } = Input;
@@ -135,9 +136,6 @@ generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFil
     });
 
 downloadFile  =  (fileNamesArray) => {
-
-  console.log('fileNamesArray', fileNamesArray);
-
   this.setState({
     dataIsReturned : false
   });
@@ -151,7 +149,19 @@ downloadFile  =  (fileNamesArray) => {
       })
       .then(response => {
           const fileNameUrlArray = response.data;
-          this.downloadFromSignedUrl(fileNameUrlArray)
+        Promise.all(this.downloadFromSignedUrl(fileNameUrlArray))
+            .then(() => {
+              console.log('all over..')
+              this.setState({
+                dataIsReturned : true
+              });
+            })
+            .catch(() => {
+              this.setState({
+                dataIsReturned : true
+              });
+            });
+
         }).catch(error => {
     this.setState({
       dataIsReturned : true
@@ -161,9 +171,19 @@ downloadFile  =  (fileNamesArray) => {
 };
 
 downloadFromSignedUrl = (fileNameUrlArray) => {
-  fileNameUrlArray.forEach(({fileName, readUrl}) => {
-    console.log('filename', fileName)
-    console.log('readUrl', readUrl)
+  console.log('filenames array length', fileNameUrlArray.length);
+  let downloadurlarray = [];
+  let filenames = [];
+  let filenamescomb = [];
+
+  let iteration = 0;
+  return fileNameUrlArray.map(({fileName, readUrl}) => {
+    // console.log('filename', fileName)
+    // console.log('readUrl', readUrl)
+
+    return new Promise((resolve, reject) => {
+      iteration += 1;
+setTimeout(() => {
     fetch(readUrl)
         .then(response => {
           if (!response.ok) {
@@ -174,33 +194,42 @@ downloadFromSignedUrl = (fileNameUrlArray) => {
         .then(response => response.blob())
         .then(blob => URL.createObjectURL(blob))
         .then(uril => {
-          console.log(uril)
           let link = document.createElement("a");
           link.href = uril;
           link.download = fileName;
           document.body.appendChild(link);
           link.click();
-          document.body.removeChild(link);
-          this.setState({
-            dataIsReturned : true
-          });
-        })
-        .catch(error => {
-          this.openNotificationWithIcon('error');
-          this.setState({
-            dataIsReturned : true
-          });
-          console.log(error);
-        });
+          // document.body.removeChild(link);
+          link.remove();
 
+
+          downloadurlarray.push(uril);
+          filenames.push(fileName);
+          filenamescomb.push({fileName, uril});
+
+          console.log('downloaded', downloadurlarray.length);
+          console.log(filenames.sort());
+          console.log(filenamescomb);
+
+          // this.setState({
+          //   dataIsReturned : true
+          // });
+          resolve();
+        })
+        .catch(() => {
+          this.openNotificationWithIcon('error', 'Failed to download the file.');
+          console.log('error');
+          reject();
+        });
+}, 1000 * iteration);
+  });
   });
 };
 
-openNotificationWithIcon = type => {
+openNotificationWithIcon = (type, description) => {
     notification[type]({
-      message: 'Failed to download the file',
-      description:
-          'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+      message: 'Failure',
+      description: description,
     });
   };
 
@@ -259,17 +288,16 @@ openNotificationWithIcon = type => {
   }
 
   start = () => {
+    if(this.state.selectedRowValues.length > MAX_DOWNLOAD_ALLOWED) {
+      this.openNotificationWithIcon('error', 'Too many files to download.');
+      return;
+    }
+
     this.setState({loading: true});
-
-    console.log('from button click', this.state.selectedRowValues)
-
     const selectedRowValues = this.state.selectedRowValues;
     const toDownloadFiles = [];
 
     selectedRowValues.forEach(row => {
-      console.log('action', row.action)
-      console.log('row', row)
-
       if(row.action.fileName) {
         toDownloadFiles.push(row.action.fileName);
       }
@@ -281,14 +309,6 @@ openNotificationWithIcon = type => {
 
     this.downloadFile(toDownloadFiles);
 
-    // // ajax request after empty completing
-    // setTimeout(() => {
-    //   this.setState({
-    //     selectedRowKeys: [],
-    //     loading: false,
-    //   });
-    // }, 1000);
-
     this.setState({
       selectedRowKeys: [],
       loading: false,
@@ -297,7 +317,6 @@ openNotificationWithIcon = type => {
   };
 
   onSelectChange = (selectedRowKeys, selectedRowValues) => {
-    console.log('selected', selectedRowValues)
     this.setState({ selectedRowKeys, selectedRowValues });
   };
 
@@ -312,6 +331,7 @@ openNotificationWithIcon = type => {
       onChange: this.onSelectChange,
     };
     const hasSelected = selectedRowKeys.length > 0;
+    const shouldDisableDownload = selectedRowKeys.length > MAX_DOWNLOAD_ALLOWED;
 
     return (
         <div className="file-list">
@@ -330,7 +350,6 @@ openNotificationWithIcon = type => {
             <div className="spacer"></div>
             <div className="selected-item-status">
               <p>
-                {console.log(selectedRowKeys)}
                 {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
               </p>
               {hasSelected && (
@@ -338,10 +357,10 @@ openNotificationWithIcon = type => {
                       type="primary"
                       className="btn green-action-btn rounded download-btn"
                       onClick={this.start}
-                      disabled={!hasSelected}
+                      disabled={shouldDisableDownload}
                       loading={loading}
                       scroll={{x: 'auto', y: 300}}>
-                    <i className="icon fi flaticon-download"/> Download Selected
+                    <i className="icon fi flaticon-download"/> Download Selected (Max 25)
                   </Button>
               )}
             </div>
