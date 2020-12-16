@@ -126,7 +126,9 @@ class FileList extends React.Component {
                     fetch(readUrl)
                         .then(response => {
                             if (!response.ok) {
-                                throw Error(response.statusText);
+                                const err = new Error(response.statusText);
+                                err.status = response.status;
+                                throw err;
                             }
                             return response;
                         })
@@ -142,8 +144,12 @@ class FileList extends React.Component {
 
                             resolve();
                         })
-                        .catch(() => {
-                            this.openNotificationWithIcon('error', 'Failed to download the file.');
+                        .catch((error) => {
+                            let errorMsg = 'Failed to download the file.';
+                            if(error.status === 404 ) {
+                                errorMsg = 'Failed to download as file is not found.';
+                            }
+                            this.openNotificationWithIcon('error', errorMsg + ` : ${fileName}`);
                             reject();
                         });
                 }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
