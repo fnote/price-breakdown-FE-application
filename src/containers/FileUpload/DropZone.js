@@ -2,6 +2,7 @@ import React from 'react';
 import {message, Upload} from 'antd';
 import {getBffUrlConfig} from "../../utils/Configs";
 import axios from 'axios';
+import {PCI_FILENAME_PREFIX} from '../../constants/Constants';
 
 
 axios.interceptors.request.use(request => {
@@ -30,9 +31,10 @@ const handleResponse = (response) => response.json()
     });
 
 const fileUploadHandler = (payload) => {
+    const filenameWithPciPrefix = PCI_FILENAME_PREFIX + payload.info.file.name;
     fetch(getBffUrlConfig().fileUploadUrl, {
         method: 'POST',
-        body: formRequestBody(payload.info.file.name, payload.info.file.type),
+        body: formRequestBody(filenameWithPciPrefix, payload.info.file.type),
         headers: {
             'Accept': 'application/json, text/plain, */*',
             'Content-Type': 'application/json'
@@ -44,7 +46,7 @@ const fileUploadHandler = (payload) => {
             if (resp.success) {
                 const data = resp.data.data[0];
                 console.log(data.putUrl);
-                uploadArtifact(data.putUrl, payload.info)
+                uploadArtifact(data.putUrl, filenameWithPciPrefix, payload.info)
                     .then(result => {
                         payload.onSuccess(result, payload.info.file);
                     })
@@ -61,11 +63,14 @@ const fileUploadHandler = (payload) => {
         });
 };
 
-const uploadArtifact = (path, payload) => {
+const uploadArtifact = (path, filenameWithPciPrefix, payload) => {
     const config = {
+        params: {
+            Key: filenameWithPciPrefix,
+            ContentType: payload.file.type
+        },
         headers: {
             'Content-Type': payload.file.type,
-            'x-amz-acl': 'public-read'
         },
         onUploadProgress: e => {
             payload.onProgress({percent: (e.loaded / e.total) * 100});
