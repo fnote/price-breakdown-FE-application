@@ -44,7 +44,7 @@ import {
     AVAILABLE_PRICE_ZONES,
     NOT_APPLICABLE_LABEL,
     PRICE_SOURCE_PA_ID,
-    FRACTION_DIGITS_CHANGING_MARGIN_VALUE,
+    FRACTION_DIGITS_CHANGING_MARGIN_VALUE, DESCRIPTION_PRICE_RULE, PERCENTAGE_SIGN,
 } from '../constants/Constants';
 
 const getFractionDigits = ({ perWeightFlag, useFixedFractionDigits, digits }) => {
@@ -322,3 +322,39 @@ export const prepareVolumePricingInfo = ({ volumePricingTiers, perWeightFlag }) 
         ? prepareVolumePricingHeaderInfo(volumePricingTiers[0])
         : null
 });
+
+
+export const formatFactorDetails = (priceRule) => (priceRule.factorCalcMethod === 'MGN' || priceRule.factorCalcMethod === 'MKP'
+    ? `${priceRule.factorSign}${priceRule.factorValue}${PERCENTAGE_SIGN}`
+    : `${priceRule.factorSign}${CURRENCY_SYMBOL_USD}${priceRule.factorValue}`);
+
+
+export const prepareDefaultPriceRuleSection = ({ priceRule }) => {
+    //price rule related details
+    const headerRow = {
+        description: DESCRIPTION_PRICE_RULE + ': ' + priceRule.name,
+        adjustmentValue: '',
+        calculatedValue: ''
+    };
+
+    //base value details
+    const baseValueDetails = {
+        description: priceRule.baseValueName ,
+        adjustmentValue: priceRule.baseValue,
+        calculatedValue: ''
+    };
+
+    //factor related details
+    const factorDetails = {
+        description: priceRule.factorCalcMethod ,
+        adjustmentValue: formatFactorDetails(priceRule),
+        calculatedValue: ''
+    };
+
+    //if factor value is 0 do not show the factor related details
+    if(priceRule.factorValue === 0 || priceRule.factorValue === ""){
+        return [headerRow , baseValueDetails];
+    }else {
+        return [headerRow, baseValueDetails, factorDetails];
+    }
+};
