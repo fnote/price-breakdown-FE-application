@@ -4,17 +4,6 @@ import {getBffUrlConfig} from "../../utils/Configs";
 import axios from 'axios';
 import {PCI_FILENAME_PREFIX} from '../../constants/Constants';
 
-
-axios.interceptors.request.use(request => {
-    console.log('Starting Request', JSON.stringify(request, null, 2))
-    return request
-})
-
-axios.interceptors.response.use(response => {
-    console.log('Response:', JSON.stringify(response, null, 2))
-    return response
-})
-
 const {Dragger} = Upload;
 
 const formRequestBody = (fileName, fileType) => JSON.stringify({
@@ -45,13 +34,13 @@ const fileUploadHandler = (payload) => {
         .then((resp) => {
             if (resp.success) {
                 const data = resp.data.data[0];
-                console.log(data.putUrl);
                 uploadArtifact(data.putUrl, filenameWithPciPrefix, payload.info)
                     .then(result => {
-                        payload.onSuccess(result, payload.info.file);
+                        payload.info.onSuccess(result, payload.info.file);
                     })
                     .catch(error => {
-                        console.log('Error:', JSON.stringify(error, null, 2))
+                        console.log('Error:', JSON.stringify(error, null, 2));
+                        payload.info.onError();
                     });
                 return resp.data;
             } else {
@@ -60,6 +49,7 @@ const fileUploadHandler = (payload) => {
         })
         .catch((e) => {
             console.log(e);
+            payload.info.onError();
         });
 };
 
@@ -82,7 +72,7 @@ const uploadArtifact = (path, filenameWithPciPrefix, payload) => {
 }
 
 const customUpload = info => {
-    const preSignedUrl = new Promise((resolve, reject) => fileUploadHandler({
+    return new Promise((resolve, reject) => fileUploadHandler({
         info,
         resolve,
         reject,
