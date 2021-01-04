@@ -10,6 +10,7 @@ const ErrorCodes = {
     UNEXPECTED_PRICING_ENGINE_ERROR: 223,
     PRICING_ENGINE_ERROR: 197,
     PRODUCT_INFO_API_ERROR: 2022,
+    CUSTOMER_INFO_API_ERROR: 2025,
 };
 
 const ErrorMessages = {
@@ -24,6 +25,7 @@ const ErrorMessages = {
     UNEXPECTED_PRICING_ENGINE_ERROR: 'Unexpected error occurred while pricing the product',
     PRICING_ENGINE_ERROR: 'Unexpected error occurred while pricing the product',
     PRODUCT_INFO_API_ERROR: 'Could not retrieve the product information',
+    CUSTOMER_INFO_API_ERROR: 'Could not retrieve the customer information',
 };
 
 const ErrorsMap = new Map([
@@ -37,7 +39,8 @@ const ErrorsMap = new Map([
     [ErrorCodes.INVALID_SPLIT_ERROR, ErrorMessages.INVALID_SPLIT_ERROR],
     [ErrorCodes.UNEXPECTED_PRICING_ENGINE_ERROR, ErrorMessages.UNEXPECTED_PRICING_ENGINE_ERROR],
     [ErrorCodes.PRICING_ENGINE_ERROR, ErrorMessages.PRICING_ENGINE_ERROR],
-    [ErrorCodes.PRODUCT_INFO_API_ERROR, ErrorMessages.PRODUCT_INFO_API_ERROR]
+    [ErrorCodes.PRODUCT_INFO_API_ERROR, ErrorMessages.PRODUCT_INFO_API_ERROR],
+    [ErrorCodes.CUSTOMER_INFO_API_ERROR, ErrorMessages.CUSTOMER_INFO_API_ERROR]
 ]);
 
 export { ErrorCodes, ErrorMessages, ErrorsMap };
