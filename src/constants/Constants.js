@@ -78,6 +78,9 @@ export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
 
 export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';
 
+export const ORDER_PRICE_TYPE_HAND = 'H';
+export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
+
 export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
 export const NAVIGATION_PATH_FILE_UPLOAD = '/FileUpload';
 

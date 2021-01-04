@@ -4,6 +4,11 @@ phases:
     runtime-versions:
       nodejs: 10
     commands:
+      # Create the custom .npmrc file with auth
+      - echo "registry=https://syscobt.jfrog.io/artifactory/api/npm/npm/" >> .npmrc
+      - echo "_auth = ${JFROG_AUTH}" >> .npmrc
+      - echo "email = 000-BT-PricingPlatform@Corp.sysco.com" >> .npmrc
+      - echo "always-auth = true" >> .npmrc
       # Install dependencies needed for running tests
       - npm install
       # Upgrade AWS CLI to the latest version
