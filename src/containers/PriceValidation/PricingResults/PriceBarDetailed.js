@@ -116,7 +116,7 @@ function PriceBarDetailed({ priceData: { product }}) {
         <div className="block group1">
           {renderDetailedSection(localSegmentRefPriceSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
         </div>
-        <div className="block group3">
+        <div className="block group2">
           {renderDetailedSection(strikeThroughPriceSection, volumeTierRows)}
         </div>
       </section>
