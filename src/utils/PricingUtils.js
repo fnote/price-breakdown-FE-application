@@ -340,7 +340,7 @@ export const prepareDefaultPriceRuleSection = ({ priceRule }) => {
     //base value details
     const baseValueDetails = {
         description: priceRule.baseValueName ,
-        adjustmentValue: priceRule.baseValue,
+        adjustmentValue: CURRENCY_SYMBOL_USD + priceRule.baseValue,
         calculatedValue: ''
     };
 
@@ -351,8 +351,8 @@ export const prepareDefaultPriceRuleSection = ({ priceRule }) => {
         calculatedValue: ''
     };
 
-    //if factor value is 0 do not show the factor related details
-    if(priceRule.factorValue === 0 || priceRule.factorValue === ""){
+    //if factor value is 0 , empty or factor cal method is empty do not show the factor related details
+    if(priceRule.factorValue === 0 || priceRule.factorValue === "" || priceRule.factorCalcMethod === ""){
         return [headerRow , baseValueDetails];
     }else {
         return [headerRow, baseValueDetails, factorDetails];
