@@ -2,7 +2,7 @@ import React from 'react';
 import {message, Upload} from 'antd';
 import {getBffUrlConfig} from "../../utils/Configs";
 import axios from 'axios';
-import {PCI_FILENAME_PREFIX} from '../../constants/Constants';
+import {PCI_SUB_FOLDER} from '../../constants/Constants';
 
 const {Dragger} = Upload;
 
@@ -20,7 +20,7 @@ const handleResponse = (response) => response.json()
     });
 
 const fileUploadHandler = (payload) => {
-    const filenameWithPciPrefix = PCI_FILENAME_PREFIX + payload.info.file.name;
+    const filenameWithPciPrefix = PCI_SUB_FOLDER + payload.info.file.name;
     fetch(getBffUrlConfig().fileUploadUrl, {
         method: 'POST',
         body: formRequestBody(filenameWithPciPrefix, payload.info.file.type),
