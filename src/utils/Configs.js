@@ -16,6 +16,8 @@ export const getBffUrlConfig = () => {
         CONFIG.userDetailsUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/user-details';
         CONFIG.fileUploadUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/input';
     } else if (process.env.REACT_APP_ENV === 'exe') {
+        CONFIG.listSearchFilesEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/';
+        CONFIG.listOutputFilesEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/output';
         CONFIG.outputBucketFilesSignedUrlEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/output';
         CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
         CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
