@@ -12,7 +12,6 @@ function AppRoute() {
                       <UserDetailContextProvider>
                           <AppLoaderContextProvider>
                               <Route path="/" component={ApplicationBase}/>
-                              <Route path="/FileUpload" component={ApplicationBase}/>
                           </AppLoaderContextProvider>
                       </UserDetailContextProvider>
                   </Switch>

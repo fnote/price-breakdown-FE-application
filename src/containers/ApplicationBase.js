@@ -12,10 +12,10 @@ import { NAVIGATION_PATH_PRICE_VALIDATION, NAVIGATION_PATH_FILE_UPLOAD } from '.
 const Application = () => (
     <Switch>
         <Route path={NAVIGATION_PATH_FILE_UPLOAD}>
-            <FileUpload/>
+            <PriceValidation/>
         </Route>
         <Route path={NAVIGATION_PATH_PRICE_VALIDATION}>
-            <PriceValidation/>
+            <FileUpload/>
         </Route>
     </Switch>
 );
