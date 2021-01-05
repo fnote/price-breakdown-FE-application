@@ -98,16 +98,21 @@ function PriceBarDetailed({ priceData: { product }}) {
     const discountPriceSection = prepareDiscountPriceInfo(product);
     const strikeThroughPriceSection = prepareStrikeThroughPriceInfo(product);
     const localSegmentRefPriceSection = prepareLocalSegmentPriceInfo(product);
-    const defaultPriceRuleSection = prepareDefaultPriceRuleSection(product);
+    let defaultPriceRuleSection;
+    if (product.priceRule !== null) {
+       defaultPriceRuleSection = prepareDefaultPriceRuleSection(product);
+    }
 
   return (
     <div className="price-bar-detailed">
       <div className="price-bar-divider"/>
       <section className="detailed-left">
         <PriceBarDetailedHeader />
-        <div className="block group1">
-              {renderDetailedSection(defaultPriceRuleSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
-        </div>
+          {product.priceRule !== null &&
+            <div className="block group1">
+                {renderDetailedSection(defaultPriceRuleSection, null, {className: DESCRIPTION_COL_CLASSNAME})}
+            </div>
+          }
         <div className="block group1">
           {renderDetailedSection(localSegmentRefPriceSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
         </div>
