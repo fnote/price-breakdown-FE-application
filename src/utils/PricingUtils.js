@@ -44,7 +44,7 @@ import {
     AVAILABLE_PRICE_ZONES,
     NOT_APPLICABLE_LABEL,
     PRICE_SOURCE_PA_ID,
-    FRACTION_DIGITS_CHANGING_MARGIN_VALUE, DESCRIPTION_PRICE_RULE, PERCENTAGE_SIGN,
+    FRACTION_DIGITS_CHANGING_MARGIN_VALUE, DESCRIPTION_PRICE_RULE, PERCENTAGE_SIGN, UNKNOWN_BASE_VALUE_NAME,
 } from '../constants/Constants';
 
 const getFractionDigits = ({ perWeightFlag, useFixedFractionDigits, digits }) => {
@@ -328,6 +328,10 @@ export const formatFactorDetails = (priceRule) => (priceRule.factorCalcMethod ==
     ? `${priceRule.factorSign}${priceRule.factorValue}${PERCENTAGE_SIGN}`
     : `${priceRule.factorSign}${CURRENCY_SYMBOL_USD}${priceRule.factorValue}`);
 
+export const formatBaseValueName = (priceRule) => (priceRule.baseValueName === '' || priceRule.baseValueName === null
+    ? `${UNKNOWN_BASE_VALUE_NAME}`
+    : `${priceRule.baseValueName}`);
+
 
 export const prepareDefaultPriceRuleSection = ({ priceRule }) => {
     //price rule related details
@@ -339,7 +343,7 @@ export const prepareDefaultPriceRuleSection = ({ priceRule }) => {
 
     //base value details
     const baseValueDetails = {
-        description: priceRule.baseValueName ,
+        description: formatBaseValueName(priceRule) ,
         adjustmentValue: CURRENCY_SYMBOL_USD + priceRule.baseValue,
         calculatedValue: ''
     };
