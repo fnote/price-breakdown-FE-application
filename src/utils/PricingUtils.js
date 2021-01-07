@@ -204,11 +204,11 @@ export const extractRequestInfo = ({ priceRequestDate, product: { splitFlag, qua
  * Returns true only when the item is priced through Price Advisor component and
  * the item is catch weight item and its gross price value is greater than or equal to $10
  */
-export const isFixedFractionDigits = (perWeightFlag, priceSource, customerReferencePrice) => (perWeightFlag
-    && priceSource === PRICE_SOURCE_PA_ID && customerReferencePrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
+export const isFixedFractionDigits = (perWeightFlag, isPricedFromReferencePrice, customerReferencePrice) => (perWeightFlag
+    && isPricedFromReferencePrice && customerReferencePrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
 
 export const prepareLocalSegmentPriceInfo = ({
- discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, priceSource
+ discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, isPricedFromReferencePrice
 }) => {
     const headerRow = {
         description: DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
@@ -221,7 +221,7 @@ export const prepareLocalSegmentPriceInfo = ({
 
     const dataRows = [headerRow, ...refPriceDiscountRows];
 
-    if (priceSource === PRICE_SOURCE_PA_ID) {
+    if (isPricedFromReferencePrice) {
         const roundingValueRow = {
             description: DESCRIPTION_ROUNDING,
             adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
@@ -236,13 +236,14 @@ export const prepareLocalSegmentPriceInfo = ({
 };
 
 export const prepareStrikeThroughPriceInfo = ({
-    discounts, customerReferencePrice, perWeightFlag, priceSource
+    discounts, customerReferencePrice, perWeightFlag, priceSource, isPricedFromReferencePrice
 }) => {
+    console.log('isPricedFromReferencePrice', isPricedFromReferencePrice);
     const headerRow = {
         description: DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
         calculatedValue: formatPrice(customerReferencePrice,
-            { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, customerReferencePrice) })
+            { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, isPricedFromReferencePrice, customerReferencePrice) })
     };
 
     const preQualifiedDiscounts = discounts
