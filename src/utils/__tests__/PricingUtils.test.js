@@ -410,7 +410,8 @@ describe('prepareLocalSegmentPriceInfo', () => {
             referencePriceRoundingAdjustment: 1.23,
             grossPrice: 5.28,
             perWeightFlag: false,
-            priceSource: 97
+            isPricedFromReferencePrice: true,
+            priceSource: 96
         };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
@@ -450,6 +451,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
                     effectiveTo: '20201111'
                 }],
             referencePriceRoundingAdjustment: 0.002,
+            isPricedFromReferencePrice: true,
             grossPrice: 5.280,
             perWeightFlag: true,
             priceSource: 97
@@ -494,7 +496,8 @@ describe('prepareLocalSegmentPriceInfo', () => {
             referencePriceRoundingAdjustment: 0.02,
             grossPrice: 10.000,
             perWeightFlag: true,
-            priceSource: 97
+            isPricedFromReferencePrice: true,
+            priceSource: 61
         };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
@@ -536,7 +539,8 @@ describe('prepareLocalSegmentPriceInfo', () => {
             referencePriceRoundingAdjustment: 0.02,
             grossPrice: 10.01,
             perWeightFlag: true,
-            priceSource: 97
+            isPricedFromReferencePrice: true,
+            priceSource: 52
         };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
@@ -560,7 +564,8 @@ describe('prepareLocalSegmentPriceInfo', () => {
             referencePriceRoundingAdjustment: 0.02,
             grossPrice: 10.01,
             perWeightFlag: true,
-            priceSource: 60
+            isPricedFromReferencePrice:false,
+            priceSource: 61
         };
 
         expect(prepareLocalSegmentPriceInfo(data)).toEqual([{
@@ -748,6 +753,7 @@ describe('prepareStrikeThroughPriceInfo', () => {
                     effectiveTo: '20201111'
                 }],
             customerReferencePrice: 10.23,
+            isPricedFromReferencePrice: true,
             perWeightFlag: true,
             priceSource: 97,
             grossPrice: 10.000
@@ -798,6 +804,7 @@ describe('prepareStrikeThroughPriceInfo', () => {
                     effectiveTo: '20201111'
                 }],
             customerReferencePrice: 10.25,
+            isPricedFromReferencePrice: true,
             perWeightFlag: true,
             priceSource: 97,
             grossPrice: 10.22
