@@ -3,6 +3,19 @@ Cloud PCI - Frontend
 
 Front-end application for Cloud PCI
 
+### `npm install`
+Before installing the dependencies, you'll have to do an npm login in the terminal to login to the jFrog server with the following details:
+
+
+`Username : bt-pricingplatform`
+
+`Pass: <Request from a Pricing team member/lead>`
+
+`Email: 000-BT-PricingPlatform@Corp.sysco.com`
+
+For cloud deployments using AWS codebuild, make sure the following environment variable is set with the value of a correct JFrog API Key.
+
+`JFROG_AUTH`
 
 In the project directory, you can run:
 
