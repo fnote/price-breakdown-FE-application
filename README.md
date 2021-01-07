@@ -4,8 +4,16 @@ Cloud PCI - Frontend
 Front-end application for Cloud PCI
 
 ### `npm install`
-Before installing the dependencies, you'll have to do an npm login in the terminal to login to the jFrog server with the following details:
+Before installing the dependencies, do the following.
+Set the default npm registry with an Artifactory npm repository using the following command:
 
+`npm config set registry https://syscobt.jfrog.io/artifactory/api/npm/npm/`
+
+Login
+
+`npm login`
+
+When prompted, provide the JFrog Artifactory login credentials as follows:
 
 `Username : bt-pricingplatform`
 
