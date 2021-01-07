@@ -236,7 +236,7 @@ export const prepareLocalSegmentPriceInfo = ({
 };
 
 export const prepareStrikeThroughPriceInfo = ({
-    discounts, customerReferencePrice, perWeightFlag, priceSource, isPricedFromReferencePrice
+    discounts, customerReferencePrice, perWeightFlag, isPricedFromReferencePrice
 }) => {
     console.log('isPricedFromReferencePrice', isPricedFromReferencePrice);
     const headerRow = {
