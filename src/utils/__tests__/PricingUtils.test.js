@@ -644,8 +644,6 @@ describe('prepareLocalSegmentPriceInfo', () => {
     });
 });
 
-
-
 describe('prepareStrikeThroughPriceInfo', () => {
     test('should ', () => {
         const data = {
