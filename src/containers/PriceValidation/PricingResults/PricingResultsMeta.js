@@ -67,25 +67,26 @@ function renderSiteInfo({
           </Tooltip>
         </div>
         <div className="block row">
-          <div className="sub-block">
+          <div className="sub-block-customer-name brand">
             <label>CUSTOMER</label>
             <div className="value bold">{customerAccount}</div>
+            <Tooltip title={customerName} color="blue">
+                <div className="customer brand">
+                    {customerName}
+                </div>
+            </Tooltip>
           </div>
+
           <div className="sub-block">
             <label>TYPE</label>
             <div className="value bold">{customerType}</div>
           </div>
-          <div className="sub-block">
-            <label>PRICE ZONE</label>
-            <div className="value bold">{priceZone}</div>
-          </div>
         </div>
-        <div className="block custname">
-          <Tooltip title={customerName} color="blue">
-            <div className="value full-width-ellipsis">
-              {customerName}
+        <div className="block row">
+            <div className="sub-block">
+              <label>PRICE ZONE</label>
+              <div className="value bold">{priceZone}</div>
             </div>
-          </Tooltip>
         </div>
       </section>
   );
