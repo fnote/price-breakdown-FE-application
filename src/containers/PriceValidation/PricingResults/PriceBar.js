@@ -10,7 +10,6 @@ const renderPricePoint = ({
         <div className="price-block">
             <div className="value">{formatPriceWithoutCurrency(pricingData[valueKey], {
                 perWeightFlag: pricingData.perWeightFlag,
-                isPricedFromReferencePrice: pricingData.isPricedFromReferencePrice,
                 useFixedFractionDigits: valueKey === VALUE_KEY_CUSTOMER_REF_PRICE
                 ? isFixedFractionDigits(pricingData.perWeightFlag, pricingData.isPricedFromReferencePrice, pricingData[valueKey]) : false
             })}</div>
