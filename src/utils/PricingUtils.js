@@ -46,6 +46,7 @@ import {
     PRICE_SOURCE_PA_ID,
     FRACTION_DIGITS_CHANGING_MARGIN_VALUE, DESCRIPTION_PRICE_RULE, PERCENTAGE_SIGN, UNKNOWN_BASE_VALUE_NAME,
 } from '../constants/Constants';
+import {formatNumberInput} from "./CommonUtils";
 
 const getFractionDigits = ({perWeightFlag, useFixedFractionDigits, digits}) => {
     if (useFixedFractionDigits) {
@@ -350,7 +351,7 @@ export const prepareDefaultPriceRuleSection = ({priceRule}) => {
     //base value details
     const baseValueDetails = {
         description: formatBaseValueName(priceRule),
-        adjustmentValue: CURRENCY_SYMBOL_USD + priceRule.baseValue,
+        adjustmentValue: CURRENCY_SYMBOL_USD + formatPriceWithoutCurrency(priceRule.baseValue ,{useFixedFractionDigits:true, digits:3}),
         calculatedValue: ''
     };
 

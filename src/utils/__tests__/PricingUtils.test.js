@@ -1260,7 +1260,7 @@ describe('prepareDefaultPriceRulesSection', () => {
             "discounts": []
         }
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.84", "calculatedValue": "", "description": "P1"}, {"adjustmentValue": "+1%", "calculatedValue": "", "description": "MGN"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}, {"adjustmentValue": "+1%", "calculatedValue": "", "description": "MGN"}]);
     });
 
     test('should return the correct value when price rule is not empty and avoid showing factor details when factor value is 0', () => {
@@ -1281,7 +1281,7 @@ describe('prepareDefaultPriceRulesSection', () => {
             "discounts": []
         }
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.84", "calculatedValue": "", "description": "P1"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
     });
 
     test('should return the correct value when price rule is not empty and avoid showing factor details when factor calc method is empty', () => {
@@ -1302,7 +1302,7 @@ describe('prepareDefaultPriceRulesSection', () => {
             "discounts": []
         }
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.84", "calculatedValue": "", "description": "P1"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
     });
 
     test('should return the correct value when price rule is not empty and avoid showing factor details when factor calc method is empty and base value name absent', () => {
@@ -1323,7 +1323,49 @@ describe('prepareDefaultPriceRulesSection', () => {
             "discounts": []
         }
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.84", "calculatedValue": "", "description": "UNKNOWN"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "UNKNOWN"}]);
+    });
+
+    test('should return 3 decimal place base value when base value has more than 3 decimal places from the response', () => {
+        const data = {
+            "supc": "0032179",
+            "splitFlag": false,
+            "statuses": [],
+            "priceRule": {
+                "name": "P1P",
+                "baseValue": 5.8400,
+                "baseValueName": "P1",
+                "factorCalcMethod": "",
+                "factorSign": " ",
+                "factorValue": 0.0000
+            },
+            "agreements": [],
+            "exception": null,
+            "discounts": []
+        }
+
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
+    });
+
+    test('should return 3 decimal place base value when base value has less than 3 decimal places from the response', () => {
+        const data = {
+            "supc": "0032179",
+            "splitFlag": false,
+            "statuses": [],
+            "priceRule": {
+                "name": "P1P",
+                "baseValue": 5.84,
+                "baseValueName": "P1",
+                "factorCalcMethod": "",
+                "factorSign": " ",
+                "factorValue": 0.0000
+            },
+            "agreements": [],
+            "exception": null,
+            "discounts": []
+        }
+
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
     });
 
 });
