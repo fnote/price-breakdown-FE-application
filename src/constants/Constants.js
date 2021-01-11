@@ -25,6 +25,7 @@ export const DESCRIPTION_CUSTOMER_NET_PRICE = 'Customer Net Price';
 export const DESCRIPTION_ROUNDING = 'Rounding';
 export const DESCRIPTION_VOLUME_TIERS = 'Item/Order Specific promotions';
 export const DESCRIPTION_EXCEPTION = 'Exception Deal';
+export const DESCRIPTION_PRICE_RULE = 'Price Rule';
 
 export const VOLUME_TIER_OPERATOR_BETWEEN = 'Between';
 export const VOLUME_TIER_RANGE_END_ABOVE = 'above';
@@ -80,3 +81,6 @@ export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';
 
 export const ORDER_PRICE_TYPE_HAND = 'H';
 export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
+
+export const PERCENTAGE_SIGN = '%';
+export const UNKNOWN_BASE_VALUE_NAME = 'UNKNOWN';

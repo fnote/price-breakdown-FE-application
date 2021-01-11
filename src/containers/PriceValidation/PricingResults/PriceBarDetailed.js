@@ -7,7 +7,8 @@ import {
     prepareOrderUnitPriceInfo,
     prepareStrikeThroughPriceInfo,
     prepareVolumePricingHeaderRow,
-    prepareVolumePricingTiers
+    prepareVolumePricingTiers,
+    prepareDefaultPriceRuleSection
 } from '../../../utils/PricingUtils';
 
 const renderHeaderRow = ({
@@ -97,12 +98,21 @@ function PriceBarDetailed({ priceData: { product }}) {
     const discountPriceSection = prepareDiscountPriceInfo(product);
     const strikeThroughPriceSection = prepareStrikeThroughPriceInfo(product);
     const localSegmentRefPriceSection = prepareLocalSegmentPriceInfo(product);
+    let defaultPriceRuleSection;
+    if (product.priceRule !== null) {
+       defaultPriceRuleSection = prepareDefaultPriceRuleSection(product);
+    }
 
   return (
     <div className="price-bar-detailed">
       <div className="price-bar-divider"/>
       <section className="detailed-left">
         <PriceBarDetailedHeader />
+          {product.priceRule !== null
+            && <div className="block group1">
+                {renderDetailedSection(defaultPriceRuleSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
+            </div>
+          }
         <div className="block group1">
           {renderDetailedSection(localSegmentRefPriceSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
         </div>

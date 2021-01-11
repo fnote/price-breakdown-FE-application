@@ -26,7 +26,7 @@ import {
     prepareVolumePricingHeaderInfo,
     prepareVolumePricingTiers,
     prepareVolumePricingHeaderRow,
-    prepareVolumePricingInfo,
+    prepareVolumePricingInfo, formatFactorDetails, prepareDefaultPriceRuleSection, formatBaseValueName,
 } from '../PricingUtils';
 
 describe('formatPrice', () => {
@@ -43,6 +43,80 @@ describe('formatPrice', () => {
 
     test('should return correct value for 0', () => {
         expect(formatPrice(0, {})).toEqual('$0.00');
+    });
+});
+
+describe('formatFactorDetails', () => {
+
+    test('should return % and sign when factor calc method is MKP', () => {
+        const data = {
+            name: "P1P",
+            baseValue: 5.8400,
+            baseValueName: "P1",
+            factorCalcMethod: "MKP",
+            factorSign: "+",
+            factorValue: 4.5
+        };
+        expect(formatFactorDetails(data)).toEqual('+4.5%');
+    });
+    test('should return % and sign when factor calc method is MGN', () => {
+        const data = {
+            name: "P1P",
+            baseValue: 5.8400,
+            baseValueName: "P1",
+            factorCalcMethod: "MGN",
+            factorSign: "+",
+            factorValue: 4.5
+        };
+        expect(formatFactorDetails(data)).toEqual('+4.5%');
+    });
+    test('should return $ and sign when factor calc method is $ per case or $ per pound', () => {
+        const data = {
+            name: "P1P",
+            baseValue: 5.8400,
+            baseValueName: "P1",
+            factorCalcMethod: "c",
+            factorSign: "+",
+            factorValue: 4.5
+        };
+        expect(formatFactorDetails(data)).toEqual('+$4.5');
+    });
+});
+
+describe('formatBaseValueName', () => {
+
+    test('should return UNKNOWN when base value name is blank', () => {
+        const data = {
+            name: "P1P",
+            baseValue: 5.8400,
+            baseValueName: "",
+            factorCalcMethod: "MKP",
+            factorSign: "+",
+            factorValue: 4.5
+        };
+        expect(formatBaseValueName(data)).toEqual('UNKNOWN');
+    });
+    test('should return UNKNOWN when base value name is blank', () => {
+        const data = {
+            name: "P1P",
+            baseValue: 5.8400,
+            baseValueName: null,
+            factorCalcMethod: "MGN",
+            factorSign: "+",
+            factorValue: 4.5
+        };
+        expect(formatBaseValueName(data)).toEqual('UNKNOWN');
+    });
+    test('should return proper base value name when base value name is present', () => {
+        const data = {
+            name: "P1P",
+            baseValue: 5.8400,
+            baseValueName: "P1",
+            factorCalcMethod: "c",
+            factorSign: "+",
+            factorValue: 4.5
+        };
+        expect(formatBaseValueName(data)).toEqual('P1');
     });
 });
 
@@ -1165,4 +1239,133 @@ describe('prepareVolumePricingInfo', () => {
             'volumePricingTiers': []
         });
     });
+});
+
+describe('prepareDefaultPriceRulesSection', () => {
+    test('should return the correct value when price rule is not empty and factor calc mtd is MGN', () => {
+        const data = {
+            "supc": "0032179",
+            "splitFlag": false,
+            "statuses": [],
+            "priceRule": {
+                "name": "P1P",
+                "baseValue": 5.8400,
+                "baseValueName": "P1",
+                "factorCalcMethod": "MGN",
+                "factorSign": "+",
+                "factorValue": 1.0000
+        },
+            "agreements": [],
+            "exception": null,
+            "discounts": []
+        }
+
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}, {"adjustmentValue": "+1%", "calculatedValue": "", "description": "MGN"}]);
+    });
+
+    test('should return the correct value when price rule is not empty and avoid showing factor details when factor value is 0', () => {
+        const data = {
+            "supc": "0032179",
+            "splitFlag": false,
+            "statuses": [],
+            "priceRule": {
+                "name": "P1P",
+                "baseValue": 5.8400,
+                "baseValueName": "P1",
+                "factorCalcMethod": "",
+                "factorSign": " ",
+                "factorValue": 0.0000
+            },
+            "agreements": [],
+            "exception": null,
+            "discounts": []
+        }
+
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
+    });
+
+    test('should return the correct value when price rule is not empty and avoid showing factor details when factor calc method is empty', () => {
+        const data = {
+            "supc": "0032179",
+            "splitFlag": false,
+            "statuses": [],
+            "priceRule": {
+                "name": "P1P",
+                "baseValue": 5.8400,
+                "baseValueName": "P1",
+                "factorCalcMethod": "",
+                "factorSign": " ",
+                "factorValue": 1.0000
+            },
+            "agreements": [],
+            "exception": null,
+            "discounts": []
+        }
+
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
+    });
+
+    test('should return the correct value when price rule is not empty and avoid showing factor details when factor calc method is empty and base value name absent', () => {
+        const data = {
+            "supc": "0032179",
+            "splitFlag": false,
+            "statuses": [],
+            "priceRule": {
+                "name": "P1P",
+                "baseValue": 5.8400,
+                "baseValueName": "",
+                "factorCalcMethod": "",
+                "factorSign": " ",
+                "factorValue": 1.0000
+            },
+            "agreements": [],
+            "exception": null,
+            "discounts": []
+        }
+
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "UNKNOWN"}]);
+    });
+
+    test('should return 3 decimal place base value when base value has more than 3 decimal places from the response', () => {
+        const data = {
+            "supc": "0032179",
+            "splitFlag": false,
+            "statuses": [],
+            "priceRule": {
+                "name": "P1P",
+                "baseValue": 5.8400,
+                "baseValueName": "P1",
+                "factorCalcMethod": "",
+                "factorSign": " ",
+                "factorValue": 0.0000
+            },
+            "agreements": [],
+            "exception": null,
+            "discounts": []
+        }
+
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
+    });
+
+    test('should return 3 decimal place base value when base value has less than 3 decimal places from the response', () => {
+        const data = {
+            "supc": "0032179",
+            "splitFlag": false,
+            "statuses": [],
+            "priceRule": {
+                "name": "P1P",
+                "baseValue": 5.84,
+                "baseValueName": "P1",
+                "factorCalcMethod": "",
+                "factorSign": " ",
+                "factorValue": 0.0000
+            },
+            "agreements": [],
+            "exception": null,
+            "discounts": []
+        }
+
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
+    });
+
 });
