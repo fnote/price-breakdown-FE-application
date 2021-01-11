@@ -108,8 +108,8 @@ function PriceBarDetailed({ priceData: { product }}) {
       <div className="price-bar-divider"/>
       <section className="detailed-left">
         <PriceBarDetailedHeader />
-          {product.priceRule !== null &&
-            <div className="block group1">
+          {product.priceRule !== null
+            && <div className="block group1">
                 {renderDetailedSection(defaultPriceRuleSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
             </div>
           }
