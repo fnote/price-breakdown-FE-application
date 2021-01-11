@@ -95,11 +95,11 @@ export const generateReadableDate = (dateString) => generateDateObject(dateStrin
 
 export const generateValidityPeriod = (effectiveFrom, effectiveTo) => `Valid ${generateReadableDate(effectiveFrom)} - ${generateReadableDate(effectiveTo)}`;
 
-export const mapDiscountToDataRow = ({ id, name, amount, priceAdjustment, effectiveFrom, effectiveTo }, source, {perWeightFlag, useFixedFractionDigits}) => ({
+export const mapDiscountToDataRow = ({ id, name, amount, priceAdjustment, effectiveFrom, effectiveTo }, source, { perWeightFlag, useFixedFractionDigits }) => ({
     id,
     description: getReadableDiscountName(name),
     adjustmentValue: getFormattedPercentageValue(amount),
-    calculatedValue: formatPrice(priceAdjustment, {perWeightFlag, useFixedFractionDigits}),
+    calculatedValue: formatPrice(priceAdjustment, { perWeightFlag, useFixedFractionDigits }),
     validityPeriod: generateValidityPeriod(effectiveFrom, effectiveTo),
     source
 });
@@ -207,7 +207,7 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
 
     const refPriceDiscountRows = discounts.filter((discount) => discount.type === DISCOUNT_TYPE_REF_PRICE)
         .map((discount) => mapDiscountToDataRow(discount, PRICE_SOURCE_DISCOUNT_SERVICE,
-            {perWeightFlag}));
+            { perWeightFlag }));
 
     const dataRows = [headerRow, ...refPriceDiscountRows];
 
@@ -216,7 +216,7 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
             description: DESCRIPTION_ROUNDING,
             adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
             calculatedValue: formatPrice(referencePriceRoundingAdjustment,
-                {perWeightFlag}),
+                { perWeightFlag }),
             source: PRICE_SOURCE_SYSTEM
         };
         dataRows.push(roundingValueRow);
