@@ -34,7 +34,7 @@ const fileUploadHandler = (payload) => {
         .then((resp) => {
             if (resp.success) {
                 const data = resp.data.data[0];
-                uploadArtifact(data.putUrl, filenameWithPciPrefix, payload.info)
+                uploadArtifact(data.putUrl, payload.info)
                     .then(result => {
                         payload.info.onSuccess(result, payload.info.file);
                     })
@@ -53,12 +53,8 @@ const fileUploadHandler = (payload) => {
         });
 };
 
-const uploadArtifact = (path, filenameWithPciPrefix, payload) => {
+const uploadArtifact = (path, payload) => {
     const config = {
-        params: {
-            Key: filenameWithPciPrefix,
-            ContentType: payload.file.type
-        },
         headers: {
             'Content-Type': payload.file.type,
         },
