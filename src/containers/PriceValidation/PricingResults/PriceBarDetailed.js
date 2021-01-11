@@ -110,7 +110,7 @@ function PriceBarDetailed({ priceData: { product }}) {
         <PriceBarDetailedHeader />
           {product.priceRule !== null &&
             <div className="block group1">
-                {renderDetailedSection(defaultPriceRuleSection, null, {className: DESCRIPTION_COL_CLASSNAME})}
+                {renderDetailedSection(defaultPriceRuleSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
             </div>
           }
         <div className="block group1">
