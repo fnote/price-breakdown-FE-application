@@ -78,10 +78,18 @@ export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
 
 export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';
 
+export const ORDER_PRICE_TYPE_HAND = 'H';
+export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
+
 export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
 export const NAVIGATION_PATH_FILE_UPLOAD = '/FileUpload';
 
-export const ERROR_FILE_EXTENSION = "_errors.txt";
+export const FILE_UPLOADING = 'uploading';
+export const FILE_UPLOADING_DONE = 'done';
+export const FILE_UPLOADING_ERROR = 'error';
+export const UNSUPPORTED_FILE_TYPE_CODE = 2030;
+
+
 export const FILE_PROCESSING = 'processing';
 export const FILE_ERROR = 'error';
 export const FILE_SUCCESS = 'success';

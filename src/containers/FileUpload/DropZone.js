@@ -2,33 +2,37 @@ import React from 'react';
 import {message, Upload} from 'antd';
 import {getBffUrlConfig} from "../../utils/Configs";
 import axios from 'axios';
-import {PCI_FILENAME_PREFIX} from '../../constants/Constants';
-
-
-axios.interceptors.request.use(request => {
-    console.log('Starting Request', JSON.stringify(request, null, 2))
-    return request
-})
-
-axios.interceptors.response.use(response => {
-    console.log('Response:', JSON.stringify(response, null, 2))
-    return response
-})
+import {
+    FILE_UPLOADING,
+    FILE_UPLOADING_DONE,
+    FILE_UPLOADING_ERROR,
+    PCI_FILENAME_PREFIX,
+    UNSUPPORTED_FILE_TYPE_CODE
+} from '../../constants/Constants';
 
 const {Dragger} = Upload;
+
+export class FileUploadRequestError extends Error {
+    constructor(response, ...params) {
+        super(...params);
+        Error.captureStackTrace(this, FileUploadRequestError);
+        this.response = response;
+        return this;
+    }
+}
+
+const handleResponse = (response) => response.json()
+    .then((data) => {
+        if (response.ok) {
+            return {success: true, data: data};
+        }
+        throw new FileUploadRequestError(data);
+    });
 
 const formRequestBody = (fileName, fileType) => JSON.stringify({
     fileNames: [fileName],
     contentType: fileType
 });
-
-const handleResponse = (response) => response.json()
-    .then((json) => {
-        if (response.ok) {
-            return {success: true, data: json};
-        }
-        return {success: false, data: json};
-    });
 
 const fileUploadHandler = (payload) => {
     const filenameWithPciPrefix = PCI_FILENAME_PREFIX + payload.info.file.name;
@@ -45,13 +49,12 @@ const fileUploadHandler = (payload) => {
         .then((resp) => {
             if (resp.success) {
                 const data = resp.data.data[0];
-                console.log(data.putUrl);
-                uploadArtifact(data.putUrl, filenameWithPciPrefix, payload.info)
+                uploadArtifact(data.putUrl, payload.info)
                     .then(result => {
-                        payload.onSuccess(result, payload.info.file);
+                        payload.info.onSuccess(result, payload.info.file);
                     })
                     .catch(error => {
-                        console.log('Error:', JSON.stringify(error, null, 2))
+                        payload.info.onError();
                     });
                 return resp.data;
             } else {
@@ -59,16 +62,12 @@ const fileUploadHandler = (payload) => {
             }
         })
         .catch((e) => {
-            console.log(e);
+            payload.info.onError(e);
         });
 };
 
-const uploadArtifact = (path, filenameWithPciPrefix, payload) => {
+const uploadArtifact = (path, payload) => {
     const config = {
-        params: {
-            Key: filenameWithPciPrefix,
-            ContentType: payload.file.type
-        },
         headers: {
             'Content-Type': payload.file.type,
         },
@@ -82,7 +81,7 @@ const uploadArtifact = (path, filenameWithPciPrefix, payload) => {
 }
 
 const customUpload = info => {
-    const preSignedUrl = new Promise((resolve, reject) => fileUploadHandler({
+    return new Promise((resolve, reject) => fileUploadHandler({
         info,
         resolve,
         reject,
@@ -95,12 +94,17 @@ const props = {
     customRequest: customUpload,
     onChange(info) {
         const {status} = info.file;
-        if (status !== 'uploading') {
+        if (status !== FILE_UPLOADING) {
         }
-        if (status === 'done') {
+        if (status === FILE_UPLOADING_DONE) {
             message.success(`${info.file.name} file uploaded successfully.`);
-        } else if (status === 'error') {
-            message.error(`${info.file.name} file upload failed.`);
+        } else if (status === FILE_UPLOADING_ERROR) {
+            const err = info.file.error;
+            if (err && err.response && err.response.errorCode === UNSUPPORTED_FILE_TYPE_CODE) {
+                message.error(`${info.file.name} file upload failed due to unsupported file type.`);
+            } else {
+                message.error(`${info.file.name} file upload failed.`);
+            }
         }
     },
 };

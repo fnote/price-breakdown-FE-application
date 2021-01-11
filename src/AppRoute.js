@@ -11,7 +11,7 @@ function AppRoute() {
                   <Switch>
                       <UserDetailContextProvider>
                           <AppLoaderContextProvider>
-                      <Route path="/" component={ApplicationBase}/>
+                              <Route path="/" component={ApplicationBase}/>
                           </AppLoaderContextProvider>
                       </UserDetailContextProvider>
                   </Switch>

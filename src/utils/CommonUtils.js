@@ -34,3 +34,16 @@ export const formatBusinessUnit = (businessUnitId, businessUnits) => {
     const businessUnit = businessUnits.get(businessUnitId);
     return (businessUnit) ? `${businessUnit.id} - ${businessUnit.name}` : businessUnitId;
 };
+
+export const formatNumberInput = (value) => {
+    const formatterRegex = /^-?\d+(?:\.\d{0,3})?/;
+
+    if (value && !isNaN(value)) {
+        const strVal = `${value}`;
+        const matcherResult = strVal.match(formatterRegex);
+        if (matcherResult) {
+            return matcherResult[0];
+        }
+    }
+    return value;
+};

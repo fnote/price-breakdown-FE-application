@@ -1,13 +1,19 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
 import {
- Form, Input, Checkbox, Select, InputNumber, DatePicker
+  Form, Input, Checkbox, Select, InputNumber, DatePicker
 } from 'antd';
 import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
-import { CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL } from '../../../constants/Constants';
+import { formatNumberInput } from '../../../utils/CommonUtils'
+import {
+  CORRELATION_ID_HEADER,
+  NOT_APPLICABLE_LABEL,
+  ORDER_PRICE_TYPE_HAND,
+  MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT
+} from '../../../constants/Constants';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -22,18 +28,25 @@ const validateMessages = {
 
 const initialValues = {quantity: 1, date: moment(), split: false};
 
-const formRequestBody = (requestData) => JSON.stringify({
+const formRequestBody = (requestData) => {
+    const product = {
+        supc: `${requestData.supc}`,
+        splitFlag: !!requestData.split
+    };
+
+    if (requestData.handPrice) {
+        product.orderPrice = requestData.handPrice;
+        product.orderPriceType = ORDER_PRICE_TYPE_HAND;
+    }
+
+    return JSON.stringify({
         businessUnitNumber: requestData.site,
         customerAccount: requestData.customer,
         priceRequestDate: requestData.date.format('YYYYMMDD'),
         requestedQuantity: requestData.quantity,
-        product:
-            {
-                supc: `${requestData.supc}`,
-                splitFlag: !!requestData.split
-            }
-
+        product,
     });
+};
 
 const SearchForm = () => {
     const priceValidationContext = useContext(PriceValidationContext);
@@ -187,6 +200,32 @@ const SearchForm = () => {
                 formatter={(value) => (value && !isNaN(value) ? Math.round(value) : value)}
             />
           </Form.Item>
+
+            <Form.Item
+                name="handPrice"
+                label="Hand Price"
+                rules={[
+                    () => ({
+                        validator(rule, value) {
+                            if (value) {
+                                if (!isNaN(value) && value >= 0) {
+                                  if (value > MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT) {
+                                    return Promise.reject(new Error(`Hand price must not be greater than ${MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT}`));
+                                  }
+                                  return Promise.resolve();
+                                }
+                                return Promise.reject(new Error('Hand price must be a valid non-negative number'));
+                            }
+
+                            return Promise.resolve();
+                        },
+                    })
+                ]}
+            >
+                <InputNumber
+                    formatter={formatNumberInput}
+                />
+            </Form.Item>
 
           <Form.Item name="split" label="Split" valuePropName="checked">
             <Checkbox/>
