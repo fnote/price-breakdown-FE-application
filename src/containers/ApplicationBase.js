@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import { Switch, Route } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
@@ -7,7 +7,7 @@ import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
-import { NAVIGATION_PATH_PRICE_VALIDATION, NAVIGATION_PATH_FILE_UPLOAD } from '../constants/Constants';
+import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION} from '../constants/Constants';
 
 const Application = () => (
     <Switch>
