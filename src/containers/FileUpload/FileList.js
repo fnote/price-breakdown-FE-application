@@ -7,6 +7,7 @@ import {
     FILE_PROCESSING,
     FILE_SUCCESS,
     MAX_DOWNLOAD_ALLOWED,
+    PCI_FILENAME_PREFIX,
     TIMEOUT_DURING_DOWNLOAD_CLICKS
 } from "../../constants/Constants";
 
@@ -76,7 +77,14 @@ class FileList extends React.Component {
             dataIsReturned: false
         });
 
-        this.generateSignedUrls(fileNamesArray)
+        const fileNamesArrayWithPciPrefix = [];
+
+        fileNamesArray.forEach((fileName) => {
+            const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
+            fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
+        });
+
+        this.generateSignedUrls(fileNamesArrayWithPciPrefix)
             .then(response => {
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -117,10 +125,13 @@ class FileList extends React.Component {
     });
 
     downloadFromSignedUrl = (fileNameUrlArray) => {
-        console.log('filenames array length', fileNameUrlArray.length);
         let iteration = 0;
         return fileNameUrlArray.map(({fileName, readUrl}) => {
             return new Promise((resolve, reject) => {
+                const regex = new RegExp("^(" + PCI_FILENAME_PREFIX + ")");
+                const fileNameWithoutPciPrefix = fileName.replace(regex,"");
+                console.log("fileNameWithoutPciPrefix", fileNameWithoutPciPrefix);
+                console.log("readUrl", readUrl);
                 iteration += 1;
                 setTimeout(() => {
                     fetch(readUrl)
@@ -137,7 +148,7 @@ class FileList extends React.Component {
                         .then(uri => {
                             let link = document.createElement("a");
                             link.href = uri;
-                            link.download = fileName;
+                            link.download = fileNameWithoutPciPrefix;
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
@@ -149,7 +160,7 @@ class FileList extends React.Component {
                             if(error.status === 404 ) {
                                 errorMsg = 'Failed to download as file is not found.';
                             }
-                            this.openNotificationWithIcon('error', errorMsg + ` : ${fileName}`);
+                            this.openNotificationWithIcon('error', errorMsg + ` : ${fileNameWithoutPciPrefix}`);
                             reject();
                         });
                 }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
