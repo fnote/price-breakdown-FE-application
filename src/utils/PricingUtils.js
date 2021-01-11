@@ -80,7 +80,7 @@ export const getFormattedPercentageValue = (factor) => convertFactorToPercentage
 
 export const getReadableDiscountName = (name) => DISCOUNT_NAMES_MAP.get(name);
 
-export const getPriceUnit = ({splitFlag, perWeightFlag}) => {
+export const getPriceUnit = ({ splitFlag, perWeightFlag }) => {
     if (perWeightFlag) {
         return PRICE_UNIT_POUND;
     }
