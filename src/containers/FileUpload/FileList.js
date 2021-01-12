@@ -19,6 +19,7 @@ class FileList extends React.Component {
         super(props);
         this.state = {
             selectedRowKeys: [], // Check here to configure the default column
+            selectedRowValues: [],
             loading: false,
             data: [],
             dataIsReturned: false,
@@ -195,6 +196,7 @@ class FileList extends React.Component {
     }
 
     loadSearchDataFiles = (value) => {
+        console.log('loadSearchDataFiles state', this.state)
         if (value !== '') {
             this.setState({
                 dataIsReturned: false,
@@ -242,11 +244,60 @@ class FileList extends React.Component {
 
     };
 
-    onSelectChange = (selectedRowKeys, selectedRowValues) => {
-        this.setState({selectedRowKeys, selectedRowValues});
+    onSelect = (record, selected) => {
+        console.log('record', record);
+        console.log('selected', selected);
+
+        if(selected) {
+            this.setState({
+                selectedRowKeys: [...this.state.selectedRowKeys, record.filename],
+                selectedRowValues: [...this.state.selectedRowValues, record]
+            });
+        } else {
+            const selectedRowKeys1 = this.state.selectedRowKeys.filter(key => key !== record.filename);
+            const selectedRows1 = this.state.selectedRowValues.filter(row => row.filename !== record.filename)
+
+            console.log('selectedRowKeys1', selectedRowKeys1);
+            console.log('selectedRows1', selectedRows1);
+
+            this.setState({
+                selectedRowKeys: this.state.selectedRowKeys.filter(key => key !== record.filename),
+                selectedRowValues: this.state.selectedRowValues.filter(row => row.filename !== record.filename)
+            });
+        }
+
+        console.log('selected from state', this.state.selectedRowKeys)
     };
 
+    onSelectAll = (selected, selectedRows, changeRows) => {
+        console.log('selected for all', selected);
+        console.log('selectedRows for all', changeRows);
+
+        const changeRowKeys = changeRows.map(row => row.filename);
+        if(selected) {
+            this.setState({
+                selectedRowKeys: [...this.state.selectedRowKeys, ...changeRowKeys],
+                selectedRowValues: [...this.state.selectedRowValues, ...changeRows]
+            });
+        } else {
+            const remainingSelectedRow = this.state.selectedRowValues.filter(row => changeRows.indexOf(row) < 0);
+            const remainingSelectedRowKeys = this.state.selectedRowKeys.filter(key => changeRowKeys.indexOf(key) < 0);
+
+            console.log('remainingSelectedRow', remainingSelectedRow);
+            console.log('remainingSelectedRowKeys', remainingSelectedRowKeys);
+
+            this.setState({
+                selectedRowKeys: remainingSelectedRowKeys,
+                selectedRowValues: remainingSelectedRow
+            });
+
+        }
+
+    }
+
+
     onSearchStringChange = (searchBox) => {
+        console.log('state', this.state)
         this.setState({searchString: searchBox.target.value});
     };
 
@@ -322,7 +373,8 @@ class FileList extends React.Component {
         const {loading, selectedRowKeys, data, dataIsReturned, searchString} = this.state;
         const rowSelection = {
             selectedRowKeys,
-            onChange: this.onSelectChange,
+            onSelect: this.onSelect,
+            onSelectAll: this.onSelectAll
         };
         const hasSelected = selectedRowKeys.length > 0;
         const shouldDisableDownload = selectedRowKeys.length > MAX_DOWNLOAD_ALLOWED;
@@ -369,6 +421,7 @@ class FileList extends React.Component {
                 <div className="file-list-table-wrapper">
                     {dataIsReturned ?
                         <Table
+                            rowKey='filename'
                             rowSelection={rowSelection}
                             columns={this.columns}
                             dataSource={data}
