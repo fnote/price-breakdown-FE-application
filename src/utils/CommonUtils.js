@@ -19,9 +19,9 @@ const mapBusinessUnit = ({ bunit_id, bunit_name }) => ({
     ...extractNames(bunit_name)
 });
 
-export const createBusinessUnitMap = ({ authorizedBunitList }) => {
-    if (authorizedBunitList && authorizedBunitList instanceof Array) {
-        const mappedBusinessUnits = authorizedBunitList.map(({ bunit_id, bunit_name }) => [
+export const createBusinessUnitMap = ({ authorizedPricingTransformationEnabledBunitList }) => {
+    if (authorizedPricingTransformationEnabledBunitList && authorizedPricingTransformationEnabledBunitList instanceof Array) {
+        const mappedBusinessUnits = authorizedPricingTransformationEnabledBunitList.map(({ bunit_id, bunit_name }) => [
             bunit_id, mapBusinessUnit({ bunit_id, bunit_name })
         ]);
         return new Map(mappedBusinessUnits);

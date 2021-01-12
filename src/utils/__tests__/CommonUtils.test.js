@@ -19,7 +19,7 @@ describe('formatBusinessUnit', () => {
 });
 
 const userDetails = {
-    authorizedBunitList: [
+    authorizedPricingTransformationEnabledBunitList: [
         {
           'bunit_id': '011',
           'bunit_name': 'Sysco Louisville',
