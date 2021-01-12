@@ -115,74 +115,6 @@ class FileList extends React.Component {
         });
     };
 
-    columns = [
-        {
-            title: 'SUBMIT TIME',
-            dataIndex: 'submittime',
-            className: 'submittime'
-        },
-        {
-            title: 'FILE NAME',
-            dataIndex: 'filename',
-            className: 'filename',
-        },
-        {
-            dataIndex: 'action',
-            className: 'action',
-            width: 'auto',
-            render: (data) => (
-                <div className="action-bar">
-                    {data.status === FILE_PROCESSING && (
-                        <div className="file-process-status">FILE IS BEING PROCESSED</div>
-                    )}
-                    {data.status === FILE_ERROR && (
-                        <div className="file-process-status error">
-                            File Contained errors
-                            <div className="divider"></div>
-                            <Button className="btn empty-btn download-error-file"
-                                    onClick={() => {
-                                        this.downloadFile([data.minorErrorFileName]);
-
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                                View error file
-                            </Button>
-                        </div>
-                    )}
-                    {data.status === FILE_SUCCESS && (
-                        <div className="file-process-status success">
-                            File processed successfully
-                        </div>
-                    )}
-                    {data.status !== FILE_PROCESSING ? (
-                        <>
-                            <Button className="btn icon-only empty-btn">
-                                <i className="icon fi flaticon-bin"/>
-                            </Button>
-                            <Button className="btn icon-only empty-btn download-file"
-                                    onClick={() => {
-                                        this.downloadFile([data.fileName]);
-
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                            </Button>
-                        </>
-
-                    ) : (
-                        <>
-                            <Button className="btn icon-only empty-btn cancel-process">
-                                <i className="icon fi flaticon-close"/>
-                            </Button>
-                            <SyncOutlined spin className="icon processing-spinner"/>
-                        </>
-                    )}
-                </div>
-            ),
-        },
-    ];
-
     generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFilesSignedUrlEndpoint, {
         method: 'POST',
         body: JSON.stringify({
@@ -350,6 +282,74 @@ class FileList extends React.Component {
         console.log('state', this.state)
         this.setState({searchString: searchBox.target.value});
     };
+
+    columns = [
+        {
+            title: 'SUBMIT TIME',
+            dataIndex: 'submittime',
+            className: 'submittime'
+        },
+        {
+            title: 'FILE NAME',
+            dataIndex: 'filename',
+            className: 'filename',
+        },
+        {
+            dataIndex: 'action',
+            className: 'action',
+            width: 'auto',
+            render: (data) => (
+                <div className="action-bar">
+                    {data.status === FILE_PROCESSING && (
+                        <div className="file-process-status">FILE IS BEING PROCESSED</div>
+                    )}
+                    {data.status === FILE_ERROR && (
+                        <div className="file-process-status error">
+                            File Contained errors
+                            <div className="divider"></div>
+                            <Button className="btn empty-btn download-error-file"
+                                    onClick={() => {
+                                        this.downloadFile([data.minorErrorFileName]);
+
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                                View error file
+                            </Button>
+                        </div>
+                    )}
+                    {data.status === FILE_SUCCESS && (
+                        <div className="file-process-status success">
+                            File processed successfully
+                        </div>
+                    )}
+                    {data.status !== FILE_PROCESSING ? (
+                        <>
+                            <Button className="btn icon-only empty-btn">
+                                <i className="icon fi flaticon-bin"/>
+                            </Button>
+                            <Button className="btn icon-only empty-btn download-file"
+                                    onClick={() => {
+                                        this.downloadFile([data.fileName]);
+
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                            </Button>
+                        </>
+
+                    ) : (
+                        <>
+                            <Button className="btn icon-only empty-btn cancel-process">
+                                <i className="icon fi flaticon-close"/>
+                            </Button>
+                            <SyncOutlined spin className="icon processing-spinner"/>
+                        </>
+                    )}
+                </div>
+            ),
+        },
+    ];
 
     render() {
         const {loading, selectedRowKeys, data, dataIsReturned, searchString} = this.state;
