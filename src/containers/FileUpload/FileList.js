@@ -196,7 +196,6 @@ class FileList extends React.Component {
     }
 
     loadSearchDataFiles = (value) => {
-        console.log('loadSearchDataFiles state', this.state)
         if (value !== '') {
             this.setState({
                 dataIsReturned: false,
@@ -279,7 +278,6 @@ class FileList extends React.Component {
     }
 
     onSearchStringChange = (searchBox) => {
-        console.log('state', this.state)
         this.setState({searchString: searchBox.target.value});
     };
 
