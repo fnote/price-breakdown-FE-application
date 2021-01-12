@@ -9,14 +9,14 @@ import {
     INVALID_FILE_TYPE,
     PCI_FILENAME_PREFIX
 } from '../../constants/Constants';
-import {isValidContentType} from "./UploadValidation";
+import {isValidFileType} from "./UploadValidation";
 
 const {Dragger} = Upload;
 
-export class FileUploadRequestError extends Error {
+export class FileUploadError extends Error {
     constructor(type, ...params) {
         super(...params);
-        Error.captureStackTrace(this, FileUploadRequestError);
+        Error.captureStackTrace(this, FileUploadError);
         this.errorType = type;
         return this;
     }
@@ -82,14 +82,14 @@ const uploadArtifact = (path, payload) => {
 }
 
 const customUpload = info => {
-    if (isValidContentType(info.file.type)) {
+    if (isValidFileType(info.file.type)) {
         return new Promise((resolve, reject) => fileUploadHandler({
             info,
             resolve,
             reject,
         }));
     }
-    return info.onError(new FileUploadRequestError(INVALID_FILE_TYPE));
+    return info.onError(new FileUploadError(INVALID_FILE_TYPE));
 };
 
 const props = {
