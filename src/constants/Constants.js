@@ -2,11 +2,11 @@ export const LABEL_CUSTOMER_NET_PRICE = 'CUSTOMER NET PRICE';
 
 export const VALUE_KEY_CUSTOMER_REF_PRICE = 'customerReferencePrice';
 export const META_DATA_PRICE_BAR = [
-    { label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1' },
-    { label: 'CUSTOMER REFERENCE PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2' },
-    { label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3' },
-    { label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right' },
-    { label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false }
+    {label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1'},
+    {label: 'CUSTOMER REFERENCE PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2'},
+    {label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3'},
+    {label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right'},
+    {label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false}
 ];
 
 export const PRICE_UNIT_CASE = 'case';
@@ -87,7 +87,14 @@ export const NAVIGATION_PATH_FILE_UPLOAD = '/FileUpload';
 export const FILE_UPLOADING = 'uploading';
 export const FILE_UPLOADING_DONE = 'done';
 export const FILE_UPLOADING_ERROR = 'error';
-export const UNSUPPORTED_FILE_TYPE_CODE = 2030;
+
+export const SUPPORTED_FILE_TYPES = [
+    '', 'text/plain', 'text/csv',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+export const INVALID_FILE_TYPE = 'Invalid ContentType';
 
 
 export const FILE_PROCESSING = 'processing';

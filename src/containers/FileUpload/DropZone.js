@@ -6,17 +6,18 @@ import {
     FILE_UPLOADING,
     FILE_UPLOADING_DONE,
     FILE_UPLOADING_ERROR,
-    PCI_FILENAME_PREFIX,
-    UNSUPPORTED_FILE_TYPE_CODE
+    INVALID_FILE_TYPE,
+    PCI_FILENAME_PREFIX
 } from '../../constants/Constants';
+import {isValidContentType} from "./UploadValidation";
 
 const {Dragger} = Upload;
 
 export class FileUploadRequestError extends Error {
-    constructor(response, ...params) {
+    constructor(type, ...params) {
         super(...params);
         Error.captureStackTrace(this, FileUploadRequestError);
-        this.response = response;
+        this.errorType = type;
         return this;
     }
 }
@@ -26,7 +27,7 @@ const handleResponse = (response) => response.json()
         if (response.ok) {
             return {success: true, data: data};
         }
-        throw new FileUploadRequestError(data);
+        throw new Error(data);
     });
 
 const formRequestBody = (fileName, fileType) => JSON.stringify({
@@ -81,11 +82,14 @@ const uploadArtifact = (path, payload) => {
 }
 
 const customUpload = info => {
-    return new Promise((resolve, reject) => fileUploadHandler({
-        info,
-        resolve,
-        reject,
-    }));
+    if (isValidContentType(info.file.type)) {
+        return new Promise((resolve, reject) => fileUploadHandler({
+            info,
+            resolve,
+            reject,
+        }));
+    }
+    return info.onError(new FileUploadRequestError(INVALID_FILE_TYPE));
 };
 
 const props = {
@@ -100,7 +104,7 @@ const props = {
             message.success(`${info.file.name} file uploaded successfully.`);
         } else if (status === FILE_UPLOADING_ERROR) {
             const err = info.file.error;
-            if (err && err.response && err.response.errorCode === UNSUPPORTED_FILE_TYPE_CODE) {
+            if (err && err.errorType === INVALID_FILE_TYPE) {
                 message.error(`${info.file.name} file upload failed due to unsupported file type.`);
             } else {
                 message.error(`${info.file.name} file upload failed.`);
@@ -110,21 +114,21 @@ const props = {
 };
 
 function DropZone() {
-  return (
-    <div className="drop-zone">
-      <Dragger {...props}>
-        <i className="icon fi flaticon-upload" />
-        <p className="ant-upload-text">Drag and drop file here</p>
-        <p className="ant-upload-hint">or</p>
-        <button
-          type="primary"
-          htmlType="submit"
-          className="select-btn outlined-btn">
-          Select File
-        </button>
-      </Dragger>
-    </div>
-  );
+    return (
+        <div className="drop-zone">
+            <Dragger {...props}>
+                <i className="icon fi flaticon-upload"/>
+                <p className="ant-upload-text">Drag and drop file here</p>
+                <p className="ant-upload-hint">or</p>
+                <button
+                    type="primary"
+                    htmlType="submit"
+                    className="select-btn outlined-btn">
+                    Select File
+                </button>
+            </Dragger>
+        </div>
+    );
 }
 
 export default DropZone;
