@@ -3,11 +3,12 @@ import {Button, Input, notification, Table} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 import {getBffUrlConfig} from "../../utils/Configs";
 import {
+    EMPTY_STRING,
     FILE_ERROR,
     FILE_PROCESSING,
     FILE_SUCCESS,
     MAX_DOWNLOAD_ALLOWED,
-    PCI_FILENAME_PREFIX,
+    PCI_FILENAME_PREFIX, TAG_NAME_A,
     TIMEOUT_DURING_DOWNLOAD_CLICKS
 } from "../../constants/Constants";
 
@@ -130,9 +131,7 @@ class FileList extends React.Component {
         return fileNameUrlArray.map(({fileName, readUrl}) => {
             return new Promise((resolve, reject) => {
                 const regex = new RegExp("^(" + PCI_FILENAME_PREFIX + ")");
-                const fileNameWithoutPciPrefix = fileName.replace(regex,"");
-                console.log("fileNameWithoutPciPrefix", fileNameWithoutPciPrefix);
-                console.log("readUrl", readUrl);
+                const fileNameWithoutPciPrefix = fileName.replace(regex, EMPTY_STRING);
                 iteration += 1;
                 setTimeout(() => {
                     fetch(readUrl)
@@ -147,7 +146,7 @@ class FileList extends React.Component {
                         .then(response => response.blob())
                         .then(blob => URL.createObjectURL(blob))
                         .then(uri => {
-                            let link = document.createElement("a");
+                            let link = document.createElement(TAG_NAME_A);
                             link.href = uri;
                             link.download = fileNameWithoutPciPrefix;
                             document.body.appendChild(link);
@@ -245,34 +244,20 @@ class FileList extends React.Component {
     };
 
     onSelect = (record, selected) => {
-        console.log('record', record);
-        console.log('selected', selected);
-
         if(selected) {
             this.setState({
                 selectedRowKeys: [...this.state.selectedRowKeys, record.filename],
                 selectedRowValues: [...this.state.selectedRowValues, record]
             });
         } else {
-            const selectedRowKeys1 = this.state.selectedRowKeys.filter(key => key !== record.filename);
-            const selectedRows1 = this.state.selectedRowValues.filter(row => row.filename !== record.filename)
-
-            console.log('selectedRowKeys1', selectedRowKeys1);
-            console.log('selectedRows1', selectedRows1);
-
             this.setState({
                 selectedRowKeys: this.state.selectedRowKeys.filter(key => key !== record.filename),
                 selectedRowValues: this.state.selectedRowValues.filter(row => row.filename !== record.filename)
             });
         }
-
-        console.log('selected from state', this.state.selectedRowKeys)
     };
 
     onSelectAll = (selected, selectedRows, changeRows) => {
-        console.log('selected for all', selected);
-        console.log('selectedRows for all', changeRows);
-
         const changeRowKeys = changeRows.map(row => row.filename);
         if(selected) {
             this.setState({
@@ -280,11 +265,8 @@ class FileList extends React.Component {
                 selectedRowValues: [...this.state.selectedRowValues, ...changeRows]
             });
         } else {
-            const remainingSelectedRow = this.state.selectedRowValues.filter(row => changeRows.indexOf(row) < 0);
             const remainingSelectedRowKeys = this.state.selectedRowKeys.filter(key => changeRowKeys.indexOf(key) < 0);
-
-            console.log('remainingSelectedRow', remainingSelectedRow);
-            console.log('remainingSelectedRowKeys', remainingSelectedRowKeys);
+            const remainingSelectedRow = this.state.selectedRowValues.filter(row => changeRows.indexOf(row) < 0);
 
             this.setState({
                 selectedRowKeys: remainingSelectedRowKeys,
