@@ -9,6 +9,7 @@ export const getBffUrlConfig = () => {
     if (process.env.REACT_APP_ENV === 'dev') {
         CONFIG.listSearchFilesEndpoint = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/';
         CONFIG.listOutputFilesEndpoint = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/output';
+        CONFIG.bathcJobDeleteEndpointBaseUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/jobs/';
         CONFIG.outputBucketFilesSignedUrlEndpoint = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/output';
         CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
         CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
@@ -18,6 +19,7 @@ export const getBffUrlConfig = () => {
     } else if (process.env.REACT_APP_ENV === 'exe') {
         CONFIG.listSearchFilesEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/';
         CONFIG.listOutputFilesEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/output';
+        CONFIG.bathcJobDeleteEndpointBaseUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/jobs/';
         CONFIG.outputBucketFilesSignedUrlEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/output';
         CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
         CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
@@ -25,6 +27,7 @@ export const getBffUrlConfig = () => {
         CONFIG.userDetailsUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/user-details';
         CONFIG.fileUploadUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/input';
     } else if (process.env.REACT_APP_ENV === 'stg') {
+        CONFIG.bathcJobDeleteEndpointBaseUrl = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/jobs/'
         CONFIG.outputBucketFilesSignedUrlEndpoint = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/output';
         CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
         CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
@@ -32,6 +35,7 @@ export const getBffUrlConfig = () => {
         CONFIG.userDetailsUrl = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/user-details';
         CONFIG.fileUploadUrl = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/input';
     } else if (process.env.REACT_APP_ENV === 'prod') {
+        CONFIG.bathcJobDeleteEndpointBaseUrl = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/batch/jobs/'
         CONFIG.outputBucketFilesSignedUrlEndpoint = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/output';
         CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
         CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
@@ -40,6 +44,7 @@ export const getBffUrlConfig = () => {
     } else {
         CONFIG.listSearchFilesEndpoint = 'http://localhost:4000/local/v1/pci-bff/batch/files/';
         CONFIG.listOutputFilesEndpoint = 'http://localhost:4000/local/v1/pci-bff/batch/files/output';
+        CONFIG.bathcJobDeleteEndpointBaseUrl = 'http://localhost:4000/local/v1/pci-bff/batch/jobs/';
         CONFIG.outputBucketFilesSignedUrlEndpoint = 'http://localhost:4000/local/v1/pci-bff/batch/signed-url/output';
         CONFIG.priceDataEndpoint = 'http://localhost:4000/local/v1/pci-bff/pricing/pricing-data';
         CONFIG.loginRedirectionUrl = 'http://localhost:4000/local/v1/pci-bff/auth/login';
