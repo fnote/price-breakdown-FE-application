@@ -97,9 +97,10 @@ export const SUPPORTED_FILE_TYPES = [
 export const INVALID_FILE_TYPE = 'Invalid ContentType';
 
 
-export const FILE_PROCESSING = 'processing';
-export const FILE_ERROR = 'error';
-export const FILE_SUCCESS = 'success';
+export const JOB_PROCESSING_STATUS = 'READY';
+export const JOB_ERROR_STATUS = 'ERROR';
+export const JOB_COMPLETE_STATUS = 'COMPLETED';
+export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
 
 export const PCI_FILENAME_PREFIX = 'CPPCI-';
 

@@ -19,18 +19,18 @@ export const getBffUrlConfig = () => {
     }
 
     // Auth apis
-    CONFIG.loginRedirectionUrl = CONFIG.bffBaseUrl + 'auth/login';
-    CONFIG.logOutRedirectionUrl = CONFIG.bffBaseUrl + 'auth/logout';
-    CONFIG.userDetailsUrl = CONFIG.bffBaseUrl + 'auth/user-details';
+    CONFIG.loginRedirectionUrl = `${CONFIG.bffBaseUrl}auth/login`;
+    CONFIG.logOutRedirectionUrl = `${CONFIG.bffBaseUrl}auth/logout`;
+    CONFIG.userDetailsUrl = `${CONFIG.bffBaseUrl}auth/user-details`;
 
     // Batch apis
-    CONFIG.listSearchFilesEndpoint = CONFIG.bffBaseUrl + 'batch/files/';
-    CONFIG.listOutputFilesEndpoint = CONFIG.bffBaseUrl + 'batch/files/output';
-    CONFIG.outputBucketFilesSignedUrlEndpoint = CONFIG.bffBaseUrl + 'batch/signed-url/output';
-    CONFIG.fileUploadUrl = CONFIG.bffBaseUrl + 'batch/signed-url/input';
+    CONFIG.listSearchFilesUrl = `${CONFIG.bffBaseUrl}batch/files/`;
+    CONFIG.filesUploadUrl = `${CONFIG.bffBaseUrl}batch/signed-url/input`;
+    CONFIG.filesDownloadUrl = `${CONFIG.bffBaseUrl}batch/signed-url/output`;
+    CONFIG.batchJobsUrl = `${CONFIG.bffBaseUrl}batch/jobs`;
 
-    //Pricing apis
-    CONFIG.priceDataEndpoint = CONFIG.bffBaseUrl + 'pricing/pricing-data';
+    // Pricing apis
+    CONFIG.priceDataEndpoint = `${CONFIG.bffBaseUrl}pricing/pricing-data`;
 
     return CONFIG;
 };

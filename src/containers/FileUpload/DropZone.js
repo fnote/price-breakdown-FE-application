@@ -37,7 +37,7 @@ const formRequestBody = (fileName, fileType) => JSON.stringify({
 
 const fileUploadHandler = (payload) => {
     const filenameWithPciPrefix = PCI_FILENAME_PREFIX + payload.info.file.name;
-    fetch(getBffUrlConfig().fileUploadUrl, {
+    fetch(getBffUrlConfig().filesUploadUrl, {
         method: 'POST',
         body: formRequestBody(filenameWithPciPrefix, payload.info.file.type),
         headers: {

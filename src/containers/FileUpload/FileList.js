@@ -1,22 +1,22 @@
 import React from 'react';
-import {Button, Input, notification, Table} from 'antd';
+import {Button, Input, message, notification, Table} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
-import {getBffUrlConfig} from "../../utils/Configs";
+import {getBffUrlConfig} from '../../utils/Configs';
 import {
     EMPTY_STRING,
-    FILE_ERROR,
-    FILE_PROCESSING,
-    FILE_SUCCESS,
+    JOB_ERROR_STATUS,
+    JOB_PROCESSING_STATUS,
+    JOB_COMPLETE_STATUS,
     MAX_DOWNLOAD_ALLOWED,
     PCI_FILENAME_PREFIX,
     TAG_NAME_A,
-    TIMEOUT_DURING_DOWNLOAD_CLICKS
-} from "../../constants/Constants";
+    TIMEOUT_DURING_DOWNLOAD_CLICKS, JOB_PARTIALLY_COMPLETED_STATUS
+} from '../../constants/Constants';
+import JobDetail from '../../model/jobDetail';
 
 const {Search} = Input;
 
 class FileList extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -27,20 +27,20 @@ class FileList extends React.Component {
             dataIsReturned: false,
             searchString: ''
         };
-    };
+    }
 
     componentDidMount() {
-        this.loadDataFiles();
-    };
+        this.listBatchJobs();
+    }
 
-    fileListRequestHandler = () => fetch(getBffUrlConfig().listOutputFilesEndpoint, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include'
-    }).then(this.handleResponse);
+    batchJobListRequestHandler = () => fetch(getBffUrlConfig().batchJobsUrl, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include'
+        }).then(this.handleResponse);
 
     fileDeleteRequestHandler = () => fetch(getBffUrlConfig().bathcJobDeleteEndpoint, {
         method: 'DELETE',
@@ -51,7 +51,7 @@ class FileList extends React.Component {
         credentials: 'include'
     }).then(this.handleResponse);
 
-    fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
+    fileSearchListRequestHandler = (batchJobsListUrl) => fetch(batchJobsListUrl, {
         method: 'GET',
         headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -61,27 +61,24 @@ class FileList extends React.Component {
     }).then(this.handleResponse);
 
     handleResponse = (response) => {
-        const files = []
+        const batchJobDetailList = [];
         return response.json().then((json) => {
             const responseData = json.data;
             if (response.ok && responseData) {
                 console.log(responseData);
-                responseData.forEach((file, index) => {
-                    const action = {
-                        status: file.action,
-                        fileName: file.fileName,
-                        minorErrorFileName: file.minorErrorFileName
-                    };
-                    files.push({
-                        key: index + 1,
-                        submittime: file.date,
-                        filename: file.fileName,
-                        action: action,
+                responseData.forEach((job) => {
+                    const jobDetail = JobDetail.fromJson(job);
+                    batchJobDetailList.push({
+                        key: jobDetail.jobId,
+                        startTime: jobDetail.startTime,
+                        endTime: jobDetail.endTime,
+                        filename: jobDetail.fileName,
+                        action: jobDetail,
                     });
                 });
-                return {success: true, data: files};
+                return {success: true, data: batchJobDetailList};
             }
-            return {success: false, data: files};
+                return {success: false, data: batchJobDetailList};
         });
     };
 
@@ -98,13 +95,13 @@ class FileList extends React.Component {
         });
 
         this.generateSignedUrls(fileNamesArrayWithPciPrefix)
-            .then(response => {
+            .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
                 }
-                return response.json()
+                return response.json();
             })
-            .then(response => {
+            .then((response) => {
                 const fileNameUrlArray = response.data;
                 Promise.all(this.downloadFromSignedUrl(fileNameUrlArray))
                     .then(() => {
@@ -117,7 +114,6 @@ class FileList extends React.Component {
                             dataIsReturned: true
                         });
                     });
-
             }).catch(() => {
             this.setState({
                 dataIsReturned: true
@@ -125,7 +121,7 @@ class FileList extends React.Component {
         });
     };
 
-    generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().outputBucketFilesSignedUrlEndpoint, {
+    generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
         method: 'POST',
         body: JSON.stringify({
             'fileNames': fileNamesArray
@@ -139,14 +135,13 @@ class FileList extends React.Component {
 
     downloadFromSignedUrl = (fileNameUrlArray) => {
         let iteration = 0;
-        return fileNameUrlArray.map(({fileName, readUrl}) => {
-            return new Promise((resolve, reject) => {
-                const regex = new RegExp("^(" + PCI_FILENAME_PREFIX + ")");
+        return fileNameUrlArray.map(({fileName, readUrl}) => new Promise((resolve, reject) => {
+                const regex = new RegExp(`^(${PCI_FILENAME_PREFIX})`);
                 const fileNameWithoutPciPrefix = fileName.replace(regex, EMPTY_STRING);
                 iteration += 1;
                 setTimeout(() => {
                     fetch(readUrl)
-                        .then(response => {
+                        .then((response) => {
                             if (!response.ok) {
                                 const err = new Error(response.statusText);
                                 err.status = response.status;
@@ -154,10 +149,10 @@ class FileList extends React.Component {
                             }
                             return response;
                         })
-                        .then(response => response.blob())
-                        .then(blob => URL.createObjectURL(blob))
-                        .then(uri => {
-                            let link = document.createElement(TAG_NAME_A);
+                        .then((response) => response.blob())
+                        .then((blob) => URL.createObjectURL(blob))
+                        .then((uri) => {
+                            const link = document.createElement(TAG_NAME_A);
                             link.href = uri;
                             link.download = fileNameWithoutPciPrefix;
                             document.body.appendChild(link);
@@ -171,18 +166,17 @@ class FileList extends React.Component {
                             if (error.status === 404) {
                                 errorMsg = 'Failed to download as file is not found.';
                             }
-                            this.openNotificationWithIcon('error', errorMsg + ` : ${fileNameWithoutPciPrefix}`);
+                            this.openNotificationWithIcon('error', `${errorMsg} : ${fileNameWithoutPciPrefix}`);
                             reject();
                         });
                 }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
-            });
-        });
+            }));
     };
 
     openNotificationWithIcon = (type, description) => {
         notification[type]({
             message: 'Failure',
-            description: description,
+            description,
         });
     };
 
@@ -190,13 +184,13 @@ class FileList extends React.Component {
         this.setState({
             dataIsReturned: false,
             searchString: ''
-        })
-        this.fileListRequestHandler().then((res) => {
+        });
+        this.fileSearchListRequestHandler(getBffUrlConfig().batchJobsUrl).then((res) => {
             if (res.success) {
                 this.setState({
                     data: res.data,
                     dataIsReturned: true
-                })
+                });
             }
         });
     }
@@ -205,38 +199,40 @@ class FileList extends React.Component {
         this.setState({
             dataIsReturned: false,
             searchString: ''
-        })
-        this.fileListRequestHandler().then((res) => {
+        });
+        this.batchJobListRequestHandler().then((res) => {
             if (res.success) {
                 this.setState({
                     data: res.data,
                     dataIsReturned: true
-                })
+                });
             }
         });
     }
 
-    getListSearchFilesEndpoint = (source, prefix) => {
-        return getBffUrlConfig().listSearchFilesEndpoint + source + "/" + prefix;
-    }
+    generateBatchJobSearchUrl = (searchString) => `${getBffUrlConfig().batchJobsUrl}?searchQuery=${searchString}`
 
-    loadSearchDataFiles = (value) => {
-        if (value !== '') {
-            this.setState({
-                dataIsReturned: false,
-            })
-
-            this.fileSearchListRequestHandler(this.getListSearchFilesEndpoint("output", value)).then((res) => {
-                if (res.success) {
-                    this.setState({
-                        data: res.data,
-                        dataIsReturned: true
-                    })
-                }
-            });
-        } else {
-            this.loadDataFiles();
+    listBatchJobs = (searchString = '') => {
+        this.setState({
+            dataIsReturned: false,
+        });
+        let batchJobListUrl = getBffUrlConfig().batchJobsUrl;
+        if (searchString !== '') {
+            batchJobListUrl = this.generateBatchJobSearchUrl(searchString);
         }
+        this.fileSearchListRequestHandler(batchJobListUrl).then((res) => {
+            if (res.success) {
+                this.setState({
+                    data: res.data,
+                    dataIsReturned: true
+                });
+            }
+        }).catch((err) => {
+            this.setState({
+                dataIsReturned: true
+            });
+            message.error('Failed to list files.');
+        });
     };
 
     start = () => {
@@ -249,7 +245,7 @@ class FileList extends React.Component {
         const selectedRowValues = this.state.selectedRowValues;
         const toDownloadFiles = [];
 
-        selectedRowValues.forEach(row => {
+        selectedRowValues.forEach((row) => {
             if (row.action.fileName) {
                 toDownloadFiles.push(row.action.fileName);
             }
@@ -265,7 +261,6 @@ class FileList extends React.Component {
             selectedRowKeys: [],
             loading: false,
         });
-
     };
 
     onSelect = (record, selected) => {
@@ -276,46 +271,51 @@ class FileList extends React.Component {
             });
         } else {
             this.setState({
-                selectedRowKeys: this.state.selectedRowKeys.filter(key => key !== record.filename),
-                selectedRowValues: this.state.selectedRowValues.filter(row => row.filename !== record.filename)
+                selectedRowKeys: this.state.selectedRowKeys.filter((key) => key !== record.filename),
+                selectedRowValues: this.state.selectedRowValues.filter((row) => row.filename !== record.filename)
             });
         }
     };
 
     onSelectAll = (selected, selectedRows, changeRows) => {
-        const changeRowKeys = changeRows.map(row => row.filename);
+        const changeRowKeys = changeRows.map((row) => row.filename);
         if (selected) {
             this.setState({
                 selectedRowKeys: [...this.state.selectedRowKeys, ...changeRowKeys],
                 selectedRowValues: [...this.state.selectedRowValues, ...changeRows]
             });
         } else {
-            const remainingSelectedRowKeys = this.state.selectedRowKeys.filter(key => changeRowKeys.indexOf(key) < 0);
-            const remainingSelectedRow = this.state.selectedRowValues.filter(row => changeRows.indexOf(row) < 0);
+            const remainingSelectedRowKeys = this.state.selectedRowKeys.filter((key) => changeRowKeys.indexOf(key) < 0);
+            const remainingSelectedRow = this.state.selectedRowValues.filter((row) => changeRows.indexOf(row) < 0);
 
             this.setState({
                 selectedRowKeys: remainingSelectedRowKeys,
                 selectedRowValues: remainingSelectedRow
             });
-
         }
-
     }
 
     onSearchStringChange = (searchBox) => {
-        this.setState({searchString: searchBox.target.value});
+        const searchString = searchBox.target.value;
+        this.setState({searchString});
+        this.listBatchJobs(searchString);
     };
 
     columns = [
         {
-            title: 'SUBMIT TIME',
-            dataIndex: 'submittime',
-            className: 'submittime'
-        },
-        {
             title: 'FILE NAME',
             dataIndex: 'filename',
             className: 'filename',
+        },
+        {
+            title: 'SUBMIT TIME',
+            dataIndex: 'startTime',
+            className: 'submittime'
+        },
+        {
+            title: 'END TIME',
+            dataIndex: 'endTime',
+            className: 'submittime'
         },
         {
             dataIndex: 'action',
@@ -323,30 +323,34 @@ class FileList extends React.Component {
             width: 'auto',
             render: (data) => (
                 <div className="action-bar">
-                    {data.status === FILE_PROCESSING && (
+                    {data.status === JOB_PROCESSING_STATUS && (
                         <div className="file-process-status">FILE IS BEING PROCESSED</div>
                     )}
-                    {data.status === FILE_ERROR && (
-                        <div className="file-process-status error">
+                    {data.status === JOB_PARTIALLY_COMPLETED_STATUS && (
+                        <div className="file-process-status warn">
                             File Contained errors
-                            <div className="divider"></div>
+
                             <Button className="btn empty-btn download-error-file"
                                     onClick={() => {
                                         this.downloadFile([data.minorErrorFileName]);
-
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
-                                View error file
+                                View minor error file
                             </Button>
                         </div>
                     )}
-                    {data.status === FILE_SUCCESS && (
+                    {data.status === JOB_COMPLETE_STATUS && (
                         <div className="file-process-status success">
                             File processed successfully
                         </div>
                     )}
-                    {data.status !== FILE_PROCESSING ? (
+                    {data.status === JOB_ERROR_STATUS && (
+                        <div className="file-process-status error">
+                            View error file
+                        </div>
+                    )}
+                    {data.status !== JOB_PROCESSING_STATUS ? (
                         <>
                             <Button className="btn icon-only empty-btn">
                                 <i className="icon fi flaticon-bin"/>
@@ -354,7 +358,6 @@ class FileList extends React.Component {
                             <Button className="btn icon-only empty-btn download-file"
                                     onClick={() => {
                                         this.downloadFile([data.fileName]);
-
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
@@ -389,14 +392,14 @@ class FileList extends React.Component {
                 <div className="panel-header">
                     <div className="title">
                         <i className="icon fi flaticon-history"/>
-                        File List
+                        Job List
                     </div>
                     <Search
                         placeholder="Search"
                         className="search-list"
                         value={searchString}
                         onChange={this.onSearchStringChange}
-                        onSearch={this.loadSearchDataFiles}
+                        onSearch={this.listBatchJobs}
                     />
                     <div className="spacer"></div>
                     <div className="selected-item-status">
@@ -424,8 +427,8 @@ class FileList extends React.Component {
                     </Button>
                 </div>
                 <div className="file-list-table-wrapper">
-                    {dataIsReturned ?
-                        <Table
+                    {dataIsReturned
+                        ? <Table
                             rowKey='filename'
                             rowSelection={rowSelection}
                             columns={this.columns}
