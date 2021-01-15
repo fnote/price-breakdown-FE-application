@@ -7,45 +7,30 @@
 export const getBffUrlConfig = () => {
     const CONFIG = {};
     if (process.env.REACT_APP_ENV === 'dev') {
-        CONFIG.listSearchFilesEndpoint = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/';
-        CONFIG.listOutputFilesEndpoint = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/output';
-        CONFIG.outputBucketFilesSignedUrlEndpoint = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/output';
-        CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
-        CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
-        CONFIG.logOutRedirectionUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/logout';
-        CONFIG.userDetailsUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/user-details';
-        CONFIG.fileUploadUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/input';
+        CONFIG.bffBaseUrl = 'https://cloud-pci-bff-dev.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/';
     } else if (process.env.REACT_APP_ENV === 'exe') {
-        CONFIG.listSearchFilesEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/';
-        CONFIG.listOutputFilesEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/files/output';
-        CONFIG.outputBucketFilesSignedUrlEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/output';
-        CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
-        CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
-        CONFIG.logOutRedirectionUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/logout';
-        CONFIG.userDetailsUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/user-details';
-        CONFIG.fileUploadUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/input';
+        CONFIG.bffBaseUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/';
     } else if (process.env.REACT_APP_ENV === 'stg') {
-        CONFIG.outputBucketFilesSignedUrlEndpoint = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/output';
-        CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
-        CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
-        CONFIG.logOutRedirectionUrl = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/logout';
-        CONFIG.userDetailsUrl = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/auth/user-details';
-        CONFIG.fileUploadUrl = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/input';
+        CONFIG.bffBaseUrl = 'https://cloud-pci-bff-stg.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/';
     } else if (process.env.REACT_APP_ENV === 'prod') {
-        CONFIG.outputBucketFilesSignedUrlEndpoint = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/batch/signed-url/output';
-        CONFIG.priceDataEndpoint = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/pricing/pricing-data';
-        CONFIG.loginRedirectionUrl = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/auth/login';
-        CONFIG.logOutRedirectionUrl = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/auth/logout';
-        CONFIG.userDetailsUrl = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/auth/user-details';
+        CONFIG.bffBaseUrl = 'https://cloud-pci-bff-prod.prcp.us-east-1.aws.sysco.net/v1/pci-bff/';
     } else {
-        CONFIG.listSearchFilesEndpoint = 'http://localhost:4000/local/v1/pci-bff/batch/files/';
-        CONFIG.listOutputFilesEndpoint = 'http://localhost:4000/local/v1/pci-bff/batch/files/output';
-        CONFIG.outputBucketFilesSignedUrlEndpoint = 'http://localhost:4000/local/v1/pci-bff/batch/signed-url/output';
-        CONFIG.priceDataEndpoint = 'http://localhost:4000/local/v1/pci-bff/pricing/pricing-data';
-        CONFIG.loginRedirectionUrl = 'http://localhost:4000/local/v1/pci-bff/auth/login';
-        CONFIG.logOutRedirectionUrl = 'http://localhost:4000/local/v1/pci-bff/auth/logout';
-        CONFIG.userDetailsUrl = 'http://localhost:4000/local/v1/pci-bff/auth/user-details';
-        CONFIG.fileUploadUrl = 'http://localhost:4000/local/v1/pci-bff/batch/signed-url/input';
+        CONFIG.bffBaseUrl = 'http://localhost:4000/local/v1/pci-bff/';
     }
+
+    // Auth apis
+    CONFIG.loginRedirectionUrl = CONFIG.bffBaseUrl + 'auth/login';
+    CONFIG.logOutRedirectionUrl = CONFIG.bffBaseUrl + 'auth/logout';
+    CONFIG.userDetailsUrl = CONFIG.bffBaseUrl + 'auth/user-details';
+
+    // Batch apis
+    CONFIG.listSearchFilesEndpoint = CONFIG.bffBaseUrl + 'batch/files/';
+    CONFIG.listOutputFilesEndpoint = CONFIG.bffBaseUrl + 'batch/files/output';
+    CONFIG.outputBucketFilesSignedUrlEndpoint = CONFIG.bffBaseUrl + 'batch/signed-url/output';
+    CONFIG.fileUploadUrl = CONFIG.bffBaseUrl + 'batch/signed-url/input';
+
+    //Pricing apis
+    CONFIG.priceDataEndpoint = CONFIG.bffBaseUrl + 'pricing/pricing-data';
+
     return CONFIG;
 };
