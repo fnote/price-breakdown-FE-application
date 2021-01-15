@@ -208,13 +208,23 @@
                 width: 100%;
               }
             }
+          }
+          &.warn {
+            @include flexbox(0 0 auto, row, flex-end, center);
+            color: $syscoorange;
+            @include breakpoint(xs) {
+              @include flexbox(0 0 auto, column, flex-end, flex-end);
+              .divider {
+                width: 100%;
+              }
+            }
             .divider {
-              border-top: 1px dashed $syscored;
+              border-top: 1px dashed $syscoorange;
               width: 2rem;
               margin: 0 0.5rem;
             }
             .download-error-file {
-              color: $syscored;
+              color: $syscoorange;
               font-size: 1rem;
               .icon {
                 font-size: 1.2rem;
