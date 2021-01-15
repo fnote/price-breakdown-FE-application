@@ -60,10 +60,15 @@ class FileList extends React.Component {
         jobDetail.fileName = jobDetail.fileName.replace(PCI_FILENAME_PREFIX, '');
         jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
             ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
+        jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
+        jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
         return jobDetail;
     };
 
     deleteJob = (jobId) => {
+        this.setState({
+            dataIsReturned: false
+        });
         this.jobDeleteRequestHandler(jobId)
             .then((response) => {
                 if (!response.ok) {
@@ -77,19 +82,19 @@ class FileList extends React.Component {
             this.removeDeletedJobFromList(jobId);
         }).catch(() => {
             this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
+            this.setState({
+                dataIsReturned: true
+            });
         });
     };
 
     removeDeletedJobFromList = (jobId) => {
         const rows = this.state.data;
-        rows.forEach((row, index) => {
-            if (row.jobDetail.jobId === jobId[0]) {
-                rows.splice(index, 1);
-            }
-        });
+        const filteredRows = rows.filter((row) => row.jobDetail.jobId !== jobId[0]);
 
         this.setState({
-            data: rows
+            data: filteredRows,
+            dataIsReturned: true
         });
     };
 
@@ -142,86 +147,6 @@ class FileList extends React.Component {
             });
         });
     };
-
-    columns = [
-        {
-            title: 'FILE NAME',
-            dataIndex: 'filename',
-            className: 'filename',
-        },
-        {
-            title: 'SUBMIT TIME',
-            dataIndex: 'startTime',
-            className: 'submittime'
-        },
-        {
-            title: 'END TIME',
-            dataIndex: 'endTime',
-            className: 'submittime'
-        },
-        {
-            dataIndex: 'jobDetail',
-            className: 'action',
-            width: 'auto',
-            render: (jobDetail) => (
-                <div className="action-bar">
-                    {jobDetail.status === JOB_INPROGRESS_STATUS && (
-                        <div className="file-process-status">FILE IS BEING PROCESSED</div>
-                    )}
-                    {jobDetail.status === JOB_PARTIALLY_COMPLETED_STATUS && (
-                        <div className="file-process-status warn">
-                            File Contained errors
-                            <div className="divider"></div>
-                            <Button className="btn empty-btn download-error-file"
-                                    onClick={() => {
-                                        this.downloadFile([jobDetail.minorErrorFileName]);
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                                View minor error file
-                            </Button>
-                        </div>
-                    )}
-                    {jobDetail.status === JOB_COMPLETE_STATUS && (
-                        <div className="file-process-status success">
-                            File processed successfully
-                        </div>
-                    )}
-                    {jobDetail.status === JOB_ERROR_STATUS && (
-                        <div className="file-process-status error">
-                            View error file
-                        </div>
-                    )}
-                    {jobDetail.status !== JOB_INPROGRESS_STATUS ? (
-                        <>
-                            <Button className="btn icon-only empty-btn"
-                                    onClick={() => {
-                                        this.deleteJob([jobDetail.jobId]);
-                                    }}
-                            >
-                                <i className="icon fi flaticon-bin"/>
-                            </Button>
-                            <Button className="btn icon-only empty-btn download-file"
-                                    onClick={() => {
-                                        this.downloadFile([jobDetail.fileName]);
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                            </Button>
-                        </>
-
-                    ) : (
-                        <>
-                            <Button className="btn icon-only empty-btn cancel-process">
-                                <i className="icon fi flaticon-close"/>
-                            </Button>
-                            <SyncOutlined spin className="icon processing-spinner"/>
-                        </>
-                    )}
-                </div>
-            ),
-        },
-    ];
 
     generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
         method: 'POST',
@@ -382,6 +307,86 @@ class FileList extends React.Component {
         this.listBatchJobs(searchString);
     };
 
+    columns = [
+        {
+            title: 'FILE NAME',
+            dataIndex: 'filename',
+            className: 'filename',
+        },
+        {
+            title: 'SUBMIT TIME',
+            dataIndex: 'startTime',
+            className: 'submittime'
+        },
+        {
+            title: 'END TIME',
+            dataIndex: 'endTime',
+            className: 'submittime'
+        },
+        {
+            dataIndex: 'jobDetail',
+            className: 'action',
+            width: 'auto',
+            render: (jobDetail) => (
+                <div className="action-bar">
+                    {jobDetail.status === JOB_INPROGRESS_STATUS && (
+                        <div className="file-process-status">FILE IS BEING PROCESSED</div>
+                    )}
+                    {jobDetail.status === JOB_PARTIALLY_COMPLETED_STATUS && (
+                        <div className="file-process-status warn">
+                            <Button className="btn empty-btn download-error-file"
+                                    onClick={() => {
+                                        this.downloadFile([jobDetail.minorErrorFileName]);
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                                View minor error file
+                            </Button>
+                            <div className="divider"></div>
+                            File Contained errors
+                        </div>
+                    )}
+                    {jobDetail.status === JOB_COMPLETE_STATUS && (
+                        <div className="file-process-status success">
+                            File processed successfully
+                        </div>
+                    )}
+                    {jobDetail.status === JOB_ERROR_STATUS && (
+                        <div className="file-process-status error">
+                            View error file
+                        </div>
+                    )}
+                    {jobDetail.status !== JOB_INPROGRESS_STATUS ? (
+                        <>
+                            <Button className="btn icon-only empty-btn"
+                                    onClick={() => {
+                                        this.deleteJob([jobDetail.jobId]);
+                                    }}
+                            >
+                                <i className="icon fi flaticon-bin"/>
+                            </Button>
+                            <Button className="btn icon-only empty-btn download-file"
+                                    onClick={() => {
+                                        this.downloadFile([jobDetail.fileName]);
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                            </Button>
+                        </>
+
+                    ) : (
+                        <>
+                            <Button className="btn icon-only empty-btn cancel-process">
+                                <i className="icon fi flaticon-close"/>
+                            </Button>
+                            <SyncOutlined spin className="icon processing-spinner"/>
+                        </>
+                    )}
+                </div>
+            ),
+        },
+    ];
+
     render() {
         const {loading, selectedRowKeys, data, dataIsReturned, searchString} = this.state;
         const rowSelection = {
@@ -426,7 +431,7 @@ class FileList extends React.Component {
                     <Button
                         type="link"
                         className="refresh-btn"
-                        onClick={() => this.listBatchJobs(this.state.searchString)}
+                        onClick={() => this.listBatchJobs(searchString)}
                     >
                         <i className="icon fi flaticon-refresh-1"/> Refresh
                     </Button>
