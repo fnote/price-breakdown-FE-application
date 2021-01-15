@@ -26,6 +26,7 @@ export const getBffUrlConfig = () => {
     // Batch apis
     CONFIG.listSearchFilesEndpoint = CONFIG.bffBaseUrl + 'batch/files/';
     CONFIG.listOutputFilesEndpoint = CONFIG.bffBaseUrl + 'batch/files/output';
+    CONFIG.bathcJobDeleteEndpointBaseUrl = CONFIG.bffBaseUrl + 'batch/jobs/';
     CONFIG.outputBucketFilesSignedUrlEndpoint = CONFIG.bffBaseUrl + 'batch/signed-url/output';
     CONFIG.fileUploadUrl = CONFIG.bffBaseUrl + 'batch/signed-url/input';
 

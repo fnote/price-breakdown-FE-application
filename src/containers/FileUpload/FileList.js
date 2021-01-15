@@ -42,15 +42,6 @@ class FileList extends React.Component {
         credentials: 'include'
     }).then(this.handleResponse);
 
-    fileDeleteRequestHandler = () => fetch(getBffUrlConfig().bathcJobDeleteEndpoint, {
-        method: 'DELETE',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include'
-    }).then(this.handleResponse);
-
     fileSearchListRequestHandler = (searchRequestEndpoint) => fetch(searchRequestEndpoint, {
         method: 'GET',
         headers: {
@@ -65,17 +56,18 @@ class FileList extends React.Component {
         return response.json().then((json) => {
             const responseData = json.data;
             if (response.ok && responseData) {
-                console.log(responseData);
                 responseData.forEach((file, index) => {
                     const action = {
                         status: file.action,
                         fileName: file.fileName,
+                        jobId: file.jobId,
                         minorErrorFileName: file.minorErrorFileName
                     };
                     files.push({
                         key: index + 1,
                         submittime: file.date,
                         filename: file.fileName,
+                        jobId: file.jobId,
                         action: action,
                     });
                 });
@@ -84,6 +76,45 @@ class FileList extends React.Component {
             return {success: false, data: files};
         });
     };
+
+    deleteFile = (jobId) => {
+        this.setState({
+            dataIsReturned: false
+        });
+
+        this.jobDeleteRequestHandler(jobId)
+            .then(response => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            }).then(response => {
+                const fileNames = response.data.fileNames;
+                this.openNotificationWithIcon('success',
+                    `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
+                this.removeDeletedJobFromList(jobId);
+            }).catch((error) => {
+                this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
+
+                this.setState({
+                    dataIsReturned: true
+                });
+            });
+    };
+
+    removeDeletedJobFromList = (jobId) => {
+        const files = this.state.data;
+        files.forEach((file, index) => {
+            if(file.jobId === jobId[0]){
+                files.splice(index, 1);
+            }
+        });
+
+        this.setState({
+            dataIsReturned: true,
+            data: files
+        });
+    }
 
     downloadFile = (fileNamesArray) => {
         this.setState({
@@ -137,6 +168,19 @@ class FileList extends React.Component {
         credentials: 'include'
     });
 
+    getJobsDeleteEndpoint = (jobId) => {
+        return getBffUrlConfig().bathcJobDeleteEndpointBaseUrl + jobId;
+    }
+
+    jobDeleteRequestHandler = (jobId) => fetch(this.getJobsDeleteEndpoint(jobId), {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    });
+
     downloadFromSignedUrl = (fileNameUrlArray) => {
         let iteration = 0;
         return fileNameUrlArray.map(({fileName, readUrl}) => {
@@ -171,7 +215,7 @@ class FileList extends React.Component {
                             if (error.status === 404) {
                                 errorMsg = 'Failed to download as file is not found.';
                             }
-                            this.openNotificationWithIcon('error', errorMsg + ` : ${fileNameWithoutPciPrefix}`);
+                            this.openNotificationWithIcon('error', errorMsg + ` : ${fileNameWithoutPciPrefix}`, 'Failure');
                             reject();
                         });
                 }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
@@ -179,29 +223,14 @@ class FileList extends React.Component {
         });
     };
 
-    openNotificationWithIcon = (type, description) => {
+    openNotificationWithIcon = (type, description, message) => {
         notification[type]({
-            message: 'Failure',
+            message: message,
             description: description,
         });
     };
 
     loadDataFiles = () => {
-        this.setState({
-            dataIsReturned: false,
-            searchString: ''
-        })
-        this.fileListRequestHandler().then((res) => {
-            if (res.success) {
-                this.setState({
-                    data: res.data,
-                    dataIsReturned: true
-                })
-            }
-        });
-    }
-
-    deleteFiles = () => {
         this.setState({
             dataIsReturned: false,
             searchString: ''
@@ -241,7 +270,7 @@ class FileList extends React.Component {
 
     start = () => {
         if (this.state.selectedRowValues.length > MAX_DOWNLOAD_ALLOWED) {
-            this.openNotificationWithIcon('error', 'Too many files to download.');
+            this.openNotificationWithIcon('error', 'Too many files to download.', 'Failure');
             return;
         }
 
@@ -297,9 +326,7 @@ class FileList extends React.Component {
                 selectedRowKeys: remainingSelectedRowKeys,
                 selectedRowValues: remainingSelectedRow
             });
-
         }
-
     }
 
     onSearchStringChange = (searchBox) => {
@@ -348,7 +375,12 @@ class FileList extends React.Component {
                     )}
                     {data.status !== FILE_PROCESSING ? (
                         <>
-                            <Button className="btn icon-only empty-btn">
+                            <Button className="btn icon-only empty-btn"
+                                    onClick={() => {
+                                        this.deleteFile([data.jobId]);
+
+                                    }}
+                            >
                                 <i className="icon fi flaticon-bin"/>
                             </Button>
                             <Button className="btn icon-only empty-btn download-file"
