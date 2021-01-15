@@ -37,7 +37,16 @@ class FileList extends React.Component {
         method: 'GET',
         headers: {
             'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    }).then(this.handleResponse);
+
+    fileDeleteRequestHandler = () => fetch(getBffUrlConfig().bathcJobDeleteEndpoint, {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
         },
         credentials: 'include'
     }).then(this.handleResponse);
@@ -56,6 +65,7 @@ class FileList extends React.Component {
         return response.json().then((json) => {
             const responseData = json.data;
             if (response.ok && responseData) {
+                console.log(responseData);
                 responseData.forEach((file, index) => {
                     const action = {
                         status: file.action,
@@ -177,6 +187,21 @@ class FileList extends React.Component {
     };
 
     loadDataFiles = () => {
+        this.setState({
+            dataIsReturned: false,
+            searchString: ''
+        })
+        this.fileListRequestHandler().then((res) => {
+            if (res.success) {
+                this.setState({
+                    data: res.data,
+                    dataIsReturned: true
+                })
+            }
+        });
+    }
+
+    deleteFiles = () => {
         this.setState({
             dataIsReturned: false,
             searchString: ''
