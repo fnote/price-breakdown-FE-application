@@ -42,7 +42,7 @@ class FileList extends React.Component {
             credentials: 'include'
         }).then(this.handleResponse);
 
-    fileDeleteRequestHandler = () => fetch(getBffUrlConfig().bathcJobDeleteEndpoint, {
+    fileDeleteRequestHandler = () => fetch(getBffUrlConfig().batchJobsUrl, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -193,14 +193,14 @@ class FileList extends React.Component {
                 });
             }
         });
-    }
+    };
 
     deleteFiles = () => {
         this.setState({
             dataIsReturned: false,
             searchString: ''
         });
-        this.batchJobListRequestHandler().then((res) => {
+        this.fileDeleteRequestHandler().then((res) => {
             if (res.success) {
                 this.setState({
                     data: res.data,
@@ -208,7 +208,7 @@ class FileList extends React.Component {
                 });
             }
         });
-    }
+    };
 
     generateBatchJobSearchUrl = (searchString) => `${getBffUrlConfig().batchJobsUrl}?searchQuery=${searchString}`
 
@@ -227,7 +227,7 @@ class FileList extends React.Component {
                     dataIsReturned: true
                 });
             }
-        }).catch((err) => {
+        }).catch(() => {
             this.setState({
                 dataIsReturned: true
             });
