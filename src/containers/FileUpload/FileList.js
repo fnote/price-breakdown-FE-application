@@ -4,13 +4,14 @@ import {SyncOutlined} from '@ant-design/icons';
 import {getBffUrlConfig} from '../../utils/Configs';
 import {
     EMPTY_STRING,
+    JOB_COMPLETE_STATUS,
     JOB_ERROR_STATUS,
     JOB_INPROGRESS_STATUS,
-    JOB_COMPLETE_STATUS,
+    JOB_PARTIALLY_COMPLETED_STATUS,
     MAX_DOWNLOAD_ALLOWED,
     PCI_FILENAME_PREFIX,
     TAG_NAME_A,
-    TIMEOUT_DURING_DOWNLOAD_CLICKS, JOB_PARTIALLY_COMPLETED_STATUS
+    TIMEOUT_DURING_DOWNLOAD_CLICKS
 } from '../../constants/Constants';
 import JobDetail from '../../model/jobDetail';
 
@@ -38,9 +39,8 @@ class FileList extends React.Component {
         return response.json().then((json) => {
             const responseData = json.data;
             if (response.ok && responseData) {
-                console.log(responseData);
                 responseData.forEach((job) => {
-                    const jobDetail = JobDetail.fromJson(job);
+                    const jobDetail = this.formatJobDetailObject(job);
                     batchJobDetailList.push({
                         key: jobDetail.jobId,
                         startTime: jobDetail.startTime,
@@ -51,8 +51,16 @@ class FileList extends React.Component {
                 });
                 return {success: true, data: batchJobDetailList};
             }
-                return {success: false, data: batchJobDetailList};
+            return {success: false, data: batchJobDetailList};
         });
+    };
+
+    formatJobDetailObject = (job) => {
+        const jobDetail = JobDetail.fromJson(job);
+        jobDetail.fileName = jobDetail.fileName.replace(PCI_FILENAME_PREFIX, '');
+        jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
+            ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
+        return jobDetail;
     };
 
     deleteJob = (jobId) => {
@@ -63,13 +71,13 @@ class FileList extends React.Component {
                 }
                 return response.json();
             }).then((response) => {
-                const fileNames = response.data.fileNames;
-                this.openNotificationWithIcon('success',
-                    `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
-                this.removeDeletedJobFromList(jobId);
-            }).catch(() => {
-                this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
-            });
+            const fileNames = response.data.fileNames;
+            this.openNotificationWithIcon('success',
+                `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
+            this.removeDeletedJobFromList(jobId);
+        }).catch(() => {
+            this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
+        });
     };
 
     removeDeletedJobFromList = (jobId) => {
@@ -135,6 +143,86 @@ class FileList extends React.Component {
         });
     };
 
+    columns = [
+        {
+            title: 'FILE NAME',
+            dataIndex: 'filename',
+            className: 'filename',
+        },
+        {
+            title: 'SUBMIT TIME',
+            dataIndex: 'startTime',
+            className: 'submittime'
+        },
+        {
+            title: 'END TIME',
+            dataIndex: 'endTime',
+            className: 'submittime'
+        },
+        {
+            dataIndex: 'jobDetail',
+            className: 'action',
+            width: 'auto',
+            render: (jobDetail) => (
+                <div className="action-bar">
+                    {jobDetail.status === JOB_INPROGRESS_STATUS && (
+                        <div className="file-process-status">FILE IS BEING PROCESSED</div>
+                    )}
+                    {jobDetail.status === JOB_PARTIALLY_COMPLETED_STATUS && (
+                        <div className="file-process-status warn">
+                            File Contained errors
+                            <div className="divider"></div>
+                            <Button className="btn empty-btn download-error-file"
+                                    onClick={() => {
+                                        this.downloadFile([jobDetail.minorErrorFileName]);
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                                View minor error file
+                            </Button>
+                        </div>
+                    )}
+                    {jobDetail.status === JOB_COMPLETE_STATUS && (
+                        <div className="file-process-status success">
+                            File processed successfully
+                        </div>
+                    )}
+                    {jobDetail.status === JOB_ERROR_STATUS && (
+                        <div className="file-process-status error">
+                            View error file
+                        </div>
+                    )}
+                    {jobDetail.status !== JOB_INPROGRESS_STATUS ? (
+                        <>
+                            <Button className="btn icon-only empty-btn"
+                                    onClick={() => {
+                                        this.deleteJob([jobDetail.jobId]);
+                                    }}
+                            >
+                                <i className="icon fi flaticon-bin"/>
+                            </Button>
+                            <Button className="btn icon-only empty-btn download-file"
+                                    onClick={() => {
+                                        this.downloadFile([jobDetail.fileName]);
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                            </Button>
+                        </>
+
+                    ) : (
+                        <>
+                            <Button className="btn icon-only empty-btn cancel-process">
+                                <i className="icon fi flaticon-close"/>
+                            </Button>
+                            <SyncOutlined spin className="icon processing-spinner"/>
+                        </>
+                    )}
+                </div>
+            ),
+        },
+    ];
+
     generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
         method: 'POST',
         body: JSON.stringify({
@@ -150,41 +238,41 @@ class FileList extends React.Component {
     downloadFromSignedUrl = (fileNameUrlArray) => {
         let iteration = 0;
         return fileNameUrlArray.map(({fileName, readUrl}) => new Promise((resolve, reject) => {
-                const regex = new RegExp(`^(${PCI_FILENAME_PREFIX})`);
-                const fileNameWithoutPciPrefix = fileName.replace(regex, EMPTY_STRING);
-                iteration += 1;
-                setTimeout(() => {
-                    fetch(readUrl)
-                        .then((response) => {
-                            if (!response.ok) {
-                                const err = new Error(response.statusText);
-                                err.status = response.status;
-                                throw err;
-                            }
-                            return response;
-                        })
-                        .then((response) => response.blob())
-                        .then((blob) => URL.createObjectURL(blob))
-                        .then((uri) => {
-                            const link = document.createElement(TAG_NAME_A);
-                            link.href = uri;
-                            link.download = fileNameWithoutPciPrefix;
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
+            const regex = new RegExp(`^(${PCI_FILENAME_PREFIX})`);
+            const fileNameWithoutPciPrefix = fileName.replace(regex, EMPTY_STRING);
+            iteration += 1;
+            setTimeout(() => {
+                fetch(readUrl)
+                    .then((response) => {
+                        if (!response.ok) {
+                            const err = new Error(response.statusText);
+                            err.status = response.status;
+                            throw err;
+                        }
+                        return response;
+                    })
+                    .then((response) => response.blob())
+                    .then((blob) => URL.createObjectURL(blob))
+                    .then((uri) => {
+                        const link = document.createElement(TAG_NAME_A);
+                        link.href = uri;
+                        link.download = fileNameWithoutPciPrefix;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
 
-                            resolve();
-                        })
-                        .catch((error) => {
-                            let errorMsg = 'Failed to download the file.';
-                            if (error.status === 404) {
-                                errorMsg = 'Failed to download as file is not found.';
-                            }
-                            this.openNotificationWithIcon('error', `${errorMsg} : ${fileNameWithoutPciPrefix}`, 'Failure');
-                            reject();
-                        });
-                }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
-            }));
+                        resolve();
+                    })
+                    .catch((error) => {
+                        let errorMsg = 'Failed to download the file.';
+                        if (error.status === 404) {
+                            errorMsg = 'Failed to download as file is not found.';
+                        }
+                        this.openNotificationWithIcon('error', `${errorMsg} : ${fileNameWithoutPciPrefix}`, 'Failure');
+                        reject();
+                    });
+            }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
+        }));
     };
 
     openNotificationWithIcon = (type, description, msg) => {
@@ -203,7 +291,7 @@ class FileList extends React.Component {
         credentials: 'include'
     }).then(this.handleResponse);
 
-    generateBatchJobSearchUrl = (searchString) => `${getBffUrlConfig().batchJobsUrl}?searchQuery=${searchString}`
+    generateBatchJobSearchUrl = (searchString) => `${getBffUrlConfig().batchJobsUrl}?searchQuery=${searchString}`;
 
     listBatchJobs = (searchString = '') => {
         this.setState({
@@ -294,86 +382,6 @@ class FileList extends React.Component {
         this.listBatchJobs(searchString);
     };
 
-    columns = [
-        {
-            title: 'FILE NAME',
-            dataIndex: 'filename',
-            className: 'filename',
-        },
-        {
-            title: 'SUBMIT TIME',
-            dataIndex: 'startTime',
-            className: 'submittime'
-        },
-        {
-            title: 'END TIME',
-            dataIndex: 'endTime',
-            className: 'submittime'
-        },
-        {
-            dataIndex: 'jobDetail',
-            className: 'jobDetail',
-            width: 'auto',
-            render: (jobDetail) => (
-                <div className="action-bar">
-                    {jobDetail.status === JOB_INPROGRESS_STATUS && (
-                        <div className="file-process-status">FILE IS BEING PROCESSED</div>
-                    )}
-                    {jobDetail.status === JOB_PARTIALLY_COMPLETED_STATUS && (
-                        <div className="file-process-status warn">
-                            File Contained errors
-
-                            <Button className="btn empty-btn download-error-file"
-                                    onClick={() => {
-                                        this.downloadFile([jobDetail.minorErrorFileName]);
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                                View minor error file
-                            </Button>
-                        </div>
-                    )}
-                    {jobDetail.status === JOB_COMPLETE_STATUS && (
-                        <div className="file-process-status success">
-                            File processed successfully
-                        </div>
-                    )}
-                    {jobDetail.status === JOB_ERROR_STATUS && (
-                        <div className="file-process-status error">
-                            View error file
-                        </div>
-                    )}
-                    {jobDetail.status !== JOB_INPROGRESS_STATUS ? (
-                        <>
-                            <Button className="btn icon-only empty-btn"
-                                    onClick={() => {
-                                        this.deleteJob([jobDetail.jobId]);
-                                    }}
-                            >
-                                <i className="icon fi flaticon-bin"/>
-                            </Button>
-                            <Button className="btn icon-only empty-btn download-file"
-                                    onClick={() => {
-                                        this.downloadFile([jobDetail.fileName]);
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                            </Button>
-                        </>
-
-                    ) : (
-                        <>
-                            <Button className="btn icon-only empty-btn cancel-process">
-                                <i className="icon fi flaticon-close"/>
-                            </Button>
-                            <SyncOutlined spin className="icon processing-spinner"/>
-                        </>
-                    )}
-                </div>
-            ),
-        },
-    ];
-
     render() {
         const {loading, selectedRowKeys, data, dataIsReturned, searchString} = this.state;
         const rowSelection = {
@@ -418,7 +426,7 @@ class FileList extends React.Component {
                     <Button
                         type="link"
                         className="refresh-btn"
-                        onClick={this.listBatchJobs}
+                        onClick={() => this.listBatchJobs(this.state.searchString)}
                     >
                         <i className="icon fi flaticon-refresh-1"/> Refresh
                     </Button>

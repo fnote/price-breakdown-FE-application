@@ -1,15 +1,14 @@
 import React from 'react';
-import {message, Upload} from 'antd';
-import {getBffUrlConfig} from "../../utils/Configs";
+import {notification, Upload} from 'antd';
 import axios from 'axios';
+import {getBffUrlConfig} from '../../utils/Configs';
 import {
-    FILE_UPLOADING,
     FILE_UPLOADING_DONE,
     FILE_UPLOADING_ERROR,
     INVALID_FILE_TYPE,
     PCI_FILENAME_PREFIX
 } from '../../constants/Constants';
-import {isValidFileType} from "./UploadValidation";
+import {isValidFileType} from './UploadValidation';
 
 const {Dragger} = Upload;
 
@@ -25,7 +24,7 @@ export class FileUploadError extends Error {
 const handleResponse = (response) => response.json()
     .then((data) => {
         if (response.ok) {
-            return {success: true, data: data};
+            return {success: true, data};
         }
         throw new Error(data);
     });
@@ -34,6 +33,19 @@ const formRequestBody = (fileName, fileType) => JSON.stringify({
     fileNames: [fileName],
     contentType: fileType
 });
+
+const uploadArtifact = (path, payload) => {
+    const config = {
+        headers: {
+            'Content-Type': payload.file.type,
+        },
+        onUploadProgress: (e) => {
+            payload.onProgress({percent: (e.loaded / e.total) * 100});
+        },
+    };
+
+    return axios.put(path, payload.file, config);
+};
 
 const fileUploadHandler = (payload) => {
     const filenameWithPciPrefix = PCI_FILENAME_PREFIX + payload.info.file.name;
@@ -51,37 +63,22 @@ const fileUploadHandler = (payload) => {
             if (resp.success) {
                 const data = resp.data.data[0];
                 uploadArtifact(data.putUrl, payload.info)
-                    .then(result => {
+                    .then((result) => {
                         payload.info.onSuccess(result, payload.info.file);
                     })
-                    .catch(error => {
+                    .catch(() => {
                         payload.info.onError();
                     });
                 return resp.data;
-            } else {
-                return null;
             }
+            return null;
         })
         .catch((e) => {
             payload.info.onError(e);
         });
 };
 
-const uploadArtifact = (path, payload) => {
-    const config = {
-        headers: {
-            'Content-Type': payload.file.type,
-        },
-        onUploadProgress: e => {
-            payload.onProgress({percent: (e.loaded / e.total) * 100});
-        },
-    };
-
-    return axios.put(path, payload.file, config);
-
-}
-
-const customUpload = info => {
+const customUpload = (info) => {
     if (isValidFileType(info.file.type)) {
         return new Promise((resolve, reject) => fileUploadHandler({
             info,
@@ -92,22 +89,27 @@ const customUpload = info => {
     return info.onError(new FileUploadError(INVALID_FILE_TYPE));
 };
 
+const openNotificationWithIcon = (type, description, msg) => {
+    notification[type]({
+        message: msg,
+        description,
+    });
+};
+
 const props = {
     name: 'file',
     multiple: true,
     customRequest: customUpload,
     onChange(info) {
         const {status} = info.file;
-        if (status !== FILE_UPLOADING) {
-        }
         if (status === FILE_UPLOADING_DONE) {
-            message.success(`${info.file.name} file uploaded successfully.`);
+            openNotificationWithIcon('success', `${info.file.name} file uploaded successfully.`, 'Success');
         } else if (status === FILE_UPLOADING_ERROR) {
             const err = info.file.error;
             if (err && err.errorType === INVALID_FILE_TYPE) {
-                message.error(`${info.file.name} file upload failed due to unsupported file type.`);
+                openNotificationWithIcon('error', `${info.file.name} file upload failed due to unsupported file type.`, 'Failure');
             } else {
-                message.error(`${info.file.name} file upload failed.`);
+                openNotificationWithIcon('error', `${info.file.name} file upload failed.`, 'Failure');
             }
         }
     },
