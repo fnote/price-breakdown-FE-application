@@ -82,6 +82,45 @@ class FileList extends React.Component {
         });
     };
 
+    deleteFile = (jobId) => {
+        this.setState({
+            dataIsReturned: false
+        });
+
+        this.jobDeleteRequestHandler(jobId)
+            .then(response => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            }).then(response => {
+                const fileNames = response.data.fileNames;
+                this.openNotificationWithIcon('success',
+                    `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
+                this.removeDeletedJobFromList(jobId);
+            }).catch((error) => {
+                this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
+
+                this.setState({
+                    dataIsReturned: true
+                });
+            });
+    };
+
+    removeDeletedJobFromList = (jobId) => {
+        const files = this.state.data;
+        files.forEach((file, index) => {
+            if(file.jobId === jobId[0]){
+                files.splice(index, 1);
+            }
+        });
+
+        this.setState({
+            dataIsReturned: true,
+            data: files
+        });
+    }
+
     downloadFile = (fileNamesArray) => {
         this.setState({
             dataIsReturned: false
@@ -133,6 +172,19 @@ class FileList extends React.Component {
         credentials: 'include'
     });
 
+    getJobsDeleteEndpoint = (jobId) => {
+        return getBffUrlConfig().bathcJobDeleteEndpointBaseUrl + jobId;
+    }
+
+    jobDeleteRequestHandler = (jobId) => fetch(this.getJobsDeleteEndpoint(jobId), {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json',
+        },
+        credentials: 'include'
+    });
+
     downloadFromSignedUrl = (fileNameUrlArray) => {
         let iteration = 0;
         return fileNameUrlArray.map(({fileName, readUrl}) => new Promise((resolve, reject) => {
@@ -166,17 +218,17 @@ class FileList extends React.Component {
                             if (error.status === 404) {
                                 errorMsg = 'Failed to download as file is not found.';
                             }
-                            this.openNotificationWithIcon('error', `${errorMsg} : ${fileNameWithoutPciPrefix}`);
+                            this.openNotificationWithIcon('error', `${errorMsg} : ${fileNameWithoutPciPrefix}`, 'Failure');
                             reject();
                         });
                 }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
             }));
     };
 
-    openNotificationWithIcon = (type, description) => {
+    openNotificationWithIcon = (type, description, message) => {
         notification[type]({
-            message: 'Failure',
-            description,
+            message: message,
+            description: description,
         });
     };
 
@@ -190,25 +242,10 @@ class FileList extends React.Component {
                 this.setState({
                     data: res.data,
                     dataIsReturned: true
-                });
+                })
             }
         });
-    };
-
-    deleteFiles = () => {
-        this.setState({
-            dataIsReturned: false,
-            searchString: ''
-        });
-        this.fileDeleteRequestHandler().then((res) => {
-            if (res.success) {
-                this.setState({
-                    data: res.data,
-                    dataIsReturned: true
-                });
-            }
-        });
-    };
+    }
 
     generateBatchJobSearchUrl = (searchString) => `${getBffUrlConfig().batchJobsUrl}?searchQuery=${searchString}`
 
@@ -237,7 +274,7 @@ class FileList extends React.Component {
 
     start = () => {
         if (this.state.selectedRowValues.length > MAX_DOWNLOAD_ALLOWED) {
-            this.openNotificationWithIcon('error', 'Too many files to download.');
+            this.openNotificationWithIcon('error', 'Too many files to download.', 'Failure');
             return;
         }
 
@@ -352,7 +389,12 @@ class FileList extends React.Component {
                     )}
                     {data.status !== JOB_PROCESSING_STATUS ? (
                         <>
-                            <Button className="btn icon-only empty-btn">
+                            <Button className="btn icon-only empty-btn"
+                                    onClick={() => {
+                                        this.deleteFile([data.jobId]);
+
+                                    }}
+                            >
                                 <i className="icon fi flaticon-bin"/>
                             </Button>
                             <Button className="btn icon-only empty-btn download-file"

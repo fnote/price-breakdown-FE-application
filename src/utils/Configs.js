@@ -24,8 +24,8 @@ export const getBffUrlConfig = () => {
     CONFIG.userDetailsUrl = `${CONFIG.bffBaseUrl}auth/user-details`;
 
     // Batch apis
-    CONFIG.filesUploadUrl = `${CONFIG.bffBaseUrl}batch/files/signed-url/input`;
-    CONFIG.filesDownloadUrl = `${CONFIG.bffBaseUrl}batch/files/signed-url/output`;
+    CONFIG.filesUploadUrl = `${CONFIG.bffBaseUrl}batch/files/input`;
+    CONFIG.filesDownloadUrl = `${CONFIG.bffBaseUrl}batch/files/output`;
     CONFIG.batchJobsUrl = `${CONFIG.bffBaseUrl}batch/jobs`;
 
     // Pricing apis
