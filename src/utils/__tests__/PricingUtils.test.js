@@ -153,7 +153,7 @@ describe('getFormattedPercentageValue', () => {
 
 describe('getReadableDiscountName', () => {
     test('should return the readable name', () => {
-        expect(getReadableDiscountName('STRATEGIC_DISCOUNT')).toEqual('Strategic Discount');
+        expect(getReadableDiscountName('STRATEGIC_RPA_DISCOUNT')).toEqual('Strategic RPA Discount');
         expect(getReadableDiscountName('NEW_CUSTOMER_DISCOUNT')).toEqual('New Customer Discount');
         expect(getReadableDiscountName('CASE_SPLIT_UPCHARGE')).toEqual('Split Up Charge');
         expect(getReadableDiscountName('SOME_THING_ELSE')).toEqual();
@@ -508,7 +508,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
                 {
                     id: 1111,
                     type: 'REFERENCE_PRICE',
-                    name: 'STRATEGIC_DISCOUNT',
+                    name: 'STRATEGIC_RPA_DISCOUNT',
                     amount: 0.99,
                     priceAdjustment: 72.23,
                     effectiveFrom: '20201025',
@@ -536,7 +536,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
             'id': 1111,
             'adjustmentValue': '-1.00%',
             'calculatedValue': '$72.230',
-            'description': 'Strategic Discount',
+            'description': 'Strategic RPA Discount',
             'source': 'Discount Service',
             'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
@@ -550,7 +550,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
                 {
                     id: 1111,
                     type: 'REFERENCE_PRICE',
-                    name: 'STRATEGIC_DISCOUNT',
+                    name: 'STRATEGIC_RPA_DISCOUNT',
                     amount: 0.99,
                     priceAdjustment: 72.23,
                     effectiveFrom: '20201025',
@@ -578,7 +578,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
             'id': 1111,
             'adjustmentValue': '-1.00%',
             'calculatedValue': '$72.230',
-            'description': 'Strategic Discount',
+            'description': 'Strategic RPA Discount',
             'source': 'Discount Service',
             'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
@@ -592,7 +592,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
                 {
                     id: 1111,
                     type: 'REFERENCE_PRICE',
-                    name: 'STRATEGIC_DISCOUNT',
+                    name: 'STRATEGIC_RPA_DISCOUNT',
                     amount: 0.99,
                     priceAdjustment: 72.23,
                     effectiveFrom: '20201025',
@@ -620,7 +620,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
             'id': 1111,
             'adjustmentValue': '-1.00%',
             'calculatedValue': '$72.230',
-            'description': 'Strategic Discount',
+            'description': 'Strategic RPA Discount',
             'source': 'Discount Service',
             'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
