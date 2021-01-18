@@ -7,7 +7,8 @@ import {
     prepareOrderUnitPriceInfo,
     prepareStrikeThroughPriceInfo,
     prepareVolumePricingHeaderRow,
-    prepareVolumePricingTiers
+    prepareVolumePricingTiers,
+    prepareDefaultPriceRuleSection
 } from '../../../utils/PricingUtils';
 
 const renderHeaderRow = ({
@@ -97,29 +98,38 @@ function PriceBarDetailed({ priceData: { product }}) {
     const discountPriceSection = prepareDiscountPriceInfo(product);
     const strikeThroughPriceSection = prepareStrikeThroughPriceInfo(product);
     const localSegmentRefPriceSection = prepareLocalSegmentPriceInfo(product);
+    let defaultPriceRuleSection;
+    if (product.priceRule !== null) {
+       defaultPriceRuleSection = prepareDefaultPriceRuleSection(product);
+    }
 
   return (
     <div className="price-bar-detailed">
       <div className="price-bar-divider"/>
       <section className="detailed-left">
         <PriceBarDetailedHeader />
-        <div className="block group1">
+          {product.priceRule !== null
+            && <div id="group0" className="block group1">
+                {renderDetailedSection(defaultPriceRuleSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
+            </div>
+          }
+        <div id="group1" className="block group1">
           {renderDetailedSection(localSegmentRefPriceSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
         </div>
-        <div className="block group2">
+        <div id="group2" className="block group2">
           {renderDetailedSection(strikeThroughPriceSection, volumeTierRows)}
         </div>
       </section>
       <div className="price-bar-divider overlap"/>
       <section className="detailed-right">
         <PriceBarDetailedHeader />
-        <div className="block group3">
+        <div id="group3" className="block group3">
           {renderDetailedSection(discountPriceSection)}
         </div>
-        <div className="block group4">
+        <div id="group4" className="block group4">
           {renderDetailedSection(orderUnitPriceSection)}
         </div>
-          <div className="block group5">
+          <div id="group5" className="block group5">
               {renderDetailedSection(customerNetPriceInfo)}
           </div>
       </section>

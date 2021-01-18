@@ -44,6 +44,9 @@ import {
     AVAILABLE_PRICE_ZONES,
     NOT_APPLICABLE_LABEL,
     FRACTION_DIGITS_CHANGING_MARGIN_VALUE,
+    DESCRIPTION_PRICE_RULE,
+    PERCENTAGE_SIGN,
+    UNKNOWN_BASE_VALUE_NAME,
 } from '../constants/Constants';
 
 const getFractionDigits = ({ perWeightFlag, useFixedFractionDigits, digits }) => {
@@ -56,15 +59,19 @@ const getFractionDigits = ({ perWeightFlag, useFixedFractionDigits, digits }) =>
  * Formats a given number into a String with decimal representation. To be used for displaying currency with currency symbol
  * */
 export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }) => (value >= 0
-    ? `${CURRENCY_SYMBOL_USD}${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`
-    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`);
+    ? `${CURRENCY_SYMBOL_USD}${value.toFixed(getFractionDigits({perWeightFlag, useFixedFractionDigits, digits}))}`
+    : `-${CURRENCY_SYMBOL_USD}${(-1 * value).toFixed(getFractionDigits({
+        perWeightFlag,
+        useFixedFractionDigits,
+        digits
+    }))}`);
 
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency without currency symbol
  * */
 export const formatPriceWithoutCurrency = (
     value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }
-    ) => `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
+) => `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
 
 export const convertFactorToPercentage = (factor) => `${(factor * 100).toFixed(PERCENTAGE_FRACTION_DIGITS)}%`;
 
@@ -90,9 +97,7 @@ export const generateReadableDate = (dateString) => generateDateObject(dateStrin
 
 export const generateValidityPeriod = (effectiveFrom, effectiveTo) => `Valid ${generateReadableDate(effectiveFrom)} - ${generateReadableDate(effectiveTo)}`;
 
-export const mapDiscountToDataRow = ({
-    id, name, amount, priceAdjustment, effectiveFrom, effectiveTo
-}, source, { perWeightFlag, useFixedFractionDigits }) => ({
+export const mapDiscountToDataRow = ({ id, name, amount, priceAdjustment, effectiveFrom, effectiveTo }, source, { perWeightFlag, useFixedFractionDigits }) => ({
     id,
     description: getReadableDiscountName(name),
     adjustmentValue: getFormattedPercentageValue(amount),
@@ -101,9 +106,7 @@ export const mapDiscountToDataRow = ({
     source
 });
 
-export const mapAgreementToDataRow = ({
-    id, description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo
-}, source, { perWeightFlag }) => {
+export const mapAgreementToDataRow = ({ id, description, percentageAdjustment, priceAdjustment, effectiveFrom, effectiveTo }, source, { perWeightFlag }) => {
     const formattedPriceAdjustment = formatPrice(priceAdjustment, { perWeightFlag });
     return {
         id,
@@ -117,9 +120,7 @@ export const mapAgreementToDataRow = ({
 
 const calculateExceptionAdjustment = (exceptionPrice, customerPrequalifiedPrice) => exceptionPrice - customerPrequalifiedPrice;
 
-export const mapExceptionToDataRow = ({
-    id, price, effectiveFrom, effectiveTo
-}, customerPrequalifiedPrice, { perWeightFlag }) => {
+export const mapExceptionToDataRow = ({ id, price, effectiveFrom, effectiveTo }, customerPrequalifiedPrice, { perWeightFlag }) => {
     const formattedCalculatedAdjustment = formatPrice(calculateExceptionAdjustment(price, customerPrequalifiedPrice), { perWeightFlag });
     return {
         id,
@@ -150,7 +151,7 @@ const getRangeConnectorValue = (operator, lowerBound, upperBound) => {
     return VOLUME_TIER_RANGE_CONNECTOR_AND;
 };
 
-export const mapVolumeTierToTableRow = ({ eligibility: {operator, lowerBound, upperBound}, discounts, isApplicable }, { perWeightFlag }) => ({
+export const mapVolumeTierToTableRow = ({ eligibility: { operator, lowerBound, upperBound }, discounts, isApplicable }, { perWeightFlag }) => ({
     description: {
         rangeStart: lowerBound,
         rangeEnd: getRangeEndValue(operator, lowerBound, upperBound),
@@ -162,9 +163,7 @@ export const mapVolumeTierToTableRow = ({ eligibility: {operator, lowerBound, up
     isSelected: !!isApplicable
 });
 
-export const extractPricePoints = ({
-    grossPrice, customerReferencePrice, customerPrequalifiedPrice, unitPrice, netPrice
-}) => ({
+export const extractPricePoints = ({ grossPrice, customerReferencePrice, customerPrequalifiedPrice, unitPrice, netPrice }) => ({
     grossPrice,
     customerReferencePrice,
     customerPrequalifiedPrice,
@@ -172,17 +171,13 @@ export const extractPricePoints = ({
     netPrice
 });
 
-export const extractItemInfo = ({
-    id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
-}) => ({
+export const extractItemInfo = ({ id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight }) => ({
     id, name, brand, pack, size, stockIndicator, catchWeightIndicator, averageWeight
 });
 
 export const getValidatedPriceZone = (priceZoneId) => (AVAILABLE_PRICE_ZONES.includes(priceZoneId) ? priceZoneId : NOT_APPLICABLE_LABEL);
 
-export const extractSiteInfo = ({
-    customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId }
-}) => ({
+export const extractSiteInfo = ({ customerAccount, customerName, customerType, businessUnitNumber, product: { priceZoneId } }) => ({
     businessUnitNumber,
     customerAccount,
     customerName,
@@ -251,11 +246,9 @@ export const prepareStrikeThroughPriceInfo = ({
     return [headerRow, ...preQualifiedDiscounts];
 };
 
-export const isApplyToPriceOrBaseAgreement = ({applicationCode}) => applicationCode === AGREEMENT_CODE_P || applicationCode === AGREEMENT_CODE_B;
+export const isApplyToPriceOrBaseAgreement = ({ applicationCode }) => applicationCode === AGREEMENT_CODE_P || applicationCode === AGREEMENT_CODE_B;
 
-export const prepareDiscountPriceInfo = ({
- agreements, customerPrequalifiedPrice, exception, perWeightFlag
-}) => {
+export const prepareDiscountPriceInfo = ({ agreements, customerPrequalifiedPrice, exception, perWeightFlag }) => {
     const headerRow = {
         description: DESCRIPTION_DISCOUNT_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
@@ -277,9 +270,9 @@ export const prepareDiscountPriceInfo = ({
     return [headerRow, ...appliedAgreementsOrException];
 };
 
-export const isOfflineAgreement = ({applicationCode}) => applicationCode === AGREEMENT_CODE_L || applicationCode === AGREEMENT_CODE_T;
+export const isOfflineAgreement = ({ applicationCode }) => applicationCode === AGREEMENT_CODE_L || applicationCode === AGREEMENT_CODE_T;
 
-export const prepareOrderUnitPriceInfo = ({agreements, unitPrice, perWeightFlag}) => {
+export const prepareOrderUnitPriceInfo = ({ agreements, unitPrice, perWeightFlag }) => {
     const headerRow = {
         description: DESCRIPTION_ORDER_NET_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
@@ -303,17 +296,17 @@ export const prepareCustomerNetPriceInfo = ({ netPrice, perWeightFlag }) => {
 };
 
 export const prepareVolumePricingHeaderInfo = ({ discounts }) => ({
-        id: discounts[0].id,
-        description: DESCRIPTION_VOLUME_TIERS,
-        validityPeriod: generateValidityPeriod(discounts[0].effectiveFrom, discounts[0].effectiveTo)
-    });
+    id: discounts[0].id,
+    description: DESCRIPTION_VOLUME_TIERS,
+    validityPeriod: generateValidityPeriod(discounts[0].effectiveFrom, discounts[0].effectiveTo)
+});
 
 export const prepareVolumePricingTiers = ({ volumePricingTiers, perWeightFlag }) => volumePricingTiers
     .map((tier) => mapVolumeTierToTableRow(tier, { perWeightFlag }));
 
-export const prepareVolumePricingHeaderRow = ({volumePricingTiers}) => (volumePricingTiers.length > 0
-        ? prepareVolumePricingHeaderInfo(volumePricingTiers[0])
-        : null);
+export const prepareVolumePricingHeaderRow = ({ volumePricingTiers }) => (volumePricingTiers.length > 0
+    ? prepareVolumePricingHeaderInfo(volumePricingTiers[0])
+    : null);
 
 export const prepareVolumePricingInfo = ({ volumePricingTiers, perWeightFlag }) => ({
     volumePricingTiers: volumePricingTiers.map((tier) => mapVolumeTierToTableRow(tier, { perWeightFlag })),
@@ -321,3 +314,42 @@ export const prepareVolumePricingInfo = ({ volumePricingTiers, perWeightFlag }) 
         ? prepareVolumePricingHeaderInfo(volumePricingTiers[0])
         : null
 });
+
+export const formatFactorDetails = (priceRule) => (priceRule.factorCalcMethod === 'MGN' || priceRule.factorCalcMethod === 'MKP'
+    ? `${priceRule.factorSign}${priceRule.factorValue}${PERCENTAGE_SIGN}`
+    : `${priceRule.factorSign}${CURRENCY_SYMBOL_USD}${priceRule.factorValue}`);
+
+export const formatBaseValueName = (priceRule) => (priceRule.baseValueName
+    ? `${priceRule.baseValueName}` : `${UNKNOWN_BASE_VALUE_NAME}`);
+
+export const prepareDefaultPriceRuleSection = ({ priceRule }) => {
+    // price rule related details
+    const headerRow = {
+        description: `${DESCRIPTION_PRICE_RULE}: ${priceRule.name}`,
+        adjustmentValue: '',
+        calculatedValue: ''
+    };
+
+    // base value details
+    const baseValueDetails = {
+        description: formatBaseValueName(priceRule),
+        adjustmentValue: CURRENCY_SYMBOL_USD + formatPriceWithoutCurrency(priceRule.baseValue, {
+            useFixedFractionDigits: true,
+            digits: 3
+        }),
+        calculatedValue: ''
+    };
+
+    // factor related details
+    const factorDetails = {
+        description: priceRule.factorCalcMethod,
+        adjustmentValue: formatFactorDetails(priceRule),
+        calculatedValue: ''
+    };
+
+    // if factor value is 0, empty or factor cal method is empty do not show the factor related details
+    if (priceRule.factorValue === 0 || priceRule.factorValue === '' || priceRule.factorCalcMethod === '') {
+        return [headerRow, baseValueDetails];
+    }
+    return [headerRow, baseValueDetails, factorDetails];
+};
