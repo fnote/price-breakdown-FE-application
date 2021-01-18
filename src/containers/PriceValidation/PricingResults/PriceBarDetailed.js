@@ -109,27 +109,27 @@ function PriceBarDetailed({ priceData: { product }}) {
       <section className="detailed-left">
         <PriceBarDetailedHeader />
           {product.priceRule !== null
-            && <div className="block group1">
+            && <div id="group0" className="block group1">
                 {renderDetailedSection(defaultPriceRuleSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
             </div>
           }
-        <div className="block group1">
+        <div id="group1" className="block group1">
           {renderDetailedSection(localSegmentRefPriceSection, null, { className: DESCRIPTION_COL_CLASSNAME })}
         </div>
-        <div className="block group2">
+        <div id="group2" className="block group2">
           {renderDetailedSection(strikeThroughPriceSection, volumeTierRows)}
         </div>
       </section>
       <div className="price-bar-divider overlap"/>
       <section className="detailed-right">
         <PriceBarDetailedHeader />
-        <div className="block group3">
+        <div id="group3" className="block group3">
           {renderDetailedSection(discountPriceSection)}
         </div>
-        <div className="block group4">
+        <div id="group4" className="block group4">
           {renderDetailedSection(orderUnitPriceSection)}
         </div>
-          <div className="block group5">
+          <div id="group5" className="block group5">
               {renderDetailedSection(customerNetPriceInfo)}
           </div>
       </section>
