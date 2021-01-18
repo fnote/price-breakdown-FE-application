@@ -43,7 +43,6 @@ import {
     DESCRIPTION_EXCEPTION,
     AVAILABLE_PRICE_ZONES,
     NOT_APPLICABLE_LABEL,
-    PRICE_SOURCE_PA_ID,
     FRACTION_DIGITS_CHANGING_MARGIN_VALUE,
     DESCRIPTION_PRICE_RULE,
     PERCENTAGE_SIGN,
@@ -199,10 +198,12 @@ export const extractRequestInfo = ({ priceRequestDate, product: { splitFlag, qua
  * Returns true only when the item is priced through Price Advisor component and
  * the item is catch weight item and its gross price value is greater than or equal to $10
  */
-export const isFixedFractionDigits = (perWeightFlag, priceSource, customerReferencePrice) => (perWeightFlag
-    && priceSource === PRICE_SOURCE_PA_ID && customerReferencePrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
+export const isFixedFractionDigits = (perWeightFlag, isPricedFromReferencePrice, customerReferencePrice) => (perWeightFlag
+    && isPricedFromReferencePrice && customerReferencePrice >= FRACTION_DIGITS_CHANGING_MARGIN_VALUE);
 
-export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, priceSource }) => {
+export const prepareLocalSegmentPriceInfo = ({
+ discounts, referencePriceRoundingAdjustment, grossPrice, perWeightFlag, isPricedFromReferencePrice
+}) => {
     const headerRow = {
         description: DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
         calculatedValue: formatPrice(grossPrice, { perWeightFlag })
@@ -214,7 +215,7 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
 
     const dataRows = [headerRow, ...refPriceDiscountRows];
 
-    if (priceSource === PRICE_SOURCE_PA_ID) {
+    if (isPricedFromReferencePrice) {
         const roundingValueRow = {
             description: DESCRIPTION_ROUNDING,
             adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
@@ -228,15 +229,14 @@ export const prepareLocalSegmentPriceInfo = ({ discounts, referencePriceRounding
     return dataRows;
 };
 
-export const prepareStrikeThroughPriceInfo = ({ discounts, customerReferencePrice, perWeightFlag, priceSource }) => {
+export const prepareStrikeThroughPriceInfo = ({
+    discounts, customerReferencePrice, perWeightFlag, isPricedFromReferencePrice
+}) => {
     const headerRow = {
         description: DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
         adjustmentValue: EMPTY_ADJUSTMENT_VALUE_INDICATOR,
         calculatedValue: formatPrice(customerReferencePrice,
-            {
-                perWeightFlag,
-                useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, priceSource, customerReferencePrice)
-            })
+            { perWeightFlag, useFixedFractionDigits: isFixedFractionDigits(perWeightFlag, isPricedFromReferencePrice, customerReferencePrice) })
     };
 
     const preQualifiedDiscounts = discounts

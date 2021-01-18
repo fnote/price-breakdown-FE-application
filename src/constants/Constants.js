@@ -74,7 +74,6 @@ export const PERCENTAGE_FRACTION_DIGITS = 2;
 export const AVAILABLE_PRICE_ZONES = [1, 2, 3, 4, 5];
 export const NOT_APPLICABLE_LABEL = 'N/A';
 
-export const PRICE_SOURCE_PA_ID = 97;
 export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
 
 export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';
