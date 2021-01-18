@@ -7,7 +7,7 @@ import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import { getBusinessUnits } from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
-import { formatNumberInput } from '../../../utils/CommonUtils'
+import { formatNumberInput } from '../../../utils/CommonUtils';
 import {
   CORRELATION_ID_HEADER,
   NOT_APPLICABLE_LABEL,

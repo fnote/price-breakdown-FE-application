@@ -35,7 +35,8 @@ class JobDetail {
 
   static fromJson(obj) {
     return new JobDetail(
-        obj.jobId, obj.bunitId, obj.status, obj.statusTime, obj.startTime, obj.endTime, obj.fileName, obj.submittedUser);
+        obj.jobId, obj.bunitId, obj.status, obj.statusTime, obj.startTime, obj.endTime, obj.fileName, obj.submittedUser
+);
   }
 }
 

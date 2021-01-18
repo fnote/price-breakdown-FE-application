@@ -96,7 +96,6 @@ export const SUPPORTED_FILE_TYPES = [
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
 export const INVALID_FILE_TYPE = 'Invalid ContentType';
 
-
 export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
 export const JOB_ERROR_STATUS = 'ERROR';
 export const JOB_COMPLETE_STATUS = 'COMPLETED';
@@ -107,6 +106,6 @@ export const PCI_FILENAME_PREFIX = 'CPPCI-';
 export const MAX_DOWNLOAD_ALLOWED = 25;
 export const TIMEOUT_DURING_DOWNLOAD_CLICKS = 1000;
 
-export const TAG_NAME_A = "a";
+export const TAG_NAME_A = 'a';
 
-export const EMPTY_STRING = "";
+export const EMPTY_STRING = '';

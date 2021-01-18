@@ -265,6 +265,7 @@ class FileList extends React.Component {
 
         this.setState({
             selectedRowKeys: [],
+            selectedRowValues: [],
             loading: false,
         });
     };
@@ -284,7 +285,7 @@ class FileList extends React.Component {
     };
 
     onSelectAll = (selected, selectedRows, changeRows) => {
-        const changeRowKeys = changeRows.map((row) => row.filename);
+        const changeRowKeys = changeRows.map((row) => row.key);
         if (selected) {
             this.setState({
                 selectedRowKeys: [...this.state.selectedRowKeys, ...changeRowKeys],

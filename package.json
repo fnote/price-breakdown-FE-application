@@ -29,7 +29,10 @@
     "build:exe": "REACT_APP_ENV=exe npm run build",
     "build:prod": "REACT_APP_ENV=prod npm run build",
     "test": "jest --config ./jest.config.js --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "eslint 'src/**/*.js'",
+    "eslint-test": "eslint 'test/**/*.js' --fix",
+    "eslint-fix": "eslint 'src/**/*.js' --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
