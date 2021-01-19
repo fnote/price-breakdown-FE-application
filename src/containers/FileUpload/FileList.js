@@ -65,7 +65,7 @@ class FileList extends React.Component {
         return jobDetail;
     };
 
-    removeFileNamePrefix = (fileName) => fileName.replace(PCI_FILENAME_PREFIX, '');
+    removeFileNamePrefix = (fileName) => fileName.replace(PCI_FILENAME_PREFIX, EMPTY_STRING);
 
     removeFileNamePrefixFromList = (fileNames) => fileNames.map((fileName) => this.removeFileNamePrefix(fileName));
 

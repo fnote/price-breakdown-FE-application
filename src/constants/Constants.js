@@ -84,7 +84,6 @@ export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
 export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
 export const NAVIGATION_PATH_FILE_UPLOAD = '/FileUpload';
 
-export const FILE_UPLOADING = 'uploading';
 export const FILE_UPLOADING_DONE = 'done';
 export const FILE_UPLOADING_ERROR = 'error';
 
