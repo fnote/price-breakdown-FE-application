@@ -25,6 +25,7 @@ export const DESCRIPTION_CUSTOMER_NET_PRICE = 'Customer Net Price';
 export const DESCRIPTION_ROUNDING = 'Rounding';
 export const DESCRIPTION_VOLUME_TIERS = 'Item/Order Specific promotions';
 export const DESCRIPTION_EXCEPTION = 'Exception Deal';
+export const DESCRIPTION_PRICE_RULE = 'Price Rule';
 
 export const VOLUME_TIER_OPERATOR_BETWEEN = 'Between';
 export const VOLUME_TIER_RANGE_END_ABOVE = 'above';
@@ -39,7 +40,7 @@ export const DISCOUNT_TYPE_PREQUALIFIED = 'PREQUALIFIED';
 export const DISCOUNT_CASE_VOLUME = 'CASE_VOLUME_DISCOUNT';
 
 export const DISCOUNT_NAMES_MAP = new Map([
-    ['STRATEGIC_DISCOUNT', 'Strategic Discount'],
+    ['STRATEGIC_RPA_DISCOUNT', 'Strategic RPA Discount'],
     ['NEW_CUSTOMER_DISCOUNT', 'New Customer Discount'],
     ['CASE_SPLIT_UPCHARGE', 'Split Up Charge'],
 ]);
@@ -73,7 +74,6 @@ export const PERCENTAGE_FRACTION_DIGITS = 2;
 export const AVAILABLE_PRICE_ZONES = [1, 2, 3, 4, 5];
 export const NOT_APPLICABLE_LABEL = 'N/A';
 
-export const PRICE_SOURCE_PA_ID = 97;
 export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
 
 export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';
@@ -109,3 +109,5 @@ export const TIMEOUT_DURING_DOWNLOAD_CLICKS = 1000;
 export const TAG_NAME_A = 'a';
 
 export const EMPTY_STRING = '';
+export const PERCENTAGE_SIGN = '%';
+export const UNKNOWN_BASE_VALUE_NAME = 'UNKNOWN';
