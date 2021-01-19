@@ -160,6 +160,7 @@
       .filename {
         color: darken($syscoblue, 5%);
         min-width: 10rem;
+        max-width: 30rem;
       }
       .download-file {
         color: $syscogreen;

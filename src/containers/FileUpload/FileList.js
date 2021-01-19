@@ -1,6 +1,8 @@
 import React from 'react';
 import {Button, Input, message, notification, Table} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
+// eslint-disable-next-line import/no-named-default
+import {default as _} from 'lodash';
 import {getBffUrlConfig} from '../../utils/Configs';
 import {
     EMPTY_STRING,
@@ -14,6 +16,12 @@ import {
     TIMEOUT_DURING_DOWNLOAD_CLICKS
 } from '../../constants/Constants';
 import JobDetail from '../../model/jobDetail';
+import {
+    generateBatchJobSearchUrl,
+    getJobsDeleteEndpoint,
+    removeFileNamePrefix,
+    removeFileNamePrefixFromList
+} from '../../utils/FIleListUtils';
 
 const {Search} = Input;
 
@@ -34,40 +42,7 @@ class FileList extends React.Component {
         this.listBatchJobs();
     }
 
-    handleResponse = (response) => {
-        const batchJobDetailList = [];
-        return response.json().then((json) => {
-            const responseData = json.data;
-            if (response.ok && responseData) {
-                responseData.forEach((job) => {
-                    const jobDetail = this.formatJobDetailObject(job);
-                    batchJobDetailList.push({
-                        jobId: jobDetail.jobId,
-                        startTime: jobDetail.startTime,
-                        endTime: jobDetail.endTime,
-                        filename: jobDetail.fileName,
-                        jobDetail,
-                    });
-                });
-                return {success: true, data: batchJobDetailList};
-            }
-            return {success: false, data: batchJobDetailList};
-        });
-    };
 
-    formatJobDetailObject = (job) => {
-        const jobDetail = JobDetail.fromJson(job);
-        jobDetail.fileName = this.removeFileNamePrefix(jobDetail.fileName);
-        jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
-            ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
-        jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
-        jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
-        return jobDetail;
-    };
-
-    removeFileNamePrefix = (fileName) => fileName.replace(PCI_FILENAME_PREFIX, EMPTY_STRING);
-
-    removeFileNamePrefixFromList = (fileNames) => fileNames.map((fileName) => this.removeFileNamePrefix(fileName));
 
     deleteJob = (jobId) => {
         this.setState({
@@ -80,7 +55,7 @@ class FileList extends React.Component {
                 }
                 return response.json();
             }).then((response) => {
-            const fileNames = this.removeFileNamePrefixFromList(response.data.fileNames);
+            const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
             this.openNotificationWithIcon('success',
                 `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
             this.removeDeletedJobFromList(jobId);
@@ -102,7 +77,7 @@ class FileList extends React.Component {
         });
     };
 
-    jobDeleteRequestHandler = (jobId) => fetch(this.getJobsDeleteEndpoint(jobId), {
+    jobDeleteRequestHandler = (jobId) => fetch(getJobsDeleteEndpoint(jobId), {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json, text/plain, */*',
@@ -110,8 +85,6 @@ class FileList extends React.Component {
         },
         credentials: 'include'
     });
-
-    getJobsDeleteEndpoint = (jobId) => `${getBffUrlConfig().batchJobsUrl}/${jobId}`;
 
     downloadFile = (fileNamesArray) => {
         this.setState({
@@ -211,6 +184,37 @@ class FileList extends React.Component {
         });
     };
 
+    handleResponse = (response) => {
+        const batchJobDetailList = [];
+        return response.json().then((json) => {
+            const responseData = json.data;
+            if (response.ok && responseData) {
+                responseData.forEach((job) => {
+                    const jobDetail = this.formatJobDetailObject(job);
+                    batchJobDetailList.push({
+                        jobId: jobDetail.jobId,
+                        startTime: jobDetail.startTime,
+                        endTime: jobDetail.endTime,
+                        filename: jobDetail.fileName,
+                        jobDetail,
+                    });
+                });
+                return {success: true, data: batchJobDetailList};
+            }
+            return {success: false, data: batchJobDetailList};
+        });
+    };
+
+    formatJobDetailObject = (job) => {
+        const jobDetail = JobDetail.fromJson(job);
+        jobDetail.fileName = removeFileNamePrefix(jobDetail.fileName);
+        jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
+            ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
+        jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
+        jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
+        return jobDetail;
+    };
+
     fileSearchListRequestHandler = (batchJobsListUrl) => fetch(batchJobsListUrl, {
         method: 'GET',
         headers: {
@@ -220,15 +224,13 @@ class FileList extends React.Component {
         credentials: 'include'
     }).then(this.handleResponse);
 
-    generateBatchJobSearchUrl = (searchString) => `${getBffUrlConfig().batchJobsUrl}?searchQuery=${searchString}`;
-
     listBatchJobs = (searchString = '') => {
         this.setState({
             dataIsReturned: false,
         });
         let batchJobListUrl = getBffUrlConfig().batchJobsUrl;
         if (searchString !== '') {
-            batchJobListUrl = this.generateBatchJobSearchUrl(searchString);
+            batchJobListUrl = generateBatchJobSearchUrl(searchString);
         }
         this.fileSearchListRequestHandler(batchJobListUrl).then((res) => {
             if (res.success) {
@@ -309,8 +311,10 @@ class FileList extends React.Component {
     onSearchStringChange = (searchBox) => {
         const searchString = searchBox.target.value;
         this.setState({searchString});
-        this.listBatchJobs(searchString);
+        this.debouncedListBatchJobs(searchString);
     };
+
+    debouncedListBatchJobs = _.debounce(((searchString) => this.listBatchJobs(searchString)), 1000);
 
     columns = [
         {
