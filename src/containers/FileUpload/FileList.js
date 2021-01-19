@@ -42,7 +42,7 @@ class FileList extends React.Component {
                 responseData.forEach((job) => {
                     const jobDetail = this.formatJobDetailObject(job);
                     batchJobDetailList.push({
-                        key: jobDetail.jobId,
+                        jobId: jobDetail.jobId,
                         startTime: jobDetail.startTime,
                         endTime: jobDetail.endTime,
                         filename: jobDetail.fileName,
@@ -57,13 +57,17 @@ class FileList extends React.Component {
 
     formatJobDetailObject = (job) => {
         const jobDetail = JobDetail.fromJson(job);
-        jobDetail.fileName = jobDetail.fileName.replace(PCI_FILENAME_PREFIX, '');
+        jobDetail.fileName = this.removeFileNamePrefix(jobDetail.fileName);
         jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
             ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
         jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
         jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
         return jobDetail;
     };
+
+    removeFileNamePrefix = (fileName) => fileName.replace(PCI_FILENAME_PREFIX, '');
+
+    removeFileNamePrefixFromList = (fileNames) => fileNames.map((fileName) => this.removeFileNamePrefix(fileName));
 
     deleteJob = (jobId) => {
         this.setState({
@@ -76,7 +80,7 @@ class FileList extends React.Component {
                 }
                 return response.json();
             }).then((response) => {
-            const fileNames = response.data.fileNames;
+            const fileNames = this.removeFileNamePrefixFromList(response.data.fileNames);
             this.openNotificationWithIcon('success',
                 `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
             this.removeDeletedJobFromList(jobId);
@@ -273,19 +277,19 @@ class FileList extends React.Component {
     onSelect = (record, selected) => {
         if (selected) {
             this.setState({
-                selectedRowKeys: [...this.state.selectedRowKeys, record.filename],
+                selectedRowKeys: [...this.state.selectedRowKeys, record.jobId],
                 selectedRowValues: [...this.state.selectedRowValues, record]
             });
         } else {
             this.setState({
-                selectedRowKeys: this.state.selectedRowKeys.filter((key) => key !== record.filename),
-                selectedRowValues: this.state.selectedRowValues.filter((row) => row.filename !== record.filename)
+                selectedRowKeys: this.state.selectedRowKeys.filter((key) => key !== record.jobId),
+                selectedRowValues: this.state.selectedRowValues.filter((row) => row.jobId !== record.jobId)
             });
         }
     };
 
     onSelectAll = (selected, selectedRows, changeRows) => {
-        const changeRowKeys = changeRows.map((row) => row.key);
+        const changeRowKeys = changeRows.map((row) => row.jobId);
         if (selected) {
             this.setState({
                 selectedRowKeys: [...this.state.selectedRowKeys, ...changeRowKeys],
@@ -317,7 +321,9 @@ class FileList extends React.Component {
         {
             title: 'SUBMIT TIME',
             dataIndex: 'startTime',
-            className: 'submittime'
+            className: 'submittime',
+            defaultSortOrder: 'descend',
+            sorter: (a, b) => a.jobId - b.jobId,
         },
         {
             title: 'END TIME',
@@ -440,7 +446,7 @@ class FileList extends React.Component {
                 <div className="file-list-table-wrapper">
                     {dataIsReturned
                         ? <Table
-                            rowKey='filename'
+                            rowKey='jobId'
                             rowSelection={rowSelection}
                             columns={this.columns}
                             dataSource={data}
