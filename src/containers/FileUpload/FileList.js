@@ -42,8 +42,6 @@ class FileList extends React.Component {
         this.listBatchJobs();
     }
 
-
-
     deleteJob = (jobId) => {
         this.setState({
             dataIsReturned: false
@@ -341,7 +339,7 @@ class FileList extends React.Component {
             render: (jobDetail) => (
                 <div className="action-bar">
                     {jobDetail.status === JOB_INPROGRESS_STATUS && (
-                        <div className="file-process-status">FILE IS BEING PROCESSED</div>
+                        <div className="file-process-status">File is being processed</div>
                     )}
                     {jobDetail.status === JOB_PARTIALLY_COMPLETED_STATUS && (
                         <div className="file-process-status warn">
@@ -354,7 +352,7 @@ class FileList extends React.Component {
                                 View minor error file
                             </Button>
                             <div className="divider"></div>
-                            File Contained errors
+                            File processed partially
                         </div>
                     )}
                     {jobDetail.status === JOB_COMPLETE_STATUS && (
@@ -364,7 +362,7 @@ class FileList extends React.Component {
                     )}
                     {jobDetail.status === JOB_ERROR_STATUS && (
                         <div className="file-process-status error">
-                            View error file
+                            Failed to process
                         </div>
                     )}
                     {jobDetail.status !== JOB_INPROGRESS_STATUS ? (
