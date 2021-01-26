@@ -5,12 +5,12 @@ import {SyncOutlined} from '@ant-design/icons';
 import {default as _} from 'lodash';
 import {getBffUrlConfig} from '../../utils/Configs';
 import {
-    EMPTY_STRING, ERROR_FILE_SUFFIX,
+    EMPTY_STRING,
     JOB_COMPLETE_STATUS,
     JOB_ERROR_STATUS,
     JOB_INPROGRESS_STATUS,
     JOB_PARTIALLY_COMPLETED_STATUS,
-    MAX_DOWNLOAD_ALLOWED, MINOR_ERROR_S3_SUB_FOLDER,
+    MAX_DOWNLOAD_ALLOWED,
     PCI_FILENAME_PREFIX,
     TAG_NAME_A,
     TIMEOUT_DURING_DOWNLOAD_CLICKS
@@ -84,13 +84,6 @@ class FileList extends React.Component {
         credentials: 'include'
     });
 
-    /**
-     * Generate minor error file path.
-     * */
-    generateMinorErrorFileNameWithPath = (fileName) => {
-        return fileName ? MINOR_ERROR_S3_SUB_FOLDER + fileName : null;
-    }
-
     downloadFile = (fileNamesArray) => {
         this.setState({
             dataIsReturned: false
@@ -99,10 +92,7 @@ class FileList extends React.Component {
         const fileNamesArrayWithPciPrefix = [];
 
         fileNamesArray.forEach((fileName) => {
-            let fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
-            if (String(fileName).includes(ERROR_FILE_SUFFIX)) {
-                fileNameWithPciPrefix = this.generateMinorErrorFileNameWithPath(fileNameWithPciPrefix);
-            }
+            const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
             fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
         });
 
@@ -192,6 +182,88 @@ class FileList extends React.Component {
         });
     };
 
+    columns = [
+        {
+            title: 'FILE NAME',
+            dataIndex: 'filename',
+            className: 'filename',
+        },
+        {
+            title: 'SUBMIT TIME',
+            dataIndex: 'startTime',
+            className: 'submittime',
+            defaultSortOrder: 'descend',
+            sorter: (a, b) => a.jobId - b.jobId,
+        },
+        {
+            title: 'END TIME',
+            dataIndex: 'endTime',
+            className: 'submittime'
+        },
+        {
+            dataIndex: 'jobDetail',
+            className: 'action',
+            width: 'auto',
+            render: (jobDetail) => (
+                <div className="action-bar">
+                    {jobDetail.status === JOB_INPROGRESS_STATUS && (
+                        <div className="file-process-status">File is being processed</div>
+                    )}
+                    {jobDetail.status === JOB_PARTIALLY_COMPLETED_STATUS && (
+                        <div className="file-process-status warn">
+                            <Button className="btn empty-btn download-error-file"
+                                    onClick={() => {
+                                        this.downloadFile([jobDetail.minorErrorFileName]);
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                                View minor error file
+                            </Button>
+                            <div className="divider"></div>
+                            File processed partially
+                        </div>
+                    )}
+                    {jobDetail.status === JOB_COMPLETE_STATUS && (
+                        <div className="file-process-status success">
+                            File processed successfully
+                        </div>
+                    )}
+                    {jobDetail.status === JOB_ERROR_STATUS && (
+                        <div className="file-process-status error">
+                            Failed to process
+                        </div>
+                    )}
+                    {jobDetail.status !== JOB_INPROGRESS_STATUS ? (
+                        <>
+                            <Button className="btn icon-only empty-btn"
+                                    onClick={() => {
+                                        this.deleteJob([jobDetail.jobId]);
+                                    }}
+                            >
+                                <i className="icon fi flaticon-bin"/>
+                            </Button>
+                            <Button className="btn icon-only empty-btn download-file"
+                                    onClick={() => {
+                                        this.downloadFile([jobDetail.fileName]);
+                                    }}
+                            >
+                                <i className="icon fi flaticon-cloud-computing"/>
+                            </Button>
+                        </>
+
+                    ) : (
+                        <>
+                            <Button className="btn icon-only empty-btn cancel-process">
+                                <i className="icon fi flaticon-close"/>
+                            </Button>
+                            <SyncOutlined spin className="icon processing-spinner"/>
+                        </>
+                    )}
+                </div>
+            ),
+        },
+    ];
+
     handleResponse = (response) => {
         const batchJobDetailList = [];
         return response.json().then((json) => {
@@ -211,16 +283,6 @@ class FileList extends React.Component {
             }
             return {success: false, data: batchJobDetailList};
         });
-    };
-
-    formatJobDetailObject = (job) => {
-        const jobDetail = JobDetail.fromJson(job);
-        jobDetail.fileName = removeFileNamePrefix(jobDetail.fileName);
-        jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
-            ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
-        jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
-        jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
-        return jobDetail;
     };
 
     fileSearchListRequestHandler = (batchJobsListUrl) => fetch(batchJobsListUrl, {
@@ -324,87 +386,15 @@ class FileList extends React.Component {
 
     debouncedListBatchJobs = _.debounce(((searchString) => this.listBatchJobs(searchString)), 1000);
 
-    columns = [
-        {
-            title: 'FILE NAME',
-            dataIndex: 'filename',
-            className: 'filename',
-        },
-        {
-            title: 'SUBMIT TIME',
-            dataIndex: 'startTime',
-            className: 'submittime',
-            defaultSortOrder: 'descend',
-            sorter: (a, b) => a.jobId - b.jobId,
-        },
-        {
-            title: 'END TIME',
-            dataIndex: 'endTime',
-            className: 'submittime'
-        },
-        {
-            dataIndex: 'jobDetail',
-            className: 'action',
-            width: 'auto',
-            render: (jobDetail) => (
-                <div className="action-bar">
-                    {jobDetail.status === JOB_INPROGRESS_STATUS && (
-                        <div className="file-process-status">File is being processed</div>
-                    )}
-                    {jobDetail.status === JOB_PARTIALLY_COMPLETED_STATUS && (
-                        <div className="file-process-status warn">
-                            <Button className="btn empty-btn download-error-file"
-                                    onClick={() => {
-                                        this.downloadFile([jobDetail.minorErrorFileName]);
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                                View minor error file
-                            </Button>
-                            <div className="divider"></div>
-                            File processed partially
-                        </div>
-                    )}
-                    {jobDetail.status === JOB_COMPLETE_STATUS && (
-                        <div className="file-process-status success">
-                            File processed successfully
-                        </div>
-                    )}
-                    {jobDetail.status === JOB_ERROR_STATUS && (
-                        <div className="file-process-status error">
-                            Failed to process
-                        </div>
-                    )}
-                    {jobDetail.status !== JOB_INPROGRESS_STATUS ? (
-                        <>
-                            <Button className="btn icon-only empty-btn"
-                                    onClick={() => {
-                                        this.deleteJob([jobDetail.jobId]);
-                                    }}
-                            >
-                                <i className="icon fi flaticon-bin"/>
-                            </Button>
-                            <Button className="btn icon-only empty-btn download-file"
-                                    onClick={() => {
-                                        this.downloadFile([jobDetail.fileName]);
-                                    }}
-                            >
-                                <i className="icon fi flaticon-cloud-computing"/>
-                            </Button>
-                        </>
-
-                    ) : (
-                        <>
-                            <Button className="btn icon-only empty-btn cancel-process">
-                                <i className="icon fi flaticon-close"/>
-                            </Button>
-                            <SyncOutlined spin className="icon processing-spinner"/>
-                        </>
-                    )}
-                </div>
-            ),
-        },
-    ];
+    formatJobDetailObject = (job) => {
+        const jobDetail = JobDetail.fromJson(job);
+        jobDetail.fileName = removeFileNamePrefix(jobDetail.fileName);
+        jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
+            ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
+        jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
+        jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
+        return jobDetail;
+    };
 
     render() {
         const {loading, selectedRowKeys, data, dataIsReturned, searchString} = this.state;

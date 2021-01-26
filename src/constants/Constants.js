@@ -102,10 +102,6 @@ export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
 
 export const PCI_FILENAME_PREFIX = 'CPPCI-';
 
-// batch minor error files
-export const ERROR_FILE_SUFFIX = '_errors';
-export const MINOR_ERROR_S3_SUB_FOLDER = 'minor-errors/';
-
 export const MAX_DOWNLOAD_ALLOWED = 25;
 export const TIMEOUT_DURING_DOWNLOAD_CLICKS = 1000;
 
