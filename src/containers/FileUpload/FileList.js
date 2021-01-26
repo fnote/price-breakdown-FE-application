@@ -43,9 +43,6 @@ class FileList extends React.Component {
     }
 
     deleteJob = (jobId) => {
-        this.setState({
-            dataIsReturned: false
-        });
         this.jobDeleteRequestHandler(jobId)
             .then((response) => {
                 if (!response.ok) {
@@ -57,11 +54,9 @@ class FileList extends React.Component {
             this.openNotificationWithIcon('success',
                 `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
             this.removeDeletedJobFromList(jobId);
+            // this.removeFromSelectedRecords(jobId);
         }).catch(() => {
             this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
-            this.setState({
-                dataIsReturned: true
-            });
         });
     };
 
@@ -85,10 +80,6 @@ class FileList extends React.Component {
     });
 
     downloadFile = (fileNamesArray) => {
-        this.setState({
-            dataIsReturned: false
-        });
-
         const fileNamesArrayWithPciPrefix = [];
 
         fileNamesArray.forEach((fileName) => {
@@ -102,25 +93,14 @@ class FileList extends React.Component {
                     throw Error(response.statusText);
                 }
                 return response.json();
+            }).catch(() => {
+                const errorMsg = 'Failed to download the files.';
+                this.openNotificationWithIcon('error', `${errorMsg} : ${fileNamesArrayWithPciPrefix}`, 'Failure');
             })
             .then((response) => {
                 const fileNameUrlArray = response.data;
-                Promise.all(this.downloadFromSignedUrl(fileNameUrlArray))
-                    .then(() => {
-                        this.setState({
-                            dataIsReturned: true
-                        });
-                    })
-                    .catch(() => {
-                        this.setState({
-                            dataIsReturned: true
-                        });
-                    });
-            }).catch(() => {
-            this.setState({
-                dataIsReturned: true
+                Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
             });
-        });
     };
 
     generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
@@ -161,6 +141,7 @@ class FileList extends React.Component {
                         link.click();
                         document.body.removeChild(link);
 
+                        this.openNotificationWithIcon('success', `File downloaded successful. File name: ${fileNameWithoutPciPrefix}`, 'Success');
                         resolve();
                     })
                     .catch((error) => {
@@ -251,7 +232,6 @@ class FileList extends React.Component {
             return;
         }
 
-        this.setState({loading: true});
         const selectedRowValues = this.state.selectedRowValues;
         const toDownloadFiles = [];
 
@@ -270,7 +250,6 @@ class FileList extends React.Component {
         this.setState({
             selectedRowKeys: [],
             selectedRowValues: [],
-            loading: false,
         });
     };
 
@@ -305,6 +284,16 @@ class FileList extends React.Component {
             });
         }
     };
+
+    removeFromSelectedRecords(recordKey) {
+        const remainingSelectedRowKeys = this.state.selectedRowKeys.filter((key) => key !== recordKey);
+        const remainingSelectedRow = this.state.selectedRowValues.filter((row) => row.jobId !== recordKey);
+
+        this.setState({
+            selectedRowKeys: remainingSelectedRowKeys,
+            selectedRowValues: remainingSelectedRow
+        });
+    }
 
     onSearchStringChange = (searchBox) => {
         const searchString = searchBox.target.value;

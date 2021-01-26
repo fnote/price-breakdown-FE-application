@@ -4,3 +4,5 @@
 import {SUPPORTED_FILE_TYPES} from '../../constants/Constants';
 
 export const isValidFileType = (contentType) => !(contentType === undefined || !SUPPORTED_FILE_TYPES.includes(contentType));
+
+export const isValidFileName = (fileName) => !(fileName === undefined || /\s/.test(fileName));

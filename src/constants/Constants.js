@@ -82,7 +82,7 @@ export const ORDER_PRICE_TYPE_HAND = 'H';
 export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
 
 export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
-export const NAVIGATION_PATH_FILE_UPLOAD = '/FileUpload';
+export const NAVIGATION_PATH_FILE_UPLOAD = '/file-upload';
 
 export const FILE_UPLOADING_DONE = 'done';
 export const FILE_UPLOADING_ERROR = 'error';
@@ -93,7 +93,14 @@ export const SUPPORTED_FILE_TYPES = [
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-export const INVALID_FILE_TYPE = 'Invalid ContentType';
+export const INVALID_FILE_TYPE = {
+    errorType: 'Invalid ContentType',
+    errorMessage: 'file upload failed due to unsupported file type.'
+};
+export const INVALID_FILE_NAME = {
+    errorType: 'Invalid FileName',
+    errorMessage: 'file upload failed due to unsupported file name.'
+};
 
 export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
 export const JOB_ERROR_STATUS = 'ERROR';

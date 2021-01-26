@@ -190,6 +190,7 @@
         @include breakpoint(xs) {
           @include flexbox(1 1 auto, column, flex-end, flex-end);
           width: 100%;
+          max-width: 30rem;
         }
         .file-process-status {
           color: $syscoyellow;
@@ -223,7 +224,7 @@
             }
             .divider {
               border-top: 1px dashed $syscoorange;
-              width: 2rem;
+              width: 1rem;
               margin: 0 0.5rem;
             }
             .download-error-file {

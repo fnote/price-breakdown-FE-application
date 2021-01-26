@@ -4,11 +4,12 @@ import axios from 'axios';
 import {getBffUrlConfig} from '../../utils/Configs';
 import {
     FILE_UPLOADING_DONE,
-    FILE_UPLOADING_ERROR,
+    FILE_UPLOADING_ERROR, INVALID_FILE_NAME,
     INVALID_FILE_TYPE,
-    PCI_FILENAME_PREFIX
+    PCI_FILENAME_PREFIX,
+    SUPPORTED_FILE_TYPES
 } from '../../constants/Constants';
-import {isValidFileType} from './UploadValidation';
+import {isValidFileName, isValidFileType} from './UploadValidation';
 
 const {Dragger} = Upload;
 
@@ -80,13 +81,16 @@ const fileUploadHandler = (payload) => {
 
 const customUpload = (info) => {
     if (isValidFileType(info.file.type)) {
-        return new Promise((resolve, reject) => fileUploadHandler({
-            info,
-            resolve,
-            reject,
-        }));
+        if (isValidFileName(info.file.name)) {
+            return new Promise((resolve, reject) => fileUploadHandler({
+                info,
+                resolve,
+                reject,
+            }));
+        }
+        return info.onError(new FileUploadError(INVALID_FILE_NAME.errorType));
     }
-    return info.onError(new FileUploadError(INVALID_FILE_TYPE));
+    return info.onError(new FileUploadError(INVALID_FILE_TYPE.errorType));
 };
 
 const openNotificationWithIcon = (type, description, msg) => {
@@ -97,6 +101,7 @@ const openNotificationWithIcon = (type, description, msg) => {
 };
 
 const props = {
+    accept: SUPPORTED_FILE_TYPES.join(', '),
     name: 'file',
     multiple: true,
     customRequest: customUpload,
@@ -106,8 +111,10 @@ const props = {
             openNotificationWithIcon('success', `${info.file.name} file uploaded successfully.`, 'Success');
         } else if (status === FILE_UPLOADING_ERROR) {
             const err = info.file.error;
-            if (err && err.errorType === INVALID_FILE_TYPE) {
-                openNotificationWithIcon('error', `${info.file.name} file upload failed due to unsupported file type.`, 'Failure');
+            if (err && err.errorType === INVALID_FILE_TYPE.errorType) {
+                openNotificationWithIcon('error', `${info.file.name} ${INVALID_FILE_TYPE.errorMessage}`, 'Failure');
+            } else if (err && err.errorType === INVALID_FILE_NAME.errorType) {
+                openNotificationWithIcon('error', `${info.file.name} ${INVALID_FILE_NAME.errorMessage}`, 'Failure');
             } else {
                 openNotificationWithIcon('error', `${info.file.name} file upload failed.`, 'Failure');
             }
