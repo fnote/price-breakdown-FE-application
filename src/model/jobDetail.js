@@ -20,9 +20,9 @@ class JobDetail {
 
   submittedUser;
 
-  minorErrorFileName = null;
+  minorErrorFileName;
 
-  constructor(jobId, bunitId, status, statusTime, startTime, endTime, fileName, submittedUser) {
+  constructor(jobId, bunitId, status, statusTime, startTime, endTime, fileName, submittedUser, minorErrorFileName) {
     this.jobId = jobId;
     this.bunitId = bunitId;
     this.status = status;
@@ -31,12 +31,13 @@ class JobDetail {
     this.endTime = endTime;
     this.fileName = fileName;
     this.submittedUser = submittedUser;
+    this.minorErrorFileName = minorErrorFileName ? minorErrorFileName : null;
   }
 
   static fromJson(obj) {
     return new JobDetail(
-        obj.jobId, obj.bunitId, obj.status, obj.statusTime, obj.startTime, obj.endTime, obj.fileName, obj.submittedUser
-);
+        obj.jobId, obj.bunitId, obj.status, obj.statusTime, obj.startTime, obj.endTime, obj.fileName, obj.submittedUser, obj.minorErrorFileName
+    );
   }
 }
 
