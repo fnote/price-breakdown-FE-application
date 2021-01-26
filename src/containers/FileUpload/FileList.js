@@ -5,12 +5,12 @@ import {SyncOutlined} from '@ant-design/icons';
 import {default as _} from 'lodash';
 import {getBffUrlConfig} from '../../utils/Configs';
 import {
-    EMPTY_STRING,
+    EMPTY_STRING, ERROR_FILE_SUFFIX,
     JOB_COMPLETE_STATUS,
     JOB_ERROR_STATUS,
     JOB_INPROGRESS_STATUS,
     JOB_PARTIALLY_COMPLETED_STATUS,
-    MAX_DOWNLOAD_ALLOWED,
+    MAX_DOWNLOAD_ALLOWED, MINOR_ERROR_S3_SUB_FOLDER,
     PCI_FILENAME_PREFIX,
     TAG_NAME_A,
     TIMEOUT_DURING_DOWNLOAD_CLICKS
@@ -84,6 +84,13 @@ class FileList extends React.Component {
         credentials: 'include'
     });
 
+    /**
+     * Generate minor error file path.
+     * */
+    generateMinorErrorFileNameWithPath = (fileName) => {
+        return fileName ? MINOR_ERROR_S3_SUB_FOLDER + fileName : null;
+    }
+
     downloadFile = (fileNamesArray) => {
         this.setState({
             dataIsReturned: false
@@ -92,7 +99,10 @@ class FileList extends React.Component {
         const fileNamesArrayWithPciPrefix = [];
 
         fileNamesArray.forEach((fileName) => {
-            const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
+            let fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
+            if (fileName.includes(ERROR_FILE_SUFFIX)) {
+                fileNameWithPciPrefix = this.generateMinorErrorFileNameWithPath(fileNameWithPciPrefix);
+            }
             fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
         });
 
