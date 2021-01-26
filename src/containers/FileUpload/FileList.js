@@ -100,7 +100,7 @@ class FileList extends React.Component {
 
         fileNamesArray.forEach((fileName) => {
             let fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
-            if (fileName.includes(ERROR_FILE_SUFFIX)) {
+            if (String(fileName).includes(ERROR_FILE_SUFFIX)) {
                 fileNameWithPciPrefix = this.generateMinorErrorFileNameWithPath(fileNameWithPciPrefix);
             }
             fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
