@@ -54,7 +54,7 @@ class FileList extends React.Component {
             this.openNotificationWithIcon('success',
                 `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
             this.removeDeletedJobFromList(jobId);
-            // this.removeFromSelectedRecords(jobId);
+            this.removeDeletedJobFromSelectedRecords(jobId);
         }).catch(() => {
             this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
         });
@@ -62,13 +62,19 @@ class FileList extends React.Component {
 
     removeDeletedJobFromList = (jobId) => {
         const rows = this.state.data;
-        const filteredRows = rows.filter((row) => row.jobDetail.jobId !== jobId[0]);
 
         this.setState({
-            data: filteredRows,
+            data: rows.filter((row) => row.jobDetail.jobId !== jobId),
             dataIsReturned: true
         });
     };
+
+    removeDeletedJobFromSelectedRecords(jobId) {
+        this.setState({
+            selectedRowKeys: this.state.selectedRowKeys.filter((key) => key !== jobId),
+            selectedRowValues: this.state.selectedRowValues.filter((row) => row.jobId !== jobId)
+        });
+    }
 
     jobDeleteRequestHandler = (jobId) => fetch(getJobsDeleteEndpoint(jobId), {
         method: 'DELETE',
@@ -218,7 +224,7 @@ class FileList extends React.Component {
                         <>
                             <Button className="btn icon-only empty-btn"
                                     onClick={() => {
-                                        this.deleteJob([jobDetail.jobId]);
+                                        this.deleteJob(jobDetail.jobId);
                                     }}
                             >
                                 <i className="icon fi flaticon-bin"/>
@@ -357,15 +363,7 @@ class FileList extends React.Component {
         }
     };
 
-    removeFromSelectedRecords(recordKey) {
-        const remainingSelectedRowKeys = this.state.selectedRowKeys.filter((key) => key !== recordKey);
-        const remainingSelectedRow = this.state.selectedRowValues.filter((row) => row.jobId !== recordKey);
 
-        this.setState({
-            selectedRowKeys: remainingSelectedRowKeys,
-            selectedRowValues: remainingSelectedRow
-        });
-    }
 
     onSearchStringChange = (searchBox) => {
         const searchString = searchBox.target.value;
