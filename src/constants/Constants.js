@@ -102,10 +102,17 @@ export const INVALID_FILE_NAME = {
     errorMessage: 'file upload failed due to unsupported file name.'
 };
 
+// job status
 export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
 export const JOB_ERROR_STATUS = 'ERROR';
 export const JOB_COMPLETE_STATUS = 'COMPLETED';
 export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
+// display job status
+export const JOB_INPROGRESS_STATUS_DISPLAY = 'File is being processed';
+export const JOB_ERROR_STATUS_DISPLAY = 'Failed to process';
+export const JOB_COMPLETE_STATUS_DISPLAY = 'File processed successfully';
+export const JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY = 'File processed partially';
+export const MINOR_ERROR_STATUS_DISPLAY = 'Minor error file';
 
 export const PCI_FILENAME_PREFIX = 'CPPCI-';
 
@@ -117,3 +124,8 @@ export const TAG_NAME_A = 'a';
 export const EMPTY_STRING = '';
 export const PERCENTAGE_SIGN = '%';
 export const UNKNOWN_BASE_VALUE_NAME = 'UNKNOWN';
+
+// delete confirmation popup
+export const DELETE_TITLE = 'Are you sure to delete this?';
+export const DELETE_CONFIRM = 'Yes';
+export const DELETE_REJECT = 'No';

@@ -1,24 +1,32 @@
 import React from 'react';
-import {Button, Input, message, notification, Table} from 'antd';
+import {Button, Input, message, notification, Popconfirm, Table} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 // eslint-disable-next-line import/no-named-default
 import {default as _} from 'lodash';
 import {getBffUrlConfig} from '../../utils/Configs';
 import {
+    DELETE_CONFIRM,
+    DELETE_REJECT,
+    DELETE_TITLE,
     EMPTY_STRING,
     JOB_COMPLETE_STATUS,
+    JOB_COMPLETE_STATUS_DISPLAY,
     JOB_ERROR_STATUS,
+    JOB_ERROR_STATUS_DISPLAY,
     JOB_INPROGRESS_STATUS,
+    JOB_INPROGRESS_STATUS_DISPLAY,
     JOB_PARTIALLY_COMPLETED_STATUS,
+    JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY,
     MAX_DOWNLOAD_ALLOWED,
+    MINOR_ERROR_STATUS_DISPLAY,
     PCI_FILENAME_PREFIX,
     TAG_NAME_A,
     TIMEOUT_DURING_DOWNLOAD_CLICKS
 } from '../../constants/Constants';
 import JobDetail from '../../model/jobDetail';
 import {
-    generateBatchJobSearchUrl,
     generateBatchJobDeleteUrl,
+    generateBatchJobSearchUrl,
     removeFileNamePrefix,
     removeFileNamePrefixFromList
 } from '../../utils/FIleListUtils';
@@ -194,7 +202,7 @@ class FileList extends React.Component {
             render: (jobDetail) => (
                 <div className="action-bar">
                     {jobDetail.status === JOB_INPROGRESS_STATUS && (
-                        <div className="file-process-status">File is being processed</div>
+                        <div className="file-process-status">{JOB_INPROGRESS_STATUS_DISPLAY}</div>
                     )}
                     {jobDetail.status === JOB_PARTIALLY_COMPLETED_STATUS && (
                         <div className="file-process-status warn">
@@ -204,31 +212,36 @@ class FileList extends React.Component {
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
-                                View minor error file
+                                {MINOR_ERROR_STATUS_DISPLAY}
                             </Button>
                             <div className="divider"></div>
-                            File processed partially
+                            {JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY}
                         </div>
                     )}
                     {jobDetail.status === JOB_COMPLETE_STATUS && (
                         <div className="file-process-status success">
-                            File processed successfully
+                            {JOB_COMPLETE_STATUS_DISPLAY}
                         </div>
                     )}
                     {jobDetail.status === JOB_ERROR_STATUS && (
                         <div className="file-process-status error">
-                            Failed to process
+                            {JOB_ERROR_STATUS_DISPLAY}
                         </div>
                     )}
                     {jobDetail.status !== JOB_INPROGRESS_STATUS ? (
                         <>
-                            <Button className="btn icon-only empty-btn"
-                                    onClick={() => {
-                                        this.deleteJob(jobDetail.jobId);
-                                    }}
+                            <Popconfirm
+                                title={DELETE_TITLE}
+                                okText={DELETE_CONFIRM}
+                                cancelText={DELETE_REJECT}
+                                onConfirm={() =>
+                                    this.deleteJob(jobDetail.jobId)
+                                }
                             >
-                                <i className="icon fi flaticon-bin"/>
-                            </Button>
+                                <Button className="btn icon-only empty-btn">
+                                    <i className="icon fi flaticon-bin"/>
+                                </Button>
+                            </Popconfirm>
                             <Button className="btn icon-only empty-btn download-file"
                                     onClick={() => {
                                         this.downloadFile([jobDetail.fileName]);
@@ -240,9 +253,6 @@ class FileList extends React.Component {
 
                     ) : (
                         <>
-                            <Button className="btn icon-only empty-btn cancel-process">
-                                <i className="icon fi flaticon-close"/>
-                            </Button>
                             <SyncOutlined spin className="icon processing-spinner"/>
                         </>
                     )}
