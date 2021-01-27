@@ -18,7 +18,7 @@ import {
 import JobDetail from '../../model/jobDetail';
 import {
     generateBatchJobSearchUrl,
-    getJobsDeleteEndpoint,
+    generateBatchJobDeleteUrl,
     removeFileNamePrefix,
     removeFileNamePrefixFromList
 } from '../../utils/FIleListUtils';
@@ -76,7 +76,7 @@ class FileList extends React.Component {
         });
     }
 
-    jobDeleteRequestHandler = (jobId) => fetch(getJobsDeleteEndpoint(jobId), {
+    jobDeleteRequestHandler = (jobId) => fetch(generateBatchJobDeleteUrl(jobId), {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json, text/plain, */*',

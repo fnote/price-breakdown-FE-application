@@ -9,7 +9,7 @@ import {
     PCI_FILENAME_PREFIX,
     SUPPORTED_FILE_TYPES
 } from '../../constants/Constants';
-import {isValidFileName, isValidFileType} from './UploadValidation';
+import {isValidFileName, isValidFileType} from '../../utils/FileUploadValidation';
 
 const {Dragger} = Upload;
 
