@@ -363,8 +363,6 @@ class FileList extends React.Component {
         }
     };
 
-
-
     onSearchStringChange = (searchBox) => {
         const searchString = searchBox.target.value;
         this.setState({searchString});
