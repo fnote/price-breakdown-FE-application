@@ -21,7 +21,7 @@ import {
     generateBatchJobDeleteUrl,
     removeFileNamePrefix,
     removeFileNamePrefixFromList
-} from '../../utils/FIleListUtils';
+} from '../../utils/FileListUtils';
 
 const {Search} = Input;
 
