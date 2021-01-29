@@ -1,32 +1,34 @@
 import {
     convertFactorToPercentage,
+    extractItemInfo,
+    extractPricePoints, extractRequestInfo,
+    extractSiteInfo,
+    formatBaseValueName,
+    formatFactorDetails,
     formatPrice,
     formatPriceWithoutCurrency,
     generateDateObject,
+    generateReadableDate,
+    generateValidityPeriod,
     getFormattedPercentageValue,
     getPriceUnit,
     getReadableDiscountName,
-    generateReadableDate,
-    generateValidityPeriod,
-    mapDiscountToDataRow,
-    mapAgreementToDataRow,
-    mapVolumeTierToTableRow,
-    extractPricePoints,
-    extractItemInfo,
-    extractSiteInfo,
     getSplitStatusBySplitFlag,
-    extractRequestInfo,
-    prepareLocalSegmentPriceInfo,
-    prepareStrikeThroughPriceInfo,
     isApplyToPriceOrBaseAgreement,
-    prepareDiscountPriceInfo,
     isOfflineAgreement,
-    prepareOrderUnitPriceInfo,
+    mapAgreementToDataRow,
+    mapDiscountToDataRow,
+    mapVolumeTierToTableRow,
     prepareCustomerNetPriceInfo,
+    prepareDefaultPriceRuleSection,
+    prepareDiscountPriceInfo,
+    prepareLocalSegmentPriceInfo,
+    prepareOrderUnitPriceInfo,
+    prepareStrikeThroughPriceInfo,
     prepareVolumePricingHeaderInfo,
-    prepareVolumePricingTiers,
     prepareVolumePricingHeaderRow,
-    prepareVolumePricingInfo, formatFactorDetails, prepareDefaultPriceRuleSection, formatBaseValueName,
+    prepareVolumePricingInfo,
+    prepareVolumePricingTiers,
 } from '../PricingUtils';
 
 describe('formatPrice', () => {
@@ -47,36 +49,35 @@ describe('formatPrice', () => {
 });
 
 describe('formatFactorDetails', () => {
-
     test('should return % and sign when factor calc method is MKP', () => {
         const data = {
-            name: "P1P",
+            name: 'P1P',
             baseValue: 5.8400,
-            baseValueName: "P1",
-            factorCalcMethod: "MKP",
-            factorSign: "+",
+            baseValueName: 'P1',
+            factorCalcMethod: 'MKP',
+            factorSign: '+',
             factorValue: 4.5
         };
         expect(formatFactorDetails(data)).toEqual('+4.5%');
     });
     test('should return % and sign when factor calc method is MGN', () => {
         const data = {
-            name: "P1P",
+            name: 'P1P',
             baseValue: 5.8400,
-            baseValueName: "P1",
-            factorCalcMethod: "MGN",
-            factorSign: "+",
+            baseValueName: 'P1',
+            factorCalcMethod: 'MGN',
+            factorSign: '+',
             factorValue: 4.5
         };
         expect(formatFactorDetails(data)).toEqual('+4.5%');
     });
     test('should return $ and sign when factor calc method is $ per case or $ per pound', () => {
         const data = {
-            name: "P1P",
+            name: 'P1P',
             baseValue: 5.8400,
-            baseValueName: "P1",
-            factorCalcMethod: "c",
-            factorSign: "+",
+            baseValueName: 'P1',
+            factorCalcMethod: 'c',
+            factorSign: '+',
             factorValue: 4.5
         };
         expect(formatFactorDetails(data)).toEqual('+$4.5');
@@ -84,36 +85,35 @@ describe('formatFactorDetails', () => {
 });
 
 describe('formatBaseValueName', () => {
-
     test('should return UNKNOWN when base value name is blank', () => {
         const data = {
-            name: "P1P",
+            name: 'P1P',
             baseValue: 5.8400,
-            baseValueName: "",
-            factorCalcMethod: "MKP",
-            factorSign: "+",
+            baseValueName: '',
+            factorCalcMethod: 'MKP',
+            factorSign: '+',
             factorValue: 4.5
         };
         expect(formatBaseValueName(data)).toEqual('UNKNOWN');
     });
     test('should return UNKNOWN when base value name is blank', () => {
         const data = {
-            name: "P1P",
+            name: 'P1P',
             baseValue: 5.8400,
             baseValueName: null,
-            factorCalcMethod: "MGN",
-            factorSign: "+",
+            factorCalcMethod: 'MGN',
+            factorSign: '+',
             factorValue: 4.5
         };
         expect(formatBaseValueName(data)).toEqual('UNKNOWN');
     });
     test('should return proper base value name when base value name is present', () => {
         const data = {
-            name: "P1P",
+            name: 'P1P',
             baseValue: 5.8400,
-            baseValueName: "P1",
-            factorCalcMethod: "c",
-            factorSign: "+",
+            baseValueName: 'P1',
+            factorCalcMethod: 'c',
+            factorSign: '+',
             factorValue: 4.5
         };
         expect(formatBaseValueName(data)).toEqual('P1');
@@ -122,12 +122,12 @@ describe('formatBaseValueName', () => {
 
 describe('formatPriceWithoutCurrency', () => {
     test('should return correctly formatted values', () => {
-        expect(formatPriceWithoutCurrency(1, { perWeightFlag: false })).toEqual('1.00');
-        expect(formatPriceWithoutCurrency(1.23342, { perWeightFlag: false })).toEqual('1.23');
-        expect(formatPriceWithoutCurrency(0, { perWeightFlag: false })).toEqual('0.00');
-        expect(formatPriceWithoutCurrency(-0.1, { perWeightFlag: false })).toEqual('-0.10');
-        expect(formatPriceWithoutCurrency(1, { perWeightFlag: true, useFixedFractionDigits: false })).toEqual('1.000');
-        expect(formatPriceWithoutCurrency(1, { perWeightFlag: true, useFixedFractionDigits: true })).toEqual('1.00');
+        expect(formatPriceWithoutCurrency(1, {perWeightFlag: false})).toEqual('1.00');
+        expect(formatPriceWithoutCurrency(1.23342, {perWeightFlag: false})).toEqual('1.23');
+        expect(formatPriceWithoutCurrency(0, {perWeightFlag: false})).toEqual('0.00');
+        expect(formatPriceWithoutCurrency(-0.1, {perWeightFlag: false})).toEqual('-0.10');
+        expect(formatPriceWithoutCurrency(1, {perWeightFlag: true, useFixedFractionDigits: false})).toEqual('1.000');
+        expect(formatPriceWithoutCurrency(1, {perWeightFlag: true, useFixedFractionDigits: true})).toEqual('1.00');
     });
 });
 
@@ -162,10 +162,10 @@ describe('getReadableDiscountName', () => {
 
 describe('getPriceUnit', () => {
     test('should return the correct value', () => {
-        expect(getPriceUnit({ splitFlag: true, perWeightFlag: true })).toEqual('pound');
-        expect(getPriceUnit({ splitFlag: false, perWeightFlag: true })).toEqual('pound');
-        expect(getPriceUnit({ splitFlag: true, perWeightFlag: false })).toEqual('each');
-        expect(getPriceUnit({ splitFlag: false, perWeightFlag: false })).toEqual('case');
+        expect(getPriceUnit({splitFlag: true, perWeightFlag: true})).toEqual('pound');
+        expect(getPriceUnit({splitFlag: false, perWeightFlag: true})).toEqual('pound');
+        expect(getPriceUnit({splitFlag: true, perWeightFlag: false})).toEqual('each');
+        expect(getPriceUnit({splitFlag: false, perWeightFlag: false})).toEqual('case');
         expect(getPriceUnit({})).toEqual('case');
     });
 });
@@ -200,8 +200,8 @@ describe('mapDiscountToDataRow', () => {
             priceAdjustment: 72.23,
             effectiveFrom: '20201005',
             effectiveTo: '20201111'
-};
-        expect(mapDiscountToDataRow(data, 'something', { perWeightFlag: false })).toEqual({
+        };
+        expect(mapDiscountToDataRow(data, 'something', {perWeightFlag: false})).toEqual({
             adjustmentValue: '-8.00%',
             calculatedValue: '$72.23',
             description: 'New Customer Discount',
@@ -220,8 +220,8 @@ describe('mapAgreementToDataRow', () => {
             priceAdjustment: 72.23,
             effectiveFrom: '20201005',
             effectiveTo: '20201111'
-};
-        expect(mapAgreementToDataRow(data, 'something', { perWeightFlag: false })).toEqual({
+        };
+        expect(mapAgreementToDataRow(data, 'something', {perWeightFlag: false})).toEqual({
             id: '1234',
             adjustmentValue: '$1.23',
             calculatedValue: '$72.23',
@@ -238,8 +238,8 @@ describe('mapAgreementToDataRow', () => {
             priceAdjustment: 72.23,
             effectiveFrom: '20201005',
             effectiveTo: '20201111'
-};
-        expect(mapAgreementToDataRow(data, 'something', { perWeightFlag: false })).toEqual({
+        };
+        expect(mapAgreementToDataRow(data, 'something', {perWeightFlag: false})).toEqual({
             id: '1234',
             adjustmentValue: '$72.23',
             calculatedValue: '$72.23',
@@ -264,10 +264,10 @@ describe('mapVolumeTierToTableRow', () => {
             }],
             isApplicable: true
         };
-        expect(mapVolumeTierToTableRow(data, { perWeightFlag: false })).toEqual({
+        expect(mapVolumeTierToTableRow(data, {perWeightFlag: false})).toEqual({
             adjustmentValue: '1100.00%',
             calculatedValue: '$2.00',
-            description: { rangeConnector: 'to', rangeEnd: 10, rangeStart: 5},
+            description: {rangeConnector: 'to', rangeEnd: 10, rangeStart: 5},
             isSelected: true,
             source: 'Discount Service'
         });
@@ -286,10 +286,10 @@ describe('mapVolumeTierToTableRow', () => {
             }],
             isApplicable: true
         };
-        expect(mapVolumeTierToTableRow(data, { perWeightFlag: false })).toEqual({
+        expect(mapVolumeTierToTableRow(data, {perWeightFlag: false})).toEqual({
             adjustmentValue: '1100.00%',
             calculatedValue: '$2.00',
-            description: { rangeConnector: 'and', rangeEnd: 'above', rangeStart: 5},
+            description: {rangeConnector: 'and', rangeEnd: 'above', rangeStart: 5},
             isSelected: true,
             source: 'Discount Service'
         });
@@ -308,7 +308,7 @@ describe('mapVolumeTierToTableRow', () => {
             }],
             isApplicable: false
         };
-        expect(mapVolumeTierToTableRow(inputData1, { perWeightFlag: false }).isSelected).toEqual(false);
+        expect(mapVolumeTierToTableRow(inputData1, {perWeightFlag: false}).isSelected).toEqual(false);
         const inputData2 = {
             eligibility: {
                 operator: '=',
@@ -321,7 +321,7 @@ describe('mapVolumeTierToTableRow', () => {
             }],
             isApplicable: true
         };
-        expect(mapVolumeTierToTableRow(inputData2, { perWeightFlag: false }).isSelected).toEqual(true);
+        expect(mapVolumeTierToTableRow(inputData2, {perWeightFlag: false}).isSelected).toEqual(true);
 
         const inputData3 = {
             eligibility: {
@@ -334,7 +334,7 @@ describe('mapVolumeTierToTableRow', () => {
                 priceAdjustment: 2
             }],
         };
-        expect(mapVolumeTierToTableRow(inputData3, { perWeightFlag: false }).isSelected).toEqual(false);
+        expect(mapVolumeTierToTableRow(inputData3, {perWeightFlag: false}).isSelected).toEqual(false);
     });
 
     test('should return the correct when Between operator is used and lower and upper bound are equal', () => {
@@ -350,10 +350,10 @@ describe('mapVolumeTierToTableRow', () => {
             }],
             isApplicable: true
         };
-        expect(mapVolumeTierToTableRow(data, { perWeightFlag: false })).toEqual({
+        expect(mapVolumeTierToTableRow(data, {perWeightFlag: false})).toEqual({
             adjustmentValue: '1100.00%',
             calculatedValue: '$2.00',
-            description: { rangeConnector: '', rangeEnd: '', rangeStart: 5},
+            description: {rangeConnector: '', rangeEnd: '', rangeStart: 5},
             isSelected: true,
             source: 'Discount Service'
         });
@@ -413,7 +413,7 @@ describe('extractSiteInfo', () => {
             customerName: 'aName',
             customerType: 'aType',
             businessUnitNumber: '001',
-            product: { priceZoneId: 1 }
+            product: {priceZoneId: 1}
         };
         expect(extractSiteInfo(data)).toEqual({
             'businessUnitNumber': '001',
@@ -430,7 +430,7 @@ describe('extractSiteInfo', () => {
             customerName: 'aName',
             customerType: 'aType',
             businessUnitNumber: '001',
-            product: { priceZoneId: null }
+            product: {priceZoneId: null}
         };
         expect(extractSiteInfo(data)).toEqual({
             'businessUnitNumber': '001',
@@ -453,9 +453,13 @@ describe('extractRequestInfo', () => {
     test('should return the correct value', () => {
         const data = {
             priceRequestDate: '20201028',
-            product: { splitFlag: true, quantity: 5 }
+            product: {splitFlag: true, quantity: 5}
         };
-        expect(extractRequestInfo(data)).toEqual({'priceRequestDate': 'Oct 28, 2020', 'quantity': 5, 'splitStatus': 'Y'});
+        expect(extractRequestInfo(data)).toEqual({
+            'priceRequestDate': 'Oct 28, 2020',
+            'quantity': 5,
+            'splitStatus': 'Y'
+        });
     });
 });
 
@@ -542,8 +546,8 @@ describe('prepareLocalSegmentPriceInfo', () => {
             'source': 'Discount Service',
             'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
-'adjustmentValue': ' ', 'calculatedValue': '$0.002', 'description': 'Rounding', 'source': 'System'
-}]);
+            'adjustmentValue': ' ', 'calculatedValue': '$0.002', 'description': 'Rounding', 'source': 'System'
+        }]);
     });
 
     test('should return the correct value when priced with PA, catch-weight item, gross price = $10', () => {
@@ -585,8 +589,8 @@ describe('prepareLocalSegmentPriceInfo', () => {
             'source': 'Discount Service',
             'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
-'adjustmentValue': ' ', 'calculatedValue': '$0.020', 'description': 'Rounding', 'source': 'System'
-}]);
+            'adjustmentValue': ' ', 'calculatedValue': '$0.020', 'description': 'Rounding', 'source': 'System'
+        }]);
     });
 
     test('should return the correct value when priced with PA, catch-weight item, gross price > $10', () => {
@@ -628,8 +632,8 @@ describe('prepareLocalSegmentPriceInfo', () => {
             'source': 'Discount Service',
             'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         }, {
-'adjustmentValue': ' ', 'calculatedValue': '$0.020', 'description': 'Rounding', 'source': 'System'
-}]);
+            'adjustmentValue': ' ', 'calculatedValue': '$0.020', 'description': 'Rounding', 'source': 'System'
+        }]);
     });
 
     test('should return the correct value when priced with non PA, catch-weight item, gross price > $10', () => {
@@ -638,7 +642,7 @@ describe('prepareLocalSegmentPriceInfo', () => {
             referencePriceRoundingAdjustment: 0.02,
             grossPrice: 10.01,
             perWeightFlag: true,
-            isPricedFromReferencePrice:false,
+            isPricedFromReferencePrice: false,
             priceSource: 61
         };
 
@@ -951,10 +955,10 @@ describe('prepareStrikeThroughPriceInfo', () => {
 
 describe('isApplyToPriceOrBaseAgreement', () => {
     test('should return the correct value', () => {
-        expect(isApplyToPriceOrBaseAgreement({ applicationCode: 'P'})).toEqual(true);
-        expect(isApplyToPriceOrBaseAgreement({ applicationCode: 'B'})).toEqual(true);
-        expect(isApplyToPriceOrBaseAgreement({ applicationCode: 'T'})).toEqual(false);
-        expect(isApplyToPriceOrBaseAgreement({ applicationCode: 'L'})).toEqual(false);
+        expect(isApplyToPriceOrBaseAgreement({applicationCode: 'P'})).toEqual(true);
+        expect(isApplyToPriceOrBaseAgreement({applicationCode: 'B'})).toEqual(true);
+        expect(isApplyToPriceOrBaseAgreement({applicationCode: 'T'})).toEqual(false);
+        expect(isApplyToPriceOrBaseAgreement({applicationCode: 'L'})).toEqual(false);
     });
 });
 
@@ -1043,23 +1047,23 @@ describe('prepareDiscountPriceInfo', () => {
             'source': 'SUS',
             'validityPeriod': 'Valid Oct 5, 2020 - Nov 11, 2020'
         },
-        {
-            'adjustmentValue': '$10.03',
-            'calculatedValue': '-$5.50',
-            'description': 'Exception Deal',
-            'id': 1111,
-            'validityPeriod': 'Valid Oct 5, 2020 - Nov 11, 2020'
-        }
-    ]);
+            {
+                'adjustmentValue': '$10.03',
+                'calculatedValue': '-$5.50',
+                'description': 'Exception Deal',
+                'id': 1111,
+                'validityPeriod': 'Valid Oct 5, 2020 - Nov 11, 2020'
+            }
+        ]);
     });
 });
 
 describe('isOfflineAgreement', () => {
     test('should return the correct value', () => {
-        expect(isOfflineAgreement({ applicationCode: 'P'})).toEqual(false);
-        expect(isOfflineAgreement({ applicationCode: 'B'})).toEqual(false);
-        expect(isOfflineAgreement({ applicationCode: 'T'})).toEqual(true);
-        expect(isOfflineAgreement({ applicationCode: 'L'})).toEqual(true);
+        expect(isOfflineAgreement({applicationCode: 'P'})).toEqual(false);
+        expect(isOfflineAgreement({applicationCode: 'B'})).toEqual(false);
+        expect(isOfflineAgreement({applicationCode: 'T'})).toEqual(true);
+        expect(isOfflineAgreement({applicationCode: 'L'})).toEqual(true);
     });
 });
 
@@ -1106,7 +1110,7 @@ describe('prepareOrderUnitPriceInfo', () => {
 
 describe('prepareCustomerNetPriceInfo', () => {
     test('should return the correct value', () => {
-        expect(prepareCustomerNetPriceInfo({ netPrice: 32.3})).toEqual([{
+        expect(prepareCustomerNetPriceInfo({netPrice: 32.3})).toEqual([{
             'adjustmentValue': ' ',
             'calculatedValue': '$32.30',
             'description': 'Customer Net Price'
@@ -1158,7 +1162,7 @@ describe('prepareVolumePricingTiers', () => {
                 isApplicable: true
             }
         ];
-        expect(prepareVolumePricingTiers({ volumePricingTiers })).toEqual([{
+        expect(prepareVolumePricingTiers({volumePricingTiers})).toEqual([{
             'adjustmentValue': '1100.00%',
             'calculatedValue': '$2.00',
             'description': {'rangeConnector': 'to', 'rangeEnd': 10, 'rangeStart': 5},
@@ -1170,7 +1174,7 @@ describe('prepareVolumePricingTiers', () => {
 
 describe('prepareVolumePricingHeaderRow', () => {
     test('should return the correct value when volumePricingTiers is empty', () => {
-        expect(prepareVolumePricingHeaderRow({ volumePricingTiers: []})).toEqual(null);
+        expect(prepareVolumePricingHeaderRow({volumePricingTiers: []})).toEqual(null);
     });
 
     test('should return the correct value when volumePricingTiers contials values', () => {
@@ -1197,7 +1201,7 @@ describe('prepareVolumePricingHeaderRow', () => {
                         effectiveTo: '20201112'
                     }]
             }];
-        expect(prepareVolumePricingHeaderRow({ volumePricingTiers })).toEqual({
+        expect(prepareVolumePricingHeaderRow({volumePricingTiers})).toEqual({
             'description': 'Item/Order Specific promotions',
             'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
         });
@@ -1224,7 +1228,7 @@ describe('prepareVolumePricingInfo', () => {
         };
 
         const volumePricingTiers = [data];
-        expect(prepareVolumePricingInfo({ volumePricingTiers, perWeightFlag: false })).toEqual({
+        expect(prepareVolumePricingInfo({volumePricingTiers, perWeightFlag: false})).toEqual({
             'volumePricingHeaderRow': {
                 'description': 'Item/Order Specific promotions',
                 'validityPeriod': 'Valid Oct 25, 2020 - Nov 13, 2020'
@@ -1251,128 +1255,156 @@ describe('prepareVolumePricingInfo', () => {
 describe('prepareDefaultPriceRulesSection', () => {
     test('should return the correct value when price rule is not empty and factor calc mtd is MGN', () => {
         const data = {
-            "supc": "0032179",
-            "splitFlag": false,
-            "statuses": [],
-            "priceRule": {
-                "name": "P1P",
-                "baseValue": 5.8400,
-                "baseValueName": "P1",
-                "factorCalcMethod": "MGN",
-                "factorSign": "+",
-                "factorValue": 1.0000
-        },
-            "agreements": [],
-            "exception": null,
-            "discounts": []
-        }
+            'supc': '0032179',
+            'splitFlag': false,
+            'statuses': [],
+            'priceRule': {
+                'name': 'P1P',
+                'baseValue': 5.8400,
+                'baseValueName': 'P1',
+                'factorCalcMethod': 'MGN',
+                'factorSign': '+',
+                'factorValue': 1.0000
+            },
+            'agreements': [],
+            'exception': null,
+            'discounts': []
+        };
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}, {"adjustmentValue": "+1%", "calculatedValue": "", "description": "MGN"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{
+            'adjustmentValue': '',
+            'calculatedValue': '',
+            'description': 'Price Rule: P1P'
+        }, {'adjustmentValue': '$5.840', 'calculatedValue': '', 'description': 'P1'}, {
+            'adjustmentValue': '+1%',
+            'calculatedValue': '',
+            'description': 'MGN'
+        }]);
     });
 
     test('should return the correct value when price rule is not empty and avoid showing factor details when factor value is 0', () => {
         const data = {
-            "supc": "0032179",
-            "splitFlag": false,
-            "statuses": [],
-            "priceRule": {
-                "name": "P1P",
-                "baseValue": 5.8400,
-                "baseValueName": "P1",
-                "factorCalcMethod": "",
-                "factorSign": " ",
-                "factorValue": 0.0000
+            'supc': '0032179',
+            'splitFlag': false,
+            'statuses': [],
+            'priceRule': {
+                'name': 'P1P',
+                'baseValue': 5.8400,
+                'baseValueName': 'P1',
+                'factorCalcMethod': '',
+                'factorSign': ' ',
+                'factorValue': 0.0000
             },
-            "agreements": [],
-            "exception": null,
-            "discounts": []
-        }
+            'agreements': [],
+            'exception': null,
+            'discounts': []
+        };
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{
+            'adjustmentValue': '',
+            'calculatedValue': '',
+            'description': 'Price Rule: P1P'
+        }, {'adjustmentValue': '$5.840', 'calculatedValue': '', 'description': 'P1'}]);
     });
 
     test('should return the correct value when price rule is not empty and avoid showing factor details when factor calc method is empty', () => {
         const data = {
-            "supc": "0032179",
-            "splitFlag": false,
-            "statuses": [],
-            "priceRule": {
-                "name": "P1P",
-                "baseValue": 5.8400,
-                "baseValueName": "P1",
-                "factorCalcMethod": "",
-                "factorSign": " ",
-                "factorValue": 1.0000
+            'supc': '0032179',
+            'splitFlag': false,
+            'statuses': [],
+            'priceRule': {
+                'name': 'P1P',
+                'baseValue': 5.8400,
+                'baseValueName': 'P1',
+                'factorCalcMethod': '',
+                'factorSign': ' ',
+                'factorValue': 1.0000
             },
-            "agreements": [],
-            "exception": null,
-            "discounts": []
-        }
+            'agreements': [],
+            'exception': null,
+            'discounts': []
+        };
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{
+            'adjustmentValue': '',
+            'calculatedValue': '',
+            'description': 'Price Rule: P1P'
+        }, {'adjustmentValue': '$5.840', 'calculatedValue': '', 'description': 'P1'}]);
     });
 
-    test('should return the correct value when price rule is not empty and avoid showing factor details when factor calc method is empty and base value name absent', () => {
+    test('should return the correct value when price rule is not empty and avoid showing '
+        + 'factor details when factor calc method is empty and base value name absent', () => {
         const data = {
-            "supc": "0032179",
-            "splitFlag": false,
-            "statuses": [],
-            "priceRule": {
-                "name": "P1P",
-                "baseValue": 5.8400,
-                "baseValueName": "",
-                "factorCalcMethod": "",
-                "factorSign": " ",
-                "factorValue": 1.0000
+            'supc': '0032179',
+            'splitFlag': false,
+            'statuses': [],
+            'priceRule': {
+                'name': 'P1P',
+                'baseValue': 5.8400,
+                'baseValueName': '',
+                'factorCalcMethod': '',
+                'factorSign': ' ',
+                'factorValue': 1.0000
             },
-            "agreements": [],
-            "exception": null,
-            "discounts": []
-        }
+            'agreements': [],
+            'exception': null,
+            'discounts': []
+        };
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "UNKNOWN"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{
+            'adjustmentValue': '',
+            'calculatedValue': '',
+            'description': 'Price Rule: P1P'
+        }, {'adjustmentValue': '$5.840', 'calculatedValue': '', 'description': 'UNKNOWN'}]);
     });
 
     test('should return 3 decimal place base value when base value has more than 3 decimal places from the response', () => {
         const data = {
-            "supc": "0032179",
-            "splitFlag": false,
-            "statuses": [],
-            "priceRule": {
-                "name": "P1P",
-                "baseValue": 5.8400,
-                "baseValueName": "P1",
-                "factorCalcMethod": "",
-                "factorSign": " ",
-                "factorValue": 0.0000
+            'supc': '0032179',
+            'splitFlag': false,
+            'statuses': [],
+            'priceRule': {
+                'name': 'P1P',
+                'baseValue': 5.8400,
+                'baseValueName': 'P1',
+                'factorCalcMethod': '',
+                'factorSign': ' ',
+                'factorValue': 0.0000
             },
-            "agreements": [],
-            "exception": null,
-            "discounts": []
-        }
+            'agreements': [],
+            'exception': null,
+            'discounts': []
+        };
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{
+            'adjustmentValue': '',
+            'calculatedValue': '',
+            'description': 'Price Rule: P1P'
+        }, {'adjustmentValue': '$5.840', 'calculatedValue': '', 'description': 'P1'}]);
     });
 
     test('should return 3 decimal place base value when base value has less than 3 decimal places from the response', () => {
         const data = {
-            "supc": "0032179",
-            "splitFlag": false,
-            "statuses": [],
-            "priceRule": {
-                "name": "P1P",
-                "baseValue": 5.84,
-                "baseValueName": "P1",
-                "factorCalcMethod": "",
-                "factorSign": " ",
-                "factorValue": 0.0000
+            'supc': '0032179',
+            'splitFlag': false,
+            'statuses': [],
+            'priceRule': {
+                'name': 'P1P',
+                'baseValue': 5.84,
+                'baseValueName': 'P1',
+                'factorCalcMethod': '',
+                'factorSign': ' ',
+                'factorValue': 0.0000
             },
-            "agreements": [],
-            "exception": null,
-            "discounts": []
-        }
+            'agreements': [],
+            'exception': null,
+            'discounts': []
+        };
 
-        expect(prepareDefaultPriceRuleSection(data)).toEqual([{"adjustmentValue": "", "calculatedValue": "", "description": "Price Rule: P1P"}, {"adjustmentValue": "$5.840", "calculatedValue": "", "description": "P1"}]);
+        expect(prepareDefaultPriceRuleSection(data)).toEqual([{
+            'adjustmentValue': '',
+            'calculatedValue': '',
+            'description': 'Price Rule: P1P'
+        }, {'adjustmentValue': '$5.840', 'calculatedValue': '', 'description': 'P1'}]);
     });
-
 });

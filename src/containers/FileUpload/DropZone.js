@@ -4,7 +4,8 @@ import axios from 'axios';
 import {getBffUrlConfig} from '../../utils/Configs';
 import {
     FILE_UPLOADING_DONE,
-    FILE_UPLOADING_ERROR, INVALID_FILE_NAME,
+    FILE_UPLOADING_ERROR,
+    INVALID_FILE_NAME,
     INVALID_FILE_TYPE,
     PCI_FILENAME_PREFIX,
     SUPPORTED_FILE_TYPES
@@ -31,8 +32,7 @@ const handleResponse = (response) => response.json()
     });
 
 const formRequestBody = (fileName, fileType) => JSON.stringify({
-    fileNames: [fileName],
-    contentType: fileType
+    fileNames: [{fileName, contentType: fileType}],
 });
 
 const uploadArtifact = (path, payload) => {

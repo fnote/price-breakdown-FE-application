@@ -29,7 +29,7 @@ import {
     generateBatchJobSearchUrl,
     removeFileNamePrefix,
     removeFileNamePrefixFromList
-} from '../../utils/FIleListUtils';
+} from '../../utils/FileListUtils';
 
 const {Search} = Input;
 
@@ -372,8 +372,6 @@ class FileList extends React.Component {
             });
         }
     };
-
-
 
     onSearchStringChange = (searchBox) => {
         const searchString = searchBox.target.value;

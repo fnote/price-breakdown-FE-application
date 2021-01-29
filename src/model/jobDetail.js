@@ -31,7 +31,7 @@ class JobDetail {
     this.endTime = endTime;
     this.fileName = fileName;
     this.submittedUser = submittedUser;
-    this.minorErrorFileName = minorErrorFileName ? minorErrorFileName : null;
+    this.minorErrorFileName = minorErrorFileName || null;
   }
 
   static fromJson(obj) {
