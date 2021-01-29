@@ -1,4 +1,4 @@
-import { formatBusinessUnit, createBusinessUnitMap, formatNumberInput } from '../CommonUtils';
+import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput} from '../CommonUtils';
 
 const businessUnits = new Map(
     [
@@ -46,6 +46,29 @@ describe('createBusinessUnitMap', () => {
         const businessUnit = businessUnitMap.get('038');
         expect(businessUnit.name).toEqual('Indianapolis');
         expect(businessUnit.shortName).toEqual('Indianapolis');
+    });
+});
+
+describe('createBusinessUnitMap returns empty Map if authorizedPricingTransformationEnabledBunitList is null', () => {
+    const userDetailsNull = createBusinessUnitMap({
+        authorizedPricingTransformationEnabledBunitList: null
+    });
+
+    const businessUnitMap = createBusinessUnitMap(userDetailsNull);
+
+    test('should return empty Map', () => {
+        expect(businessUnitMap.size).toEqual(0);
+    });
+});
+
+describe('createBusinessUnitMap returns empty Map if string authorizedPricingTransformationEnabledBunitList is passed', () => {
+    const userDetailsInvalid = createBusinessUnitMap({
+        authorizedPricingTransformationEnabledBunitList: ''
+    });
+    const businessUnitMap = createBusinessUnitMap(userDetailsInvalid);
+
+    test('should return empty Map', () => {
+        expect(businessUnitMap.size).toEqual(0);
     });
 });
 

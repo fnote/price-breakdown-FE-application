@@ -93,6 +93,9 @@ export const SUPPORTED_FILE_TYPES = [
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     'application/msword',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+
+export const UNSUPPORTED_SPECIAL_CHARACTERS = /[ &$@=;:+,?\\{^}%`\]'">[~<#|]/;
+
 export const INVALID_FILE_TYPE = {
     errorType: 'Invalid ContentType',
     errorMessage: 'file upload failed due to unsupported file type.'
