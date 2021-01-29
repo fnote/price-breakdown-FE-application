@@ -108,4 +108,8 @@ describe('formatNumberInput', () => {
     test('Should not return an error when having decimal places only ', () => {
         expect(formatNumberInput('10.')).toEqual('10.');
     });
+
+    test('Should return null when passed a null ', () => {
+        expect(formatNumberInput(null)).toEqual(null);
+    });
 });

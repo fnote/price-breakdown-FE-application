@@ -3,8 +3,7 @@ import {
     generateBatchJobSearchUrl,
     removeFileNamePrefix,
     removeFileNamePrefixFromList
-} from "../FileListUtils";
-
+} from '../FileListUtils';
 
 describe('FileListUtils', () => {
     test('generateBatchJobSearchUrl should return formatted search url for given query', () => {

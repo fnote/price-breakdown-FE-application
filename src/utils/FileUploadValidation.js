@@ -11,5 +11,5 @@ export const isValidFileType = (contentType) => !(contentType === undefined || !
 /**
  * Validate file name
  * */
-export const isValidFileName = (fileName) => !(fileName === undefined || fileName.length === 0 ||
-    UNSUPPORTED_SPECIAL_CHARACTERS.test(fileName));
+export const isValidFileName = (fileName) => !(fileName === undefined || fileName.length === 0
+    || UNSUPPORTED_SPECIAL_CHARACTERS.test(fileName));

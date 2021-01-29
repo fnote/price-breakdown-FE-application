@@ -1,5 +1,4 @@
-import {isValidFileName, isValidFileType} from "../FileUploadValidation";
-
+import {isValidFileName, isValidFileType} from '../FileUploadValidation';
 
 describe('FileUploadValidation', () => {
     test('isValidFileType should return true when the given file type is support', () => {
