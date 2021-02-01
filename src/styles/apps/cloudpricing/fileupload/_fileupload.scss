@@ -154,10 +154,13 @@
       .submittime {
         color: $textstandard;
         min-width: 9rem;
+        max-width: 16rem;
+        font-size: 0.9rem;
       }
       .filename {
         color: darken($syscoblue, 5%);
         min-width: 10rem;
+        max-width: 30rem;
       }
       .download-file {
         color: $syscogreen;
@@ -187,6 +190,7 @@
         @include breakpoint(xs) {
           @include flexbox(1 1 auto, column, flex-end, flex-end);
           width: 100%;
+          max-width: 30rem;
         }
         .file-process-status {
           color: $syscoyellow;
@@ -208,13 +212,23 @@
                 width: 100%;
               }
             }
+          }
+          &.warn {
+            @include flexbox(0 0 auto, row, flex-end, center);
+            color: $syscoorange;
+            @include breakpoint(xs) {
+              @include flexbox(0 0 auto, column, flex-end, flex-end);
+              .divider {
+                width: 100%;
+              }
+            }
             .divider {
-              border-top: 1px dashed $syscored;
-              width: 2rem;
+              border-top: 1px dashed $syscoorange;
+              width: 1rem;
               margin: 0 0.5rem;
             }
             .download-error-file {
-              color: $syscored;
+              color: $syscoorange;
               font-size: 1rem;
               .icon {
                 font-size: 1.2rem;

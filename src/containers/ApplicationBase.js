@@ -1,10 +1,24 @@
 import React, {useContext, useEffect} from 'react';
+import {Route, Switch} from 'react-router-dom';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
+import FileUpload from './FileUpload/FileUpload';
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
+import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION} from '../constants/Constants';
+
+const Application = () => (
+    <Switch>
+        <Route path={NAVIGATION_PATH_FILE_UPLOAD}>
+            <FileUpload/>
+        </Route>
+        <Route path={NAVIGATION_PATH_PRICE_VALIDATION}>
+            <PriceValidation/>
+        </Route>
+    </Switch>
+);
 
 export default function ApplicationBase() {
     const userDetailContext = useContext(UserDetailContext);
@@ -24,7 +38,7 @@ export default function ApplicationBase() {
     if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = auth.isUserLoginCompleted() ? <PriceValidation/> : <Login/>;
+        component = auth.isUserLoginCompleted() ? Application() : <Login/>;
     }
 
   return (

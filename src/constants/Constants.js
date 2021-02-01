@@ -2,11 +2,11 @@ export const LABEL_CUSTOMER_NET_PRICE = 'CUSTOMER NET PRICE';
 
 export const VALUE_KEY_CUSTOMER_REF_PRICE = 'customerReferencePrice';
 export const META_DATA_PRICE_BAR = [
-    { label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1' },
-    { label: 'CUSTOMER REFERENCE PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2' },
-    { label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3' },
-    { label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right' },
-    { label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false }
+    {label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1'},
+    {label: 'CUSTOMER REFERENCE PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2'},
+    {label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3'},
+    {label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right'},
+    {label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false}
 ];
 
 export const PRICE_UNIT_CASE = 'case';
@@ -81,5 +81,42 @@ export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';
 export const ORDER_PRICE_TYPE_HAND = 'H';
 export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
 
+export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
+export const NAVIGATION_PATH_FILE_UPLOAD = '/file-upload';
+
+export const FILE_UPLOADING_DONE = 'done';
+export const FILE_UPLOADING_ERROR = 'error';
+
+export const SUPPORTED_FILE_TYPES = [
+    '', 'text/plain', 'text/csv',
+    'application/vnd.ms-excel',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    'application/msword',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+
+export const UNSUPPORTED_SPECIAL_CHARACTERS = /[ &$@=;:+,?\\{^}%`\]'">[~<#|]/;
+
+export const INVALID_FILE_TYPE = {
+    errorType: 'Invalid ContentType',
+    errorMessage: 'file upload failed due to unsupported file type.'
+};
+export const INVALID_FILE_NAME = {
+    errorType: 'Invalid FileName',
+    errorMessage: 'file upload failed due to unsupported file name.'
+};
+
+export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
+export const JOB_ERROR_STATUS = 'ERROR';
+export const JOB_COMPLETE_STATUS = 'COMPLETED';
+export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
+
+export const PCI_FILENAME_PREFIX = 'CPPCI-';
+
+export const MAX_DOWNLOAD_ALLOWED = 25;
+export const TIMEOUT_DURING_DOWNLOAD_CLICKS = 1000;
+
+export const TAG_NAME_A = 'a';
+
+export const EMPTY_STRING = '';
 export const PERCENTAGE_SIGN = '%';
 export const UNKNOWN_BASE_VALUE_NAME = 'UNKNOWN';
