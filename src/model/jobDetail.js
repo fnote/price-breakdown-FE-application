@@ -22,22 +22,23 @@ class JobDetail {
 
   minorErrorFileName;
 
-  constructor(jobId, bunitId, status, statusTime, startTime, endTime, fileName, submittedUser, minorErrorFileName) {
-    this.jobId = jobId;
-    this.bunitId = bunitId;
-    this.status = status;
-    this.statusTime = statusTime;
-    this.startTime = startTime;
-    this.endTime = endTime;
-    this.fileName = fileName;
-    this.submittedUser = submittedUser;
-    this.minorErrorFileName = minorErrorFileName || null;
+  isProcessing;
+
+  constructor(obj) {
+    this.jobId = obj.jobId;
+    this.bunitId = obj.bunitId;
+    this.status = obj.status;
+    this.statusTime = obj.statusTime;
+    this.startTime = obj.startTime;
+    this.endTime = obj.endTime;
+    this.fileName = obj.fileName;
+    this.submittedUser = obj.submittedUser;
+    this.minorErrorFileName = obj.minorErrorFileName || null;
+    this.isProcessing = false;
   }
 
   static fromJson(obj) {
-    return new JobDetail(
-        obj.jobId, obj.bunitId, obj.status, obj.statusTime, obj.startTime, obj.endTime, obj.fileName, obj.submittedUser, obj.minorErrorFileName
-    );
+    return new JobDetail(obj);
   }
 }
 

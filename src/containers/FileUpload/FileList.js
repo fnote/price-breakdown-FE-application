@@ -50,7 +50,15 @@ class FileList extends React.Component {
         this.listBatchJobs();
     }
 
+    // ------ delete job ------
     deleteJob = (jobId) => {
+        // set the file state to deleting
+        const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
+        if (item && item.jobDetail) {
+            item.jobDetail.isProcessing = true;
+            this.setState({item});
+        }
+
         this.jobDeleteRequestHandler(jobId)
             .then((response) => {
                 if (!response.ok) {
@@ -93,6 +101,7 @@ class FileList extends React.Component {
         credentials: 'include'
     });
 
+    // ------ download file ------
     downloadFile = (fileNamesArray) => {
         const fileNamesArrayWithPciPrefix = [];
 
@@ -154,7 +163,6 @@ class FileList extends React.Component {
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
-
                         this.openNotificationWithIcon('success', `File downloaded successful. File name: ${fileNameWithoutPciPrefix}`, 'Success');
                         resolve();
                     })
@@ -168,13 +176,6 @@ class FileList extends React.Component {
                     });
             }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
         }));
-    };
-
-    openNotificationWithIcon = (type, description, msg) => {
-        notification[type]({
-            message: msg,
-            description,
-        });
     };
 
     columns = [
@@ -228,14 +229,15 @@ class FileList extends React.Component {
                             {JOB_ERROR_STATUS_DISPLAY}
                         </div>
                     )}
-                    {jobDetail.status !== JOB_INPROGRESS_STATUS ? (
+                    {jobDetail.status !== JOB_INPROGRESS_STATUS && !jobDetail.isProcessing ? (
                         <>
                             <Popconfirm
                                 title={DELETE_TITLE}
                                 okText={DELETE_CONFIRM}
                                 cancelText={DELETE_REJECT}
-                                onConfirm={() =>
-                                    this.deleteJob(jobDetail.jobId)
+                                onConfirm={() => {
+                                    this.deleteJob(jobDetail.jobId);
+                                }
                                 }
                             >
                                 <Button className="btn icon-only empty-btn">
@@ -260,6 +262,24 @@ class FileList extends React.Component {
             ),
         },
     ];
+
+    // ------ notification slider ------
+    openNotificationWithIcon = (type, description, msg) => {
+        notification[type]({
+            message: msg,
+            description,
+        });
+    };
+
+    formatJobDetailObject = (job) => {
+        const jobDetail = JobDetail.fromJson(job);
+        jobDetail.fileName = removeFileNamePrefix(jobDetail.fileName);
+        jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
+            ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
+        jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
+        jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
+        return jobDetail;
+    };
 
     handleResponse = (response) => {
         const batchJobDetailList = [];
@@ -380,16 +400,6 @@ class FileList extends React.Component {
     };
 
     debouncedListBatchJobs = _.debounce(((searchString) => this.listBatchJobs(searchString)), 1000);
-
-    formatJobDetailObject = (job) => {
-        const jobDetail = JobDetail.fromJson(job);
-        jobDetail.fileName = removeFileNamePrefix(jobDetail.fileName);
-        jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
-            ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
-        jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
-        jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
-        return jobDetail;
-    };
 
     render() {
         const {loading, selectedRowKeys, data, dataIsReturned, searchString} = this.state;

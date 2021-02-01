@@ -110,6 +110,7 @@ export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
 export const JOB_ERROR_STATUS = 'ERROR';
 export const JOB_COMPLETE_STATUS = 'COMPLETED';
 export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
+
 // display job status
 export const JOB_INPROGRESS_STATUS_DISPLAY = 'File is being processed';
 export const JOB_ERROR_STATUS_DISPLAY = 'Failed to process';
