@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Input, message, notification, Popconfirm, Table} from 'antd';
+import {Button, Input, message, notification, Popconfirm, Table, Tooltip} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 // eslint-disable-next-line import/no-named-default
 import {default as _} from 'lodash';
@@ -70,8 +70,12 @@ class FileList extends React.Component {
                 return response.json();
             }).then((response) => {
             const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
+            const formattedFileNames = [];
+            fileNames.forEach((fileName) => {
+                formattedFileNames.push((fileName.length > 30) ? fileName.substr(0, 29) + '...' : fileName);
+            });
             this.openNotificationWithIcon('success',
-                `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
+                `Batch job deletion successful. Deleted file names: ${formattedFileNames}`, 'Success');
             this.removeDeletedJobFromList(jobId);
             this.removeDeletedJobFromSelectedRecords(jobId);
         }).catch(() => {
@@ -186,6 +190,20 @@ class FileList extends React.Component {
             title: 'FILE NAME',
             dataIndex: 'filename',
             className: 'filename',
+            render: (fileName) => (
+                <div>
+                    {fileName.length > 40 &&
+                        (<Tooltip
+                            title={fileName}
+                            placement="top">
+                            <div>{fileName.substr(0, 29) + '...'}</div>
+                        </Tooltip>)
+                    }
+                    {fileName.length < 40 &&
+                        (<div>{fileName}</div>)
+                    }
+                </div>
+            )
         },
         {
             title: 'SUBMIT TIME',

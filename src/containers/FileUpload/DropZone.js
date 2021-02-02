@@ -107,14 +107,16 @@ const props = {
     customRequest: customUpload,
     onChange(info) {
         const {status} = info.file;
+        let fileName = info.file.name;
+        fileName = (fileName.length > 30) ? fileName.substr(0, 29) + '...' : fileName;
         if (status === FILE_UPLOADING_DONE) {
-            openNotificationWithIcon('success', `${info.file.name} file uploaded successfully.`, 'Success');
+            openNotificationWithIcon('success', `${fileName} file uploaded successfully.`, 'Success');
         } else if (status === FILE_UPLOADING_ERROR) {
             const err = info.file.error;
             if (err && err.errorType === INVALID_FILE_TYPE.errorType) {
-                openNotificationWithIcon('error', `${info.file.name} ${INVALID_FILE_TYPE.errorMessage}`, 'Failure');
+                openNotificationWithIcon('error', `${fileName} ${INVALID_FILE_TYPE.errorMessage}`, 'Failure');
             } else if (err && err.errorType === INVALID_FILE_NAME.errorType) {
-                openNotificationWithIcon('error', `${info.file.name} ${INVALID_FILE_NAME.errorMessage}`, 'Failure');
+                openNotificationWithIcon('error', `${fileName} ${INVALID_FILE_NAME.errorMessage}`, 'Failure');
             } else {
                 openNotificationWithIcon('error', `${info.file.name} file upload failed.`, 'Failure');
             }
