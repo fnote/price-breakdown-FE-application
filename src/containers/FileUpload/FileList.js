@@ -11,6 +11,8 @@ import {
     EMPTY_STRING,
     JOB_COMPLETE_STATUS,
     JOB_COMPLETE_STATUS_DISPLAY,
+    JOB_DELETING_STATUS,
+    JOB_DELETING_STATUS_DISPLAY,
     JOB_ERROR_STATUS,
     JOB_ERROR_STATUS_DISPLAY,
     JOB_INPROGRESS_STATUS,
@@ -56,6 +58,7 @@ class FileList extends React.Component {
         const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
         if (item && item.jobDetail) {
             item.jobDetail.isProcessing = true;
+            item.jobDetail.status = JOB_DELETING_STATUS;
             this.setState({item});
         }
 
@@ -227,6 +230,11 @@ class FileList extends React.Component {
                     {jobDetail.status === JOB_ERROR_STATUS && (
                         <div className="file-process-status error">
                             {JOB_ERROR_STATUS_DISPLAY}
+                        </div>
+                    )}
+                    {jobDetail.status === JOB_DELETING_STATUS && (
+                        <div className="file-process-status processing">
+                            {JOB_DELETING_STATUS_DISPLAY}
                         </div>
                     )}
                     {jobDetail.status !== JOB_INPROGRESS_STATUS && !jobDetail.isProcessing ? (
