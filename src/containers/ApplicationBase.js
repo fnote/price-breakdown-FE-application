@@ -1,5 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {Route, Switch} from 'react-router-dom';
+import {notification} from 'antd';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
@@ -23,6 +24,12 @@ const Application = () => (
 export default function ApplicationBase() {
     const userDetailContext = useContext(UserDetailContext);
     const appLoaderContext = useContext(AppLoaderContext);
+
+    // Global configurations for notifications
+    notification.config({
+        placement: 'bottomRight',
+        duration: 3,
+    });
 
     useEffect(() => {
         if (auth.isUserLoginPending() || auth.shouldFetchUserDetailsAgain(userDetailContext)) {

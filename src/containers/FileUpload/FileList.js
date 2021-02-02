@@ -109,7 +109,7 @@ class FileList extends React.Component {
     });
 
     // ------ download file ------
-    downloadFile = (fileNamesArray) => {
+    downloadFiles = (fileNamesArray) => {
         const fileNamesArrayWithPciPrefix = [];
 
         fileNamesArray.forEach((fileName) => {
@@ -230,7 +230,7 @@ class FileList extends React.Component {
                         <div className="file-process-status warn">
                             <Button className="btn empty-btn download-error-file"
                                     onClick={() => {
-                                        this.downloadFile([jobDetail.minorErrorFileName]);
+                                        this.downloadFiles([jobDetail.minorErrorFileName]);
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
@@ -272,7 +272,7 @@ class FileList extends React.Component {
                             </Popconfirm>
                             <Button className="btn icon-only empty-btn download-file"
                                     onClick={() => {
-                                        this.downloadFile([jobDetail.fileName]);
+                                        this.downloadFiles([jobDetail.fileName]);
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
@@ -379,7 +379,7 @@ class FileList extends React.Component {
             }
         });
 
-        this.downloadFile(toDownloadFiles);
+        this.downloadFiles(toDownloadFiles);
 
         this.setState({
             selectedRowKeys: [],
@@ -410,11 +410,11 @@ class FileList extends React.Component {
             });
         } else {
             const remainingSelectedRowKeys = this.state.selectedRowKeys.filter((key) => changeRowKeys.indexOf(key) < 0);
-            const remainingSelectedRow = this.state.selectedRowValues.filter((row) => changeRows.indexOf(row) < 0);
+            const remainingSelectedRows = this.state.selectedRowValues.filter((row) => changeRows.indexOf(row) < 0);
 
             this.setState({
                 selectedRowKeys: remainingSelectedRowKeys,
-                selectedRowValues: remainingSelectedRow
+                selectedRowValues: remainingSelectedRows
             });
         }
     };
