@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Input, message, notification, Popconfirm, Table} from 'antd';
+import {Button, Input, message, notification, Popconfirm, Table, Tooltip} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 // eslint-disable-next-line import/no-named-default
 import {default as _} from 'lodash';
@@ -70,8 +70,12 @@ class FileList extends React.Component {
                 return response.json();
             }).then((response) => {
             const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
+            const formattedFileNames = [];
+            fileNames.forEach((fileName) => {
+                formattedFileNames.push((fileName.length > 30) ? fileName.substr(0, 29) + '...' : fileName);
+            });
             this.openNotificationWithIcon('success',
-                `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
+                `Batch job deletion successful. Deleted file names: ${formattedFileNames}`, 'Success');
             this.removeDeletedJobFromList(jobId);
             this.removeDeletedJobFromSelectedRecords(jobId);
         }).catch(() => {
@@ -105,7 +109,7 @@ class FileList extends React.Component {
     });
 
     // ------ download file ------
-    downloadFile = (fileNamesArray) => {
+    downloadFiles = (fileNamesArray) => {
         const fileNamesArrayWithPciPrefix = [];
 
         fileNamesArray.forEach((fileName) => {
@@ -186,6 +190,20 @@ class FileList extends React.Component {
             title: 'FILE NAME',
             dataIndex: 'filename',
             className: 'filename',
+            render: (fileName) => (
+                <div>
+                    {fileName.length > 40 &&
+                        (<Tooltip
+                            title={fileName}
+                            placement="top">
+                            <div>{fileName.substr(0, 29) + '...'}</div>
+                        </Tooltip>)
+                    }
+                    {fileName.length < 40 &&
+                        (<div>{fileName}</div>)
+                    }
+                </div>
+            )
         },
         {
             title: 'SUBMIT TIME',
@@ -212,7 +230,7 @@ class FileList extends React.Component {
                         <div className="file-process-status warn">
                             <Button className="btn empty-btn download-error-file"
                                     onClick={() => {
-                                        this.downloadFile([jobDetail.minorErrorFileName]);
+                                        this.downloadFiles([jobDetail.minorErrorFileName]);
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
@@ -254,7 +272,7 @@ class FileList extends React.Component {
                             </Popconfirm>
                             <Button className="btn icon-only empty-btn download-file"
                                     onClick={() => {
-                                        this.downloadFile([jobDetail.fileName]);
+                                        this.downloadFiles([jobDetail.fileName]);
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
@@ -361,7 +379,7 @@ class FileList extends React.Component {
             }
         });
 
-        this.downloadFile(toDownloadFiles);
+        this.downloadFiles(toDownloadFiles);
 
         this.setState({
             selectedRowKeys: [],
@@ -392,11 +410,11 @@ class FileList extends React.Component {
             });
         } else {
             const remainingSelectedRowKeys = this.state.selectedRowKeys.filter((key) => changeRowKeys.indexOf(key) < 0);
-            const remainingSelectedRow = this.state.selectedRowValues.filter((row) => changeRows.indexOf(row) < 0);
+            const remainingSelectedRows = this.state.selectedRowValues.filter((row) => changeRows.indexOf(row) < 0);
 
             this.setState({
                 selectedRowKeys: remainingSelectedRowKeys,
-                selectedRowValues: remainingSelectedRow
+                selectedRowValues: remainingSelectedRows
             });
         }
     };
