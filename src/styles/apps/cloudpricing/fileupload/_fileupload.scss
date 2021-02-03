@@ -63,9 +63,12 @@
         .ant-upload-list-item-info {
           @include flexbox(0 0 auto, row, flex-start, center);
           padding: 0;
+          width: 90%;
+          overflow: hidden;
           & > span {
             height: auto;
             display: flex;
+            text-overflow: ellipsis;
           }
           .anticon-loading .anticon,
           .ant-upload-text-icon .anticon {
