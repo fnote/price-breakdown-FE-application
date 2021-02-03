@@ -76,7 +76,7 @@ class FileList extends React.Component {
                 formattedFileNames.push(getDisplayFileName(fileName));
             });
             this.openNotificationWithIcon('success',
-                `Batch job deletion successful. Deleted file names: ${formattedFileNames}`, 'Success');
+                `Job deletion success. Deleted files: ${formattedFileNames}`, 'Success');
             this.removeDeletedJobFromList(jobId);
             this.removeDeletedJobFromSelectedRecords(jobId);
         }).catch(() => {
