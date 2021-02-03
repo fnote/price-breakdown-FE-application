@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Input, message, notification, Table} from 'antd';
+import {Button, Input, notification, Table} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 // eslint-disable-next-line import/no-named-default
 import {default as _} from 'lodash';
@@ -86,87 +86,29 @@ class FileList extends React.Component {
     });
 
     downloadFiles = (fileNamesArray) => {
-        const fileNamesArrayWithPciPrefix = [];
+        if (fileNamesArray.length > 0) {
+            const fileNamesArrayWithPciPrefix = [];
 
-        fileNamesArray.forEach((fileName) => {
-            const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
-            fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
-        });
+            fileNamesArray.forEach((fileName) => {
+                const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
+                fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
+            });
 
-        this.generateSignedUrls(fileNamesArrayWithPciPrefix)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            }).catch(() => {
+            this.generateSignedUrls(fileNamesArrayWithPciPrefix)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                }).catch(() => {
                 const errorMsg = 'Failed to download the files.';
                 this.openNotificationWithIcon('error', `${errorMsg} : ${fileNamesArrayWithPciPrefix}`, 'Failure');
             })
-            .then((response) => {
-                const fileNameUrlArray = response.data;
-                Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
-            });
-    };
-
-    generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
-        method: 'POST',
-        body: JSON.stringify({
-            'fileNames': fileNamesArray
-        }),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-    });
-
-    downloadFromSignedUrl = (fileNameUrlArray) => {
-        let iteration = 0;
-        return fileNameUrlArray.map(({fileName, readUrl}) => new Promise((resolve, reject) => {
-            const regex = new RegExp(`^(${PCI_FILENAME_PREFIX})`);
-            const fileNameWithoutPciPrefix = fileName.replace(regex, EMPTY_STRING);
-            iteration += 1;
-            setTimeout(() => {
-                fetch(readUrl)
-                    .then((response) => {
-                        if (!response.ok) {
-                            const err = new Error(response.statusText);
-                            err.status = response.status;
-                            throw err;
-                        }
-                        return response;
-                    })
-                    .then((response) => response.blob())
-                    .then((blob) => URL.createObjectURL(blob))
-                    .then((uri) => {
-                        const link = document.createElement(TAG_NAME_A);
-                        link.href = uri;
-                        link.download = fileNameWithoutPciPrefix;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-
-                        this.openNotificationWithIcon('success', `File downloaded successful. File name: ${fileNameWithoutPciPrefix}`, 'Success');
-                        resolve();
-                    })
-                    .catch((error) => {
-                        let errorMsg = 'Failed to download the file.';
-                        if (error.status === 404) {
-                            errorMsg = 'Failed to download as file is not found.';
-                        }
-                        this.openNotificationWithIcon('error', `${errorMsg} : ${fileNameWithoutPciPrefix}`, 'Failure');
-                        reject();
-                    });
-            }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
-        }));
-    };
-
-    openNotificationWithIcon = (type, description, msg) => {
-        notification[type]({
-            message: msg,
-            description,
-        });
+                .then((response) => {
+                    const fileNameUrlArray = response.data;
+                    Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
+                });
+        }
     };
 
     columns = [
@@ -251,6 +193,66 @@ class FileList extends React.Component {
         },
     ];
 
+    generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
+        method: 'POST',
+        body: JSON.stringify({
+            'fileNames': fileNamesArray
+        }),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+    });
+
+    downloadFromSignedUrl = (fileNameUrlArray) => {
+        let iteration = 0;
+        return fileNameUrlArray.map(({fileName, readUrl}) => new Promise((resolve, reject) => {
+            const regex = new RegExp(`^(${PCI_FILENAME_PREFIX})`);
+            const fileNameWithoutPciPrefix = fileName.replace(regex, EMPTY_STRING);
+            iteration += 1;
+            setTimeout(() => {
+                fetch(readUrl)
+                    .then((response) => {
+                        if (!response.ok) {
+                            const err = new Error(response.statusText);
+                            err.status = response.status;
+                            throw err;
+                        }
+                        return response;
+                    })
+                    .then((response) => response.blob())
+                    .then((blob) => URL.createObjectURL(blob))
+                    .then((uri) => {
+                        const link = document.createElement(TAG_NAME_A);
+                        link.href = uri;
+                        link.download = fileNameWithoutPciPrefix;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+
+                        this.openNotificationWithIcon('success', `File downloaded successful. File name: ${fileNameWithoutPciPrefix}`, 'Success');
+                        resolve();
+                    })
+                    .catch((error) => {
+                        let errorMsg = 'Failed to download the file.';
+                        if (error.status === 404) {
+                            errorMsg = 'Failed to download as file is not found.';
+                        }
+                        this.openNotificationWithIcon('error', `${errorMsg} : ${fileNameWithoutPciPrefix}`, 'Failure');
+                        reject();
+                    });
+            }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
+        }));
+    };
+
+    openNotificationWithIcon = (type, description, msg) => {
+        notification[type]({
+            message: msg,
+            description,
+        });
+    };
+
     handleResponse = (response) => {
         const batchJobDetailList = [];
         return response.json().then((json) => {
@@ -300,9 +302,11 @@ class FileList extends React.Component {
             this.setState({
                 dataIsReturned: true
             });
-            message.error('Failed to list files.');
+            this.openNotificationWithIcon('error', 'Failed to list files.', 'Failure');
         });
     };
+
+    debouncedListBatchJobs = _.debounce(((searchString) => this.listBatchJobs(searchString)), 1000);
 
     bulkDownload = () => {
         if (this.state.selectedRowValues.length > MAX_DOWNLOAD_ALLOWED) {
@@ -312,16 +316,25 @@ class FileList extends React.Component {
 
         const selectedRowValues = this.state.selectedRowValues;
         const toDownloadFiles = [];
+        const inprogressBatchJobs = [];
 
         selectedRowValues.forEach((row) => {
-            if (row.jobDetail.fileName) {
-                toDownloadFiles.push(row.jobDetail.fileName);
-            }
+            if (row.jobDetail.status === JOB_INPROGRESS_STATUS) {
+                inprogressBatchJobs.push(row.jobDetail.fileName);
+            } else {
+                if (row.jobDetail.fileName) {
+                    toDownloadFiles.push(row.jobDetail.fileName);
+                }
 
-            if (row.jobDetail.minorErrorFileName) {
-                toDownloadFiles.push(row.jobDetail.minorErrorFileName);
+                if (row.jobDetail.minorErrorFileName) {
+                    toDownloadFiles.push(row.jobDetail.minorErrorFileName);
+                }
             }
         });
+
+        if (inprogressBatchJobs.length > 0) {
+            this.openNotificationWithIcon('warn', `Failed to download files for in-progress records. File names: ${inprogressBatchJobs.join(', ')}`, 'Warning');
+        }
 
         this.downloadFiles(toDownloadFiles);
 
@@ -368,8 +381,6 @@ class FileList extends React.Component {
         this.setState({searchString});
         this.debouncedListBatchJobs(searchString);
     };
-
-    debouncedListBatchJobs = _.debounce(((searchString) => this.listBatchJobs(searchString)), 1000);
 
     formatJobDetailObject = (job) => {
         const jobDetail = JobDetail.fromJson(job);
