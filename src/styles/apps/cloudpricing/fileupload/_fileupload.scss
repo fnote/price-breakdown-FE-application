@@ -164,6 +164,11 @@
       }
       .download-file {
         color: $syscogreen;
+        &:hover {
+          color: $syscodarkgreen;
+          opacity: 1.7;
+          transform: scale(1.2);
+        }
       }
       .cancel-process {
         color: $syscored;
