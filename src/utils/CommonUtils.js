@@ -4,6 +4,8 @@
  * Created: 10/26/20. Mon 2020 15:00
  */
 
+import {FILE_NAME_DISPLAY_LENGTH} from "../constants/Constants";
+
 const BUSINESS_UNIT_NAME_SPLITTER = 'Sysco ';
 
 const extractNames = (businessUnitName = '', splitter = BUSINESS_UNIT_NAME_SPLITTER) => {
@@ -47,3 +49,7 @@ export const formatNumberInput = (value) => {
     }
     return value;
 };
+
+export const getDisplayFileName = (fileName) => {
+    return (fileName.length > FILE_NAME_DISPLAY_LENGTH) ? fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1) + '...' : fileName;
+}

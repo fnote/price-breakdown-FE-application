@@ -11,6 +11,7 @@ import {
     SUPPORTED_FILE_TYPES
 } from '../../constants/Constants';
 import {isValidFileName, isValidFileType} from '../../utils/FileUploadValidation';
+import {getDisplayFileName} from "../../utils/CommonUtils";
 
 const {Dragger} = Upload;
 
@@ -108,7 +109,7 @@ const props = {
     onChange(info) {
         const {status} = info.file;
         let fileName = info.file.name;
-        fileName = (fileName.length > 30) ? fileName.substr(0, 29) + '...' : fileName;
+        fileName = getDisplayFileName(fileName);
         if (status === FILE_UPLOADING_DONE) {
             openNotificationWithIcon('success', `${fileName} file uploaded successfully.`, 'Success');
         } else if (status === FILE_UPLOADING_ERROR) {

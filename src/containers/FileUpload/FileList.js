@@ -8,7 +8,7 @@ import {
     DELETE_CONFIRM,
     DELETE_REJECT,
     DELETE_TITLE,
-    EMPTY_STRING,
+    EMPTY_STRING, FILE_NAME_DISPLAY_LENGTH,
     JOB_COMPLETE_STATUS,
     JOB_COMPLETE_STATUS_DISPLAY,
     JOB_DELETING_STATUS,
@@ -32,6 +32,7 @@ import {
     removeFileNamePrefix,
     removeFileNamePrefixFromList
 } from '../../utils/FileListUtils';
+import {getDisplayFileName} from "../../utils/CommonUtils";
 
 const {Search} = Input;
 
@@ -72,7 +73,7 @@ class FileList extends React.Component {
             const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
             const formattedFileNames = [];
             fileNames.forEach((fileName) => {
-                formattedFileNames.push((fileName.length > 30) ? fileName.substr(0, 29) + '...' : fileName);
+                formattedFileNames.push(getDisplayFileName(fileName));
             });
             this.openNotificationWithIcon('success',
                 `Batch job deletion successful. Deleted file names: ${formattedFileNames}`, 'Success');
@@ -170,7 +171,8 @@ class FileList extends React.Component {
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
-                        this.openNotificationWithIcon('success', `File downloaded successful. File name: ${fileNameWithoutPciPrefix}`, 'Success');
+                        this.openNotificationWithIcon('success',
+                            `File downloaded successful. File name: ${getDisplayFileName(fileNameWithoutPciPrefix)}`, 'Success');
                         resolve();
                     })
                     .catch((error) => {
@@ -178,7 +180,7 @@ class FileList extends React.Component {
                         if (error.status === 404) {
                             errorMsg = 'Failed to download as file is not found.';
                         }
-                        this.openNotificationWithIcon('error', `${errorMsg} : ${fileNameWithoutPciPrefix}`, 'Failure');
+                        this.openNotificationWithIcon('error', `${errorMsg} : ${getDisplayFileName(fileNameWithoutPciPrefix)}`, 'Failure');
                         reject();
                     });
             }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
@@ -192,14 +194,14 @@ class FileList extends React.Component {
             className: 'filename',
             render: (fileName) => (
                 <div>
-                    {fileName.length > 40 &&
+                    {fileName.length > FILE_NAME_DISPLAY_LENGTH &&
                         (<Tooltip
                             title={fileName}
                             placement="top">
-                            <div>{fileName.substr(0, 29) + '...'}</div>
+                            <div>{fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1) + '...'}</div>
                         </Tooltip>)
                     }
-                    {fileName.length < 40 &&
+                    {fileName.length < 30 &&
                         (<div>{fileName}</div>)
                     }
                 </div>

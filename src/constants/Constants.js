@@ -124,6 +124,7 @@ export const PCI_FILENAME_PREFIX = 'CPPCI-';
 
 export const MAX_DOWNLOAD_ALLOWED = 25;
 export const TIMEOUT_DURING_DOWNLOAD_CLICKS = 1000;
+export const FILE_NAME_DISPLAY_LENGTH = 30;
 
 export const TAG_NAME_A = 'a';
 
