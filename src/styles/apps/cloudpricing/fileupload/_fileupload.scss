@@ -64,7 +64,7 @@
           @include flexbox(0 0 auto, row, flex-start, center);
           padding: 0;
           width: 90%;
-          overflow: hidden;
+        overflow: hidden;
           & > span {
             height: auto;
             display: flex;
@@ -82,7 +82,8 @@
           }
 
           .ant-upload-list-item-card-actions {
-            right: 0.5rem;
+            width: 10%;
+            text-align: center;
           }
         }
         @include breakpoint(xs) {
