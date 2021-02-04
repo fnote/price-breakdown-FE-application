@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Input, message, notification, Popconfirm, Table, Tooltip} from 'antd';
+import {Button, Input, notification, Popconfirm, Table, Tooltip} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 // eslint-disable-next-line import/no-named-default
 import {default as _} from 'lodash';
@@ -32,7 +32,7 @@ import {
     removeFileNamePrefix,
     removeFileNamePrefixFromList
 } from '../../utils/FileListUtils';
-import {getDisplayFileName} from "../../utils/CommonUtils";
+import {getDisplayFileName} from '../../utils/CommonUtils';
 
 const {Search} = Input;
 
@@ -111,27 +111,29 @@ class FileList extends React.Component {
 
     // ------ download file ------
     downloadFiles = (fileNamesArray) => {
-        const fileNamesArrayWithPciPrefix = [];
+        if (fileNamesArray.length > 0) {
+            const fileNamesArrayWithPciPrefix = [];
 
-        fileNamesArray.forEach((fileName) => {
-            const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
-            fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
-        });
+            fileNamesArray.forEach((fileName) => {
+                const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
+                fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
+            });
 
-        this.generateSignedUrls(fileNamesArrayWithPciPrefix)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            }).catch(() => {
+            this.generateSignedUrls(fileNamesArrayWithPciPrefix)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                }).catch(() => {
                 const errorMsg = 'Failed to download the files.';
                 this.openNotificationWithIcon('error', `${errorMsg} : ${fileNamesArrayWithPciPrefix}`, 'Failure');
             })
-            .then((response) => {
-                const fileNameUrlArray = response.data;
-                Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
-            });
+                .then((response) => {
+                    const fileNameUrlArray = response.data;
+                    Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
+                });
+        }
     };
 
     generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
@@ -194,15 +196,15 @@ class FileList extends React.Component {
             className: 'filename',
             render: (fileName) => (
                 <div>
-                    {fileName.length > FILE_NAME_DISPLAY_LENGTH &&
-                        (<Tooltip
+                    {fileName.length > FILE_NAME_DISPLAY_LENGTH
+                        && (<Tooltip
                             title={fileName}
                             placement="top">
-                            <div>{fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1) + '...'}</div>
+                            <div>{`${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...`}</div>
                         </Tooltip>)
                     }
-                    {fileName.length < 30 &&
-                        (<div>{fileName}</div>)
+                    {fileName.length < 30
+                        && (<div>{fileName}</div>)
                     }
                 </div>
             )
@@ -358,7 +360,7 @@ class FileList extends React.Component {
             this.setState({
                 dataIsReturned: true
             });
-            message.error('Failed to list files.');
+            this.openNotificationWithIcon('error', 'Failed to list files.', 'Failure');
         });
     };
 
@@ -370,16 +372,25 @@ class FileList extends React.Component {
 
         const selectedRowValues = this.state.selectedRowValues;
         const toDownloadFiles = [];
+        const inprogressBatchJobs = [];
 
         selectedRowValues.forEach((row) => {
-            if (row.jobDetail.fileName) {
-                toDownloadFiles.push(row.jobDetail.fileName);
-            }
+            if (row.jobDetail.status === JOB_INPROGRESS_STATUS) {
+                inprogressBatchJobs.push(row.jobDetail.fileName);
+            } else {
+                if (row.jobDetail.fileName) {
+                    toDownloadFiles.push(row.jobDetail.fileName);
+                }
 
-            if (row.jobDetail.minorErrorFileName) {
-                toDownloadFiles.push(row.jobDetail.minorErrorFileName);
+                if (row.jobDetail.minorErrorFileName) {
+                    toDownloadFiles.push(row.jobDetail.minorErrorFileName);
+                }
             }
         });
+
+        if (inprogressBatchJobs.length > 0) {
+            this.openNotificationWithIcon('warn', `Failed to download files for in-progress records. File names: ${inprogressBatchJobs.join(', ')}`, 'Warning');
+        }
 
         this.downloadFiles(toDownloadFiles);
 
