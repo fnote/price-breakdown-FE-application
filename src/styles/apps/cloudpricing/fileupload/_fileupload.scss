@@ -111,16 +111,28 @@
       @include breakpoint(xs) {
         @include flexbox(0 0 auto, column, flex-start, flex-start);
       }
+
       .title {
         @include flexbox(0 0 auto, row, flex-start, flex-start);
         color: $bluegrey;
         font-weight: 600;
         font-size: 1.4rem;
         margin-right: 1.5rem;
+
         .icon {
           margin-right: 0.5rem;
         }
       }
+
+      .upload-confirmation {
+        @include flexbox(0 0 auto, row, flex-start, flex-start);
+        color: $syscodarkgreen;
+        font-weight: 500;
+        font-size: 1.0rem;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+      }
+
       .search-list {
         width: auto;
         border-radius: 1.5rem;
@@ -129,6 +141,7 @@
           width: 100%;
         }
       }
+
       .refresh-btn {
         color: $bluegrey;
         font-size: 1.1rem;

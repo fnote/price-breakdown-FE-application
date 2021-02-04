@@ -135,3 +135,6 @@ export const UNKNOWN_BASE_VALUE_NAME = 'UNKNOWN';
 export const DELETE_TITLE = 'Are you sure to delete this?';
 export const DELETE_CONFIRM = 'Yes';
 export const DELETE_REJECT = 'No';
+
+// batch job list polling interval time
+export const JOB_LIST_REFRESH_INTERVAL = 20000;
