@@ -9,6 +9,7 @@ import {
     DELETE_REJECT,
     DELETE_TITLE,
     EMPTY_STRING,
+    FILE_APPEAR_NOTIFICATION,
     JOB_COMPLETE_STATUS,
     JOB_COMPLETE_STATUS_DISPLAY,
     JOB_DELETING_STATUS,
@@ -25,13 +26,13 @@ import {
     TAG_NAME_A,
     TIMEOUT_DURING_DOWNLOAD_CLICKS
 } from '../../constants/Constants';
-import {
-    generateBatchJobDeleteUrl,
-    generateBatchJobSearchUrl,
-    removeFileNamePrefixFromList
-} from '../../utils/FileListUtils';
+import {generateBatchJobSearchUrl, removeFileNamePrefixFromList} from '../../utils/FileListUtils';
 import {withHooksHOC} from './FileListHOC';
-import {fileSearchListRequestHandler} from './BatchJobResults/BatchJobResults';
+import {
+    fileSearchListRequestHandler,
+    generateSignedUrls,
+    jobDeleteRequestHandler
+} from './BatchJobResults/BatchJobResults';
 
 const {Search} = Input;
 
@@ -50,10 +51,11 @@ class FileList extends React.Component {
 
     componentDidUpdate() {
         if (this.props.refreshedData !== null && (JSON.stringify(this.props.refreshedData) !== JSON.stringify(this.state.data))) {
+            // keep deleting items in the same state
             const deletingItems = this.state.data.filter((i) => i.jobDetail.isProcessing === true);
             const data = this.props.refreshedData.map((i1) => Object.assign(i1, deletingItems.find((i2) => i2.jobId === i1.jobId)));
-
             this.setState({data});
+
             if (this.props.fileUploadCompleted) {
                 this.props.onChange(false);
             }
@@ -63,33 +65,6 @@ class FileList extends React.Component {
     componentDidMount() {
         this.listBatchJobs();
     }
-
-    // ------ delete job ------
-    deleteJob = (jobId) => {
-        // set the file state to deleting
-        const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
-        if (item && item.jobDetail) {
-            item.jobDetail.isProcessing = true;
-            item.jobDetail.status = JOB_DELETING_STATUS;
-            this.setState({item});
-        }
-
-        this.jobDeleteRequestHandler(jobId)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            }).then((response) => {
-            const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
-            this.removeDeletedJobFromList(jobId);
-            this.removeDeletedJobFromSelectedRecords(jobId);
-            this.openNotificationWithIcon('success',
-                `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
-        }).catch(() => {
-            this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
-        });
-    };
 
     columns = [
         {
@@ -183,12 +158,49 @@ class FileList extends React.Component {
         },
     ];
 
-    removeDeletedJobFromList = (jobId) => {
+    // ------ notification slider ------
+    openNotificationWithIcon = (type, description, msg) => {
+        notification[type]({
+            message: msg,
+            description,
+        });
+    };
+
+    // ------ delete job ------
+    deleteJob = (jobId) => {
+        // set the file state to deleting
+        const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
+        if (item && item.jobDetail) {
+            item.jobDetail.isProcessing = true;
+            item.jobDetail.status = JOB_DELETING_STATUS;
+            this.setState({item});
+        }
+
+        jobDeleteRequestHandler(jobId)
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            }).then((response) => {
+            const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
+            this.removeDeletedJobFromList(jobId, fileNames);
+            this.removeDeletedJobFromSelectedRecords(jobId);
+        }).catch(() => {
+            this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
+        });
+    };
+
+    removeDeletedJobFromList = (jobId, fileNames) => {
         const rows = this.state.data;
 
         this.setState({
             data: rows.filter((row) => row.jobDetail.jobId !== jobId),
             dataIsReturned: true
+        });
+        Promise.resolve().then(() => {
+            this.openNotificationWithIcon('success',
+                `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
         });
     };
 
@@ -199,15 +211,6 @@ class FileList extends React.Component {
         });
     }
 
-    jobDeleteRequestHandler = (jobId) => fetch(generateBatchJobDeleteUrl(jobId), {
-        method: 'DELETE',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include'
-    });
-
     // ------ download file ------
     downloadFile = (fileNamesArray) => {
         const fileNamesArrayWithPciPrefix = [];
@@ -217,7 +220,7 @@ class FileList extends React.Component {
             fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
         });
 
-        this.generateSignedUrls(fileNamesArrayWithPciPrefix)
+        generateSignedUrls(fileNamesArrayWithPciPrefix)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -232,18 +235,6 @@ class FileList extends React.Component {
                 Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
             });
     };
-
-    generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
-        method: 'POST',
-        body: JSON.stringify({
-            'fileNames': fileNamesArray
-        }),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-    });
 
     downloadFromSignedUrl = (fileNameUrlArray) => {
         let iteration = 0;
@@ -283,14 +274,6 @@ class FileList extends React.Component {
                     });
             }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
         }));
-    };
-
-    // ------ notification slider ------
-    openNotificationWithIcon = (type, description, msg) => {
-        notification[type]({
-            message: msg,
-            description,
-        });
     };
 
     // ------list all the batch jobs------
@@ -409,7 +392,7 @@ class FileList extends React.Component {
                         onSearch={this.listBatchJobs}
                     />
                     <div className="upload-confirmation">
-                        {this.props.fileUploadCompleted ? 'Newly uploaded files will appear soon!' : ''}
+                        {this.props.fileUploadCompleted ? FILE_APPEAR_NOTIFICATION : ''}
                     </div>
                     <div className="spacer"></div>
                     <div className="selected-item-status">

@@ -1,6 +1,7 @@
 import JobDetail from '../../../model/jobDetail';
-import {removeFileNamePrefix} from '../../../utils/FileListUtils';
+import {generateBatchJobDeleteUrl, removeFileNamePrefix} from '../../../utils/FileListUtils';
 import {PCI_FILENAME_PREFIX} from '../../../constants/Constants';
+import {getBffUrlConfig} from '../../../utils/Configs';
 
 const formatJobDetailObject = (job) => {
     const jobDetail = JobDetail.fromJson(job);
@@ -41,3 +42,24 @@ export const fileSearchListRequestHandler = (batchJobsListUrl) => fetch(batchJob
     },
     credentials: 'include'
 }).then(handleResponse);
+
+export const jobDeleteRequestHandler = (jobId) => fetch(generateBatchJobDeleteUrl(jobId), {
+    method: 'DELETE',
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json',
+    },
+    credentials: 'include'
+});
+
+export const generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
+    method: 'POST',
+    body: JSON.stringify({
+        'fileNames': fileNamesArray
+    }),
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+    },
+    credentials: 'include'
+});
