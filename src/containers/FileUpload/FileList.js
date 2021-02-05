@@ -8,7 +8,9 @@ import {
     DELETE_CONFIRM,
     DELETE_REJECT,
     DELETE_TITLE,
-    EMPTY_STRING, FILE_NAME_DISPLAY_LENGTH,
+    EMPTY_STRING,
+    FILE_APPEAR_NOTIFICATION,
+    FILE_NAME_DISPLAY_LENGTH,
     JOB_COMPLETE_STATUS,
     JOB_COMPLETE_STATUS_DISPLAY,
     JOB_DELETING_STATUS,
@@ -25,13 +27,13 @@ import {
     TAG_NAME_A,
     TIMEOUT_DURING_DOWNLOAD_CLICKS
 } from '../../constants/Constants';
-import JobDetail from '../../model/jobDetail';
+import {generateBatchJobSearchUrl, removeFileNamePrefixFromList} from '../../utils/FileListUtils';
+import {withHooksHOC} from './FileListHOC';
 import {
-    generateBatchJobDeleteUrl,
-    generateBatchJobSearchUrl,
-    removeFileNamePrefix,
-    removeFileNamePrefixFromList
-} from '../../utils/FileListUtils';
+    fileSearchListRequestHandler,
+    generateSignedUrls,
+    jobDeleteRequestHandler
+} from './BatchJobResults/BatchJobResults';
 import {getDisplayFileName} from '../../utils/CommonUtils';
 
 const {Search} = Input;
@@ -49,9 +51,30 @@ class FileList extends React.Component {
         };
     }
 
+    componentDidUpdate() {
+        if (this.props.refreshedData !== null && (JSON.stringify(this.props.refreshedData) !== JSON.stringify(this.state.data))) {
+            // keep deleting items in the same state
+            const deletingItems = this.state.data.filter((i) => i.jobDetail.isProcessing === true);
+            const data = this.props.refreshedData.map((i1) => Object.assign(i1, deletingItems.find((i2) => i2.jobId === i1.jobId)));
+            this.setState({data});
+
+            if (this.props.fileUploadCompleted) {
+                this.props.onChange(false);
+            }
+        }
+    }
+
     componentDidMount() {
         this.listBatchJobs();
     }
+
+    // ------ notification slider ------
+    openNotificationWithIcon = (type, description, msg) => {
+        notification[type]({
+            message: msg,
+            description,
+        });
+    };
 
     // ------ delete job ------
     deleteJob = (jobId) => {
@@ -63,7 +86,7 @@ class FileList extends React.Component {
             this.setState({item});
         }
 
-        this.jobDeleteRequestHandler(jobId)
+        jobDeleteRequestHandler(jobId)
             .then((response) => {
                 if (!response.ok) {
                     throw Error(response.statusText);
@@ -75,39 +98,25 @@ class FileList extends React.Component {
             fileNames.forEach((fileName) => {
                 formattedFileNames.push(getDisplayFileName(fileName));
             });
-            this.openNotificationWithIcon('success',
-                `Job deletion success. Deleted files: ${formattedFileNames}`, 'Success');
-            this.removeDeletedJobFromList(jobId);
+            this.removeDeletedJobFromList(jobId, formattedFileNames);
             this.removeDeletedJobFromSelectedRecords(jobId);
         }).catch(() => {
             this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
         });
     };
 
-    removeDeletedJobFromList = (jobId) => {
+    removeDeletedJobFromList = (jobId, formattedFileNames) => {
         const rows = this.state.data;
 
         this.setState({
             data: rows.filter((row) => row.jobDetail.jobId !== jobId),
             dataIsReturned: true
         });
-    };
-
-    removeDeletedJobFromSelectedRecords(jobId) {
-        this.setState({
-            selectedRowKeys: this.state.selectedRowKeys.filter((key) => key !== jobId),
-            selectedRowValues: this.state.selectedRowValues.filter((row) => row.jobId !== jobId)
+        Promise.resolve().then(() => {
+            this.openNotificationWithIcon('success',
+                `Job deletion success. Deleted files: ${formattedFileNames}`, 'Success');
         });
-    }
-
-    jobDeleteRequestHandler = (jobId) => fetch(generateBatchJobDeleteUrl(jobId), {
-        method: 'DELETE',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json',
-        },
-        credentials: 'include'
-    });
+    };
 
     // ------ download file ------
     downloadFiles = (fileNamesArray) => {
@@ -119,7 +128,7 @@ class FileList extends React.Component {
                 fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
             });
 
-            this.generateSignedUrls(fileNamesArrayWithPciPrefix)
+            generateSignedUrls(fileNamesArrayWithPciPrefix)
                 .then((response) => {
                     if (!response.ok) {
                         throw Error(response.statusText);
@@ -136,58 +145,12 @@ class FileList extends React.Component {
         }
     };
 
-    generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().filesDownloadUrl, {
-        method: 'POST',
-        body: JSON.stringify({
-            'fileNames': fileNamesArray
-        }),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-    });
-
-    downloadFromSignedUrl = (fileNameUrlArray) => {
-        let iteration = 0;
-        return fileNameUrlArray.map(({fileName, readUrl}) => new Promise((resolve, reject) => {
-            const regex = new RegExp(`^(${PCI_FILENAME_PREFIX})`);
-            const fileNameWithoutPciPrefix = fileName.replace(regex, EMPTY_STRING);
-            iteration += 1;
-            setTimeout(() => {
-                fetch(readUrl)
-                    .then((response) => {
-                        if (!response.ok) {
-                            const err = new Error(response.statusText);
-                            err.status = response.status;
-                            throw err;
-                        }
-                        return response;
-                    })
-                    .then((response) => response.blob())
-                    .then((blob) => URL.createObjectURL(blob))
-                    .then((uri) => {
-                        const link = document.createElement(TAG_NAME_A);
-                        link.href = uri;
-                        link.download = fileNameWithoutPciPrefix;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        this.openNotificationWithIcon('success',
-                            `File downloaded successful. File name: ${getDisplayFileName(fileNameWithoutPciPrefix)}`, 'Success');
-                        resolve();
-                    })
-                    .catch((error) => {
-                        let errorMsg = 'Failed to download the file.';
-                        if (error.status === 404) {
-                            errorMsg = 'Failed to download as file is not found.';
-                        }
-                        this.openNotificationWithIcon('error', `${errorMsg} : ${getDisplayFileName(fileNameWithoutPciPrefix)}`, 'Failure');
-                        reject();
-                    });
-            }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
-        }));
-    };
+    removeDeletedJobFromSelectedRecords(jobId) {
+        this.setState({
+            selectedRowKeys: this.state.selectedRowKeys.filter((key) => key !== jobId),
+            selectedRowValues: this.state.selectedRowValues.filter((row) => row.jobId !== jobId)
+        });
+    }
 
     columns = [
         {
@@ -197,14 +160,14 @@ class FileList extends React.Component {
             render: (fileName) => (
                 <div>
                     {fileName.length > FILE_NAME_DISPLAY_LENGTH
-                        && (<Tooltip
-                            title={fileName}
-                            placement="top">
-                            <div>{`${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...`}</div>
-                        </Tooltip>)
+                    && (<Tooltip
+                        title={fileName}
+                        placement="top">
+                        <div>{`${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...`}</div>
+                    </Tooltip>)
                     }
                     {fileName.length < 30
-                        && (<div>{fileName}</div>)
+                    && (<div>{fileName}</div>)
                     }
                 </div>
             )
@@ -238,8 +201,10 @@ class FileList extends React.Component {
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
-                                {MINOR_ERROR_STATUS_DISPLAY}
                             </Button>
+                            <div className="file-process-status minor-error">
+                                {MINOR_ERROR_STATUS_DISPLAY}
+                            </div>
                             <div className="divider"></div>
                             {JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY}
                         </div>
@@ -293,54 +258,48 @@ class FileList extends React.Component {
         },
     ];
 
-    // ------ notification slider ------
-    openNotificationWithIcon = (type, description, msg) => {
-        notification[type]({
-            message: msg,
-            description,
-        });
-    };
-
-    formatJobDetailObject = (job) => {
-        const jobDetail = JobDetail.fromJson(job);
-        jobDetail.fileName = removeFileNamePrefix(jobDetail.fileName);
-        jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
-            ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
-        jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
-        jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
-        return jobDetail;
-    };
-
-    handleResponse = (response) => {
-        const batchJobDetailList = [];
-        return response.json().then((json) => {
-            const responseData = json.data;
-            if (response.ok && responseData) {
-                responseData.forEach((job) => {
-                    const jobDetail = this.formatJobDetailObject(job);
-                    batchJobDetailList.push({
-                        jobId: jobDetail.jobId,
-                        startTime: jobDetail.startTime,
-                        endTime: jobDetail.endTime,
-                        filename: jobDetail.fileName,
-                        jobDetail,
+    downloadFromSignedUrl = (fileNameUrlArray) => {
+        let iteration = 0;
+        return fileNameUrlArray.map(({fileName, readUrl}) => new Promise((resolve, reject) => {
+            const regex = new RegExp(`^(${PCI_FILENAME_PREFIX})`);
+            const fileNameWithoutPciPrefix = fileName.replace(regex, EMPTY_STRING);
+            iteration += 1;
+            setTimeout(() => {
+                fetch(readUrl)
+                    .then((response) => {
+                        if (!response.ok) {
+                            const err = new Error(response.statusText);
+                            err.status = response.status;
+                            throw err;
+                        }
+                        return response;
+                    })
+                    .then((response) => response.blob())
+                    .then((blob) => URL.createObjectURL(blob))
+                    .then((uri) => {
+                        const link = document.createElement(TAG_NAME_A);
+                        link.href = uri;
+                        link.download = fileNameWithoutPciPrefix;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        this.openNotificationWithIcon('success',
+                            `File downloaded successful. File name: ${getDisplayFileName(fileNameWithoutPciPrefix)}`, 'Success');
+                        resolve();
+                    })
+                    .catch((error) => {
+                        let errorMsg = 'Failed to download the file.';
+                        if (error.status === 404) {
+                            errorMsg = 'Failed to download as file is not found.';
+                        }
+                        this.openNotificationWithIcon('error', `${errorMsg} : ${getDisplayFileName(fileNameWithoutPciPrefix)}`, 'Failure');
+                        reject();
                     });
-                });
-                return {success: true, data: batchJobDetailList};
-            }
-            return {success: false, data: batchJobDetailList};
-        });
+            }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
+        }));
     };
 
-    fileSearchListRequestHandler = (batchJobsListUrl) => fetch(batchJobsListUrl, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-    }).then(this.handleResponse);
-
+    // ------list all the batch jobs------
     listBatchJobs = (searchString = '') => {
         this.setState({
             dataIsReturned: false,
@@ -349,7 +308,7 @@ class FileList extends React.Component {
         if (searchString !== '') {
             batchJobListUrl = generateBatchJobSearchUrl(searchString);
         }
-        this.fileSearchListRequestHandler(batchJobListUrl).then((res) => {
+        fileSearchListRequestHandler(batchJobListUrl).then((res) => {
             if (res.success) {
                 this.setState({
                     data: res.data,
@@ -464,6 +423,9 @@ class FileList extends React.Component {
                         onChange={this.onSearchStringChange}
                         onSearch={this.listBatchJobs}
                     />
+                    <div className="upload-confirmation">
+                        {this.props.fileUploadCompleted ? FILE_APPEAR_NOTIFICATION : ''}
+                    </div>
                     <div className="spacer"></div>
                     <div className="selected-item-status">
                         <p>
@@ -505,4 +467,4 @@ class FileList extends React.Component {
     }
 }
 
-export default FileList;
+export default withHooksHOC(FileList);

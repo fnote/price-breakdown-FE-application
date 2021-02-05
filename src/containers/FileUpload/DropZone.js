@@ -11,7 +11,7 @@ import {
     SUPPORTED_FILE_TYPES
 } from '../../constants/Constants';
 import {isValidFileName, isValidFileType} from '../../utils/FileUploadValidation';
-import {getDisplayFileName} from "../../utils/CommonUtils";
+import {getDisplayFileName} from '../../utils/CommonUtils';
 
 const {Dragger} = Upload;
 
@@ -101,31 +101,34 @@ const openNotificationWithIcon = (type, description, msg) => {
     });
 };
 
-const props = {
-    accept: SUPPORTED_FILE_TYPES.join(', '),
-    name: 'file',
-    multiple: true,
-    customRequest: customUpload,
-    onChange(info) {
-        const {status} = info.file;
-        let fileName = info.file.name;
-        fileName = getDisplayFileName(fileName);
-        if (status === FILE_UPLOADING_DONE) {
-            openNotificationWithIcon('success', `${fileName} file uploaded successfully.`, 'Success');
-        } else if (status === FILE_UPLOADING_ERROR) {
-            const err = info.file.error;
-            if (err && err.errorType === INVALID_FILE_TYPE.errorType) {
-                openNotificationWithIcon('error', `${fileName} ${INVALID_FILE_TYPE.errorMessage}`, 'Failure');
-            } else if (err && err.errorType === INVALID_FILE_NAME.errorType) {
-                openNotificationWithIcon('error', `${fileName} ${INVALID_FILE_NAME.errorMessage}`, 'Failure');
-            } else {
-                openNotificationWithIcon('error', `${info.file.name} file upload failed.`, 'Failure');
+function DropZone(properties) {
+    const props = {
+        accept: SUPPORTED_FILE_TYPES.join(', '),
+        name: 'file',
+        multiple: true,
+        customRequest: customUpload,
+        onChange(info) {
+            properties.refreshSwitch(false);
+            const {status} = info.file;
+            let fileName = info.file.name;
+            fileName = getDisplayFileName(fileName);
+            if (status === FILE_UPLOADING_DONE) {
+                properties.onChange(true);
+                openNotificationWithIcon('success', `${fileName} file uploaded successfully.`, 'Success');
+            } else if (status === FILE_UPLOADING_ERROR) {
+                const err = info.file.error;
+                if (err && err.errorType === INVALID_FILE_TYPE.errorType) {
+                    openNotificationWithIcon('error', `${fileName} ${INVALID_FILE_TYPE.errorMessage}`, 'Failure');
+                } else if (err && err.errorType === INVALID_FILE_NAME.errorType) {
+                    openNotificationWithIcon('error', `${fileName} ${INVALID_FILE_NAME.errorMessage}`, 'Failure');
+                } else {
+                    openNotificationWithIcon('error', `${info.file.name} file upload failed.`, 'Failure');
+                }
             }
-        }
-    },
-};
+            properties.refreshSwitch(true);
+        },
+    };
 
-function DropZone() {
     return (
         <div className="drop-zone">
             <Dragger {...props}>

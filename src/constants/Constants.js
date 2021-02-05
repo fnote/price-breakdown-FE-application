@@ -86,6 +86,7 @@ export const NAVIGATION_PATH_FILE_UPLOAD = '/file-upload';
 
 export const FILE_UPLOADING_DONE = 'done';
 export const FILE_UPLOADING_ERROR = 'error';
+export const FILE_APPEAR_NOTIFICATION = 'Newly uploaded files will appear in the list sooner!';
 
 export const SUPPORTED_FILE_TYPES = [
     '', 'text/plain', 'text/csv',
@@ -136,3 +137,6 @@ export const UNKNOWN_BASE_VALUE_NAME = 'UNKNOWN';
 export const DELETE_TITLE = 'Are you sure to delete this?';
 export const DELETE_CONFIRM = 'Yes';
 export const DELETE_REJECT = 'No';
+
+// batch job list polling interval time
+export const JOB_LIST_REFRESH_INTERVAL = 40000;

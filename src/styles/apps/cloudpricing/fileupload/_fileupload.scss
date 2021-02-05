@@ -125,6 +125,14 @@
           margin-right: 0.5rem;
         }
       }
+      .upload-confirmation {
+        @include flexbox(0 0 auto, row, flex-start, flex-start);
+        color: $syscodarkgreen;
+        font-weight: 500;
+        font-size: 1.0rem;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+      }
       .search-list {
         width: auto;
         border-radius: 1.5rem;
@@ -231,14 +239,21 @@
                 width: 100%;
               }
             }
+
+            .minor-error {
+              color: $lightorange;
+            }
+
             .divider {
               border-top: 1px dashed $syscoorange;
               width: 1rem;
               margin: 0 0.5rem;
             }
+
             .download-error-file {
               color: $syscoorange;
               font-size: 1rem;
+
               .icon {
                 font-size: 1.2rem;
                 margin-right: 0.4rem;
