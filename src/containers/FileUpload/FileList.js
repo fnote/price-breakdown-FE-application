@@ -51,13 +51,10 @@ class FileList extends React.Component {
         };
     }
 
-    componentDidUpdate() {
-        if (this.props.refreshedData !== null && (JSON.stringify(this.props.refreshedData) !== JSON.stringify(this.state.data))) {
-            // keep deleting items in the same state
-            const deletingItems = this.state.data.filter((i) => i.jobDetail.isProcessing === true);
-            const data = this.props.refreshedData.map((i1) => Object.assign(i1, deletingItems.find((i2) => i2.jobId === i1.jobId)));
-            this.setState({data});
-
+    componentDidUpdate(prevProps) {
+        if (this.props.refreshedData !== null && prevProps.refreshedData !== this.props.refreshedData
+            && (JSON.stringify(this.props.refreshedData) !== JSON.stringify(this.state.data))) {
+            this.doUpdate();
             if (this.props.fileUploadCompleted) {
                 this.props.onChange(false);
             }
@@ -68,88 +65,28 @@ class FileList extends React.Component {
         this.listBatchJobs();
     }
 
-    // ------ notification slider ------
-    openNotificationWithIcon = (type, description, msg) => {
-        notification[type]({
-            message: msg,
-            description,
+    doUpdate = () => {
+        // keep deleting items in the same state
+        const newJobs = this.props.refreshedData.filter((current) => this.comparer(current, this.state.data));
+        this.setState({
+            data: [...newJobs, ...this.state.data]
         });
-    };
+    }
 
-    // ------ delete job ------
-    deleteJob = (jobId) => {
-        // set the file state to deleting
-        const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
-        if (item && item.jobDetail) {
-            item.jobDetail.isProcessing = true;
-            item.jobDetail.status = JOB_DELETING_STATUS;
-            this.setState({item});
-        }
-
-        jobDeleteRequestHandler(jobId)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
+    // compare two job lists - filter new jobs, if it's an older job keep deleting jobs
+    comparer = (current, stateData) => {
+        let found = false;
+        stateData.forEach((item) => {
+            if (current.jobId === item.jobId) {
+                if (!item.jobDetail.isProcessing
+                    && item.jobDetail.status !== current.jobDetail.status) {
+                    item.jobDetail.status = current.jobDetail.status;
+                    this.setState({item});
                 }
-                return response.json();
-            }).then((response) => {
-            const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
-            const formattedFileNames = [];
-            fileNames.forEach((fileName) => {
-                formattedFileNames.push(getDisplayFileName(fileName));
-            });
-            this.removeDeletedJobFromList(jobId, formattedFileNames);
-            this.removeDeletedJobFromSelectedRecords(jobId);
-        }).catch(() => {
-            this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
+                found = true;
+            }
         });
-    };
-
-    removeDeletedJobFromList = (jobId, formattedFileNames) => {
-        const rows = this.state.data;
-
-        this.setState({
-            data: rows.filter((row) => row.jobDetail.jobId !== jobId),
-            dataIsReturned: true
-        });
-        Promise.resolve().then(() => {
-            this.openNotificationWithIcon('success',
-                `Job deletion success. Deleted files: ${formattedFileNames}`, 'Success');
-        });
-    };
-
-    // ------ download file ------
-    downloadFiles = (fileNamesArray) => {
-        if (fileNamesArray.length > 0) {
-            const fileNamesArrayWithPciPrefix = [];
-
-            fileNamesArray.forEach((fileName) => {
-                const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
-                fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
-            });
-
-            generateSignedUrls(fileNamesArrayWithPciPrefix)
-                .then((response) => {
-                    if (!response.ok) {
-                        throw Error(response.statusText);
-                    }
-                    return response.json();
-                }).catch(() => {
-                const errorMsg = 'Failed to download the files.';
-                this.openNotificationWithIcon('error', `${errorMsg} : ${fileNamesArrayWithPciPrefix}`, 'Failure');
-            })
-                .then((response) => {
-                    const fileNameUrlArray = response.data;
-                    Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
-                });
-        }
-    };
-
-    removeDeletedJobFromSelectedRecords(jobId) {
-        this.setState({
-            selectedRowKeys: this.state.selectedRowKeys.filter((key) => key !== jobId),
-            selectedRowValues: this.state.selectedRowValues.filter((row) => row.jobId !== jobId)
-        });
+        return !found;
     }
 
     columns = [
@@ -257,6 +194,84 @@ class FileList extends React.Component {
             ),
         },
     ];
+
+    // ------ notification slider ------
+    openNotificationWithIcon = (type, description, msg) => {
+        notification[type]({
+            message: msg,
+            description,
+        });
+    };
+
+    // ------ delete job ------
+    deleteJob = (jobId) => {
+        // set the file state to deleting
+        const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
+        if (item && item.jobDetail) {
+            item.jobDetail.isProcessing = true;
+            item.jobDetail.status = JOB_DELETING_STATUS;
+            this.setState({item});
+        }
+
+        jobDeleteRequestHandler(jobId)
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            }).then((response) => {
+            const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
+            this.removeDeletedJobFromList(jobId, fileNames);
+            this.removeDeletedJobFromSelectedRecords(jobId);
+        }).catch(() => {
+            this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
+        });
+    };
+
+    removeDeletedJobFromList = (jobId, fileNames) => {
+        const rows = this.state.data;
+
+        this.setState({
+            data: rows.filter((row) => row.jobDetail.jobId !== jobId),
+            dataIsReturned: true
+        });
+        Promise.resolve().then(() => {
+            this.openNotificationWithIcon('success',
+                `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
+        });
+    };
+
+    removeDeletedJobFromSelectedRecords(jobId) {
+        this.setState({
+            selectedRowKeys: this.state.selectedRowKeys.filter((key) => key !== jobId),
+            selectedRowValues: this.state.selectedRowValues.filter((row) => row.jobId !== jobId)
+        });
+    }
+
+    // ------ download file ------
+    downloadFile = (fileNamesArray) => {
+        const fileNamesArrayWithPciPrefix = [];
+
+        fileNamesArray.forEach((fileName) => {
+            const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
+            fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
+        });
+
+        generateSignedUrls(fileNamesArrayWithPciPrefix)
+            .then((response) => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            }).catch(() => {
+                const errorMsg = 'Failed to download the files.';
+                this.openNotificationWithIcon('error', `${errorMsg} : ${fileNamesArrayWithPciPrefix}`, 'Failure');
+            })
+            .then((response) => {
+                const fileNameUrlArray = response.data;
+                Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
+            });
+    };
 
     downloadFromSignedUrl = (fileNameUrlArray) => {
         let iteration = 0;
