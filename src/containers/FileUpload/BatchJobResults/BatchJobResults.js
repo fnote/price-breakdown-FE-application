@@ -34,15 +34,6 @@ const handleResponse = (response) => {
     });
 };
 
-export const fileSearchListRequestHandler = (batchJobsListUrl) => fetch(batchJobsListUrl, {
-    method: 'GET',
-    headers: {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
-    },
-    credentials: 'include'
-}).then(handleResponse);
-
 export const jobDeleteRequestHandler = (jobId) => fetch(generateBatchJobDeleteUrl(jobId), {
     method: 'DELETE',
     headers: {
@@ -63,3 +54,22 @@ export const generateSignedUrls = (fileNamesArray) => fetch(getBffUrlConfig().fi
     },
     credentials: 'include'
 });
+
+export const fileSearchListRequestHandler = (batchJobsListUrl) => fetch(batchJobsListUrl, {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+    },
+    credentials: 'include'
+}).then(handleResponse);
+
+// get new batch jobs list
+export const autoRefreshBatchJobs = () => {
+    const batchJobListUrl = getBffUrlConfig().batchJobsUrl;
+    return fileSearchListRequestHandler(batchJobListUrl).then((res) => {
+        if (res.success) {
+            return res.data;
+        }
+    }).catch(() => null);
+};

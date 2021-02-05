@@ -45,17 +45,14 @@ class FileList extends React.Component {
             loading: false,
             data: [],
             dataIsReturned: false,
-            searchString: ''
+            searchString: '',
         };
     }
 
-    componentDidUpdate() {
-        if (this.props.refreshedData !== null && (JSON.stringify(this.props.refreshedData) !== JSON.stringify(this.state.data))) {
-            // keep deleting items in the same state
-            const deletingItems = this.state.data.filter((i) => i.jobDetail.isProcessing === true);
-            const data = this.props.refreshedData.map((i1) => Object.assign(i1, deletingItems.find((i2) => i2.jobId === i1.jobId)));
-            this.setState({data});
-
+    componentDidUpdate(prevProps) {
+        if (this.props.refreshedData !== null && prevProps.refreshedData !== this.props.refreshedData
+            && (JSON.stringify(this.props.refreshedData) !== JSON.stringify(this.state.data))) {
+            this.doUpdate();
             if (this.props.fileUploadCompleted) {
                 this.props.onChange(false);
             }
@@ -64,6 +61,30 @@ class FileList extends React.Component {
 
     componentDidMount() {
         this.listBatchJobs();
+    }
+
+    doUpdate = () => {
+        // keep deleting items in the same state
+        const newJobs = this.props.refreshedData.filter((current) => this.comparer(current, this.state.data));
+        this.setState({
+            data: [...newJobs, ...this.state.data]
+        });
+    }
+
+    // compare two job lists - filter new jobs, if it's an older job keep deleting jobs
+    comparer = (current, stateData) => {
+        let found = false;
+        stateData.forEach((item) => {
+            if (current.jobId === item.jobId) {
+                if (!item.jobDetail.isProcessing
+                    && item.jobDetail.status !== current.jobDetail.status) {
+                    item.jobDetail.status = current.jobDetail.status;
+                    this.setState({item});
+                }
+                found = true;
+            }
+        });
+        return !found;
     }
 
     columns = [

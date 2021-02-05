@@ -12,7 +12,7 @@ function FileUpload() {
     };
 
     const refreshSwitch = (value) => {
-        setRefreshOn(value);
+            setRefreshOn(value);
     };
 
     return (
