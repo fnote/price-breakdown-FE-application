@@ -85,8 +85,13 @@ class FileList extends React.Component {
                 }
                 found = true;
             } else {
-                if(current.fileName === item.fileName) {
-                    this.setState({item: current});
+                if(current.filename === item.filename) {
+                    item.jobId = current.jobId;
+                    item.jobDetail = current.jobDetail;
+                    item.endTime = current.endTime;
+                    item.startTime = current.startTime;
+                    this.setState({item});
+                    found = true;
                 }
             }
         });
