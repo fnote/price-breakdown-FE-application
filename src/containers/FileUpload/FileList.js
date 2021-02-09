@@ -224,7 +224,8 @@ class FileList extends React.Component {
                 }
                 return response.json();
             }).then((response) => {
-            const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
+            let fileNames = removeFileNamePrefixFromList(response.data.fileNames);
+            fileNames = getDisplayFileName(fileNames);
             this.removeDeletedJobFromList(jobId, fileNames);
             this.removeDeletedJobFromSelectedRecords(jobId);
         }).catch(() => {
@@ -241,7 +242,7 @@ class FileList extends React.Component {
         });
         Promise.resolve().then(() => {
             this.openNotificationWithIcon('success',
-                `Batch job deletion successful. Deleted file names: ${getDisplayFileName(fileNames)}`, 'Success');
+                `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
         });
     };
 
