@@ -225,8 +225,11 @@ class FileList extends React.Component {
                 return response.json();
             }).then((response) => {
             let fileNames = removeFileNamePrefixFromList(response.data.fileNames);
-            fileNames = getDisplayFileName(fileNames);
-            this.removeDeletedJobFromList(jobId, fileNames);
+            const formattedFileNames = [];
+            fileNames.forEach((fileName) => {
+                formattedFileNames.push(getDisplayFileName(fileName));
+            });
+            this.removeDeletedJobFromList(jobId, formattedFileNames);
             this.removeDeletedJobFromSelectedRecords(jobId);
         }).catch(() => {
             this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
