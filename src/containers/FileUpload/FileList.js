@@ -84,6 +84,10 @@ class FileList extends React.Component {
                     this.setState({item});
                 }
                 found = true;
+            } else {
+                if(current.fileName === item.fileName) {
+                    this.setState({item: current});
+                }
             }
         });
         return !found;
