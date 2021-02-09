@@ -140,3 +140,8 @@ export const DELETE_REJECT = 'No';
 
 // batch job list polling interval time
 export const JOB_LIST_REFRESH_INTERVAL = 10000;
+
+// batch job time - timezone regex
+export const TIMEZONE_ABBREVIATION_REGEX = /[A-Z](?!.*[(])/;
+export const TIMEZONE_REGEX = /\(([^)]+)\)/;
+

@@ -1,6 +1,6 @@
 import JobDetail from '../../../model/jobDetail';
 import {generateBatchJobDeleteUrl, removeFileNamePrefix} from '../../../utils/FileListUtils';
-import {PCI_FILENAME_PREFIX} from '../../../constants/Constants';
+import {PCI_FILENAME_PREFIX, TIMEZONE_ABBREVIATION_REGEX, TIMEZONE_REGEX} from '../../../constants/Constants';
 import {getBffUrlConfig} from '../../../utils/Configs';
 
 const formatJobDetailObject = (job) => {
@@ -8,8 +8,11 @@ const formatJobDetailObject = (job) => {
     jobDetail.fileName = removeFileNamePrefix(jobDetail.fileName);
     jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
         ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
-    jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString() : null;
-    jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString() : null;
+    const timeZoneAbb = new Date(jobDetail.startTime).toTimeString().match(new RegExp(TIMEZONE_ABBREVIATION_REGEX,"g")).join('');
+    jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString()
+        .replace(TIMEZONE_REGEX, timeZoneAbb) : null;
+    jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString()
+        .replace(TIMEZONE_REGEX, timeZoneAbb) : null;
     return jobDetail;
 };
 
