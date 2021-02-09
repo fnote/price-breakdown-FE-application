@@ -237,7 +237,7 @@ class FileList extends React.Component {
         });
         Promise.resolve().then(() => {
             this.openNotificationWithIcon('success',
-                `Batch job deletion successful. Deleted file names: ${fileNames}`, 'Success');
+                `Batch job deletion successful. Deleted file names: ${getDisplayFileName(fileNames)}`, 'Success');
         });
     };
 
@@ -249,7 +249,7 @@ class FileList extends React.Component {
     }
 
     // ------ download file ------
-    downloadFile = (fileNamesArray) => {
+    downloadFiles = (fileNamesArray) => {
         const fileNamesArrayWithPciPrefix = [];
 
         fileNamesArray.forEach((fileName) => {
@@ -265,7 +265,7 @@ class FileList extends React.Component {
                 return response.json();
             }).catch(() => {
                 const errorMsg = 'Failed to download the files.';
-                this.openNotificationWithIcon('error', `${errorMsg} : ${fileNamesArrayWithPciPrefix}`, 'Failure');
+                this.openNotificationWithIcon('error', `${errorMsg} : ${getDisplayFileName(fileNamesArrayWithPciPrefix)}`, 'Failure');
             })
             .then((response) => {
                 const fileNameUrlArray = response.data;
@@ -363,7 +363,7 @@ class FileList extends React.Component {
         });
 
         if (inprogressBatchJobs.length > 0) {
-            this.openNotificationWithIcon('warn', `Failed to download files for in-progress records. File names: ${inprogressBatchJobs.join(', ')}`, 'Warning');
+            this.openNotificationWithIcon('warn', `Failed to download files for in-progress records. File names: ${getDisplayFileName(inprogressBatchJobs.join(', '))}`, 'Warning');
         }
 
         this.downloadFiles(toDownloadFiles);
