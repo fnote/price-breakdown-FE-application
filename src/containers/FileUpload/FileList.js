@@ -112,7 +112,7 @@ class FileList extends React.Component {
                         <div>{`${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...`}</div>
                     </Tooltip>)
                     }
-                    {fileName.length < 30
+                    {fileName.length <= 30
                     && (<div>{fileName}</div>)
                     }
                 </div>
