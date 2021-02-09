@@ -133,13 +133,13 @@ function DropZone(properties) {
         <div className="drop-zone">
             <Dragger {...props}>
                 <i className="icon fi flaticon-upload"/>
-                <p className="ant-upload-text">Drag and drop file here</p>
+                <p className="ant-upload-text">Drag and drop file/s here</p>
                 <p className="ant-upload-hint">or</p>
                 <button
                     type="primary"
                     htmlType="submit"
                     className="select-btn outlined-btn">
-                    Select File
+                    Select File/s
                 </button>
             </Dragger>
         </div>
