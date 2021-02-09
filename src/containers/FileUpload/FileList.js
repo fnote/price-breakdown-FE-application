@@ -81,6 +81,8 @@ class FileList extends React.Component {
                 if (!item.jobDetail.isProcessing
                     && item.jobDetail.status !== current.jobDetail.status) {
                     item.jobDetail.status = current.jobDetail.status;
+                    item.startTime = current.startTime;
+                    item.endTime = current.endTime;
                     this.setState({item});
                 }
                 found = true;
