@@ -114,11 +114,11 @@ export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
 export const JOB_DELETING_STATUS = 'DELETING';
 
 // display job status
-export const JOB_INPROGRESS_STATUS_DISPLAY = 'File is being processed';
-export const JOB_ERROR_STATUS_DISPLAY = 'Failed to process';
-export const JOB_COMPLETE_STATUS_DISPLAY = 'File processed successfully';
-export const JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY = 'File processed partially';
-export const MINOR_ERROR_STATUS_DISPLAY = 'Minor error file';
+export const JOB_INPROGRESS_STATUS_DISPLAY = 'Processing';
+export const JOB_ERROR_STATUS_DISPLAY = 'Failed';
+export const JOB_COMPLETE_STATUS_DISPLAY = 'Completed';
+export const JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY = 'Partially Completed';
+export const MINOR_ERROR_STATUS_DISPLAY = 'Minor Error';
 export const JOB_DELETING_STATUS_DISPLAY = 'Deleting';
 
 export const PCI_FILENAME_PREFIX = 'CPPCI-';

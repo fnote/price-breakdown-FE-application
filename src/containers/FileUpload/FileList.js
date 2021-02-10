@@ -265,27 +265,29 @@ class FileList extends React.Component {
 
     // ------ download file ------
     downloadFiles = (fileNamesArray) => {
-        const fileNamesArrayWithPciPrefix = [];
+        if (fileNamesArray.length > 0) {
+            const fileNamesArrayWithPciPrefix = [];
 
-        fileNamesArray.forEach((fileName) => {
-            const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
-            fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
-        });
+            fileNamesArray.forEach((fileName) => {
+                const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
+                fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
+            });
 
-        generateSignedUrls(fileNamesArrayWithPciPrefix)
-            .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
-            }).catch(() => {
+            generateSignedUrls(fileNamesArrayWithPciPrefix)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response.json();
+                }).catch(() => {
                 const errorMsg = 'Failed to download the files.';
                 this.openNotificationWithIcon('error', `${errorMsg} : ${getDisplayFileName(fileNamesArrayWithPciPrefix)}`, 'Failure');
             })
-            .then((response) => {
-                const fileNameUrlArray = response.data;
-                Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
-            });
+                .then((response) => {
+                    const fileNameUrlArray = response.data;
+                    Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
+                });
+        }
     };
 
     downloadFromSignedUrl = (fileNameUrlArray) => {
