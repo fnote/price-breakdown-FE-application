@@ -8,7 +8,8 @@ const formatJobDetailObject = (job) => {
     jobDetail.fileName = removeFileNamePrefix(jobDetail.fileName);
     jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
         ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;
-    const timeZoneAbb = new Date(jobDetail.startTime).toTimeString().match(new RegExp(TIMEZONE_ABBREVIATION_REGEX, "g")).join('');
+    const timeZoneAbb = new Date(jobDetail.startTime).toTimeString()
+        .match(new RegExp(TIMEZONE_ABBREVIATION_REGEX, 'g')).join('');
     jobDetail.startTime = jobDetail.startTime ? new Date(jobDetail.startTime).toString()
         .replace(TIMEZONE_REGEX, timeZoneAbb) : null;
     jobDetail.endTime = jobDetail.endTime ? new Date(jobDetail.endTime).toString()

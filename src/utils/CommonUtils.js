@@ -50,4 +50,5 @@ export const formatNumberInput = (value) => {
     return value;
 };
 
-export const getDisplayFileName = (fileName) => ((fileName.length > FILE_NAME_DISPLAY_LENGTH) ? `${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...` : fileName);
+export const getDisplayFileName = (fileName) => ((fileName.length > FILE_NAME_DISPLAY_LENGTH)
+    ? `${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...` : fileName);
