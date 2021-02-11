@@ -3,6 +3,7 @@ import {
   MenuOutlined,
   CloseOutlined,
   LogoutOutlined,
+  QuestionCircleOutlined,
 } from '@ant-design/icons';
 import Navigation from './Navigation';
 import {auth} from '../../utils/security/Auth';
@@ -40,6 +41,7 @@ class AccountWidget extends React.Component {
         <div
           id="user-widget"
           className={visible ? 'user-widget show' : 'user-widget'}>
+          <a className="need-help-header-link" href="/#" target="_BLANK"><QuestionCircleOutlined className="icdon"/> Need Help</a>
           <div className="user">
             <div className="name">
                 {displayName}
@@ -97,6 +99,10 @@ class AccountWidget extends React.Component {
               <li className="hide">
                 <div className="menulabel">Manage Users</div>
                 <span className="icon fi flaticon-user" />
+              </li>
+              <li className="">
+                <QuestionCircleOutlined className="icon"/>
+                <div className="menulabel">Help &amp; Training</div>
               </li>
               <li onClick={() => this.logoutButtonClicked()}>
                 <LogoutOutlined className="icon" />

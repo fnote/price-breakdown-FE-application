@@ -216,7 +216,9 @@
             color: $syscogreen;
           }
           &.error {
-            @include flexbox(0 0 auto, row, flex-end, center);
+            @include flexbox(1 1 auto, row, flex-end, center);
+            flex-wrap: wrap;
+            white-space: pre-wrap;
             color: $syscored;
             @include breakpoint(xs) {
               @include flexbox(0 0 auto, column, flex-end, flex-end);
@@ -229,7 +231,9 @@
             color: $lightblue;
           }
           &.warn {
-            @include flexbox(0 0 auto, row, flex-end, center);
+            @include flexbox(1 1 auto, row, flex-end, center);
+            flex-wrap: wrap;
+            white-space: pre-wrap;
             color: $syscoorange;
             @include breakpoint(xs) {
               @include flexbox(0 0 auto, column, flex-end, flex-end);
