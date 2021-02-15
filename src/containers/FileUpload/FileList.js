@@ -52,7 +52,7 @@ class FileList extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.refreshedData !== null && prevProps.refreshedData !== this.props.refreshedData
+        if (this.props.refreshedData && prevProps.refreshedData !== this.props.refreshedData
             && (JSON.stringify(this.props.refreshedData) !== JSON.stringify(this.state.data))) {
             this.doUpdate();
             if (this.props.fileUploadCompleted) {
