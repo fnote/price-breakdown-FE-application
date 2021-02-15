@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Input, notification, Popconfirm, Table, Tooltip} from 'antd';
+import {Button, Input, notification, Popconfirm, Table} from 'antd';
 import {SyncOutlined} from '@ant-design/icons';
 // eslint-disable-next-line import/no-named-default
 import {default as _} from 'lodash';
@@ -10,7 +10,6 @@ import {
     DELETE_TITLE,
     EMPTY_STRING,
     FILE_APPEAR_NOTIFICATION,
-    FILE_NAME_DISPLAY_LENGTH,
     JOB_COMPLETE_STATUS,
     JOB_COMPLETE_STATUS_DISPLAY,
     JOB_DELETING_STATUS,
@@ -187,20 +186,8 @@ class FileList extends React.Component {
         {
             title: 'FILE NAME',
             dataIndex: 'filename',
-            className: 'filename',
             render: (fileName) => (
-                <div>
-                    {fileName.length > FILE_NAME_DISPLAY_LENGTH
-                    && (<Tooltip
-                        title={fileName}
-                        placement="top">
-                        <div>{`${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...`}</div>
-                    </Tooltip>)
-                    }
-                    {fileName.length <= 30
-                    && (<div>{fileName}</div>)
-                    }
-                </div>
+                <div className='filename' title={fileName}>{fileName}</div>
             )
         },
         {
