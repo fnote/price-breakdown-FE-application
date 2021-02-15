@@ -173,6 +173,9 @@
         color: darken($syscoblue, 5%);
         min-width: 10rem;
         max-width: 25rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .download-file {
         color: $syscogreen;
