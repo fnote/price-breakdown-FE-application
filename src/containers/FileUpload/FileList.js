@@ -27,7 +27,11 @@ import {
     TAG_NAME_A,
     TIMEOUT_DURING_DOWNLOAD_CLICKS
 } from '../../constants/Constants';
-import {generateBatchJobSearchUrl, removeFileNamePrefixFromList} from '../../utils/FileListUtils';
+import {
+    generateBatchJobSearchUrl,
+    isMaxDownloadableCountExceed,
+    removeFileNamePrefixFromList
+} from '../../utils/FileListUtils';
 import {withHooksHOC} from './FileListHOC';
 import {
     fileSearchListRequestHandler,
@@ -358,7 +362,7 @@ class FileList extends React.Component {
     debouncedListBatchJobs = _.debounce(((searchString) => this.listBatchJobs(searchString)), 1000);
 
     bulkDownload = () => {
-        if (this.state.selectedRowValues.length > MAX_DOWNLOAD_ALLOWED) {
+        if (isMaxDownloadableCountExceed(this.state.selectedRowValues.length)) {
             this.openNotificationWithIcon('error', 'Too many files to download.', 'Failure');
             return;
         }
