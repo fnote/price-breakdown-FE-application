@@ -34,3 +34,4 @@ export const removeFileNamePrefixFromList = (fileNames) => fileNames.map((fileNa
  * @returns {boolean}
  */
 export const isMaxDownloadableCountExceed = (selectedCount) => selectedCount > MAX_DOWNLOAD_ALLOWED;
+
