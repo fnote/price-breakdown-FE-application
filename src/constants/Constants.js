@@ -86,6 +86,7 @@ export const NAVIGATION_PATH_FILE_UPLOAD = '/file-upload';
 
 export const FILE_UPLOADING_DONE = 'done';
 export const FILE_UPLOADING_ERROR = 'error';
+export const FILE_APPEAR_NOTIFICATION = 'Submitted file(s) will appear in the file list shortly!';
 
 export const SUPPORTED_FILE_TYPES = [
     '', 'text/plain', 'text/csv',
@@ -105,18 +106,41 @@ export const INVALID_FILE_NAME = {
     errorMessage: 'file upload failed due to unsupported file name.'
 };
 
+// job status
 export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
 export const JOB_ERROR_STATUS = 'ERROR';
 export const JOB_COMPLETE_STATUS = 'COMPLETED';
 export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
+export const JOB_DELETING_STATUS = 'DELETING';
+
+// display job status
+export const JOB_INPROGRESS_STATUS_DISPLAY = 'Processing';
+export const JOB_ERROR_STATUS_DISPLAY = 'Failed';
+export const JOB_COMPLETE_STATUS_DISPLAY = 'Completed';
+export const JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY = 'Partially Completed';
+export const MINOR_ERROR_STATUS_DISPLAY = 'Minor Error';
+export const JOB_DELETING_STATUS_DISPLAY = 'Deleting';
 
 export const PCI_FILENAME_PREFIX = 'CPPCI-';
 
 export const MAX_DOWNLOAD_ALLOWED = 25;
 export const TIMEOUT_DURING_DOWNLOAD_CLICKS = 1000;
+export const FILE_NAME_DISPLAY_LENGTH = 30;
 
 export const TAG_NAME_A = 'a';
 
 export const EMPTY_STRING = '';
 export const PERCENTAGE_SIGN = '%';
 export const UNKNOWN_BASE_VALUE_NAME = 'UNKNOWN';
+
+// delete confirmation popup
+export const DELETE_TITLE = 'Are you sure to delete this?';
+export const DELETE_CONFIRM = 'Yes';
+export const DELETE_REJECT = 'No';
+
+// batch job list polling interval time
+export const JOB_LIST_REFRESH_INTERVAL = 40000;
+
+// batch job time - timezone regex
+export const TIMEZONE_ABBREVIATION_REGEX = /[A-Z](?!.*[(])/;
+export const TIMEZONE_REGEX = /\(([^)]+)\)/;

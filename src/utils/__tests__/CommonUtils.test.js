@@ -1,4 +1,4 @@
-import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput} from '../CommonUtils';
+import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName} from '../CommonUtils';
 
 const businessUnits = new Map(
     [
@@ -111,5 +111,15 @@ describe('formatNumberInput', () => {
 
     test('Should return null when passed a null ', () => {
         expect(formatNumberInput(null)).toEqual(null);
+    });
+});
+
+describe('getDisplayFileName', () => {
+    test('Should return formatted fileName when above length', () => {
+        expect(getDisplayFileName('ABCDEFGHIJKLMNOPQRST_001_902839_20200202_C.txt')).toEqual('ABCDEFGHIJKLMNOPQRST_001_9028...');
+    });
+
+    test('Should return a same file name when below length', () => {
+        expect(getDisplayFileName('ABC_001_902839_20200202_C.txt')).toEqual('ABC_001_902839_20200202_C.txt');
     });
 });
