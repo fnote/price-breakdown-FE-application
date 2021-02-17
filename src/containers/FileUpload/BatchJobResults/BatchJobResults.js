@@ -4,7 +4,7 @@ import {PCI_FILENAME_PREFIX, TIMEZONE_ABBREVIATION_REGEX, TIMEZONE_REGEX} from '
 import {getBffUrlConfig} from '../../../utils/Configs';
 
 const formatJobDetailObject = (job) => {
-    const jobDetail = JobDetail.fromJson(job);
+    const jobDetail = new JobDetail(job);
     jobDetail.fileName = removeFileNamePrefix(jobDetail.fileName);
     jobDetail.minorErrorFileName = jobDetail.minorErrorFileName
         ? jobDetail.minorErrorFileName.replace(PCI_FILENAME_PREFIX, '') : null;

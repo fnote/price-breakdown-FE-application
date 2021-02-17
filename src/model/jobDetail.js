@@ -36,10 +36,6 @@ class JobDetail {
     this.minorErrorFileName = obj.minorErrorFileName || null;
     this.isProcessing = false;
   }
-
-  static fromJson(obj) {
-    return new JobDetail(obj);
-  }
 }
 
 export default JobDetail;

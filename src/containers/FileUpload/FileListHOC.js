@@ -11,7 +11,7 @@ import {autoRefreshBatchJobs} from './BatchJobResults/BatchJobResults';
 
 export const withHooksHOC = (WrappedComponent) => (props) => {
         const [jobList, setJobList] = React.useState(null);
-        // Asynchronous calls to refresh the list of jobs data in polling interval of every 15 seconds
+        // Asynchronous calls to refresh the list of jobs data in given time interval
         useInterval(async () => {
             const newList = props.refreshOn ? await autoRefreshBatchJobs() : null;
             if (newList !== null && (JSON.stringify(newList) !== JSON.stringify(jobList))) {
