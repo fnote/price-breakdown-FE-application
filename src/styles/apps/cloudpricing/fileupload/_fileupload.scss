@@ -150,6 +150,11 @@
         &:active {
           opacity: 0.4;
         }
+        &:hover {
+          color: $syscodarkblue;
+          opacity: 1.7;
+          transform: scale(1.03);
+        }
         @include breakpoint(xs) {
           padding: 0;
           margin-left: auto;
