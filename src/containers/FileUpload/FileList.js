@@ -26,7 +26,11 @@ import {
     TAG_NAME_A,
     TIMEOUT_DURING_DOWNLOAD_CLICKS
 } from '../../constants/Constants';
-import {generateBatchJobSearchUrl, removeFileNamePrefixFromList} from '../../utils/FileListUtils';
+import {
+    generateBatchJobSearchUrl,
+    isMaxDownloadableCountExceed,
+    removeFileNamePrefixFromList
+} from '../../utils/FileListUtils';
 import {withHooksHOC} from './FileListHOC';
 import {
     fileSearchListRequestHandler,
@@ -51,7 +55,7 @@ class FileList extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.refreshedData !== null && prevProps.refreshedData !== this.props.refreshedData
+        if (this.props.refreshedData && prevProps.refreshedData !== this.props.refreshedData
             && (JSON.stringify(this.props.refreshedData) !== JSON.stringify(this.state.data))) {
             this.doUpdate();
             if (this.props.fileUploadCompleted) {
@@ -79,7 +83,7 @@ class FileList extends React.Component {
             if (current.jobId === item.jobId) {
                 if (!item.jobDetail.isProcessing
                     && item.jobDetail.status !== current.jobDetail.status) {
-                    item.jobDetail.status = current.jobDetail.status;
+                    item.jobDetail = current.jobDetail;
                     item.startTime = current.startTime;
                     item.endTime = current.endTime;
                     this.setState({item});
@@ -345,7 +349,7 @@ class FileList extends React.Component {
     debouncedListBatchJobs = _.debounce(((searchString) => this.listBatchJobs(searchString)), 1000);
 
     bulkDownload = () => {
-        if (this.state.selectedRowValues.length > MAX_DOWNLOAD_ALLOWED) {
+        if (isMaxDownloadableCountExceed(this.state.selectedRowValues.length)) {
             this.openNotificationWithIcon('error', 'Too many files to download.', 'Failure');
             return;
         }

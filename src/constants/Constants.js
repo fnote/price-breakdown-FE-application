@@ -1,3 +1,6 @@
+// help page url
+export const HELP_PAGE_URL = 'https://syscobt.atlassian.net/wiki/spaces/PRCP/pages/2298184412/Getting+started+with+the+Cloud+Price+Calculation+Inquiry+PCI';
+
 export const LABEL_CUSTOMER_NET_PRICE = 'CUSTOMER NET PRICE';
 
 export const VALUE_KEY_CUSTOMER_REF_PRICE = 'customerReferencePrice';

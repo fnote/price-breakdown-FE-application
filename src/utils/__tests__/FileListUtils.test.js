@@ -1,6 +1,7 @@
 import {
     generateBatchJobDeleteUrl,
     generateBatchJobSearchUrl,
+    isMaxDownloadableCountExceed,
     removeFileNamePrefix,
     removeFileNamePrefixFromList
 } from '../FileListUtils';
@@ -28,5 +29,17 @@ describe('FileListUtils', () => {
         const fileNamesWithPrefix = ['CPPCI-DevTest', 'CPPCI-BPTest'];
         const fileNamesWithoutPrefix = ['DevTest', 'BPTest'];
         expect(removeFileNamePrefixFromList(fileNamesWithPrefix)).toEqual(fileNamesWithoutPrefix);
+    });
+
+    test('isMaxDownloadableCountExceed should return true if the selected count exceeded max', () => {
+        expect(isMaxDownloadableCountExceed(26)).toEqual(true);
+    });
+
+    test('isMaxDownloadableCountExceed should return false if the selected count similar to max', () => {
+        expect(isMaxDownloadableCountExceed(25)).toEqual(false);
+    });
+
+    test('isMaxDownloadableCountExceed should return false if the selected count not exceeded max', () => {
+        expect(isMaxDownloadableCountExceed(24)).toEqual(false);
     });
 });
