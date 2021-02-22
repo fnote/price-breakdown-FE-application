@@ -150,15 +150,6 @@
       }
     }
   }
-  .need-help-header-link{
-    position: absolute;
-    text-align: right;
-    width: 6rem;
-    margin-right: 180%;
-    @include breakpoint(xs) {
-      display: none;
-    }
-  }
 }
 
 .sidemenu-toggle {
