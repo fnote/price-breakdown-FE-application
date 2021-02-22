@@ -11,7 +11,7 @@ function AppBar() {
             <img src={logo} alt="Sysco Cloud Pricing" className="logo"/>
             <Navigation/>
             <a className="need-help-header-link" href={HELP_PAGE_URL} target="_BLANK" rel="noopener noreferrer">
-                <QuestionCircleOutlined className="icdon"/> Need Help
+                <QuestionCircleOutlined className="icdon"/> Need Help?
             </a>
             <AccountWidget/>
         </div>
