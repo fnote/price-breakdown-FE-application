@@ -1,5 +1,5 @@
 import React from 'react';
-import {CloseOutlined, LogoutOutlined, MenuOutlined, QuestionCircleOutlined, } from '@ant-design/icons';
+import {CloseOutlined, LogoutOutlined, MenuOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import Navigation from './Navigation';
 import {auth} from '../../utils/security/Auth';
 import {UserDetailContext} from '../../containers/UserDetailContext';
@@ -44,9 +44,6 @@ class AccountWidget extends React.Component {
           <div
               id="user-widget"
               className={visible ? 'user-widget show' : 'user-widget'}>
-            <a className="need-help-header-link" href={HELP_PAGE_URL} target="_BLANK" rel="noopener noreferrer">
-              <QuestionCircleOutlined className="icdon"/> Need Help
-            </a>
             <div className="user">
               <div className="name">
                 {displayName}
