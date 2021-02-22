@@ -1,5 +1,5 @@
 import React from 'react';
-import {CloseOutlined, LogoutOutlined, MenuOutlined, QuestionCircleOutlined,} from '@ant-design/icons';
+import {CloseOutlined, LogoutOutlined, MenuOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import Navigation from './Navigation';
 import {auth} from '../../utils/security/Auth';
 import {UserDetailContext} from '../../containers/UserDetailContext';

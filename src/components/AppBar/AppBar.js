@@ -1,9 +1,9 @@
 import React from 'react';
+import {QuestionCircleOutlined} from '@ant-design/icons';
 import logo from '../../styles/images/logo.svg';
 import AccountWidget from './AccountWidget';
 import Navigation from './Navigation';
-import {HELP_PAGE_URL} from "../../constants/Constants";
-import {QuestionCircleOutlined} from "@ant-design/icons";
+import {HELP_PAGE_URL} from '../../constants/Constants';
 
 function AppBar() {
     return (
