@@ -3,6 +3,7 @@ import {notification, Upload} from 'antd';
 import axios from 'axios';
 import {getBffUrlConfig} from '../../utils/Configs';
 import {
+    CSV_EXTENSION,
     FILE_UPLOADING_DONE,
     FILE_UPLOADING_ERROR,
     FILENAME_DELIMITER,
@@ -11,7 +12,7 @@ import {
     PCI_FILENAME_PREFIX,
     SUPPORTED_FILE_EXTENSIONS
 } from '../../constants/Constants';
-import {blobToFile, isValidFileName, isValidFileType, mimeType} from '../../utils/FileUploadValidation';
+import {blobToFile, getCSVMimeType, isValidFileName, isValidFileType} from '../../utils/FileUploadValidation';
 import {getDisplayFileName} from '../../utils/CommonUtils';
 
 const {Dragger} = Upload;
@@ -83,17 +84,12 @@ const fileUploadHandler = (payload) => {
 
 const customUpload = (info) => {
     const file = info.file;
-    console.log(`file: ${file.name}, ${file.type}`);
-    if (file.name.includes(FILENAME_DELIMITER)) {
-        // Get file extension from file name
-        const splitFilename = file.name.split(FILENAME_DELIMITER);
-        const extension = FILENAME_DELIMITER.concat(splitFilename[splitFilename.length - 1]);
-
-        console.log(`extension: ${extension}`);
-
+    // Get file extension from file name
+    const splitFilename = file.name.split(FILENAME_DELIMITER);
+    const extension = FILENAME_DELIMITER.concat(splitFilename[splitFilename.length - 1]);
+    if (extension === CSV_EXTENSION) {
         // create a blob from file calling mime type injection function
-        const blob = new Blob([file], {type: mimeType(extension)});
-
+        const blob = new Blob([file], {type: getCSVMimeType()});
         // Here you can use the file as you wish
         info.file = blobToFile(blob, file.name);
     }
