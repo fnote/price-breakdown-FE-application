@@ -91,6 +91,9 @@ export const FILE_UPLOADING_DONE = 'done';
 export const FILE_UPLOADING_ERROR = 'error';
 export const FILE_APPEAR_NOTIFICATION = 'Submitted file(s) will appear in the file list shortly!';
 
+export const FILENAME_DELIMITER = '.';
+export const SUPPORTED_FILE_EXTENSIONS = ['', '.txt', '.csv', '.xls', '.xlsx', '.doc', '.docx'];
+
 export const SUPPORTED_FILE_TYPES = [
     '', 'text/plain', 'text/csv',
     'application/vnd.ms-excel',
