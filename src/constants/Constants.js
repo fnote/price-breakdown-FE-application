@@ -92,12 +92,10 @@ export const FILE_UPLOADING_ERROR = 'error';
 export const FILE_APPEAR_NOTIFICATION = 'Submitted file(s) will appear in the file list shortly!';
 
 export const FILENAME_DELIMITER = '.';
-export const CSV_EXTENSION = '.csv';
-export const CSV_MIMETYPE = 'text/csv';
-export const SUPPORTED_FILE_EXTENSIONS = ['', '.txt', CSV_EXTENSION, '.xls', '.xlsx', '.doc', '.docx'];
+export const SUPPORTED_FILE_EXTENSIONS = ['', '.txt', '.csv', '.xls', '.xlsx', '.doc', '.docx'];
 
 export const SUPPORTED_FILE_TYPES = [
-    '', 'text/plain', CSV_MIMETYPE,
+    '', 'text/plain', 'text/csv',
     'application/vnd.ms-excel',
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     'application/msword',

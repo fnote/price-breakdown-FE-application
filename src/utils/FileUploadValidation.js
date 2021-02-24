@@ -1,7 +1,7 @@
 /**
  * Validation functions for file upload
  * */
-import {CSV_MIMETYPE, SUPPORTED_FILE_TYPES, UNSUPPORTED_SPECIAL_CHARACTERS} from '../constants/Constants';
+import {SUPPORTED_FILE_EXTENSIONS, SUPPORTED_FILE_TYPES, UNSUPPORTED_SPECIAL_CHARACTERS} from '../constants/Constants';
 
 /**
  * Validate file content type
@@ -19,7 +19,14 @@ export const isValidFileName = (fileName) => !(fileName === undefined || fileNam
  * @param extension
  * @returns {string}
  */
-export const getCSVMimeType = () => CSV_MIMETYPE;
+export const mimeType = (extension) => {
+    let i;
+    for (i = 0; i < SUPPORTED_FILE_EXTENSIONS.length; i += 1) {
+        if (extension === SUPPORTED_FILE_EXTENSIONS[i]) {
+            return SUPPORTED_FILE_TYPES[i];
+        }
+    }
+};
 
 /**
  * Convert Blob to File again
