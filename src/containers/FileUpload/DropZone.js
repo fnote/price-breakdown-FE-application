@@ -84,7 +84,7 @@ const fileUploadHandler = (payload) => {
 const customUpload = (info) => {
     const file = info.file;
     console.log(`file: ${file.name}, ${file.type}`);
-    if (file.type === '' && file.name.includes(FILENAME_DELIMITER)) {
+    if (file.name.includes(FILENAME_DELIMITER)) {
         // Get file extension from file name
         const splitFilename = file.name.split(FILENAME_DELIMITER);
         const extension = FILENAME_DELIMITER.concat(splitFilename[splitFilename.length - 1]);
