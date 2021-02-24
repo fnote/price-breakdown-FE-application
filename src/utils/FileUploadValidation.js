@@ -17,7 +17,7 @@ export const isValidFileName = (fileName) => !(fileName === undefined || fileNam
 /**
  * Inject getCSVMimeType By extension
  * @param extension
- * @returns {string}
+ * @returns {string|null}
  */
 export const getMimeType = (extension) => {
     let i;
@@ -26,6 +26,7 @@ export const getMimeType = (extension) => {
             return SUPPORTED_FILE_TYPES[i];
         }
     }
+    return null;
 };
 
 /**
