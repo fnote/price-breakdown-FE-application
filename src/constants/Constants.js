@@ -92,8 +92,14 @@ export const FILE_UPLOADING_ERROR = 'error';
 export const FILE_APPEAR_NOTIFICATION = 'Submitted file(s) will appear in the file list shortly!';
 
 export const FILENAME_DELIMITER = '.';
-export const SUPPORTED_FILE_EXTENSIONS = ['', '.txt', '.csv', '.xls', '.xlsx', '.doc', '.docx'];
 
+// !IMPORTANT
+// this has the respective file extensions for the mimetypes in SUPPORTED_FILE_TYPES.
+// The order of the list is important in getMimeType().
+export const SUPPORTED_FILE_EXTENSIONS = ['', '.txt', '.csv', '.xls', '.xlsx', '.doc', '.docx'];
+// !IMPORTANT
+// this has the respective file mimetypes for the extensions in SUPPORTED_FILE_EXTENSIONS.
+// The order of the list is important in getMimeType().
 export const SUPPORTED_FILE_TYPES = [
     '', 'text/plain', 'text/csv',
     'application/vnd.ms-excel',

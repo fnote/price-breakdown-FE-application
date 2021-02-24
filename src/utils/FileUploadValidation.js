@@ -19,7 +19,7 @@ export const isValidFileName = (fileName) => !(fileName === undefined || fileNam
  * @param extension
  * @returns {string}
  */
-export const mimeType = (extension) => {
+export const getMimeType = (extension) => {
     let i;
     for (i = 0; i < SUPPORTED_FILE_EXTENSIONS.length; i += 1) {
         if (extension === SUPPORTED_FILE_EXTENSIONS[i]) {

@@ -11,7 +11,7 @@ import {
     PCI_FILENAME_PREFIX,
     SUPPORTED_FILE_EXTENSIONS
 } from '../../constants/Constants';
-import {blobToFile, isValidFileName, isValidFileType, mimeType} from '../../utils/FileUploadValidation';
+import {blobToFile, getMimeType, isValidFileName, isValidFileType} from '../../utils/FileUploadValidation';
 import {getDisplayFileName} from '../../utils/CommonUtils';
 
 const {Dragger} = Upload;
@@ -83,14 +83,14 @@ const fileUploadHandler = (payload) => {
 
 const customUpload = (info) => {
     const file = info.file;
-    // Get file extension from file name
     if (file.name.includes(FILENAME_DELIMITER)) {
         // Get file extension from file name
         const splitFilename = file.name.split(FILENAME_DELIMITER);
         const extension = FILENAME_DELIMITER.concat(splitFilename[splitFilename.length - 1]);
+
         // create a blob from file calling mime type injection function
-        const blob = new Blob([file], {type: mimeType(extension)});
-        // Here you can use the file as you wish
+        const blob = new Blob([file], {type: getMimeType(extension)});
+        // re-convert to a file
         info.file = blobToFile(blob, file.name);
     }
 
