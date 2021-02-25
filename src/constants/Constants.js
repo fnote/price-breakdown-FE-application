@@ -45,6 +45,7 @@ export const DISCOUNT_CASE_VOLUME = 'CASE_VOLUME_DISCOUNT';
 export const DISCOUNT_NAMES_MAP = new Map([
     ['STRATEGIC_RPA_DISCOUNT', 'Strategic RPA Discount'],
     ['NEW_CUSTOMER_DISCOUNT', 'New Customer Discount'],
+    ['NEW_ATTRIBUTE_GROUP_DISCOUNT', 'New Attribute Group Discount'],
     ['CASE_SPLIT_UPCHARGE', 'Split Up Charge'],
 ]);
 
