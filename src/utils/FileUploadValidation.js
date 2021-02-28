@@ -1,12 +1,13 @@
 /**
  * Validation functions for file upload
  * */
-import {SUPPORTED_FILE_EXTENSIONS, SUPPORTED_FILE_TYPES, UNSUPPORTED_SPECIAL_CHARACTERS} from '../constants/Constants';
+import {SUPPORTED_FILE_EXTENSIONS_TYPES, UNSUPPORTED_SPECIAL_CHARACTERS} from '../constants/Constants';
 
 /**
  * Validate file content type
  * */
-export const isValidFileType = (contentType) => !(contentType === undefined || !SUPPORTED_FILE_TYPES.includes(contentType));
+export const isValidFileType = (contentType) => !(contentType === undefined
+    || !SUPPORTED_FILE_EXTENSIONS_TYPES.map((type) => type.type).includes(contentType));
 
 /**
  * Validate file name
@@ -21,9 +22,9 @@ export const isValidFileName = (fileName) => !(fileName === undefined || fileNam
  */
 export const getMimeType = (extension) => {
     let i;
-    for (i = 0; i < SUPPORTED_FILE_EXTENSIONS.length; i += 1) {
-        if (extension === SUPPORTED_FILE_EXTENSIONS[i]) {
-            return SUPPORTED_FILE_TYPES[i];
+    for (i = 0; i < SUPPORTED_FILE_EXTENSIONS_TYPES.length; i += 1) {
+        if (extension === SUPPORTED_FILE_EXTENSIONS_TYPES[i].extension) {
+            return SUPPORTED_FILE_EXTENSIONS_TYPES[i].type;
         }
     }
     return null;

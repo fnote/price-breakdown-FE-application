@@ -93,19 +93,14 @@ export const FILE_APPEAR_NOTIFICATION = 'Submitted file(s) will appear in the fi
 
 export const FILENAME_DELIMITER = '.';
 
-// !IMPORTANT
-// this has the respective file extensions for the mimetypes in SUPPORTED_FILE_TYPES.
-// The order of the list is important in getMimeType().
-export const SUPPORTED_FILE_EXTENSIONS = ['', '.txt', '.csv', '.xls', '.xlsx', '.doc', '.docx'];
-// !IMPORTANT
-// this has the respective file mimetypes for the extensions in SUPPORTED_FILE_EXTENSIONS.
-// The order of the list is important in getMimeType().
-export const SUPPORTED_FILE_TYPES = [
-    '', 'text/plain', 'text/csv',
-    'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+// this has the supported file extensions and its mimetypes respectively
+export const SUPPORTED_FILE_EXTENSIONS_TYPES = [{extension: '', type: ''},
+    {extension: '.txt', type: 'text/plain'},
+    {extension: '.csv', type: 'text/csv'},
+    {extension: '.xls', type: 'application/vnd.ms-excel'},
+    {extension: '.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},
+    {extension: '.doc', type: 'application/msword'},
+    {extension: '.docx', type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}];
 
 export const UNSUPPORTED_SPECIAL_CHARACTERS = /[ &$@=;:+,?\\{^}%`\]'">[~<#|]/;
 

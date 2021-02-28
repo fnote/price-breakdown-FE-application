@@ -9,7 +9,7 @@ import {
     INVALID_FILE_NAME,
     INVALID_FILE_TYPE,
     PCI_FILENAME_PREFIX,
-    SUPPORTED_FILE_EXTENSIONS
+    SUPPORTED_FILE_EXTENSIONS_TYPES
 } from '../../constants/Constants';
 import {blobToFile, getMimeType, isValidFileName, isValidFileType} from '../../utils/FileUploadValidation';
 import {getDisplayFileName} from '../../utils/CommonUtils';
@@ -115,7 +115,7 @@ const openNotificationWithIcon = (type, description, msg) => {
 
 function DropZone(properties) {
     const props = {
-        accept: SUPPORTED_FILE_EXTENSIONS.join(', '),
+        accept: SUPPORTED_FILE_EXTENSIONS_TYPES.map((type) => type.extension).join(', '),
         name: 'file',
         multiple: true,
         customRequest: customUpload,
