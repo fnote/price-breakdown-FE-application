@@ -115,6 +115,7 @@ class FileList extends React.Component {
         const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
         if (item && item.jobDetail) {
             item.jobDetail.isProcessing = true;
+            item.jobDetail.originalStatus = item.jobDetail.status;
             item.jobDetail.status = JOB_DELETING_STATUS;
             this.setState({item});
         }
@@ -135,6 +136,9 @@ class FileList extends React.Component {
             this.removeDeletedJobFromSelectedRecords(jobId);
         }).catch(() => {
             this.openNotificationWithIcon('error', 'Failed to delete the batch file', 'Failure');
+            item.jobDetail.isProcessing = false;
+            item.jobDetail.status = item.jobDetail.originalStatus;
+            this.setState({item});
         });
     };
 

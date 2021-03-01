@@ -26,12 +26,12 @@ export default function ApplicationBase() {
     const appLoaderContext = useContext(AppLoaderContext);
 
     // prevent dragover and drop events in the window
-    window.addEventListener("dragover",function(e){
+    window.addEventListener('dragover', (e) => {
         e.preventDefault();
-    },false);
-    window.addEventListener("drop",function(e){
+    }, false);
+    window.addEventListener('drop', (e) => {
         e.preventDefault();
-    },false);
+    }, false);
 
     // Global configurations for notifications
     notification.config({
