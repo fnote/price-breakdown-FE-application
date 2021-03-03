@@ -5,12 +5,13 @@ import {getBffUrlConfig} from '../../utils/Configs';
 import {
     FILE_UPLOADING_DONE,
     FILE_UPLOADING_ERROR,
+    FILENAME_DELIMITER,
     INVALID_FILE_NAME,
     INVALID_FILE_TYPE,
     PCI_FILENAME_PREFIX,
-    SUPPORTED_FILE_TYPES
+    SUPPORTED_FILE_EXTENSIONS_TYPES
 } from '../../constants/Constants';
-import {isValidFileName, isValidFileType} from '../../utils/FileUploadValidation';
+import {blobToFile, getMimeType, isValidFileName, isValidFileType} from '../../utils/FileUploadValidation';
 import {getDisplayFileName} from '../../utils/CommonUtils';
 
 const {Dragger} = Upload;
@@ -82,6 +83,17 @@ const fileUploadHandler = (payload) => {
 
 const customUpload = (info) => {
     if (isValidFileType(info.file.type)) {
+        const file = info.file;
+        if (file.name.includes(FILENAME_DELIMITER)) {
+            // Get file extension from file name
+            const splitFilename = file.name.split(FILENAME_DELIMITER);
+            const extension = FILENAME_DELIMITER.concat(splitFilename[splitFilename.length - 1]);
+
+            // create a blob from file calling mime type injection function
+            const blob = new Blob([file], {type: getMimeType(extension)});
+            // re-convert to a file
+            info.file = blobToFile(blob, file.name);
+        }
         if (isValidFileName(info.file.name)) {
             return new Promise((resolve, reject) => fileUploadHandler({
                 info,
@@ -103,7 +115,7 @@ const openNotificationWithIcon = (type, description, msg) => {
 
 function DropZone(properties) {
     const props = {
-        accept: SUPPORTED_FILE_TYPES.join(', '),
+        accept: SUPPORTED_FILE_EXTENSIONS_TYPES.map((type) => type.extension).join(', '),
         name: 'file',
         multiple: true,
         customRequest: customUpload,

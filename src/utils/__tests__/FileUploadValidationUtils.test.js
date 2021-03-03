@@ -1,4 +1,5 @@
-import {isValidFileName, isValidFileType} from '../FileUploadValidation';
+import {blobToFile, getMimeType, isValidFileName, isValidFileType} from '../FileUploadValidation';
+import {SUPPORTED_FILE_EXTENSIONS_TYPES} from '../../constants/Constants';
 
 describe('FileUploadValidation', () => {
     test('isValidFileType should return true when the given file type is support', () => {
@@ -58,5 +59,40 @@ describe('FileUploadValidation', () => {
     test('isValidFileName should return false when the filename has a special char', () => {
         const fileName = 'DevTest%450.txt';
         expect(isValidFileName(fileName)).toEqual(false);
+    });
+
+    test('getMimeType should return valid mime type for no extension', () => {
+        expect(getMimeType(SUPPORTED_FILE_EXTENSIONS_TYPES[0].extension)).toEqual(SUPPORTED_FILE_EXTENSIONS_TYPES[0].type);
+    });
+
+    test('getMimeType should return valid mime type for .txt', () => {
+        expect(getMimeType(SUPPORTED_FILE_EXTENSIONS_TYPES[1].extension)).toEqual(SUPPORTED_FILE_EXTENSIONS_TYPES[1].type);
+    });
+
+    test('getMimeType should return valid mime type for .csv', () => {
+        expect(getMimeType(SUPPORTED_FILE_EXTENSIONS_TYPES[2].extension)).toEqual(SUPPORTED_FILE_EXTENSIONS_TYPES[2].type);
+    });
+
+    test('getMimeType should return valid mime type for .xls', () => {
+        expect(getMimeType(SUPPORTED_FILE_EXTENSIONS_TYPES[3].extension)).toEqual(SUPPORTED_FILE_EXTENSIONS_TYPES[3].type);
+    });
+
+    test('getMimeType should return valid mime type for .xlsx', () => {
+        expect(getMimeType(SUPPORTED_FILE_EXTENSIONS_TYPES[4].extension)).toEqual(SUPPORTED_FILE_EXTENSIONS_TYPES[4].type);
+    });
+
+    test('getMimeType should return valid mime type for .doc', () => {
+        expect(getMimeType(SUPPORTED_FILE_EXTENSIONS_TYPES[5].extension)).toEqual(SUPPORTED_FILE_EXTENSIONS_TYPES[5].type);
+    });
+
+    test('getMimeType should return valid mime type for .docx', () => {
+        expect(getMimeType(SUPPORTED_FILE_EXTENSIONS_TYPES[6].extension)).toEqual(SUPPORTED_FILE_EXTENSIONS_TYPES[6].type);
+    });
+
+    test('blobToFile should return new file', () => {
+        const filename = 'dev_001.txt';
+        const blob = new Blob([''], {type: getMimeType('.txt')});
+        const newFile = blobToFile(blob, filename);
+        expect(newFile.name).toEqual(filename);
     });
 });

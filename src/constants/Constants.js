@@ -92,12 +92,16 @@ export const FILE_UPLOADING_DONE = 'done';
 export const FILE_UPLOADING_ERROR = 'error';
 export const FILE_APPEAR_NOTIFICATION = 'Submitted file(s) will appear in the file list shortly!';
 
-export const SUPPORTED_FILE_TYPES = [
-    '', 'text/plain', 'text/csv',
-    'application/vnd.ms-excel',
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'application/msword',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+export const FILENAME_DELIMITER = '.';
+
+// this has the supported file extensions and its mimetypes respectively
+export const SUPPORTED_FILE_EXTENSIONS_TYPES = [{extension: '', type: ''},
+    {extension: '.txt', type: 'text/plain'},
+    {extension: '.csv', type: 'text/csv'},
+    {extension: '.xls', type: 'application/vnd.ms-excel'},
+    {extension: '.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},
+    {extension: '.doc', type: 'application/msword'},
+    {extension: '.docx', type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}];
 
 export const UNSUPPORTED_SPECIAL_CHARACTERS = /[ &$@=;:+,?\\{^}%`\]'">[~<#|]/;
 
