@@ -119,6 +119,8 @@ export const JOB_ERROR_STATUS = 'ERROR';
 export const JOB_COMPLETE_STATUS = 'COMPLETED';
 export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
 export const JOB_DELETING_STATUS = 'DELETING';
+export const JOB_DOWNLOADING_STATUS = 'DOWNLOADING';
+export const JOB_MINOR_ERROR_DOWNLOADING_STATUS = 'DOWNLOADING_MINOR_ERROR';
 
 // display job status
 export const JOB_INPROGRESS_STATUS_DISPLAY = 'Processing';
@@ -127,6 +129,8 @@ export const JOB_COMPLETE_STATUS_DISPLAY = 'Completed';
 export const JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY = 'Partially Completed';
 export const MINOR_ERROR_STATUS_DISPLAY = 'Minor Error';
 export const JOB_DELETING_STATUS_DISPLAY = 'Deleting';
+export const JOB_DOWNLOADING_STATUS_DISPLAY = 'Downloading';
+export const JOB_MINOR_ERROR_DOWNLOADING_STATUS_DISPLAY = 'Downloading Minor Error';
 
 export const PCI_FILENAME_PREFIX = 'CPPCI-';
 
@@ -151,3 +155,7 @@ export const JOB_LIST_REFRESH_INTERVAL = 40000;
 // batch job time - timezone regex
 export const TIMEZONE_ABBREVIATION_REGEX = /[A-Z](?!.*[(])/;
 export const TIMEZONE_REGEX = /\(([^)]+)\)/;
+
+//file type
+export const MINOR_ERROR_FILE = 'minor error file';
+export const COMPLETED_FILE = 'completed file';
