@@ -55,17 +55,16 @@ export default function ApplicationBase() {
     });
 
     let component;
-    if (appLoaderContext.appLoadingState) {
-        component = <AppLoader/>;
-    } else {
-        component = true ? Application() : <Login/>; // auth.isUserLoginCompleted() ? Application() : <Login/>;
-    }
 
     if(!browserDetector.isSupported()){
         component =  <UnsupportedBrowser
             browserName={browserDetector.getBrowserName()}
             browserVersion={browserDetector.getBrowserVersion()}
             fullBrowserVersion={browserDetector.getFullBrowserVersion()}/>;
+    } else if (appLoaderContext.appLoadingState) {
+        component = <AppLoader/>;
+    } else {
+        component = auth.isUserLoginCompleted() ? Application() : <Login/>;
     }
 
   return (
