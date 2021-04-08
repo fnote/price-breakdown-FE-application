@@ -58,7 +58,7 @@ export default function ApplicationBase() {
     if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = true ? Application() : <Login/>;
+        component = true ? Application() : <Login/>; // auth.isUserLoginCompleted() ? Application() : <Login/>;
     }
 
     if(!browserDetector.isSupported()){
