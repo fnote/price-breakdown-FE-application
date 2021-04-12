@@ -155,6 +155,7 @@ describe('getReadableDiscountName', () => {
     test('should return the readable name', () => {
         expect(getReadableDiscountName('STRATEGIC_RPA_DISCOUNT')).toEqual('Strategic RPA Discount');
         expect(getReadableDiscountName('NEW_CUSTOMER_DISCOUNT')).toEqual('New Customer Discount');
+        expect(getReadableDiscountName('NEW_ATTRIBUTE_GROUP_DISCOUNT')).toEqual('New Attribute Group Discount');
         expect(getReadableDiscountName('CASE_SPLIT_UPCHARGE')).toEqual('Split Up Charge');
         expect(getReadableDiscountName('SOME_THING_ELSE')).toEqual();
     });
@@ -205,6 +206,22 @@ describe('mapDiscountToDataRow', () => {
             adjustmentValue: '-8.00%',
             calculatedValue: '$72.23',
             description: 'New Customer Discount',
+            source: 'something',
+            validityPeriod: 'Valid Oct 5, 2020 - Nov 11, 2020'
+        });
+    });
+    test('should return the correct value', () => {
+        const data = {
+            name: 'NEW_ATTRIBUTE_GROUP_DISCOUNT',
+            amount: 0.92,
+            priceAdjustment: 72.23,
+            effectiveFrom: '20201005',
+            effectiveTo: '20201111'
+        };
+        expect(mapDiscountToDataRow(data, 'something', {perWeightFlag: false})).toEqual({
+            adjustmentValue: '-8.00%',
+            calculatedValue: '$72.23',
+            description: 'New Attribute Group Discount',
             source: 'something',
             validityPeriod: 'Valid Oct 5, 2020 - Nov 11, 2020'
         });
