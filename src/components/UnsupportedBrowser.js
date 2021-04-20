@@ -1,5 +1,5 @@
 import React from "react";
-import {  List } from "antd";
+import { List } from "antd";
 import {
   SUPPORTED_WEB_BROWSERS,
   UNSUPPORTED_WEB_BROWSER,
@@ -22,7 +22,7 @@ function _getSupportedBrowserList(browsers) {
 
 function _renderBrowserList(supportedBrowserList) {
   return (
-    <div>
+    <>
       <List
         grid={{ gutter: 5, column: 4 }}
         dataSource={supportedBrowserList}
@@ -32,10 +32,14 @@ function _renderBrowserList(supportedBrowserList) {
               <img className="browsersupport-icon" src={chrome} alt="chrome" />
             )}
             {item.split("/")[0] === "Firefox" && (
-              <img className="browsersupport-icon" src={firefox} alt="firefox" />
+              <img
+                className="browsersupport-icon"
+                src={firefox}
+                alt="firefox"
+              />
             )}
             {item.split("/")[0] === "Edge" && (
-              <img className="browsersupport-icon" src={edge} alt="edge"/>
+              <img className="browsersupport-icon" src={edge} alt="edge" />
             )}
             {item.split("/")[0] === "Safari" && (
               <img className="browsersupport-icon" src={safari} alt="safari" />
@@ -47,7 +51,7 @@ function _renderBrowserList(supportedBrowserList) {
           </List.Item>
         )}
       />
-    </div>
+    </>
   );
 }
 
@@ -65,11 +69,10 @@ function UnsupportedBrowser(props) {
   );
 
   return (
-    <>
-      <div className="browsersupport-wrapper">
-        <div id="browsersupport-logo">
-          
-        </div>
+    <div className="browsersupport-wrapper">
+      <div id="browsersupport-logo"></div>
+
+      <div className="browser-support-widget-wrapper">
         <div className="browsersupport-icon-wrapper">
           <BrowserIcon className="browsersupport-icon" />
         </div>
@@ -87,11 +90,11 @@ function UnsupportedBrowser(props) {
 
         <div id="browsersupport-list">{supportedBrowsers}</div>
         <div id="browersupport-options">
-          <div id="browsersupport-separator"/>
+          <div id="browsersupport-separator" />
           <button id="browsersupport-dismiss">continue anyway</button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
