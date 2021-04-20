@@ -1,0 +1,339 @@
+.browsersupport-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  animation: fadeIn 1s ease;
+  background: url("../../../images/browser_support_bg.svg");
+  background-size: cover;
+  background-attachment: fixed;
+
+  #browsersupport-logo{
+      position: absolute;
+      left:20px;
+      top:20px;
+      width:300px;
+      height:100px;
+      background: url("../../../images/browser_support_logo.svg") no-repeat;
+      background-size: contain;
+      background-position: center center;
+      transform:scale(0.8)
+  }
+
+  .browsersupport-icon-wrapper {
+    width: 150px;
+    height: 150px;
+    background: $browser-support-cream;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    position: absolute;
+    top: 10%;
+
+    .browsersupport-icon {
+      transform: scale(2.5);
+      position: relative;
+      margin: 0px 0px 0px 15px;
+    }
+  }
+
+  .browsersupport-header-wrapper {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    position: absolute;
+    top: 35%;
+    #browsersupport-header-msg {
+      font-size: 30px;
+      font-weight: 300;
+      color: $browser-support-light;
+    }
+    #browsersupport-sub-msg {
+      font-size: 36px;
+      font-weight: bold;
+      color: $browser-support-bold;
+      letter-spacing: 0.4px;
+      margin-top: 5px;
+    }
+  }
+
+  .browsersupport-info {
+    font-size: 15px;
+    color: $browser-support-light;
+    position: absolute;
+    top: 52%;
+  }
+
+  .browsersupport-icon {
+    width: 50px;
+  }
+
+  #browsersupport-list {
+    width: 25%;
+    height: auto;
+    min-width: 20%;
+    text-align: center;
+    position: absolute;
+    top: 60%;
+  }
+
+  #browsersupport-browsername {
+    color: $browser-support-blue;
+    font-weight: 800;
+    margin-top: 10px;
+  }
+
+  #browersupport-browserversion {
+    font-size: 12px;
+  }
+
+  #browersupport-options {
+    position: absolute;
+    top: 76%;
+
+    #browsersupport-separator {
+      width: 200px;
+      height: 0.5px;
+      background: black;
+      margin-top: 50px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      opacity: 0.7;
+      &::after {
+        position: absolute;
+        content: "OR";
+        top: -5px;
+        background: #fff;
+        padding: 0px 5px 0px 5px;
+        font-size: 15px;
+        color:#000;
+      }
+    }
+
+    #browsersupport-dismiss {
+       
+      background-color: white;
+      color: $browser-support-bold;
+      cursor: pointer;
+      width: 200px;
+      height: 45px;
+      border-radius: 40px;
+      border: 2px solid $browser-support-bold;
+      font-size: 14px;
+      background: #fff;
+      position: absolute;
+      margin-top: 40px;
+      outline: none;
+      transition: 0.5s;
+      &:hover {
+        background: $syscoblue;
+        color: #fff;
+        border:none;
+        transition: 0.5s;
+      }
+    }
+  }
+
+  //   media queries
+
+
+  @include breakpoint(xs) {
+
+    #browsersupport-logo{
+       left:20px;
+        width:100px;
+        height:100px;
+        background: url("../../../images/logo_short.svg") no-repeat;
+        background-size: contain;
+        background-position: center center;
+        transform:scale(0.8);
+        border-radius: 50%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    }
+  
+
+    #browsersupport-list {
+        width: 80%;
+    }
+
+    .browsersupport-info {
+        width:100%;
+        text-align: center;
+    }
+     
+  }
+
+
+  @include breakpoint(sm) {
+    .browsersupport-icon-wrapper {
+      top: 1%;
+      transform: scale(0.9);
+    }
+
+    .browsersupport-header-wrapper {
+      top: 33%;
+    }
+
+    #browsersupport-header-msg {
+      font-size: 28px !important;
+      font-weight: 300 !important;
+    }
+
+    #browsersupport-sub-msg {
+      font-size: 33px !important;
+    }
+
+    .browsersupport-info {
+      font-size: 14px !important;
+      top: 53.5%;
+    }
+
+    .browsersupport-icon {
+      width: 40px;
+    }
+
+    #browsersupport-list {
+      width: 30%;
+      height: auto;
+      min-width: 20%;
+      text-align: center;
+      position: absolute;
+      top: 60%;
+      transform: scale(0.8);
+    }
+    #browersupport-options {
+      top: 74%;
+    }
+    #browsersupport-dismiss {
+      margin-top: 26px !important;
+      transform: scale(0.9);
+      font-size: 12px;
+    }
+  }
+
+
+
+  @include breakpoint(lg) {
+    .browsersupport-icon-wrapper {
+        width: 150px;
+        height: 150px;
+        background: $browser-support-cream;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        position: absolute;
+        top: 10%;
+    
+        .browsersupport-icon {
+          transform: scale(2.5) !important;
+          position: relative;
+          margin: 0px 0px 0px 15px;
+        }
+      }
+    
+      .browsersupport-header-wrapper {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        position: absolute;
+        top: 35%;
+        #browsersupport-header-msg {
+          font-size: 30px !important;
+          font-weight: 300 !important;
+          color: $browser-support-light;
+        }
+        #browsersupport-sub-msg {
+          font-size: 36px !important;
+          font-weight: bold;
+          color: $browser-support-bold;
+          letter-spacing: 0.4px;
+          margin-top: 5px;
+        }
+      }
+    
+      .browsersupport-info {
+        font-size: 16px !important;
+        color: $browser-support-light;
+        position: absolute;
+        top: 52%;
+      }
+    
+      .browsersupport-icon {
+        width: 50px;
+      }
+    
+      #browsersupport-list {
+        width: 20% !important;
+        height: auto;
+        min-width: 20%;
+        text-align: center;
+        position: absolute;
+        top: 60%;
+        transform: scale(1);
+      }
+    
+      #browsersupport-browsername {
+        color: $browser-support-blue;
+        font-weight: 800;
+        margin-top: 10px;
+      }
+    
+      #browersupport-browserversion {
+        font-size: 12px;
+      }
+    
+      #browersupport-options {
+        position: absolute;
+        top: 76%;
+    
+        #browsersupport-separator {
+          width: 200px;
+          height: 0.5px;
+          background: black;
+          margin-top: 50px;
+          position: relative;
+          display: flex;
+          justify-content: center;
+          opacity: 0.7;
+          &::after {
+            position: absolute;
+            content: "OR";
+            top: -5px;
+            background: #fff;
+            padding: 0px 5px 0px 5px;
+            font-size: 15px;
+            color:#000;
+          }
+        }
+    
+        #browsersupport-dismiss {
+           
+          background-color: white;
+          color: $browser-support-bold;
+          cursor: pointer;
+          width: 200px;
+          height: 45px;
+          border-radius: 40px;
+          border: 2px solid $browser-support-bold;
+          font-size: 14px;
+          background: #fff;
+          position: absolute;
+          margin-top: 40px !important;
+          outline: none;
+          transition: 0.5s;
+          &:hover {
+            background: $syscoblue;
+            color: #fff;
+            border:none;
+            transition: 0.5s;
+          }
+        }
+      }
+  }
+
+
+
+}

@@ -114,6 +114,20 @@ export const INVALID_FILE_NAME = {
     errorMessage: 'file upload failed due to unsupported file name.'
 };
 
+// A browser is considered supported if it is mentioned in the list and equal or newer than the mentioned versions.
+export const SUPPORTED_WEB_BROWSERS = {
+        Chrome: 86,
+        Edge: 87,
+        Firefox: 84,
+        Safari: 12
+}
+
+export const UNSUPPORTED_WEB_BROWSER = {
+    headerMessage: `your browser isn't supported`,
+    // infoMessage: 'Please use one of the following browsers to get the best experience using Cloud PCI'
+    infoMessage: 'Please use one of these options to improve your experience'
+}
+
 // job status
 export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
 export const JOB_ERROR_STATUS = 'ERROR';

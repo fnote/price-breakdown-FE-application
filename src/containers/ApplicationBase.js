@@ -10,6 +10,10 @@ import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
 import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION} from '../constants/Constants';
 
+import UnsupportedBrowser from "../components/UnsupportedBrowser";
+import BrowserDetector from "../utils/BrowserDetector";
+import {SUPPORTED_WEB_BROWSERS} from '../constants/Constants'
+
 const Application = () => (
     <Switch>
         <Route path={NAVIGATION_PATH_FILE_UPLOAD}>
@@ -24,6 +28,7 @@ const Application = () => (
 export default function ApplicationBase() {
     const userDetailContext = useContext(UserDetailContext);
     const appLoaderContext = useContext(AppLoaderContext);
+    const browserDetector = new BrowserDetector(SUPPORTED_WEB_BROWSERS);
 
     // prevent dragover and drop events in the window
     window.addEventListener('dragover', (e) => {
@@ -50,7 +55,15 @@ export default function ApplicationBase() {
     });
 
     let component;
-    if (appLoaderContext.appLoadingState) {
+
+    
+    
+    if(!browserDetector.isSupported()){
+        component =  <UnsupportedBrowser
+            browserName={browserDetector.getBrowserName()}
+            browserVersion={browserDetector.getBrowserVersion()}
+            fullBrowserVersion={browserDetector.getFullBrowserVersion()}/>;
+    } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
         component = auth.isUserLoginCompleted() ? Application() : <Login/>;
