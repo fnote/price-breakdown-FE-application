@@ -58,7 +58,7 @@ export default function ApplicationBase() {
 
     
     
-    if(!browserDetector.isSupported()){
+    if(browserDetector.isSupported()){
         component =  <UnsupportedBrowser
             browserName={browserDetector.getBrowserName()}
             browserVersion={browserDetector.getBrowserVersion()}

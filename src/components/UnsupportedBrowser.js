@@ -24,7 +24,7 @@ function _renderBrowserList(supportedBrowserList) {
   return (
     <>
       <List
-        grid={{ gutter: 5, column: 4 }}
+        grid={{ gutter: 20, column: 4 }}
         dataSource={supportedBrowserList}
         renderItem={(item) => (
           <List.Item style={{ justifyContent: "center", alignItems: "center" }}>
