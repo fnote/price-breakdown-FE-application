@@ -4,7 +4,7 @@
  * Created: 10/26/20. Mon 2020 15:00
  */
 
-import {FILE_NAME_DISPLAY_LENGTH} from '../constants/Constants';
+import {FILE_NAME_DISPLAY_LENGTH, ONLINE_STATUS_CHECK_URL} from '../constants/Constants';
 
 const BUSINESS_UNIT_NAME_SPLITTER = 'Sysco ';
 
@@ -52,3 +52,16 @@ export const formatNumberInput = (value) => {
 
 export const getDisplayFileName = (fileName) => ((fileName.length > FILE_NAME_DISPLAY_LENGTH)
     ? `${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...` : fileName);
+
+/**
+ * Internet connectivity check
+ */
+export const checkOnlineStatus = async () => {
+    try {
+        //Here additionally time parameter is sent to avoid getting cached responses.
+        const online = await fetch(ONLINE_STATUS_CHECK_URL+Date.now());
+        return online.status >= 200 && online.status < 300; // either true or false
+    } catch (err) {
+        return false; // definitely offline
+    }
+};

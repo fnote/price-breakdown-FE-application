@@ -3,6 +3,7 @@ import { List } from "antd";
 import {
   SUPPORTED_WEB_BROWSERS,
   UNSUPPORTED_WEB_BROWSER,
+  UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
 } from "../constants/Constants";
 
 import { ReactComponent as BrowserIcon } from "../styles/images/sad_browser.svg";
@@ -32,11 +33,7 @@ function _renderBrowserList(supportedBrowserList) {
               <img className="browsersupport-icon" src={chrome} alt="chrome" />
             )}
             {item.split("/")[0] === "Firefox" && (
-              <img
-                className="browsersupport-icon"
-                src={firefox}
-                alt="firefox"
-              />
+              <img className="browsersupport-icon" src={firefox} alt="firefox" />
             )}
             {item.split("/")[0] === "Edge" && (
               <img className="browsersupport-icon" src={edge} alt="edge" />
@@ -53,6 +50,11 @@ function _renderBrowserList(supportedBrowserList) {
       />
     </>
   );
+}
+
+function continueButtonClicked() {
+    localStorage.setItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE, true);
+    window.location.assign('/');
 }
 
 function UnsupportedBrowser(props) {
@@ -91,7 +93,7 @@ function UnsupportedBrowser(props) {
         <div id="browsersupport-list">{supportedBrowsers}</div>
         <div id="browersupport-options">
           <div id="browsersupport-separator" />
-          <button id="browsersupport-dismiss">continue anyway</button>
+          <button id="browsersupport-dismiss" onClick={() => continueButtonClicked()}>continue anyway</button>
         </div>
       </div>
     </div>

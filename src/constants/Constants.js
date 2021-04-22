@@ -116,7 +116,7 @@ export const INVALID_FILE_NAME = {
 
 // A browser is considered supported if it is mentioned in the list and equal or newer than the mentioned versions.
 export const SUPPORTED_WEB_BROWSERS = {
-        Chrome: 86,
+        Chrome: 90,
         Edge: 87,
         Firefox: 84,
         Safari: 12
@@ -127,6 +127,9 @@ export const UNSUPPORTED_WEB_BROWSER = {
     // infoMessage: 'Please use one of the following browsers to get the best experience using Cloud PCI'
     infoMessage: 'Please use one of these options to improve your experience'
 }
+
+export const UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE = 'unsupported_browser_screen_continue'
+export const UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE = 'unsupported_browser_alert_continue'
 
 // job status
 export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
@@ -166,3 +169,8 @@ export const JOB_LIST_REFRESH_INTERVAL = 40000;
 // batch job time - timezone regex
 export const TIMEZONE_ABBREVIATION_REGEX = /[A-Z](?!.*[(])/;
 export const TIMEZONE_REGEX = /\(([^)]+)\)/;
+
+//Network online status detection
+export const ONLINE_STATUS_CHECK_INTERVAL = 10000;
+export const ONLINE_STATUS_CHECK_URL = '/favicon.ico?d=';
+export const ONLINE_STATUS_OFFLINE_MSG = 'Please check the Internet connection!';

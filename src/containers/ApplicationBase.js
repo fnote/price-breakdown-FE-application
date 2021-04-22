@@ -8,7 +8,11 @@ import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
-import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION} from '../constants/Constants';
+import {
+    NAVIGATION_PATH_FILE_UPLOAD,
+    NAVIGATION_PATH_PRICE_VALIDATION,
+    UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
+} from '../constants/Constants';
 
 import UnsupportedBrowser from "../components/UnsupportedBrowser";
 import BrowserDetector from "../utils/BrowserDetector";
@@ -56,10 +60,8 @@ export default function ApplicationBase() {
 
     let component;
 
-    
-    
-    if(browserDetector.isSupported()){
-        component =  <UnsupportedBrowser
+    if (!browserDetector.isSupported() && !localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE)) {
+        component = <UnsupportedBrowser
             browserName={browserDetector.getBrowserName()}
             browserVersion={browserDetector.getBrowserVersion()}
             fullBrowserVersion={browserDetector.getFullBrowserVersion()}/>;
