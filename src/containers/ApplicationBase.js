@@ -13,6 +13,7 @@ import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION} from '../
 import UnsupportedBrowser from "../components/UnsupportedBrowser";
 import BrowserDetector from "../utils/BrowserDetector";
 import {SUPPORTED_WEB_BROWSERS} from '../constants/Constants'
+import ToperrorBar from "../components/ToperrorBar"
 
 const Application = () => (
     <Switch>
@@ -58,7 +59,7 @@ export default function ApplicationBase() {
 
     
     
-    if(browserDetector.isSupported()){
+    if(!browserDetector.isSupported()){
         component =  <UnsupportedBrowser
             browserName={browserDetector.getBrowserName()}
             browserVersion={browserDetector.getBrowserVersion()}
@@ -72,6 +73,7 @@ export default function ApplicationBase() {
     return (
 
         <React.Fragment>
+            <ToperrorBar msg="Your browser isn't supported"  buttonText="Learn More" close/>
             {component}
         </React.Fragment>
     );
