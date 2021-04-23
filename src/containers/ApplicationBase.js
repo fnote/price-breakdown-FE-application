@@ -14,10 +14,11 @@ import {
     UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
 } from '../constants/Constants';
 
-import UnsupportedBrowser from "../components/UnsupportedBrowser";
+import UnsupportedBrowserScreen from "../components/UnsupportedBrowserScreen";
 import BrowserDetector from "../utils/BrowserDetector";
 import {SUPPORTED_WEB_BROWSERS} from '../constants/Constants'
-import ToperrorBar from "../components/ToperrorBar"
+import NetworkDetector from "../components/NetworkDetector";
+import UnsupportedBrowserTopAlert from "../components/UnsupportedBrowserTopAlert";
 
 const Application = () => (
     <Switch>
@@ -62,7 +63,7 @@ export default function ApplicationBase() {
     let component;
 
     if (!browserDetector.isSupported() && !localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE)) {
-        component = <UnsupportedBrowser
+        component = <UnsupportedBrowserScreen
             browserName={browserDetector.getBrowserName()}
             browserVersion={browserDetector.getBrowserVersion()}
             fullBrowserVersion={browserDetector.getFullBrowserVersion()}/>;
@@ -73,9 +74,9 @@ export default function ApplicationBase() {
     }
 
     return (
-
         <React.Fragment>
-            <ToperrorBar msg="Your browser isn't supported"  buttonText="Learn More" close/>
+            <UnsupportedBrowserTopAlert/>
+            <NetworkDetector/>
             {component}
         </React.Fragment>
     );

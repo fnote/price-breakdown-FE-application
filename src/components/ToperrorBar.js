@@ -2,7 +2,7 @@ import React from 'react'
 import {ReactComponent as Browsericon} from '../styles/images/sad_browser.svg'
 import { CloseCircleOutlined } from '@ant-design/icons';
 
-export default function ToperrorBar({msg , close , buttonText}) {
+export default function ToperrorBar({msg , close , buttonText, closeButtonClicked}) {
     return (
         <div id="error-bar-base">
             <div id="error-bar-left">
@@ -20,7 +20,7 @@ export default function ToperrorBar({msg , close , buttonText}) {
                 }
             </div>
             { close && 
-            <div id="error-bar-right">
+            <div id="error-bar-right" onClick={() => closeButtonClicked()}>
             <CloseCircleOutlined style={{ fontSize: '20px', color: '#525252' }} />
            </div>
 }

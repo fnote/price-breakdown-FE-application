@@ -57,7 +57,7 @@ function continueButtonClicked() {
     window.location.assign('/');
 }
 
-function UnsupportedBrowser(props) {
+function UnsupportedBrowserScreen(props) {
   // const { browserName, browserVersion, fullBrowserVersion } = props;
   // const subtitle =
   //   "Your " +
@@ -100,4 +100,4 @@ function UnsupportedBrowser(props) {
   );
 }
 
-export default UnsupportedBrowser;
+export default UnsupportedBrowserScreen;

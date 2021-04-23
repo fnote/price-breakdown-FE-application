@@ -1,7 +1,10 @@
-import React, {useEffect} from 'react';
-import {Alert} from "antd";
+import React, {useEffect, useState} from 'react';
 import {checkOnlineStatus} from '../utils/CommonUtils'
-import {ONLINE_STATUS_CHECK_INTERVAL, ONLINE_STATUS_OFFLINE_MSG} from '../constants/Constants'
+import {
+    ONLINE_STATUS_CHECK_INTERVAL,
+    ONLINE_STATUS_OFFLINE_MSG
+} from '../constants/Constants'
+import ToperrorBar from "./ToperrorBar";
 
 /**
  * Detects the online state and shows the appropriate messages.
@@ -9,7 +12,7 @@ import {ONLINE_STATUS_CHECK_INTERVAL, ONLINE_STATUS_OFFLINE_MSG} from '../consta
  * @constructor
  */
 function NetworkDetector(){
-    const [isDisconnected, setIsDisconnected] = React.useState(!checkOnlineStatus());
+    const [isDisconnected, setIsDisconnected] = useState(!checkOnlineStatus());
 
     const updateOnlineStatus = async () => {
         const result = await checkOnlineStatus();
@@ -32,15 +35,16 @@ function NetworkDetector(){
         }
     });
 
+    const closeButtonClicked = () => {
+        setIsDisconnected(false);
+    }
+
     return (
-        <div>
-            { isDisconnected && (<Alert
-                style={{width: "100%"}}
-                message={ONLINE_STATUS_OFFLINE_MSG}
-                type="error"
-                closable
-            />)}
-        </div>
+        <React.Fragment>
+            { isDisconnected && (
+                <ToperrorBar msg={ONLINE_STATUS_OFFLINE_MSG} close closeButtonClicked={closeButtonClicked}/>
+            )}
+        </React.Fragment>
     );
 }
 
