@@ -1,7 +1,7 @@
 #error-bar-base {
   background: $top-error-bar-background;
   width: 100%;
-  height: 35px;
+  height: 2.7rem;
   z-index: 99;
   opacity:0.8;
   @include flexbox(0 0 auto, row, space-between, center);
@@ -10,12 +10,12 @@
   
     @include flexbox(0 0 auto, row, center, center);
     height:100%;
-    margin-left:40px;
+    margin-left:3.07rem;
     width:auto;
 
     .error-bar-icon{
-        width:35px;
-        height:35px;
+        width: 2.7rem;
+        height: 2.7rem;
     }
     #error-bar-msg{
         margin-left:20px;
@@ -25,11 +25,11 @@
     }
     #error-bar-moreinfo{
         #error-bar-button{
-            margin-left:20px;
+            margin-left:1.54rem;
             background:none;
-            border:1.5px solid #525252;
-            padding:5px 8px;
-            border-radius:40px;
+            border:0.115rem solid #525252;
+            padding:0.384rem 0.615rem;
+            border-radius:3.076rem;
             color:#525252;
             font-weight: 400;
             @include flexbox(0 0 auto, row, center, center);
@@ -48,7 +48,7 @@
    
     @include flexbox(0 0 auto, row, center, center);
     height:100%;
-    margin-right:40px;
+    margin-right:3.076rem;
     cursor: pointer;
   }
 
