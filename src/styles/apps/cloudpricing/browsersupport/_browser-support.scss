@@ -15,7 +15,7 @@
     position: absolute;
     left: 0.555rem;
     top: 0.65rem;
-    width:24rem;
+    width: 24rem;
     height: 7.7rem;
     background: url("../../../images/browser_support_logo.svg") no-repeat;
     background-size: contain;
@@ -87,7 +87,7 @@
 
   #browersupport-options {
     #browsersupport-separator {
-      width:100%;
+      width: 100%;
       height: 0.03rem;
       background: black;
       margin-top: 0.85rem;
@@ -135,7 +135,6 @@
         right: 2rem;
         position: absolute;
       }
-     
     }
   }
 
@@ -143,7 +142,7 @@
 
   @include breakpoint(xs) {
     #browsersupport-logo {
-      left:   0.555rem;
+      left: 0.555rem;
       width: 7.8rem;
       height: 7.8rem;
       background: url("../../../images/logo_short.svg") no-repeat;
@@ -180,7 +179,7 @@
       font-size: 3rem;
       font-weight: bold;
       color: $browser-support-bold;
-      letter-spacing: 0.030rem;
+      letter-spacing: 0.03rem;
       margin-top: 0.4rem;
     }
   }
@@ -198,14 +197,14 @@
     #browsersupport-list {
       width: 85%;
     }
-    .browsersupport-header-wrapper{
-      margin-top:3.1rem;
+    .browsersupport-header-wrapper {
+      margin-top: 3.1rem;
     }
-    #browersupport-options{
+    #browersupport-options {
       margin-top: 1.53rem;
     }
-    .browsersupport-info{
-      margin-top:6.2rem;
+    .browsersupport-info {
+      margin-top: 6.2rem;
     }
   }
 }
