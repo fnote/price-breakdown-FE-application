@@ -67,13 +67,13 @@ export default function ApplicationBase() {
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = auth.isUserLoginCompleted() ? Application() : <Login/>;
+        component = !auth.isUserLoginCompleted() ? Application() : <Login/>;
     }
 
     return (
 
         <React.Fragment>
-            <ToperrorBar msg="Your browser isn't supported"  buttonText="Learn More" close/>
+            {/* <ToperrorBar msg="Your browser isn't supported"  buttonText="Learn More" close/> */}
             {component}
         </React.Fragment>
     );
