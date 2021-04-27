@@ -35,14 +35,14 @@ function NetworkConnectivityAlert(){
         }
     });
 
-    const closeButtonClicked = () => {
+    const onClickCloseHandler = () => {
         setIsDisconnected(false);
     }
 
     return (
         <React.Fragment>
             { isDisconnected && (
-                <ToperrorBar msg={ONLINE_STATUS_OFFLINE_MSG} close closeButtonClicked={closeButtonClicked}/>
+                <ToperrorBar msg={ONLINE_STATUS_OFFLINE_MSG} close onClickClose={onClickCloseHandler}/>
             )}
         </React.Fragment>
     );

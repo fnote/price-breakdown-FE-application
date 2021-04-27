@@ -15,7 +15,7 @@ function UnsupportedBrowserTopAlert(){
     let [unsupportedBrowserAlertContinue, setUnsupportedBrowserAlertContinue] = useState(sessionStorage.getItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE));
 
 
-    const closeButtonClicked = () => {
+    const onClickCloseHandler = () => {
         sessionStorage.setItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE, true);
         setUnsupportedBrowserAlertContinue(true);
     }
@@ -23,7 +23,7 @@ function UnsupportedBrowserTopAlert(){
     return (
         <React.Fragment>
             { (!unsupportedBrowserAlertContinue && sessionStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE)) && (
-                <ToperrorBar msg={UNSUPPORTED_WEB_BROWSER.headerMessageLine2} close closeButtonClicked={closeButtonClicked}/>
+                <ToperrorBar msg={UNSUPPORTED_WEB_BROWSER.headerMessageLine2} close onClickClose={onClickCloseHandler}/>
             )}
         </React.Fragment>
     );

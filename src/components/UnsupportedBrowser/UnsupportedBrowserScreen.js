@@ -52,19 +52,12 @@ function _renderBrowserList(supportedBrowserList) {
   );
 }
 
-function continueButtonClicked() {
+function continueButtonOnClickHandler() {
     sessionStorage.setItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE, true);
     window.location.assign('/');
 }
 
 function UnsupportedBrowserScreen(props) {
-  // const { browserName, browserVersion, fullBrowserVersion } = props;
-  // const subtitle =
-  //   "Your " +
-  //   browserName +
-  //   " web browser (version " +
-  //   fullBrowserVersion +
-  //   ") is not compatible with Cloud PCI.";
 
   const supportedBrowsers = _renderBrowserList(
     _getSupportedBrowserList(SUPPORTED_WEB_BROWSERS)
@@ -91,7 +84,7 @@ function UnsupportedBrowserScreen(props) {
         <div id="browsersupport-list">{supportedBrowsers}</div>
         <div id="browersupport-options">
           <div id="browsersupport-separator" />
-          <button id="browsersupport-dismiss" onClick={continueButtonClicked}>continue anyway</button>
+          <button id="browsersupport-dismiss" onClick={continueButtonOnClickHandler}>continue anyway</button>
         </div>
       </div>
     </div>
