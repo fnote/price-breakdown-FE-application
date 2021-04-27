@@ -4,13 +4,13 @@ import {
   SUPPORTED_WEB_BROWSERS,
   UNSUPPORTED_WEB_BROWSER,
   UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
-} from "../constants/Constants";
+} from "../../constants/Constants";
 
-import { ReactComponent as BrowserIcon } from "../styles/images/sad_browser.svg";
-import chrome from "../styles/images/chrome.svg";
-import firefox from "../styles/images/firefox.svg";
-import edge from "../styles/images/edge.svg";
-import safari from "../styles/images/safari.svg";
+import { ReactComponent as BrowserIcon } from "../../styles/images/sad_browser.svg";
+import chrome from "../../styles/images/chrome.svg";
+import firefox from "../../styles/images/firefox.svg";
+import edge from "../../styles/images/edge.svg";
+import safari from "../../styles/images/safari.svg";
 
 function _getSupportedBrowserList(browsers) {
   const supportedBrowserList = [];
@@ -53,7 +53,7 @@ function _renderBrowserList(supportedBrowserList) {
 }
 
 function continueButtonClicked() {
-    localStorage.setItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE, true);
+    sessionStorage.setItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE, true);
     window.location.assign('/');
 }
 
@@ -80,10 +80,8 @@ function UnsupportedBrowserScreen(props) {
         </div>
 
         <div className="browsersupport-header-wrapper">
-          <span id="browsersupport-header-msg">We're sorry , but</span>
-          <span id="browsersupport-sub-msg">
-            {UNSUPPORTED_WEB_BROWSER.headerMessage}
-          </span>
+          <span id="browsersupport-header-msg">{UNSUPPORTED_WEB_BROWSER.headerMessageLine1}</span>
+          <span id="browsersupport-sub-msg">{UNSUPPORTED_WEB_BROWSER.headerMessageLine2}</span>
         </div>
 
         <div className="browsersupport-info">
@@ -93,7 +91,7 @@ function UnsupportedBrowserScreen(props) {
         <div id="browsersupport-list">{supportedBrowsers}</div>
         <div id="browersupport-options">
           <div id="browsersupport-separator" />
-          <button id="browsersupport-dismiss" onClick={() => continueButtonClicked()}>continue anyway</button>
+          <button id="browsersupport-dismiss" onClick={continueButtonClicked}>continue anyway</button>
         </div>
       </div>
     </div>

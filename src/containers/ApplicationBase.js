@@ -14,11 +14,11 @@ import {
     UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
 } from '../constants/Constants';
 
-import UnsupportedBrowserScreen from "../components/UnsupportedBrowserScreen";
+import UnsupportedBrowserScreen from "../components/UnsupportedBrowser/UnsupportedBrowserScreen";
 import BrowserDetector from "../utils/BrowserDetector";
 import {SUPPORTED_WEB_BROWSERS} from '../constants/Constants'
-import NetworkDetector from "../components/NetworkDetector";
-import UnsupportedBrowserTopAlert from "../components/UnsupportedBrowserTopAlert";
+import NetworkConnectivityAlert from "../components/NetworkConnectivityAlert/NetworkConnectivityAlert";
+import UnsupportedBrowserTopAlert from "../components/UnsupportedBrowser/UnsupportedBrowserTopAlert";
 
 const Application = () => (
     <Switch>
@@ -62,7 +62,7 @@ export default function ApplicationBase() {
 
     let component;
 
-    if (!browserDetector.isSupported() && !localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE)) {
+    if (!browserDetector.isSupported() && !sessionStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE)) {
         component = <UnsupportedBrowserScreen
             browserName={browserDetector.getBrowserName()}
             browserVersion={browserDetector.getBrowserVersion()}
@@ -76,7 +76,7 @@ export default function ApplicationBase() {
     return (
         <React.Fragment>
             <UnsupportedBrowserTopAlert/>
-            <NetworkDetector/>
+            <NetworkConnectivityAlert/>
             {component}
         </React.Fragment>
     );

@@ -123,8 +123,8 @@ export const SUPPORTED_WEB_BROWSERS = {
 }
 
 export const UNSUPPORTED_WEB_BROWSER = {
-    headerMessage: `your browser isn't supported`,
-    // infoMessage: 'Please use one of the following browsers to get the best experience using Cloud PCI'
+    headerMessageLine1: `We're sorry , but`,
+    headerMessageLine2: `Your browser isn't supported`,
     infoMessage: 'Please use one of these options to improve your experience'
 }
 

@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {checkOnlineStatus} from '../utils/CommonUtils'
+import {checkOnlineStatus} from '../../utils/CommonUtils'
 import {
     ONLINE_STATUS_CHECK_INTERVAL,
     ONLINE_STATUS_OFFLINE_MSG
-} from '../constants/Constants'
-import ToperrorBar from "./ToperrorBar";
+} from '../../constants/Constants'
+import ToperrorBar from "../ToperrorBar";
 
 /**
  * Detects the online state and shows the appropriate messages.
  * @returns {JSX.Element}
  * @constructor
  */
-function NetworkDetector(){
+function NetworkConnectivityAlert(){
     const [isDisconnected, setIsDisconnected] = useState(!checkOnlineStatus());
 
     const updateOnlineStatus = async () => {
@@ -48,4 +48,4 @@ function NetworkDetector(){
     );
 }
 
-export default NetworkDetector;
+export default NetworkConnectivityAlert;
