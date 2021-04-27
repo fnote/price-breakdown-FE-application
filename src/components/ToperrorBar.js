@@ -17,7 +17,7 @@ export default function ToperrorBar({ msg, close, buttonText, closeButtonClicked
         )}
       </div>
       {close && (
-        <div id="error-bar-right" onClick={closeButtonClicked}>
+        <div id="error-bar-right" onClick={ closeButtonClicked }>
           <CloseCircleOutlined style={{ fontSize: "1.6rem", color: "#525252" }} />
         </div>
       )}
