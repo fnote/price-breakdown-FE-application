@@ -117,7 +117,7 @@ export const INVALID_FILE_NAME = {
 
 // A browser is considered supported if it is mentioned in the list and equal or newer than the mentioned versions.
 export const SUPPORTED_WEB_BROWSERS = {
-        Chrome: 90,
+        Chrome: 86,
         Edge: 87,
         Firefox: 84,
         Safari: 12
