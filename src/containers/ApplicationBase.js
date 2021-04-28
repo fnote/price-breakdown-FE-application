@@ -11,12 +11,12 @@ import {AppLoaderContext} from '../components/AppLoderContext';
 import {
     NAVIGATION_PATH_FILE_UPLOAD,
     NAVIGATION_PATH_PRICE_VALIDATION,
-    UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
+    UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE,
+    SUPPORTED_WEB_BROWSERS
 } from '../constants/Constants';
 
 import UnsupportedBrowserScreen from "../components/UnsupportedBrowser/UnsupportedBrowserScreen";
 import BrowserDetector from "../utils/BrowserDetector";
-import {SUPPORTED_WEB_BROWSERS} from '../constants/Constants'
 import NetworkConnectivityAlert from "../components/NetworkConnectivityAlert/NetworkConnectivityAlert";
 import UnsupportedBrowserTopAlert from "../components/UnsupportedBrowser/UnsupportedBrowserTopAlert";
 
