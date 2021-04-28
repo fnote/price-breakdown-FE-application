@@ -7,7 +7,9 @@ import {
 import ToperrorBar from "../ToperrorBar";
 
 /**
- * Detects the alert closed local state and shows the if necessary
+ * Detects the alert closed session state and shows the if necessary.
+ * This alert may be shown on any screen except for the UnsupportedBrowserScreen.
+ *
  * @returns {JSX.Element}
  * @constructor
  */

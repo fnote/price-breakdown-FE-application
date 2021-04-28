@@ -3,7 +3,7 @@ import {CloseOutlined, LogoutOutlined, MenuOutlined, QuestionCircleOutlined } fr
 import Navigation from './Navigation';
 import {auth} from '../../utils/security/Auth';
 import {UserDetailContext} from '../../containers/UserDetailContext';
-import {HELP_PAGE_URL} from '../../constants/Constants';
+import {HELP_PAGE_URL, CLOUD_PCI_FRONTEND_VERSION} from '../../constants/Constants';
 
 class AccountWidget extends React.Component {
   state = {
@@ -73,7 +73,7 @@ class AccountWidget extends React.Component {
             <Navigation />
             <ul>
               <li className="appversion">
-              Version 1.0.00
+                Version {CLOUD_PCI_FRONTEND_VERSION}
               </li>
               <li className="hide">
                 <div className="menulabel">Profile</div>

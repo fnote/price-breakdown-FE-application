@@ -54,7 +54,9 @@ export const getDisplayFileName = (fileName) => ((fileName.length > FILE_NAME_DI
     ? `${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...` : fileName);
 
 /**
- * Internet connectivity check
+ * Internet connectivity check. This function send a request to fetch the
+ * favicon of the same application. The timestamp is appended to the request to
+ * avoid receiving a cached response.
  */
 export const checkOnlineStatus = async () => {
     try {

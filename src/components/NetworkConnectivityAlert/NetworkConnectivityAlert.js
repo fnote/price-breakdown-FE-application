@@ -7,7 +7,10 @@ import {
 import ToperrorBar from "../ToperrorBar";
 
 /**
- * Detects the online state and shows the appropriate messages.
+ * Detects the online state and shows the alert upon connection issues.
+ * Component listens to the online state changes as well as do checks on
+ * predefined regular time intervals (ONLINE_STATUS_CHECK_INTERVAL)
+ *
  * @returns {JSX.Element}
  * @constructor
  */

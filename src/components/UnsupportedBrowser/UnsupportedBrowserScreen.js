@@ -21,6 +21,13 @@ function _getSupportedBrowserList(browsers) {
   return supportedBrowserList;
 }
 
+/**
+ * This screen will be shown when the user has an unsupported browser.
+ *
+ * @param supportedBrowserList
+ * @returns {JSX.Element}
+ * @private
+ */
 function _renderBrowserList(supportedBrowserList) {
   return (
     <>
