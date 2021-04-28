@@ -2,7 +2,7 @@ import React from "react";
 import { ReactComponent as Browsericon } from "../styles/images/sad_browser.svg";
 import { CloseCircleOutlined } from "@ant-design/icons";
 
-export default function ToperrorBar({ msg, close, buttonText, onClickClose }) {
+export default function TopErrorBar({ msg, close, buttonText, onClickClose }) {
   return (
     <div id="error-bar-base">
       <div id="error-bar-left">

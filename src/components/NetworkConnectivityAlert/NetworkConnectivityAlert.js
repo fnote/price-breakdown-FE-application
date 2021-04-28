@@ -4,7 +4,7 @@ import {
     ONLINE_STATUS_CHECK_INTERVAL,
     ONLINE_STATUS_OFFLINE_MSG
 } from '../../constants/Constants'
-import ToperrorBar from "../ToperrorBar";
+import TopErrorBar from "../TopErrorBar";
 
 /**
  * Detects the online state and shows the alert upon connection issues.
@@ -45,7 +45,7 @@ function NetworkConnectivityAlert(){
     return (
         <React.Fragment>
             { isDisconnected && (
-                <ToperrorBar msg={ONLINE_STATUS_OFFLINE_MSG} close onClickClose={onClickCloseHandler}/>
+                <TopErrorBar msg={ONLINE_STATUS_OFFLINE_MSG} close onClickClose={onClickCloseHandler}/>
             )}
         </React.Fragment>
     );

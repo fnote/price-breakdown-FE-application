@@ -4,7 +4,7 @@ import {
     UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE,
     UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
 } from '../../constants/Constants'
-import ToperrorBar from "../ToperrorBar";
+import TopErrorBar from "../TopErrorBar";
 
 /**
  * Detects the alert closed session state and shows the if necessary.
@@ -25,7 +25,7 @@ function UnsupportedBrowserTopAlert(){
     return (
         <React.Fragment>
             { (!unsupportedBrowserAlertContinue && sessionStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE)) && (
-                <ToperrorBar msg={UNSUPPORTED_WEB_BROWSER.headerMessageLine2} close onClickClose={onClickCloseHandler}/>
+                <TopErrorBar msg={UNSUPPORTED_WEB_BROWSER.headerMessageLine2} close onClickClose={onClickCloseHandler}/>
             )}
         </React.Fragment>
     );

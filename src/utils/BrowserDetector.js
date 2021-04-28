@@ -70,49 +70,11 @@ export default class BrowserDetector {
     }
 
     /**
-     * Checks if the current browser is from an Android device.
-     *
-     * @returns {Boolean}
+     * Sets the current browser information. Used for unit testing.
+     * @param browser
      */
-    get isAndroid() {
-        return /Android/i.test(navigator.userAgent);
+    setBrowser(browser){
+        this.browser = browser;
     }
 
-    /**
-     * Checks if the current browser is from a BlackBerry device.
-     *
-     * @returns {Boolean}
-     */
-    get isBlackBerry() {
-        return /BlackBerry/i.test(navigator.userAgent);
-    }
-
-    /**
-     * Checks if the current browser is from a Windows Mobile device.
-     *
-     * @returns {Boolean}
-     */
-    get isWindowsMobile() {
-        return /IEMobile/i.test(navigator.userAgent);
-    }
-
-    /**
-     * Checks if the current browser is Mobile Safari.
-     *
-     * @returns {Boolean}
-     */
-    get isIOS() {
-        return /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    }
-
-    /**
-     * Checks if the current browser is a mobile browser.
-     *
-     * @returns {Boolean}
-     */
-    get isMobile() {
-        return (
-            this.isAndroid || this.isBlackBerry || this.isWindowsMobile || this.isIOS
-        );
-    }
 }

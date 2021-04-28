@@ -174,4 +174,4 @@ export const TIMEZONE_REGEX = /\(([^)]+)\)/;
 //Network online status detection
 export const ONLINE_STATUS_CHECK_INTERVAL = 10000;
 export const ONLINE_STATUS_CHECK_URL = '/favicon.ico?d=';
-export const ONLINE_STATUS_OFFLINE_MSG = 'Please check the Internet connection!';
+export const ONLINE_STATUS_OFFLINE_MSG = 'Please check the internet connection!';
