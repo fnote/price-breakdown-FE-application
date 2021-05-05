@@ -4,7 +4,12 @@
  * Created: 10/26/20. Mon 2020 15:00
  */
 
-import {FILE_NAME_DISPLAY_LENGTH, ONLINE_STATUS_CHECK_URL} from '../constants/Constants';
+import {
+    FILE_NAME_DISPLAY_LENGTH,
+    ONLINE_STATUS_CHECK_URL,
+    UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE,
+    UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
+} from '../constants/Constants';
 
 const BUSINESS_UNIT_NAME_SPLITTER = 'Sysco ';
 
@@ -67,3 +72,44 @@ export const checkOnlineStatus = async () => {
         return false; // definitely offline
     }
 };
+
+/**
+ * Class to manipulate Unsupported browser alert states.
+ */
+class UnsupportedBrowserState {
+    constructor() {
+    }
+
+    setUnsupportedBrowserScreenContinue = () => {
+        localStorage.setItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE, 'true');
+    }
+
+    isSetUnsupportedBrowserScreenContinue = () => {
+        return localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE) !== null;
+    }
+
+    clearUnsupportedBrowserScreenContinue = () => {
+        localStorage.removeItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE);
+    }
+
+    setUnsupportedBrowserAlertContinue = () => {
+        localStorage.setItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE, 'true');
+    }
+
+    isSetUnsupportedBrowserAlertContinue = () => {
+        return localStorage.getItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE) !== null;
+    }
+
+    clearUnsupportedBrowserAlertContinue = () => {
+        localStorage.removeItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE);
+    }
+
+    /**
+     * clear all the states
+     */
+    clearUnsupportedBrowserStates = () => {
+        this.clearUnsupportedBrowserAlertContinue();
+        this.clearUnsupportedBrowserScreenContinue();
+    }
+}
+export const unsupportedBrowserState = new UnsupportedBrowserState();

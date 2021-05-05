@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {
-    UNSUPPORTED_WEB_BROWSER,
-    UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE,
-    UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
+    UNSUPPORTED_WEB_BROWSER
 } from '../../constants/Constants'
+import {unsupportedBrowserState} from "../../utils/CommonUtils"
 import TopErrorBar from "../TopErrorBar";
 
 /**
@@ -14,17 +13,17 @@ import TopErrorBar from "../TopErrorBar";
  * @constructor
  */
 function UnsupportedBrowserTopAlert(){
-    let [unsupportedBrowserAlertContinue, setUnsupportedBrowserAlertContinue] = useState(sessionStorage.getItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE));
+    let [unsupportedBrowserAlertContinue, setUnsupportedBrowserAlertContinue] = useState(unsupportedBrowserState.isSetUnsupportedBrowserAlertContinue());
 
 
     const onClickCloseHandler = () => {
-        sessionStorage.setItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE, true);
+        unsupportedBrowserState.setUnsupportedBrowserAlertContinue();
         setUnsupportedBrowserAlertContinue(true);
     }
 
     return (
         <React.Fragment>
-            { (!unsupportedBrowserAlertContinue && sessionStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE)) && (
+            { (!unsupportedBrowserAlertContinue && unsupportedBrowserState.isSetUnsupportedBrowserScreenContinue()) && (
                 <TopErrorBar msg={UNSUPPORTED_WEB_BROWSER.headerMessageLine2} close onClickClose={onClickCloseHandler}/>
             )}
         </React.Fragment>

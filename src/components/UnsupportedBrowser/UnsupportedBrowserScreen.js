@@ -2,9 +2,10 @@ import React from "react";
 import { List } from "antd";
 import {
   SUPPORTED_WEB_BROWSERS,
-  UNSUPPORTED_WEB_BROWSER,
-  UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
+  UNSUPPORTED_WEB_BROWSER
 } from "../../constants/Constants";
+
+import {unsupportedBrowserState} from "../../utils/CommonUtils"
 
 import { ReactComponent as BrowserIcon } from "../../styles/images/sad_browser.svg";
 import chrome from "../../styles/images/chrome.svg";
@@ -60,7 +61,7 @@ function _renderBrowserList(supportedBrowserList) {
 }
 
 function continueButtonOnClickHandler() {
-    sessionStorage.setItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE, true);
+    unsupportedBrowserState.setUnsupportedBrowserScreenContinue();
     window.location.assign('/');
 }
 
