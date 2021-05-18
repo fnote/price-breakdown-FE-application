@@ -56,10 +56,10 @@ export default function ApplicationBase() {
         component = auth.isUserLoginCompleted() ? Application() : <Login/>;
     }
 
-  return (
+    return (
 
-    <React.Fragment>
-        {component}
-    </React.Fragment>
-  );
+        <React.Fragment>
+            {component}
+        </React.Fragment>
+    );
 }
