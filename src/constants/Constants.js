@@ -119,7 +119,7 @@ export const INVALID_FILE_NAME = {
 export const SUPPORTED_WEB_BROWSERS = {
         Chrome: 86,
         Edge: 87,
-        Firefox: 84,
+        //Firefox: 84, // Not approved to be used at Sysco
         Safari: 12
 }
 
