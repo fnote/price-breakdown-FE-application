@@ -4,6 +4,7 @@ import Navigation from './Navigation';
 import {auth} from '../../utils/security/Auth';
 import {UserDetailContext} from '../../containers/UserDetailContext';
 import {HELP_PAGE_URL, CLOUD_PCI_FRONTEND_VERSION} from '../../constants/Constants';
+import {unsupportedBrowserState} from '../../utils/CommonUtils'
 
 class AccountWidget extends React.Component {
   state = {
@@ -11,6 +12,7 @@ class AccountWidget extends React.Component {
   };
 
   logoutButtonClicked = () => {
+    unsupportedBrowserState.clearUnsupportedBrowserStates();
     auth.logOutRedirection();
   };
 
