@@ -45,7 +45,7 @@ function NetworkConnectivityAlert(){
     return (
         <React.Fragment>
             { isDisconnected && (
-                <TopErrorBar msg={ONLINE_STATUS_OFFLINE_MSG} close={false} onClickClose={onClickCloseHandler}/>
+                <TopErrorBar msg={ONLINE_STATUS_OFFLINE_MSG} close={false} onClickClose={onClickCloseHandler} classNames={"status-red"}/>
             )}
         </React.Fragment>
     );

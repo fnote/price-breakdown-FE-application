@@ -75,8 +75,8 @@ export default function ApplicationBase() {
 
     return (
         <React.Fragment>
-            <UnsupportedBrowserTopAlert/>
             <NetworkConnectivityAlert/>
+            <UnsupportedBrowserTopAlert/>
             {component}
         </React.Fragment>
     );
