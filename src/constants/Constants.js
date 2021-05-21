@@ -117,10 +117,10 @@ export const INVALID_FILE_NAME = {
 
 // A browser is considered supported if it is mentioned in the list and equal or newer than the mentioned versions.
 export const SUPPORTED_WEB_BROWSERS = {
-        Chrome: 86,
-        Edge: 87,
+        Chrome: 100,
+        Edge: 100,
         //Firefox: 84, // Not approved to be used at Sysco
-        Safari: 12
+        Safari: 14
 }
 
 export const UNSUPPORTED_WEB_BROWSER = {
