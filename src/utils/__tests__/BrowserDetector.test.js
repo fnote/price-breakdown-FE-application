@@ -15,6 +15,9 @@ describe('BrowserDetector', () => {
             fullBrowserVersion: '90.0.1'
         });
         expect(browserDetector.isSupported()).toEqual(true);
+        expect(browserDetector.getBrowserName()).toEqual('Chrome');
+        expect(browserDetector.getBrowserVersion()).toEqual(90);
+        expect(browserDetector.getFullBrowserVersion()).toEqual('90.0.1');
     });
 
     test('isSupported should return false when unsupported browser', () => {
