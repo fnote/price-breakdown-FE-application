@@ -24,7 +24,7 @@ const UserDetailContextProvider = (props) => {
     const [userDetails, setUserDetails] = useState(initialState);
     const fetchUserDetailsHandler = (newStateData) => {
         const newUserDetails = newStateData.userDetails;
-        if (newUserDetails && newUserDetails.authorizedBunitList) {
+        if (newUserDetails && newUserDetails.authorizedPricingTransformationEnabledBunitList) {
             const modifiedUserDetails = { ...newUserDetails, businessUnitMap: createBusinessUnitMap(newUserDetails)};
             const modifiedState = { ...newStateData, userDetails: modifiedUserDetails };
             setUserDetails(modifiedState);

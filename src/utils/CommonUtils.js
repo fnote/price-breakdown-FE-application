@@ -4,6 +4,8 @@
  * Created: 10/26/20. Mon 2020 15:00
  */
 
+import {FILE_NAME_DISPLAY_LENGTH} from '../constants/Constants';
+
 const BUSINESS_UNIT_NAME_SPLITTER = 'Sysco ';
 
 const extractNames = (businessUnitName = '', splitter = BUSINESS_UNIT_NAME_SPLITTER) => {
@@ -19,9 +21,9 @@ const mapBusinessUnit = ({ bunit_id, bunit_name }) => ({
     ...extractNames(bunit_name)
 });
 
-export const createBusinessUnitMap = ({ authorizedBunitList }) => {
-    if (authorizedBunitList && authorizedBunitList instanceof Array) {
-        const mappedBusinessUnits = authorizedBunitList.map(({ bunit_id, bunit_name }) => [
+export const createBusinessUnitMap = ({ authorizedPricingTransformationEnabledBunitList }) => {
+    if (authorizedPricingTransformationEnabledBunitList && authorizedPricingTransformationEnabledBunitList instanceof Array) {
+        const mappedBusinessUnits = authorizedPricingTransformationEnabledBunitList.map(({ bunit_id, bunit_name }) => [
             bunit_id, mapBusinessUnit({ bunit_id, bunit_name })
         ]);
         return new Map(mappedBusinessUnits);
@@ -47,3 +49,6 @@ export const formatNumberInput = (value) => {
     }
     return value;
 };
+
+export const getDisplayFileName = (fileName) => ((fileName.length > FILE_NAME_DISPLAY_LENGTH)
+    ? `${fileName.substr(0, FILE_NAME_DISPLAY_LENGTH - 1)}...` : fileName);

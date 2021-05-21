@@ -68,6 +68,7 @@
                     font-size: 2rem;
                     border: none;
                 }
+
                 &.selected,
                 &:hover {
                     border-radius: 0;
@@ -77,5 +78,9 @@
                 }
             }
         }
+    }
+
+    .need-help-header-link {
+        padding: 1rem;
     }
 }

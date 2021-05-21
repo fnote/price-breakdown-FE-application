@@ -1,6 +1,7 @@
 .user-widget {
-  @include flexbox(0 0 auto, row, center, flex-end);
+  @include flexbox(0 0 auto, row, center, center);
   padding: 0 0.5rem;
+  position: relative;
 
   .user {
     @include flexbox(0 0 auto, column, center, flex-end);

@@ -1,12 +1,15 @@
+// help page url
+export const HELP_PAGE_URL = 'https://syscobt.atlassian.net/wiki/spaces/PRCP/pages/2298184412/Getting+started+with+the+Cloud+Price+Calculation+Inquiry+PCI';
+
 export const LABEL_CUSTOMER_NET_PRICE = 'CUSTOMER NET PRICE';
 
 export const VALUE_KEY_CUSTOMER_REF_PRICE = 'customerReferencePrice';
 export const META_DATA_PRICE_BAR = [
-    { label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1' },
-    { label: 'CUSTOMER REFERENCE PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2' },
-    { label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3' },
-    { label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right' },
-    { label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false }
+    {label: 'LOCAL SEGMENT REFERENCE PRICE', valueKey: 'grossPrice', styleClass: 'group1'},
+    {label: 'CUSTOMER REFERENCE PRICE', valueKey: 'customerReferencePrice', styleClass: 'group2'},
+    {label: 'DISCOUNT PRICE', valueKey: 'customerPrequalifiedPrice', styleClass: 'group3'},
+    {label: 'ORDER UNIT PRICE', valueKey: 'unitPrice', styleClass: 'group4 pad-right'},
+    {label: LABEL_CUSTOMER_NET_PRICE, valueKey: 'netPrice', styleClass: 'main-price', insertDivider: false}
 ];
 
 export const PRICE_UNIT_CASE = 'case';
@@ -40,8 +43,9 @@ export const DISCOUNT_TYPE_PREQUALIFIED = 'PREQUALIFIED';
 export const DISCOUNT_CASE_VOLUME = 'CASE_VOLUME_DISCOUNT';
 
 export const DISCOUNT_NAMES_MAP = new Map([
-    ['STRATEGIC_DISCOUNT', 'Strategic Discount'],
+    ['STRATEGIC_RPA_DISCOUNT', 'Strategic RPA Discount'],
     ['NEW_CUSTOMER_DISCOUNT', 'New Customer Discount'],
+    ['NEW_ATTRIBUTE_GROUP_DISCOUNT', 'New Attribute Group Discount'],
     ['CASE_SPLIT_UPCHARGE', 'Split Up Charge'],
 ]);
 
@@ -74,7 +78,6 @@ export const PERCENTAGE_FRACTION_DIGITS = 2;
 export const AVAILABLE_PRICE_ZONES = [1, 2, 3, 4, 5];
 export const NOT_APPLICABLE_LABEL = 'N/A';
 
-export const PRICE_SOURCE_PA_ID = 97;
 export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
 
 export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';
@@ -82,5 +85,78 @@ export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';
 export const ORDER_PRICE_TYPE_HAND = 'H';
 export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
 
+export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
+export const NAVIGATION_PATH_FILE_UPLOAD = '/file-upload';
+
+export const FILE_UPLOADING_DONE = 'done';
+export const FILE_UPLOADING_ERROR = 'error';
+export const FILE_APPEAR_NOTIFICATION = 'Submitted file(s) will appear in the file list shortly!';
+
+export const FILENAME_DELIMITER = '.';
+
+// this has the supported file extensions and its mimetypes respectively
+export const SUPPORTED_FILE_EXTENSIONS_TYPES = [{extension: '', type: ''},
+    {extension: '.txt', type: 'text/plain'},
+    {extension: '.csv', type: 'text/csv'},
+    {extension: '.xls', type: 'application/vnd.ms-excel'},
+    {extension: '.xlsx', type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'},
+    {extension: '.doc', type: 'application/msword'},
+    {extension: '.docx', type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'}];
+
+export const UNSUPPORTED_SPECIAL_CHARACTERS = /[ &$@=;:+,?\\{^}%`\]'">[~<#|]/;
+
+export const INVALID_FILE_TYPE = {
+    errorType: 'Invalid ContentType',
+    errorMessage: 'file upload failed due to unsupported file type.'
+};
+export const INVALID_FILE_NAME = {
+    errorType: 'Invalid FileName',
+    errorMessage: 'file upload failed due to unsupported file name.'
+};
+
+// job status
+export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
+export const JOB_ERROR_STATUS = 'ERROR';
+export const JOB_COMPLETE_STATUS = 'COMPLETED';
+export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
+export const JOB_DELETING_STATUS = 'DELETING';
+export const JOB_DOWNLOADING_STATUS = 'DOWNLOADING';
+export const JOB_MINOR_ERROR_DOWNLOADING_STATUS = 'DOWNLOADING_MINOR_ERROR';
+
+// display job status
+export const JOB_INPROGRESS_STATUS_DISPLAY = 'Processing';
+export const JOB_ERROR_STATUS_DISPLAY = 'Failed';
+export const JOB_COMPLETE_STATUS_DISPLAY = 'Completed';
+export const JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY = 'Partially Completed';
+export const MINOR_ERROR_STATUS_DISPLAY = 'Minor Error';
+export const JOB_DELETING_STATUS_DISPLAY = 'Deleting';
+export const JOB_DOWNLOADING_STATUS_DISPLAY = 'Downloading';
+export const JOB_MINOR_ERROR_DOWNLOADING_STATUS_DISPLAY = 'Downloading Minor Error';
+
+export const PCI_FILENAME_PREFIX = 'CPPCI-';
+
+export const MAX_DOWNLOAD_ALLOWED = 25;
+export const TIMEOUT_DURING_DOWNLOAD_CLICKS = 1000;
+export const FILE_NAME_DISPLAY_LENGTH = 30;
+
+export const TAG_NAME_A = 'a';
+
+export const EMPTY_STRING = '';
 export const PERCENTAGE_SIGN = '%';
 export const UNKNOWN_BASE_VALUE_NAME = 'UNKNOWN';
+
+// delete confirmation popup
+export const DELETE_TITLE = 'Are you sure to delete this?';
+export const DELETE_CONFIRM = 'Yes';
+export const DELETE_REJECT = 'No';
+
+// batch job list polling interval time
+export const JOB_LIST_REFRESH_INTERVAL = 40000;
+
+// batch job time - timezone regex
+export const TIMEZONE_ABBREVIATION_REGEX = /[A-Z](?!.*[(])/;
+export const TIMEZONE_REGEX = /\(([^)]+)\)/;
+
+//file type
+export const MINOR_ERROR_FILE = 'minor error file';
+export const COMPLETED_FILE = 'completed file';

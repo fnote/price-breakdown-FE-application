@@ -45,10 +45,18 @@
     padding: 0.5rem;
     // border-left: 1px grey dotted;
     border-radius: 0;
+
     &:active {
       background-color: $background;
       opacity: 0.9;
     }
+
+    &:hover {
+      color: $syscodarkblue;
+      opacity: 1.7;
+      transform: scale(1.2);
+    }
+
     i {
       margin-right: 0;
     }

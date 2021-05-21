@@ -63,9 +63,12 @@
         .ant-upload-list-item-info {
           @include flexbox(0 0 auto, row, flex-start, center);
           padding: 0;
+          width: 90%;
+        overflow: hidden;
           & > span {
             height: auto;
             display: flex;
+            text-overflow: ellipsis;
           }
           .anticon-loading .anticon,
           .ant-upload-text-icon .anticon {
@@ -79,7 +82,8 @@
           }
 
           .ant-upload-list-item-card-actions {
-            right: 0.5rem;
+            width: 10%;
+            text-align: center;
           }
         }
         @include breakpoint(xs) {
@@ -121,6 +125,14 @@
           margin-right: 0.5rem;
         }
       }
+      .upload-confirmation {
+        @include flexbox(0 0 auto, row, flex-start, flex-start);
+        color: $syscodarkgreen;
+        font-weight: 500;
+        font-size: 1.0rem;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+      }
       .search-list {
         width: auto;
         border-radius: 1.5rem;
@@ -138,6 +150,11 @@
         &:active {
           opacity: 0.4;
         }
+        &:hover {
+          color: $syscodarkblue;
+          opacity: 1.7;
+          transform: scale(1.03);
+        }
         @include breakpoint(xs) {
           padding: 0;
           margin-left: auto;
@@ -154,10 +171,16 @@
       .submittime {
         color: $textstandard;
         min-width: 9rem;
+        max-width: 14rem;
+        font-size: 0.9rem;
       }
       .filename {
         color: darken($syscoblue, 5%);
         min-width: 10rem;
+        max-width: 25rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
       .download-file {
         color: $syscogreen;
@@ -187,6 +210,7 @@
         @include breakpoint(xs) {
           @include flexbox(1 1 auto, column, flex-end, flex-end);
           width: 100%;
+          max-width: 30rem;
         }
         .file-process-status {
           color: $syscoyellow;
@@ -200,7 +224,9 @@
             color: $syscogreen;
           }
           &.error {
-            @include flexbox(0 0 auto, row, flex-end, center);
+            @include flexbox(1 1 auto, row, flex-end, center);
+            flex-wrap: wrap;
+            white-space: pre-wrap;
             color: $syscored;
             @include breakpoint(xs) {
               @include flexbox(0 0 auto, column, flex-end, flex-end);
@@ -208,14 +234,36 @@
                 width: 100%;
               }
             }
+          }
+          &.processing {
+            color: $lightblue;
+          }
+          &.warn {
+            @include flexbox(1 1 auto, row, flex-end, center);
+            flex-wrap: wrap;
+            white-space: pre-wrap;
+            color: $syscoorange;
+            @include breakpoint(xs) {
+              @include flexbox(0 0 auto, column, flex-end, flex-end);
+              .divider {
+                width: 100%;
+              }
+            }
+
+            .minor-error {
+              color: $lightorange;
+            }
+
             .divider {
-              border-top: 1px dashed $syscored;
-              width: 2rem;
+              border-top: 1px dashed $syscoorange;
+              width: 1rem;
               margin: 0 0.5rem;
             }
+
             .download-error-file {
-              color: $syscored;
+              color: $syscoorange;
               font-size: 1rem;
+
               .icon {
                 font-size: 1.2rem;
                 margin-right: 0.4rem;

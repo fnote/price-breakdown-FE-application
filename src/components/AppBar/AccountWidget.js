@@ -1,12 +1,9 @@
 import React from 'react';
-import {
-  MenuOutlined,
-  CloseOutlined,
-  LogoutOutlined,
-} from '@ant-design/icons';
+import {CloseOutlined, LogoutOutlined, MenuOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import Navigation from './Navigation';
 import {auth} from '../../utils/security/Auth';
-import { UserDetailContext } from '../../containers/UserDetailContext';
+import {UserDetailContext} from '../../containers/UserDetailContext';
+import {HELP_PAGE_URL} from '../../constants/Constants';
 
 class AccountWidget extends React.Component {
   state = {
@@ -23,7 +20,7 @@ class AccountWidget extends React.Component {
   };
 
   changeLanguage = (lng) => {
-    const { i18n } = this.props;
+    const {i18n} = this.props;
     i18n.changeLanguage(lng);
   };
 
@@ -31,32 +28,39 @@ class AccountWidget extends React.Component {
     window.location.reload();
   };
 
+  openInNewTab(url) {
+    const win = window.open(url, '_blank');
+    if (win) {
+      win.focus();
+    }
+  }
+
   render() {
-    const { visible } = this.state;
+    const {visible} = this.state;
     const userDetailsObj = this.context.userDetailsData.userDetails;
     const displayName = Object.keys(userDetailsObj).length !== 0 ? `${userDetailsObj.firstName} ${userDetailsObj.lastName}` : 'N/A';
     return (
-      <div className={visible ? 'account-widget open' : 'account-widget'}>
-        <div
-          id="user-widget"
-          className={visible ? 'user-widget show' : 'user-widget'}>
-          <div className="user">
-            <div className="name">
+        <div className={visible ? 'account-widget open' : 'account-widget'}>
+          <div
+              id="user-widget"
+              className={visible ? 'user-widget show' : 'user-widget'}>
+            <div className="user">
+              <div className="name">
                 {displayName}
-              <div className="welcome">Signed In</div>
+                <div className="welcome">Signed In</div>
+              </div>
+            </div>
+            <div
+                id="user-pic"
+                className="user-pic hover-brighten"
+                role="button"
+                tabIndex="0"
+                onKeyPress={this.toggleMenu}
+                onClick={this.toggleMenu}>
+              <div className="pic"/>
+              <span className="menuicon fi flaticon-next "/>
             </div>
           </div>
-          <div
-            id="user-pic"
-            className="user-pic hover-brighten"
-            role="button"
-            tabIndex="0"
-            onKeyPress={this.toggleMenu}
-            onClick={this.toggleMenu}>
-            <div className="pic" />
-            <span className="menuicon fi flaticon-next " />
-          </div>
-        </div>
 
         {visible && (
           <div
@@ -96,10 +100,14 @@ class AccountWidget extends React.Component {
               </li>
               <li className="hide">
                 <div className="menulabel">Manage Users</div>
-                <span className="icon fi flaticon-user" />
+                <span className="icon fi flaticon-user"/>
+              </li>
+              <li onClick={() => this.openInNewTab(HELP_PAGE_URL)} className="">
+                <QuestionCircleOutlined className="icon"/>
+                <div className="menulabel">Help &amp; Training</div>
               </li>
               <li onClick={() => this.logoutButtonClicked()}>
-                <LogoutOutlined className="icon" />
+                <LogoutOutlined className="icon"/>
                 <div className="menulabel">Logout</div>
               </li>
             </ul>

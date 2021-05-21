@@ -1,6 +1,6 @@
 {
   "name": "cloud-pci-frontend",
-  "version": "0.1.0",
+  "version": "1.6.0",
   "private": true,
   "dependencies": {
     "@ant-design/icons": "4.2.2",
@@ -8,6 +8,7 @@
     "@testing-library/react": "9.5.0",
     "@testing-library/user-event": "7.2.1",
     "antd": "4.6.4",
+    "axios": "0.21.1",
     "classnames": "2.2.6",
     "jest-qcenter-integrator": "1.0.0",
     "moment": "2.29.1",
@@ -18,7 +19,8 @@
     "react-dropzone": "4.2.12",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
-    "xlsx": "0.16.2"
+    "xlsx": "0.16.2",
+    "lodash": "4.17.20"
   },
   "scripts": {
     "start": "REACT_APP_ENV=local react-scripts start",
@@ -28,7 +30,10 @@
     "build:exe": "REACT_APP_ENV=exe npm run build",
     "build:prod": "REACT_APP_ENV=prod npm run build",
     "test": "jest --config ./jest.config.js --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "eslint": "eslint 'src/**/*.js'",
+    "eslint-test": "eslint 'src/**/*.test.js'",
+    "eslint-fix": "eslint 'src/**/*.js' --fix"
   },
   "eslintConfig": {
     "extends": "react-app"

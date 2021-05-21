@@ -1,4 +1,4 @@
-import { formatBusinessUnit, createBusinessUnitMap, formatNumberInput } from '../CommonUtils';
+import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName} from '../CommonUtils';
 
 const businessUnits = new Map(
     [
@@ -19,7 +19,7 @@ describe('formatBusinessUnit', () => {
 });
 
 const userDetails = {
-    authorizedBunitList: [
+    authorizedPricingTransformationEnabledBunitList: [
         {
           'bunit_id': '011',
           'bunit_name': 'Sysco Louisville',
@@ -46,6 +46,29 @@ describe('createBusinessUnitMap', () => {
         const businessUnit = businessUnitMap.get('038');
         expect(businessUnit.name).toEqual('Indianapolis');
         expect(businessUnit.shortName).toEqual('Indianapolis');
+    });
+});
+
+describe('createBusinessUnitMap returns empty Map if authorizedPricingTransformationEnabledBunitList is null', () => {
+    const userDetailsNull = createBusinessUnitMap({
+        authorizedPricingTransformationEnabledBunitList: null
+    });
+
+    const businessUnitMap = createBusinessUnitMap(userDetailsNull);
+
+    test('should return empty Map', () => {
+        expect(businessUnitMap.size).toEqual(0);
+    });
+});
+
+describe('createBusinessUnitMap returns empty Map if string authorizedPricingTransformationEnabledBunitList is passed', () => {
+    const userDetailsInvalid = createBusinessUnitMap({
+        authorizedPricingTransformationEnabledBunitList: ''
+    });
+    const businessUnitMap = createBusinessUnitMap(userDetailsInvalid);
+
+    test('should return empty Map', () => {
+        expect(businessUnitMap.size).toEqual(0);
     });
 });
 
@@ -84,5 +107,19 @@ describe('formatNumberInput', () => {
 
     test('Should not return an error when having decimal places only ', () => {
         expect(formatNumberInput('10.')).toEqual('10.');
+    });
+
+    test('Should return null when passed a null ', () => {
+        expect(formatNumberInput(null)).toEqual(null);
+    });
+});
+
+describe('getDisplayFileName', () => {
+    test('Should return formatted fileName when above length', () => {
+        expect(getDisplayFileName('ABCDEFGHIJKLMNOPQRST_001_902839_20200202_C.txt')).toEqual('ABCDEFGHIJKLMNOPQRST_001_9028...');
+    });
+
+    test('Should return a same file name when below length', () => {
+        expect(getDisplayFileName('ABC_001_902839_20200202_C.txt')).toEqual('ABC_001_902839_20200202_C.txt');
     });
 });
