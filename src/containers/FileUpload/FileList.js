@@ -199,10 +199,11 @@ class FileList extends React.Component {
                     }
                     return response.json();
                 }).catch(() => {
-                const errorMsg = 'Failed to download the files.';
-                this.openNotificationWithIcon('error',
-                    `${errorMsg} :${getDisplayFileName(fileNamesArrayWithPciPrefix)}`, 'Failure');
-                this.changeJobsToOriginalState(jobIds);
+                    const fileNamesWithOutPrefix = removeFileNamePrefixFromList(fileNamesArrayWithPciPrefix);
+                    const errorMsg = 'Failed to download the files.';
+                    this.openNotificationWithIcon('error',
+                        `${errorMsg} :${getDisplayFileName(fileNamesWithOutPrefix)}`, 'Failure');
+                    this.changeJobsToOriginalState(jobIds);
             })
                 .then((response) => {
                     const fileNameUrlArray = response.data;
