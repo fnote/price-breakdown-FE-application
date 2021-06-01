@@ -72,6 +72,9 @@ class AccountWidget extends React.Component {
             onClick={this.toggleMenu}>
             <Navigation />
             <ul>
+              <li className="appversion">
+              Version 1.0.00
+              </li>
               <li className="hide">
                 <div className="menulabel">Profile</div>
                 <span className="icon fi flaticon-account" />

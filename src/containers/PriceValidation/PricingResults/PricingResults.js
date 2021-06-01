@@ -15,6 +15,7 @@ function PricingResults() {
 
     if (response) {
         const { correlationId } = priceValidationContext.response;
+    
         return (
             <div className="pricing-results">
                 <div className="section-wrapper">
