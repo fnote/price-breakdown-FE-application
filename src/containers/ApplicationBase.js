@@ -4,11 +4,12 @@ import {notification} from 'antd';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
+import HistoryInquiry from './HistoryInquiry/HistoryInquiry';
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
-import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION} from '../constants/Constants';
+import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION , NAVIGATION_PATH_HISTORY_INQUIRY} from '../constants/Constants';
 
 import UnsupportedBrowser from "../components/UnsupportedBrowser";
 import BrowserDetector from "../utils/BrowserDetector";
@@ -17,11 +18,14 @@ import ToperrorBar from "../components/ToperrorBar"
 
 const Application = () => (
     <Switch>
-        <Route path={NAVIGATION_PATH_FILE_UPLOAD}>
+        <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
             <FileUpload/>
         </Route>
-        <Route path={NAVIGATION_PATH_PRICE_VALIDATION}>
+        <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
             <PriceValidation/>
+        </Route>
+        <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
+            <HistoryInquiry/>
         </Route>
     </Switch>
 );
@@ -67,7 +71,7 @@ export default function ApplicationBase() {
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = !auth.isUserLoginCompleted() ? Application() : <Login/>;
+        component = auth.isUserLoginCompleted() ? Application() : <Login/>;
     }
 
     return (

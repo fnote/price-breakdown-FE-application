@@ -11,6 +11,7 @@
 @import "fileupload/_fileupload";
 @import "browsersupport/_browser-support";
 @import "toperrorbar/_toperrorbar";
+@import "historyinquiry/_historyinquiry";
 
 .cloudpricing-wrapper {
   @include flexbox(1 1 auto, column, flex-start, flex-start);
