@@ -1,4 +1,4 @@
-export const CLOUD_PCI_FRONTEND_VERSION = '1.4.0';
+export const CLOUD_PCI_FRONTEND_VERSION = '1.6.0';
 // help page url
 export const HELP_PAGE_URL = 'https://syscobt.atlassian.net/wiki/spaces/PRCP/pages/2298184412/Getting+started+with+the+Cloud+Price+Calculation+Inquiry+PCI';
 
