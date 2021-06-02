@@ -2,7 +2,8 @@ import React from "react";
 import { List } from "antd";
 import {
   SUPPORTED_WEB_BROWSERS,
-  UNSUPPORTED_WEB_BROWSER
+  UNSUPPORTED_WEB_BROWSER,
+  UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR
 } from "../../constants/Constants";
 
 import {unsupportedBrowserState} from "../../utils/CommonUtils"
@@ -16,7 +17,7 @@ import safari from "../../styles/images/safari.svg";
 function _getSupportedBrowserList(browsers) {
   const supportedBrowserList = [];
   Object.entries(browsers).map(([key, value], i) => {
-    return supportedBrowserList.push(key + "/" + value);
+    return supportedBrowserList.push(key + UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR + value);
   });
 
   return supportedBrowserList;
@@ -36,22 +37,22 @@ function _renderBrowserList(supportedBrowserList) {
         grid={{ gutter: 20, column: supportedBrowserList.length }}
         dataSource={supportedBrowserList}
         renderItem={(item) => (
-          <List.Item style={{ justifyContent: "center", alignItems: "center" }}>
-            {item.split("/")[0] === "Chrome" && (
+          <List.Item id="browsersupport-list-item">
+            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === "Chrome" && (
               <img className="browsersupport-icon" src={chrome} alt="chrome" />
             )}
-            {item.split("/")[0] === "Firefox" && (
+            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === "Firefox" && (
               <img className="browsersupport-icon" src={firefox} alt="firefox" />
             )}
-            {item.split("/")[0] === "Edge" && (
+            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === "Edge" && (
               <img className="browsersupport-icon" src={edge} alt="edge" />
             )}
-            {item.split("/")[0] === "Safari" && (
+            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === "Safari" && (
               <img className="browsersupport-icon" src={safari} alt="safari" />
             )}
-            <div id="browsersupport-browsername">{item.split("/")[0]}</div>
+            <div id="browsersupport-browsername">{item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0]}</div>
             <div id="browersupport-browserversion">
-              Version {item.split("/")[1]} +
+              Version {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[1]} +
             </div>
           </List.Item>
         )}

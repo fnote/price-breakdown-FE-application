@@ -131,6 +131,7 @@ export const UNSUPPORTED_WEB_BROWSER = {
 
 export const UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE = 'unsupported_browser_screen_continue'
 export const UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE = 'unsupported_browser_alert_continue'
+export const UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR = '/'
 
 // job status
 export const JOB_INPROGRESS_STATUS = 'INPROGRESS';

@@ -18,7 +18,7 @@ export default function TopErrorBar({ msg, close, buttonText, onClickClose, clas
       </div>
       {close && (
         <div id="error-bar-right" onClick={ onClickClose }>
-          <CloseCircleOutlined style={{ fontSize: "1.6rem", color: "#525252" }} />
+          <CloseCircleOutlined id="close-circle" />
         </div>
       )}
     </div>
