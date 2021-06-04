@@ -90,7 +90,7 @@ const customUpload = (info) => {
             const extension = FILENAME_DELIMITER.concat(splitFilename[splitFilename.length - 1]);
 
             // create a blob from file calling mime type injection function
-            const blob = new Blob([file], {type: getMimeType(extension)});
+            const blob = new Blob([file], {type: getMimeType(extension.toLowerCase())});
             // re-convert to a file
             info.file = blobToFile(blob, file.name);
         }

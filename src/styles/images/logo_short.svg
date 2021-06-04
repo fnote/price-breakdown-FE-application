@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="292.743" height="273" viewBox="0 0 292.743 273">
+  <defs>
+    <filter id="Ellipse_69" x="98.743" y="131" width="115" height="114" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.329"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_698" data-name="Group 698" transform="translate(-1766.257 2180)">
+    <rect id="Rectangle_47" data-name="Rectangle 47" width="273" height="273" rx="25" transform="translate(1786 -2180)" fill="#fff"/>
+    <path id="cloud" d="M204.473,61.633a47.817,47.817,0,0,0-9.48.948,39.1,39.1,0,0,0-54.758-27.8A52.186,52.186,0,0,0,42.128,70.4a43.5,43.5,0,0,0,1.307,86.984H204.473a47.876,47.876,0,1,0,0-95.753Zm0,0" transform="translate(1797.138 -2122.611)" fill="#a3d4f7"/>
+    <path id="Path_541" data-name="Path 541" d="M0,0H152.362V178.025S47.32,208.869,9.229,164.363,0,0,0,0Z" transform="translate(1855.386 -2145.448) rotate(25)" fill="#fff" opacity="0.3"/>
+    <g transform="matrix(1, 0, 0, 1, 1766.26, -2180)" filter="url(#Ellipse_69)">
+      <ellipse id="Ellipse_69-2" data-name="Ellipse 69" cx="48.5" cy="48" rx="48.5" ry="48" transform="translate(107.74 140)" fill="#fff"/>
+    </g>
+    <path id="Path_539" data-name="Path 539" d="M27.132,70.308V61.656c9.744-1.68,14.952-7.98,14.952-15.456,0-7.644-3.948-12.264-14.028-15.792-7.14-2.6-10.08-4.452-10.08-7.14,0-2.352,1.764-4.788,7.224-4.788a26.14,26.14,0,0,1,12.1,2.94l2.52-9.492A29.678,29.678,0,0,0,27.552,9.156V1.764H19.32v7.98c-8.988,1.68-14.2,7.476-14.2,14.952,0,8.148,6.132,12.348,15.12,15.372,6.216,2.1,8.988,4.116,8.988,7.308,0,3.276-3.36,5.208-8.148,5.208a29.659,29.659,0,0,1-13.944-3.7L4.62,58.716A33.865,33.865,0,0,0,18.9,62.244v8.064Z" transform="translate(1900 -2028)" fill="#75828b"/>
+    <path id="Path_540" data-name="Path 540" d="M0,0H81.362V177S27.084,199.736,6.744,155.485,0,0,0,0Z" transform="translate(1850.737 -2148.774) rotate(25)" fill="#fff" opacity="0.3"/>
+  </g>
+</svg>

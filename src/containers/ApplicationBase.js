@@ -8,7 +8,17 @@ import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
-import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION} from '../constants/Constants';
+import {
+    NAVIGATION_PATH_FILE_UPLOAD,
+    NAVIGATION_PATH_PRICE_VALIDATION,
+    SUPPORTED_WEB_BROWSERS
+} from '../constants/Constants';
+
+import {unsupportedBrowserState} from "../utils/CommonUtils"
+import UnsupportedBrowserScreen from "../components/UnsupportedBrowser/UnsupportedBrowserScreen";
+import BrowserDetector from "../utils/BrowserDetector";
+import NetworkConnectivityAlert from "../components/NetworkConnectivityAlert/NetworkConnectivityAlert";
+import UnsupportedBrowserTopAlert from "../components/UnsupportedBrowser/UnsupportedBrowserTopAlert";
 
 const Application = () => (
     <Switch>
@@ -24,6 +34,7 @@ const Application = () => (
 export default function ApplicationBase() {
     const userDetailContext = useContext(UserDetailContext);
     const appLoaderContext = useContext(AppLoaderContext);
+    const browserDetector = new BrowserDetector(SUPPORTED_WEB_BROWSERS);
 
     // prevent dragover and drop events in the window
     window.addEventListener('dragover', (e) => {
@@ -50,16 +61,23 @@ export default function ApplicationBase() {
     });
 
     let component;
-    if (appLoaderContext.appLoadingState) {
+
+    if (!browserDetector.isSupported() && !unsupportedBrowserState.isSetUnsupportedBrowserScreenContinue()) {
+        component = <UnsupportedBrowserScreen
+            browserName={browserDetector.getBrowserName()}
+            browserVersion={browserDetector.getBrowserVersion()}
+            fullBrowserVersion={browserDetector.getFullBrowserVersion()}/>;
+    } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
         component = auth.isUserLoginCompleted() ? Application() : <Login/>;
     }
 
-  return (
-
-    <React.Fragment>
-        {component}
-    </React.Fragment>
-  );
+    return (
+        <React.Fragment>
+            <NetworkConnectivityAlert/>
+            <UnsupportedBrowserTopAlert/>
+            {component}
+        </React.Fragment>
+    );
 }

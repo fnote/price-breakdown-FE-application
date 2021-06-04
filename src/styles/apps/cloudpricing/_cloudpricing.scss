@@ -9,6 +9,8 @@
 @import "actionbuttons/_actionbuttons";
 @import "pricevalidation/_pricevalidation";
 @import "fileupload/_fileupload";
+@import "browsersupport/_browser-support";
+@import "toperrorbar/_toperrorbar";
 
 .cloudpricing-wrapper {
   @include flexbox(1 1 auto, column, flex-start, flex-start);

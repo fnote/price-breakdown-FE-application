@@ -1,6 +1,6 @@
 //Main Theme Colors
 $background: white;
-$textstandard: #62737E;
+$textstandard: #62737e;
 $textalternative: white;
 $textalternative-faded: rgba(255, 255, 255, 0.5);
 $faded-background-light: rgba(255, 255, 255, 0.6);
@@ -21,7 +21,7 @@ $syscoorange: #ff8402;
 $lightorange: #ff84028f;
 $darkorange: #e28a2a;
 
-$bluegrey: #507B8F;
+$bluegrey: #507b8f;
 $bluegrey2: #7792a5;
 
 $syscopurple: #8e44ad;
@@ -34,7 +34,21 @@ $gridhighlight: #fff7e4;
 $modalheader: #f6f9fc;
 
 //Price Group Colors
-$price-group-color-1: #A18976;
-$price-group-color-2: #507B8F;
-$price-group-color-3: #4B8BA8;
-$price-group-color-4: #4BA88C;
+$price-group-color-1: #a18976;
+$price-group-color-2: #507b8f;
+$price-group-color-3: #4b8ba8;
+$price-group-color-4: #4ba88c;
+
+//Browser Support colors
+$browser-support-cream: #fffbe7;
+$browser-support-light: #707070;
+$browser-support-bold: #000000;
+$browser-support-blue: #0373b4;
+
+//top error bar colors
+$top-error-bar-background:#FFD400;
+$top-error-bar-close-circle-outline:#525252;
+
+//App version text color
+
+$app-version-after: rgba(98, 115, 126,0.2);

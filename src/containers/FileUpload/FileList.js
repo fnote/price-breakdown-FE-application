@@ -14,6 +14,10 @@ import {
     JOB_COMPLETE_STATUS_DISPLAY,
     JOB_DELETING_STATUS,
     JOB_DELETING_STATUS_DISPLAY,
+    JOB_DOWNLOADING_STATUS,
+    JOB_DOWNLOADING_STATUS_DISPLAY,
+    JOB_MINOR_ERROR_DOWNLOADING_STATUS,
+    JOB_MINOR_ERROR_DOWNLOADING_STATUS_DISPLAY,
     JOB_ERROR_STATUS,
     JOB_ERROR_STATUS_DISPLAY,
     JOB_INPROGRESS_STATUS,
@@ -24,7 +28,9 @@ import {
     MINOR_ERROR_STATUS_DISPLAY,
     PCI_FILENAME_PREFIX,
     TAG_NAME_A,
-    TIMEOUT_DURING_DOWNLOAD_CLICKS
+    TIMEOUT_DURING_DOWNLOAD_CLICKS,
+    MINOR_ERROR_FILE,
+    COMPLETED_FILE
 } from '../../constants/Constants';
 import {
     generateBatchJobSearchUrl,
@@ -163,15 +169,29 @@ class FileList extends React.Component {
     }
 
     // ------ download file ------
-    downloadFiles = (fileNamesArray) => {
+    downloadFiles = (fileDownloadType, jobIds, fileNamesArray) => {
         if (fileNamesArray.length > 0) {
             const fileNamesArrayWithPciPrefix = [];
+            const jobList = {};
 
-            fileNamesArray.forEach((fileName) => {
+            fileNamesArray.forEach((fileName,i) => {
+                jobList[fileName] = jobIds[i];
                 const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
                 fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
             });
-
+            jobIds.forEach((jobId) => {
+                const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
+                if (item && item.jobDetail) {
+                    item.jobDetail.isProcessing = true;
+                    item.jobDetail.originalStatus = item.jobDetail.status;
+                    if (fileDownloadType === COMPLETED_FILE) {
+                        item.jobDetail.status = JOB_DOWNLOADING_STATUS;
+                    } else {
+                        item.jobDetail.status = JOB_MINOR_ERROR_DOWNLOADING_STATUS;
+                    }
+                    this.setState({item});
+                }
+            })
             generateSignedUrls(fileNamesArrayWithPciPrefix)
                 .then((response) => {
                     if (!response.ok) {
@@ -179,13 +199,15 @@ class FileList extends React.Component {
                     }
                     return response.json();
                 }).catch(() => {
-                const errorMsg = 'Failed to download the files.';
-                this.openNotificationWithIcon('error',
-                    `${errorMsg} :${getDisplayFileName(fileNamesArrayWithPciPrefix)}`, 'Failure');
+                    const fileNamesWithOutPrefix = removeFileNamePrefixFromList(fileNamesArrayWithPciPrefix);
+                    const errorMsg = 'Failed to download the files.';
+                    this.openNotificationWithIcon('error',
+                        `${errorMsg} :${getDisplayFileName(fileNamesWithOutPrefix)}`, 'Failure');
+                    this.changeJobsToOriginalState(jobIds);
             })
                 .then((response) => {
                     const fileNameUrlArray = response.data;
-                    Promise.all(this.downloadFromSignedUrl(fileNameUrlArray));
+                    Promise.all(this.downloadFromSignedUrl(fileNameUrlArray, jobList));
                 });
         }
     };
@@ -223,7 +245,7 @@ class FileList extends React.Component {
                         <div className="file-process-status warn">
                             <Button className="btn empty-btn download-error-file"
                                     onClick={() => {
-                                        this.downloadFiles([jobDetail.minorErrorFileName]);
+                                        this.downloadFiles(MINOR_ERROR_FILE,[jobDetail.jobId], [jobDetail.minorErrorFileName]);
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
@@ -250,6 +272,16 @@ class FileList extends React.Component {
                             {JOB_DELETING_STATUS_DISPLAY}
                         </div>
                     )}
+                    {jobDetail.status === JOB_DOWNLOADING_STATUS && (
+                        <div className="file-process-status processing">
+                            {JOB_DOWNLOADING_STATUS_DISPLAY}
+                        </div>
+                    )}
+                    {jobDetail.status === JOB_MINOR_ERROR_DOWNLOADING_STATUS && (
+                        <div className="file-process-status processing">
+                            {JOB_MINOR_ERROR_DOWNLOADING_STATUS_DISPLAY}
+                        </div>
+                    )}
                     {jobDetail.status !== JOB_INPROGRESS_STATUS && !jobDetail.isProcessing ? (
                         <>
                             <Popconfirm
@@ -267,7 +299,7 @@ class FileList extends React.Component {
                             </Popconfirm>
                             <Button className="btn icon-only empty-btn download-file"
                                     onClick={() => {
-                                        this.downloadFiles([jobDetail.fileName]);
+                                        this.downloadFiles(COMPLETED_FILE, [jobDetail.jobId], [jobDetail.fileName]);
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
@@ -284,7 +316,7 @@ class FileList extends React.Component {
         },
     ];
 
-    downloadFromSignedUrl = (fileNameUrlArray) => {
+    downloadFromSignedUrl = (fileNameUrlArray, jobList) => {
         let iteration = 0;
         return fileNameUrlArray.map(({fileName, readUrl}) => new Promise((resolve, reject) => {
             const regex = new RegExp(`^(${PCI_FILENAME_PREFIX})`);
@@ -311,6 +343,7 @@ class FileList extends React.Component {
                         document.body.removeChild(link);
                         this.openNotificationWithIcon('success',
                             `File downloaded successful. File name: ${getDisplayFileName(fileNameWithoutPciPrefix)}`, 'Success');
+                        this.changeJobToOriginalState(jobList[fileNameWithoutPciPrefix]);
                         resolve();
                     })
                     .catch((error) => {
@@ -320,11 +353,27 @@ class FileList extends React.Component {
                         }
                         this.openNotificationWithIcon('error',
                             `${errorMsg} : ${getDisplayFileName(fileNameWithoutPciPrefix)}`, 'Failure');
+                        this.changeJobToOriginalState(jobList[fileNameWithoutPciPrefix]);
                         reject();
                     });
             }, TIMEOUT_DURING_DOWNLOAD_CLICKS * iteration);
         }));
     };
+
+    changeJobsToOriginalState (jobIds) {
+        jobIds.forEach((jobId) => {
+            this.changeJobToOriginalState(jobId);
+        })
+    }
+
+    changeJobToOriginalState (jobId) {
+        const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
+        if (item && item.jobDetail) {
+            item.jobDetail.isProcessing = false;
+            item.jobDetail.status = item.jobDetail.originalStatus;
+            this.setState({item});
+        }
+    }
 
     // ------list all the batch jobs------
     listBatchJobs = (searchString = '') => {
@@ -360,12 +409,15 @@ class FileList extends React.Component {
 
         const selectedRowValues = this.state.selectedRowValues;
         const toDownloadFiles = [];
+        const toDownloadFileIds = [];
         const inprogressBatchJobs = [];
+
 
         selectedRowValues.forEach((row) => {
             if (row.jobDetail.status === JOB_INPROGRESS_STATUS) {
                 inprogressBatchJobs.push(row.jobDetail.fileName);
             } else {
+                toDownloadFileIds.push(row.jobDetail.jobId);
                 if (row.jobDetail.fileName) {
                     toDownloadFiles.push(row.jobDetail.fileName);
                 }
@@ -382,7 +434,7 @@ class FileList extends React.Component {
                 'Warning');
         }
 
-        this.downloadFiles(toDownloadFiles);
+        this.downloadFiles(COMPLETED_FILE, toDownloadFileIds, toDownloadFiles);
 
         this.setState({
             selectedRowKeys: [],

@@ -1,3 +1,4 @@
+export const CLOUD_PCI_FRONTEND_VERSION = '1.6.0';
 // help page url
 export const HELP_PAGE_URL = 'https://syscobt.atlassian.net/wiki/spaces/PRCP/pages/2298184412/Getting+started+with+the+Cloud+Price+Calculation+Inquiry+PCI';
 
@@ -45,6 +46,7 @@ export const DISCOUNT_CASE_VOLUME = 'CASE_VOLUME_DISCOUNT';
 export const DISCOUNT_NAMES_MAP = new Map([
     ['STRATEGIC_RPA_DISCOUNT', 'Strategic RPA Discount'],
     ['NEW_CUSTOMER_DISCOUNT', 'New Customer Discount'],
+    ['NEW_ATTRIBUTE_GROUP_DISCOUNT', 'New Attribute Group Discount'],
     ['CASE_SPLIT_UPCHARGE', 'Split Up Charge'],
 ]);
 
@@ -113,12 +115,32 @@ export const INVALID_FILE_NAME = {
     errorMessage: 'file upload failed due to unsupported file name.'
 };
 
+// A browser is considered supported if it is mentioned in the list and equal or newer than the mentioned versions.
+export const SUPPORTED_WEB_BROWSERS = {
+        Chrome: 89,
+        Edge: 90,
+        //Firefox: 84, // Not approved to be used at Sysco
+        //Safari: 14  // Deprecated for now
+}
+
+export const UNSUPPORTED_WEB_BROWSER = {
+    headerMessageLine1: `We're sorry , but`,
+    headerMessageLine2: `Your browser isn't supported`,
+    infoMessage: 'Please use one of these options to improve your experience'
+}
+
+export const UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE = 'unsupported_browser_screen_continue'
+export const UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE = 'unsupported_browser_alert_continue'
+export const UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR = '/'
+
 // job status
 export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
 export const JOB_ERROR_STATUS = 'ERROR';
 export const JOB_COMPLETE_STATUS = 'COMPLETED';
 export const JOB_PARTIALLY_COMPLETED_STATUS = 'PARTIALLY_COMPLETED';
 export const JOB_DELETING_STATUS = 'DELETING';
+export const JOB_DOWNLOADING_STATUS = 'DOWNLOADING';
+export const JOB_MINOR_ERROR_DOWNLOADING_STATUS = 'DOWNLOADING_MINOR_ERROR';
 
 // display job status
 export const JOB_INPROGRESS_STATUS_DISPLAY = 'Processing';
@@ -127,6 +149,8 @@ export const JOB_COMPLETE_STATUS_DISPLAY = 'Completed';
 export const JOB_PARTIALLY_COMPLETED_STATUS_DISPLAY = 'Partially Completed';
 export const MINOR_ERROR_STATUS_DISPLAY = 'Minor Error';
 export const JOB_DELETING_STATUS_DISPLAY = 'Deleting';
+export const JOB_DOWNLOADING_STATUS_DISPLAY = 'Downloading';
+export const JOB_MINOR_ERROR_DOWNLOADING_STATUS_DISPLAY = 'Downloading Minor Error';
 
 export const PCI_FILENAME_PREFIX = 'CPPCI-';
 
@@ -151,3 +175,12 @@ export const JOB_LIST_REFRESH_INTERVAL = 40000;
 // batch job time - timezone regex
 export const TIMEZONE_ABBREVIATION_REGEX = /[A-Z](?!.*[(])/;
 export const TIMEZONE_REGEX = /\(([^)]+)\)/;
+
+//file type
+export const MINOR_ERROR_FILE = 'minor error file';
+export const COMPLETED_FILE = 'completed file';
+
+//Network online status detection
+export const ONLINE_STATUS_CHECK_INTERVAL = 10000;
+export const ONLINE_STATUS_CHECK_URL = '/favicon.ico?d=';
+export const ONLINE_STATUS_OFFLINE_MSG = 'Please check the internet connection!';

@@ -14,7 +14,7 @@ module.exports = {
     [qCenterIntegrator,
       {
         release: process.env.QC_BUILD || 'CloudPCI_REG_BUILD',
-        project: 'Cloud PCI',
+        project: 'PRCP-CLOUD PCI',
         env: process.env.QC_ENV || 'EXE',
         module: 'CLOUD_PCI_UNIT',
         feature: 'UNIT_TESTS_FE',
