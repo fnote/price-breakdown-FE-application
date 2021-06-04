@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+        stroke: #707070;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-3 {
+        fill: #bddff8;
+      }
+
+      .cls-3, .cls-4 {
+        opacity: 0.1;
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient);
+      }
+    </style>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_37" data-name="Rectangle 37" class="cls-1" width="1920" height="1080"/>
+    </clipPath>
+    <linearGradient id="linear-gradient" x1="0.792" y1="0.001" x2="0.829" y2="1.036" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#bddff8"/>
+      <stop offset="1" stop-color="#6af7dc"/>
+    </linearGradient>
+  </defs>
+  <g id="Mask_Group_1" data-name="Mask Group 1" class="cls-2">
+    <g id="Group_630" data-name="Group 630">
+      <path id="Path_539" data-name="Path 539" class="cls-3" d="M-65.685-44.725S-73.962,138.1,103.992,191.241s835.973-29.761,1251.891,240.217,480.064,720.653,575.249,763.169S1949.755-117,1949.755-117Z" transform="translate(-16.362 -45.159)"/>
+      <path id="Path_540" data-name="Path 540" class="cls-4" d="M-65.686-47.212S-73.9,129.319,102.634,180.636,931.917,151.9,1344.506,412.589s526.56,704.113,620.983,745.167S1933.626-117,1933.626-117Z" transform="matrix(0.974, 0.225, -0.225, 0.974, 191.163, -292.819)"/>
+    </g>
+  </g>
+</svg>

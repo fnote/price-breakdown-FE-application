@@ -30,11 +30,13 @@
     font-size: 1rem;
     transition: ease-in-out 120ms background;
     position: relative;
+
     .sub-text {
       font-size: 0.9rem;
       font-weight: 300;
       margin-top: 0.1rem;
     }
+    
     .menulabel {
       @include flexbox(1 1 auto, column, flex-start, flex-start);
     }
@@ -69,6 +71,25 @@
       }
     }
   }
+
+  .appversion{
+    font-size: 0.85rem  !important;
+    &:hover{
+      background:none;
+      color: $textstandard;
+    }
+    &::after{
+      content: '';
+      position: absolute;
+      width:85%;
+      height:1px;
+      left:10px;
+      bottom:0;
+      background:$app-version-after;
+    }
+  }
+ 
+
   .submenu {
     position: absolute;
     left: -45%;
