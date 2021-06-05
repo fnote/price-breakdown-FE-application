@@ -2,7 +2,7 @@ import {
     browserName,
     browserVersion,
     fullBrowserVersion
-} from "react-device-detect";
+} from 'react-device-detect';
 
 /**
  * BrowserDetector
@@ -26,8 +26,8 @@ export default class BrowserDetector {
         this.browser = {
             name: browserName,
             version: browserVersion,
-            fullBrowserVersion: fullBrowserVersion
-        }
+            fullBrowserVersion
+        };
         this.supportedBrowsers = supportedBrowsers;
     }
 
@@ -35,7 +35,7 @@ export default class BrowserDetector {
      * The Browser name
      * @returns {string}
      */
-    getBrowserName(){
+    getBrowserName() {
         return this.browser.name;
     }
 
@@ -43,7 +43,7 @@ export default class BrowserDetector {
      * The Browser main version number
      * @returns {string}
      */
-    getBrowserVersion(){
+    getBrowserVersion() {
         return this.browser.version;
     }
 
@@ -51,7 +51,7 @@ export default class BrowserDetector {
      * The Full Browser bersion number
      * @returns {string}
      */
-    getFullBrowserVersion(){
+    getFullBrowserVersion() {
         return this.browser.fullBrowserVersion;
     }
 
@@ -73,8 +73,7 @@ export default class BrowserDetector {
      * Sets the current browser information. Used for unit testing.
      * @param browser
      */
-    setBrowser(browser){
+    setBrowser(browser) {
         this.browser = browser;
     }
-
 }

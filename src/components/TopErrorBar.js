@@ -1,6 +1,6 @@
-import React from "react";
-import { ReactComponent as Browsericon } from "../styles/images/sad_browser.svg";
-import { CloseCircleOutlined } from "@ant-design/icons";
+import React from 'react';
+import { CloseCircleOutlined } from '@ant-design/icons';
+import { ReactComponent as Browsericon } from '../styles/images/sad_browser.svg';
 
 export default function TopErrorBar({ msg, close, buttonText, onClickClose, classNames }) {
   return (
@@ -11,7 +11,7 @@ export default function TopErrorBar({ msg, close, buttonText, onClickClose, clas
         {buttonText && (
           <div id="error-bar-moreinfo">
             <button id="error-bar-button">
-              {buttonText ? buttonText : "N/A"}
+              {buttonText || 'N/A'}
             </button>
           </div>
         )}
