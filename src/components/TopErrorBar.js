@@ -11,7 +11,7 @@ export default function TopErrorBar({ msg, close, buttonText, onClickClose, clas
         {buttonText && (
           <div id="error-bar-moreinfo">
             <button id="error-bar-button">
-              {buttonText || 'N/A'}
+              {buttonText}
             </button>
           </div>
         )}
