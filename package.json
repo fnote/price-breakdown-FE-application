@@ -26,6 +26,7 @@
   "scripts": {
     "start": "REACT_APP_ENV=local react-scripts start",
     "build": "react-scripts build",
+    "zip": "npm-build-zip --destination=./build",
     "build:dev": "REACT_APP_ENV=dev npm run build",
     "build:stg": "REACT_APP_ENV=stg npm run build",
     "build:exe": "REACT_APP_ENV=exe npm run build",
@@ -61,6 +62,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.21.5",
-    "eslint-plugin-react-hooks": "^4.0.0"
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "npm-build-zip": "^1.0.3"
   }
 }

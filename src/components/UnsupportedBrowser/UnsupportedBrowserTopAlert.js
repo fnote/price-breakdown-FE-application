@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {
     UNSUPPORTED_WEB_BROWSER
-} from '../../constants/Constants'
-import {unsupportedBrowserState} from "../../utils/CommonUtils"
-import TopErrorBar from "../TopErrorBar";
+} from '../../constants/Constants';
+import {unsupportedBrowserState} from '../../utils/CommonUtils';
+import TopErrorBar from '../TopErrorBar';
 
 /**
  * Detects the alert closed session state and shows the if necessary.
@@ -12,14 +12,13 @@ import TopErrorBar from "../TopErrorBar";
  * @returns {JSX.Element}
  * @constructor
  */
-function UnsupportedBrowserTopAlert(){
-    let [unsupportedBrowserAlertContinue, setUnsupportedBrowserAlertContinue] = useState(unsupportedBrowserState.isSetUnsupportedBrowserAlertContinue());
-
+function UnsupportedBrowserTopAlert() {
+    const [unsupportedBrowserAlertContinue, setUnsupportedBrowserAlertContinue] = useState(unsupportedBrowserState.isSetUnsupportedBrowserAlertContinue());
 
     const onClickCloseHandler = () => {
         unsupportedBrowserState.setUnsupportedBrowserAlertContinue();
         setUnsupportedBrowserAlertContinue(true);
-    }
+    };
 
     return (
         <React.Fragment>

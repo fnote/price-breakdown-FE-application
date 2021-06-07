@@ -1,24 +1,22 @@
-import React from "react";
-import { List } from "antd";
+import React from 'react';
+import { List } from 'antd';
 import {
   SUPPORTED_WEB_BROWSERS,
   UNSUPPORTED_WEB_BROWSER,
   UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR
-} from "../../constants/Constants";
+} from '../../constants/Constants';
 
-import {unsupportedBrowserState} from "../../utils/CommonUtils"
+import {unsupportedBrowserState} from '../../utils/CommonUtils';
 
-import { ReactComponent as BrowserIcon } from "../../styles/images/sad_browser.svg";
-import chrome from "../../styles/images/chrome.svg";
-import firefox from "../../styles/images/firefox.svg";
-import edge from "../../styles/images/edge.svg";
-import safari from "../../styles/images/safari.svg";
+import { ReactComponent as BrowserIcon } from '../../styles/images/sad_browser.svg';
+import chrome from '../../styles/images/chrome.svg';
+import firefox from '../../styles/images/firefox.svg';
+import edge from '../../styles/images/edge.svg';
+import safari from '../../styles/images/safari.svg';
 
 function _getSupportedBrowserList(browsers) {
   const supportedBrowserList = [];
-  Object.entries(browsers).map(([key, value], i) => {
-    return supportedBrowserList.push(key + UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR + value);
-  });
+  Object.entries(browsers).map(([key, value]) => supportedBrowserList.push(key + UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR + value));
 
   return supportedBrowserList;
 }
@@ -38,16 +36,16 @@ function _renderBrowserList(supportedBrowserList) {
         dataSource={supportedBrowserList}
         renderItem={(item) => (
           <List.Item id="browsersupport-list-item">
-            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === "Chrome" && (
+            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === 'Chrome' && (
               <img className="browsersupport-icon" src={chrome} alt="chrome" />
             )}
-            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === "Firefox" && (
+            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === 'Firefox' && (
               <img className="browsersupport-icon" src={firefox} alt="firefox" />
             )}
-            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === "Edge" && (
+            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === 'Edge' && (
               <img className="browsersupport-icon" src={edge} alt="edge" />
             )}
-            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === "Safari" && (
+            {item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0] === 'Safari' && (
               <img className="browsersupport-icon" src={safari} alt="safari" />
             )}
             <div id="browsersupport-browsername">{item.split(UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR)[0]}</div>
@@ -66,8 +64,7 @@ function continueButtonOnClickHandler() {
     window.location.assign('/');
 }
 
-function UnsupportedBrowserScreen(props) {
-
+function UnsupportedBrowserScreen() {
   const supportedBrowsers = _renderBrowserList(
     _getSupportedBrowserList(SUPPORTED_WEB_BROWSERS)
   );

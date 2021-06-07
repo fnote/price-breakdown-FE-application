@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {checkOnlineStatus} from '../../utils/CommonUtils'
+import {checkOnlineStatus} from '../../utils/CommonUtils';
 import {
     ONLINE_STATUS_CHECK_INTERVAL,
     ONLINE_STATUS_OFFLINE_MSG
-} from '../../constants/Constants'
-import TopErrorBar from "../TopErrorBar";
+} from '../../constants/Constants';
+import TopErrorBar from '../TopErrorBar';
 
 /**
  * Detects the online state and shows the alert upon connection issues.
@@ -14,7 +14,7 @@ import TopErrorBar from "../TopErrorBar";
  * @returns {JSX.Element}
  * @constructor
  */
-function NetworkConnectivityAlert(){
+function NetworkConnectivityAlert() {
     const [isDisconnected, setIsDisconnected] = useState(!checkOnlineStatus());
 
     const updateOnlineStatus = async () => {
@@ -22,7 +22,7 @@ function NetworkConnectivityAlert(){
         setIsDisconnected(!result);
     };
 
-    useEffect(() =>{
+    useEffect(() => {
         window.addEventListener('online', updateOnlineStatus);
         window.addEventListener('offline', updateOnlineStatus);
 
@@ -31,21 +31,21 @@ function NetworkConnectivityAlert(){
             ONLINE_STATUS_CHECK_INTERVAL
         );
 
-        return function cleanup(){
+        return function cleanup() {
             window.removeEventListener('online', updateOnlineStatus);
             window.removeEventListener('offline', updateOnlineStatus);
             clearInterval(interval);
-        }
+        };
     });
 
     const onClickCloseHandler = () => {
         setIsDisconnected(false);
-    }
+    };
 
     return (
         <React.Fragment>
             { isDisconnected && (
-                <TopErrorBar msg={ONLINE_STATUS_OFFLINE_MSG} close={false} onClickClose={onClickCloseHandler} classNames={"status-red"}/>
+                <TopErrorBar msg={ONLINE_STATUS_OFFLINE_MSG} close={false} onClickClose={onClickCloseHandler} classNames={'status-red'}/>
             )}
         </React.Fragment>
     );

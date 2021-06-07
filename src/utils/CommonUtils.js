@@ -65,8 +65,8 @@ export const getDisplayFileName = (fileName) => ((fileName.length > FILE_NAME_DI
  */
 export const checkOnlineStatus = async () => {
     try {
-        //Here additionally time parameter is sent to avoid getting cached responses.
-        const online = await fetch(ONLINE_STATUS_CHECK_URL+Date.now());
+        // Here additionally time parameter is sent to avoid getting cached responses.
+        const online = await fetch(ONLINE_STATUS_CHECK_URL + Date.now());
         return online.status >= 200 && online.status < 300; // either true or false
     } catch (err) {
         return false; // definitely offline
@@ -77,16 +77,12 @@ export const checkOnlineStatus = async () => {
  * Class to manipulate Unsupported browser alert states.
  */
 class UnsupportedBrowserState {
-    constructor() {
-    }
 
     setUnsupportedBrowserScreenContinue = () => {
         localStorage.setItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE, 'true');
     }
 
-    isSetUnsupportedBrowserScreenContinue = () => {
-        return localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE) !== null;
-    }
+    isSetUnsupportedBrowserScreenContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE) !== null
 
     clearUnsupportedBrowserScreenContinue = () => {
         localStorage.removeItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE);
@@ -96,9 +92,7 @@ class UnsupportedBrowserState {
         localStorage.setItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE, 'true');
     }
 
-    isSetUnsupportedBrowserAlertContinue = () => {
-        return localStorage.getItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE) !== null;
-    }
+    isSetUnsupportedBrowserAlertContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE) !== null
 
     clearUnsupportedBrowserAlertContinue = () => {
         localStorage.removeItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE);

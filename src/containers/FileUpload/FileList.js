@@ -174,7 +174,7 @@ class FileList extends React.Component {
             const fileNamesArrayWithPciPrefix = [];
             const jobList = {};
 
-            fileNamesArray.forEach((fileName,i) => {
+            fileNamesArray.forEach((fileName, i) => {
                 jobList[fileName] = jobIds[i];
                 const fileNameWithPciPrefix = PCI_FILENAME_PREFIX + fileName;
                 fileNamesArrayWithPciPrefix.push(fileNameWithPciPrefix);
@@ -191,7 +191,7 @@ class FileList extends React.Component {
                     }
                     this.setState({item});
                 }
-            })
+            });
             generateSignedUrls(fileNamesArrayWithPciPrefix)
                 .then((response) => {
                     if (!response.ok) {
@@ -245,7 +245,7 @@ class FileList extends React.Component {
                         <div className="file-process-status warn">
                             <Button className="btn empty-btn download-error-file"
                                     onClick={() => {
-                                        this.downloadFiles(MINOR_ERROR_FILE,[jobDetail.jobId], [jobDetail.minorErrorFileName]);
+                                        this.downloadFiles(MINOR_ERROR_FILE, [jobDetail.jobId], [jobDetail.minorErrorFileName]);
                                     }}
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
@@ -360,13 +360,13 @@ class FileList extends React.Component {
         }));
     };
 
-    changeJobsToOriginalState (jobIds) {
+    changeJobsToOriginalState(jobIds) {
         jobIds.forEach((jobId) => {
             this.changeJobToOriginalState(jobId);
-        })
+        });
     }
 
-    changeJobToOriginalState (jobId) {
+    changeJobToOriginalState(jobId) {
         const item = {...this.state.data.filter((i) => i.jobDetail.jobId === jobId)[0]};
         if (item && item.jobDetail) {
             item.jobDetail.isProcessing = false;
@@ -411,7 +411,6 @@ class FileList extends React.Component {
         const toDownloadFiles = [];
         const toDownloadFileIds = [];
         const inprogressBatchJobs = [];
-
 
         selectedRowValues.forEach((row) => {
             if (row.jobDetail.status === JOB_INPROGRESS_STATUS) {

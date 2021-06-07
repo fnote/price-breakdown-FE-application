@@ -14,11 +14,11 @@ import {
     SUPPORTED_WEB_BROWSERS
 } from '../constants/Constants';
 
-import {unsupportedBrowserState} from "../utils/CommonUtils"
-import UnsupportedBrowserScreen from "../components/UnsupportedBrowser/UnsupportedBrowserScreen";
-import BrowserDetector from "../utils/BrowserDetector";
-import NetworkConnectivityAlert from "../components/NetworkConnectivityAlert/NetworkConnectivityAlert";
-import UnsupportedBrowserTopAlert from "../components/UnsupportedBrowser/UnsupportedBrowserTopAlert";
+import {unsupportedBrowserState} from '../utils/CommonUtils';
+import UnsupportedBrowserScreen from '../components/UnsupportedBrowser/UnsupportedBrowserScreen';
+import BrowserDetector from '../utils/BrowserDetector';
+import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
+import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/UnsupportedBrowserTopAlert';
 
 const Application = () => (
     <Switch>
