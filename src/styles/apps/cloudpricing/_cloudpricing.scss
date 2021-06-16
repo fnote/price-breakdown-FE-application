@@ -12,6 +12,7 @@
 @import "browsersupport/_browser-support";
 @import "toperrorbar/_toperrorbar";
 @import "historyinquiry/_historyinquiry";
+@import "priceZoneReassignment/priceZone";
 
 .cloudpricing-wrapper {
   @include flexbox(1 1 auto, column, flex-start, flex-start);

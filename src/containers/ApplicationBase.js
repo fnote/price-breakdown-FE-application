@@ -5,11 +5,12 @@ import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
 import HistoryInquiry from './HistoryInquiry/HistoryInquiry';
+import PriceZoneRe from './PriceZoneReassignment/PriceZoneRe'
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
-import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION , NAVIGATION_PATH_HISTORY_INQUIRY} from '../constants/Constants';
+import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION , NAVIGATION_PATH_HISTORY_INQUIRY , NAVIGATION_PATH_PRICEZONE_REASSIGNMENT} from '../constants/Constants';
 
 import UnsupportedBrowser from "../components/UnsupportedBrowser";
 import BrowserDetector from "../utils/BrowserDetector";
@@ -26,6 +27,9 @@ const Application = () => (
         </Route>
         <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
             <HistoryInquiry/>
+        </Route>
+        <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
+            <PriceZoneRe/>
         </Route>
     </Switch>
 );
@@ -71,7 +75,7 @@ export default function ApplicationBase() {
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = auth.isUserLoginCompleted() ? Application() : <Login/>;
+        component = !auth.isUserLoginCompleted() ? Application() : <Login/>;
     }
 
     return (

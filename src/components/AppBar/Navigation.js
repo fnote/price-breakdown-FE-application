@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, useRouteMatch} from 'react-router-dom';
-import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION , NAVIGATION_PATH_HISTORY_INQUIRY} from '../../constants/Constants';
+import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION , NAVIGATION_PATH_HISTORY_INQUIRY , NAVIGATION_PATH_PRICEZONE_REASSIGNMENT} from '../../constants/Constants';
 
 const getClassName = (match, componentPath) => (match.path === componentPath ? 'selected' : '');
 
@@ -21,6 +21,12 @@ function Navigation() {
         <Link to={NAVIGATION_PATH_FILE_UPLOAD}>
             <li className={getClassName(match, NAVIGATION_PATH_FILE_UPLOAD)}>
                 <i className="icon fi flaticon-cloud"/>Calculations via <span className="bold">File Upload</span>
+            </li>
+        </Link>
+
+        <Link to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
+            <li className={getClassName(match, NAVIGATION_PATH_PRICEZONE_REASSIGNMENT)}>
+                <i className="icon fi flaticon-cloud"/>pricezone <span className="bold">reassignment</span>
             </li>
         </Link>
     </ul>

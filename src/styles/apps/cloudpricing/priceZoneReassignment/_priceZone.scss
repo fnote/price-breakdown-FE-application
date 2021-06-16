@@ -1,0 +1,44 @@
+.pz-customer-groupbox {
+  border: 1px dashed #62737e;
+  border-radius: 10px;
+  padding: 20px 10px 10px 10px;
+  margin: 0px 0px 1rem -18px;
+  position: relative;
+  background: #fff;
+  display: block;
+  z-index: 2;
+  box-shadow: -10px 0px 1px 4px #fff;
+
+  .pz-radio{
+      .ant-radio-group{
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: space-evenly;
+      height:100%;
+      top:0;
+      left:-10px;
+     
+      }
+  }
+
+  .pz-linebreak {
+      
+    .ant-form-item-label {
+      white-space: pre-wrap !important;
+      height: 3rem;
+      margin-left:6px;
+  
+    }
+  }
+  .ant-form-item-control {
+    // margin-left: 10px;
+  }
+}
+
+.pz-linebreak-item-group {
+    display: flex;
+    align-items: center;
+  }
