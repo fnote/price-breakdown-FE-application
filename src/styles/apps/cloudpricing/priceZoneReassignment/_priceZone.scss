@@ -1,3 +1,5 @@
+// Search panel styles
+
 .pz-customer-groupbox {
   border: 1px dashed #62737e;
   border-radius: 10px;
@@ -9,28 +11,25 @@
   z-index: 2;
   box-shadow: -10px 0px 1px 4px #fff;
 
-  .pz-radio{
-      .ant-radio-group{
+  .pz-radio {
+    .ant-radio-group {
       position: absolute;
       display: flex;
       flex-direction: column;
 
       align-items: center;
       justify-content: space-evenly;
-      height:100%;
-      top:0;
-      left:-10px;
-     
-      }
+      height: 100%;
+      top: 0;
+      left: -10px;
+    }
   }
 
   .pz-linebreak {
-      
     .ant-form-item-label {
       white-space: pre-wrap !important;
       height: 3rem;
-      margin-left:6px;
-  
+      margin-left: 6px;
     }
   }
   .ant-form-item-control {
@@ -39,6 +38,200 @@
 }
 
 .pz-linebreak-item-group {
+  display: flex;
+  align-items: center;
+}
+
+
+
+
+// pricezone container styles
+
+.pz-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  margin: 0 2rem;
+  border-radius: 0.9rem;
+  background: white;
+  border: 0.076rem solid rgba(98, 115, 126, 0.25);
+
+  .ant-tabs{
+    width: 100%;
+
+    .ant-tabs-nav-wrap{
+      border-top-left-radius: 20px;
+    }
+
+    .ant-tabs-nav{
+      margin:0 !important;
+    }
+    .ant-tabs-tabpane{
+      background: #fff;
+    }
+
+  .pz-header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    position: relative;
+    padding-top: 5px;
+    background: #fff;
+    .pz-header-title {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 20px 0px 20px 25px;
+    }
+    .pz-tab-section {
+      width: 100%;
+      display: flex;
+      .pz-tabs {
+        width: calc(100% / 6);
+        padding: 20px;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+       
+      }
+      .pz-separator{
+        &::before{
+          position: absolute;
+          left:0;
+          top:1rem;
+          content:'';
+          width:2px;
+          height:70%;
+          border-left:1px dashed #62737e;
+        }
+      }
+      .pz-tab-items {
+        display: flex;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .pz-tab-items-top,
+        .pz-tab-items-bottom {
+          width: 100%;
+          padding-bottom: 5px;
+          text-align: left;
+       
+        }
+        .pz-tab-items-top{
+          font-weight: 600;
+          font-size:1.15rem;
+        }
+        .pz-tab-items-bottom {
+          width: 100%;
+          padding-bottom: 5px;
+          text-align: left;
+          font-weight:700;
+          font-size:1.5rem;
+          margin-top: 1rem;
+        }
+        .pz-text-wrapper {
+          text-align: left;
+        }
+      }
+      .pz-tabs-combine {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: calc(100% / 4);
+        box-shadow: 0px 0px 8px 1.5px  rgba(204, 204, 204,0.5), 0px 10px 1px  #fff;
+        border-top-left-radius: 20px;
+        border-top-right-radius: 20px;
+        background: #fff;
+        z-index:999;
+        position: relative;
+        &::after{
+            position: absolute;
+            content: '';
+            background: #fff;
+            width:100%;
+            height:20px;
+            bottom:-10px;
+            left:0;
+            z-index: 99;
+        }
+        
+
+        .pz-tabs-combine-l,
+        .pz-tabs-combine-r {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+
+          .pz-tab-items-top,
+          .pz-tab-items-bottom {
+            text-align: center;
+            margin-top: 5px;
+          }
+        }
+      }
+    }
   }
+  .pz-cutomer-grp-text {
+    background: #76e0f6;
+  }
+  .pz-item-grp-text {
+    background: #f6e176;
+  }
+  .pz-item-grp-text,
+  .pz-cutomer-grp-text {
+    display: inline-block;
+    padding: 4px;
+    border-radius: 3px;
+  }
+}
+
+
+// pricezone Table
+
+
+.pz-table-wrapper{
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    border-radius: 0.9rem;
+    width:100%;
+    background: #fff;
+    padding: 40px 5px;
+    box-shadow: 0px -2px 5px   rgba(204, 204, 204,0.5);
+    margin-top:0.6rem;
+
+    
+}
+
+.pz-review-reminder{
+  font-weight: 400 !important;
+  font-size: 1rem !important;
+  width:100%;
+  height:20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top:0.4rem;
+  font-style: italic;
+}
+}
+
+// override content styles background
+
+.pz-no-bg{
+  background: none !important;
+}

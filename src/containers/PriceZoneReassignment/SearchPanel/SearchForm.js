@@ -50,8 +50,8 @@ export default function SearchForm() {
 
             <Form.Item
               name="Itemgroup"
-              label="Item group"
-              className="pz-linebreak-item-group"
+              label="Attribute group"
+              className="pz-linebreak pz-linebreak-item-group"
               rules={[
                 {
                   required: true,
