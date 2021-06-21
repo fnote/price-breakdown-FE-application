@@ -5,7 +5,7 @@ import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
 import HistoryInquiry from './HistoryInquiry/HistoryInquiry';
-import PriceZoneRe from './PriceZoneReassignment/PriceZoneRe'
+import PriceZoneRe from './PriceZoneReassignment/PriceZoneRe';
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';

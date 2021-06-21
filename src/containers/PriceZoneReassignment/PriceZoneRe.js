@@ -1,12 +1,11 @@
-import React from "react";
-import AppBar from "../../components/AppBar/AppBar";
-import SearchPanel from "./SearchPanel/SearchPanel";
-import PriceZoneHeader from "../PriceZoneReassignment/PriceZoneResults/PrizeZoneHeader";
-import PriceZoneTable from "../PriceZoneReassignment/PriceZoneResults/PriceZoneTable";
-import PriceZoneReview from "./PriceZoneReview/PriceZoneReview";
-import { FileTextFilled } from "@ant-design/icons";
-import { useState } from "react";
-import { Tabs } from "antd";
+import React, { useState } from 'react';
+import { FileTextFilled } from '@ant-design/icons';
+import { Tabs } from 'antd';
+import AppBar from '../../components/AppBar/AppBar';
+import SearchPanel from './SearchPanel/SearchPanel';
+import PriceZoneHeader from './PriceZoneResults/PrizeZoneHeader';
+import PriceZoneTable from './PriceZoneResults/PriceZoneTable';
+import PriceZoneReview from './PriceZoneReview/PriceZoneReview';
 
 export default function PriceZoneRe() {
   const { TabPane } = Tabs;
