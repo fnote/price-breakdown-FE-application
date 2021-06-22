@@ -223,8 +223,9 @@
   tr{
     th{
      &:nth-child(2){
-       border-left:1px dashed #000;
-       border-right:1px dashed #000;
+       border-left:1px dashed rgba(0, 0, 0, 0.137);
+       border-right:1px dashed rgba(0, 0, 0, 0.137);
+       
      }
     }
   }
@@ -232,8 +233,8 @@
   .ant-table-row{
     .ant-table-cell{
      &:nth-child(2){
-       border-left:1px dashed #000;
-       border-right:1px dashed #000;
+       border-left:1px dashed rgba(0, 0, 0, 0.137);
+       border-right:1px dashed rgba(0, 0, 0, 0.137);
      }
     }
   }
@@ -481,4 +482,13 @@
   background:#F6E176;
   text-align: center;
   border-radius:5px;
+}
+
+
+// ========================
+// PRICE ZONE POPUPS STYLES
+// ========================
+
+.pz-confirm-pop-base{
+
 }
