@@ -223,8 +223,9 @@
   tr{
     th{
      &:nth-child(2){
-       border-left:1px dashed #000;
-       border-right:1px dashed #000;
+       border-left:1px dashed rgba(0, 0, 0, 0.137);
+       border-right:1px dashed rgba(0, 0, 0, 0.137);
+       
      }
     }
   }
@@ -232,8 +233,8 @@
   .ant-table-row{
     .ant-table-cell{
      &:nth-child(2){
-       border-left:1px dashed #000;
-       border-right:1px dashed #000;
+       border-left:1px dashed rgba(0, 0, 0, 0.137);
+       border-right:1px dashed rgba(0, 0, 0, 0.137);
      }
     }
   }
@@ -481,4 +482,82 @@
   background:#F6E176;
   text-align: center;
   border-radius:5px;
+}
+
+
+// ========================
+// PRICE ZONE POPUPS STYLES
+// ========================
+
+
+.pz-antModal{
+  .ant-modal-content{
+    border-radius:10px !important;
+  }
+  .ant-modal-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+
+    .ant-btn{
+      border:none;
+      border-radius:0.2rem;
+    }
+    .ant-btn-primary{
+      background:$syscogreen;
+    }
+  } 
+}
+
+.pz-confirm-pop-base{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+flex-direction: column;
+width:100%;
+height:20rem;
+
+.alert{
+  color:#FFC107;
+  font-size: 5rem;
+}
+.pz-alert-main,.pz-alert-sr-main{
+  font-size: 2rem;
+  font-weight:600;
+  width:100%;
+  text-align: center;
+}
+.pz-alert-sub,.pz-alert-sr-sub{
+  font-size: 1.05rem;
+  font-weight:400;
+  text-align: center;
+  padding:0px 2rem;
+  margin-top:1rem;
+  color: lighten(#000,30%);
+  width:100%;
+}
+.pz-alert-sr-main,.pz-alert-sr-sub{
+  text-align: left;
+  padding:10px 0;
+  margin:0;
+}
+
+.pz-submit-text-base{
+  margin-top:10px;
+
+}
+
+}
+
+// =========================
+// TOOLTIP 
+// =========================
+
+.pz-tooltip{
+  .ant-tooltip-inner {
+    color: #000;
+   
+}
+
 }
