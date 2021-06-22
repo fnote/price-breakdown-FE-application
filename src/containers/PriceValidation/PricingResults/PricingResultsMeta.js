@@ -97,7 +97,7 @@ function renderOrderInfo({ priceRequestDate, quantity, splitStatus }) {
       <section className="order-info">
         <div className="block">
           <label>Date</label>
-          <div className="value bold">{priceRequestDate}</div>
+          <div className="value bold">{priceRequestDate} 2021</div>
         </div>
         <div className="block">
           <label>QTY</label>
@@ -117,7 +117,7 @@ function PricingResultsMeta(props) {
     <div className="pricing-result-meta">
       { renderItemInfo(priceData.item) }
       { renderSiteInfo(priceData.site, userData) }
-      { renderOrderInfo(priceData.order) }
+      { renderOrderInfo([ 2021, 'qty', 'status' ]) }
     </div>
   );
 }

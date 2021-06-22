@@ -4,6 +4,8 @@ import {notification} from 'antd';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
+import HistoryInquiry from './HistoryInquiry/HistoryInquiry';
+import PriceZoneRe from './PriceZoneReassignment/PriceZoneRe';
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
@@ -11,7 +13,9 @@ import {AppLoaderContext} from '../components/AppLoderContext';
 import {
     NAVIGATION_PATH_FILE_UPLOAD,
     NAVIGATION_PATH_PRICE_VALIDATION,
-    SUPPORTED_WEB_BROWSERS
+    SUPPORTED_WEB_BROWSERS,
+    NAVIGATION_PATH_HISTORY_INQUIRY,
+    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT
 } from '../constants/Constants';
 
 import {unsupportedBrowserState} from '../utils/CommonUtils';
@@ -22,11 +26,17 @@ import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/Unsuppo
 
 const Application = () => (
     <Switch>
-        <Route path={NAVIGATION_PATH_FILE_UPLOAD}>
+        <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
             <FileUpload/>
         </Route>
-        <Route path={NAVIGATION_PATH_PRICE_VALIDATION}>
+        <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
             <PriceValidation/>
+        </Route>
+        <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
+            <HistoryInquiry/>
+        </Route>
+        <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
+            <PriceZoneRe/>
         </Route>
     </Switch>
 );
