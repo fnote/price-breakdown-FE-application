@@ -1,23 +1,27 @@
 import React, { useState } from "react";
-import { Select, DatePicker } from "antd";
+import { Select, DatePicker, Input } from "antd";
 import useModal from "../ModalHook/useModal";
 import { WarningFilled } from "@ant-design/icons";
 
 export default function PrizeZoneHeader() {
-  const { on, Modal, toggle } = useModal();
-
+  const { on,  Modal, toggle } = useModal();
   // on is the modal status =>  on || off
 
-  const PriceZoneConfirm = () => {
+  const { TextArea } = Input;
+
+const [submitModal , setSubmitModal] = useState(false);
+
+  const ModalComponent = () => {
     return (
       <div>
         {Modal(
           {
             title: "",
             centered: "true",
-            onOK: () => alert("ok button's logic called"),
-            okText: "Proceed",
-            cancelText: "Cancel",
+            onOK: () => setSubmitModal(true),
+            still:true, // modal won't close  
+            okText: "PROCEED",
+            cancelText: "CANCEL",
           },
 
           <div className="pz-confirm-pop-base">
@@ -30,11 +34,45 @@ export default function PrizeZoneHeader() {
               associated with item attribute group and all the customers
               associated with customer group will be updated.
             </div>
+           
           </div>
         )}
       </div>
     );
   };
+
+  const SubmitReason = () => {
+    return (
+      <div>
+        {Modal(
+          {
+            title: "",
+            centered: "true",
+            onOK: () => setSubmitModal(false),
+            onCancel:()=>setSubmitModal(false),
+            okText: "SUBMIT",
+            cancelText: "CANCEL",
+          },
+
+          <div className="pz-confirm-pop-base">
+            <div className="pz-alert-sr-main">Submit Reason</div>
+            <div className="pz-alert-sr-sub">
+              Please provide a reason which would be sent to the reviewer as to
+              why this change was submitted.
+            </div>
+            <TextArea
+            className="pz-submit-text-base"
+              value={''}
+              placeholder="Submit reason goes here"
+              autoSize={{ minRows: 3, maxRows: 5 }}
+            />
+          </div>
+        )}
+      </div>
+    );
+  };
+
+ 
 
   return (
     <div className="pz-header">
@@ -99,7 +137,7 @@ export default function PrizeZoneHeader() {
                   type="primary"
                   htmlType="submit"
                   className="search-btn outlined-btn"
-                  onClick={toggle}
+                  onClick={(still)=>toggle(still)}
                 >
                   SUBMIT CHANGE
                 </button>
@@ -111,7 +149,10 @@ export default function PrizeZoneHeader() {
           </div>
         </div>
       </div>
-      <PriceZoneConfirm />
+      <ModalComponent />
+      {submitModal && <SubmitReason/>}
+     
+     
     </div>
   );
 }

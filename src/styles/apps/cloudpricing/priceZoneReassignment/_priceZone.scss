@@ -522,17 +522,30 @@ height:20rem;
   color:#FFC107;
   font-size: 5rem;
 }
-.pz-alert-main{
+.pz-alert-main,.pz-alert-sr-main{
   font-size: 2rem;
   font-weight:600;
+  width:100%;
+  text-align: center;
 }
-.pz-alert-sub{
+.pz-alert-sub,.pz-alert-sr-sub{
   font-size: 1.05rem;
   font-weight:400;
   text-align: center;
   padding:0px 2rem;
   margin-top:1rem;
   color: lighten(#000,30%);
+  width:100%;
+}
+.pz-alert-sr-main,.pz-alert-sr-sub{
+  text-align: left;
+  padding:10px 0;
+  margin:0;
+}
+
+.pz-submit-text-base{
+  margin-top:10px;
+
 }
 
 }
