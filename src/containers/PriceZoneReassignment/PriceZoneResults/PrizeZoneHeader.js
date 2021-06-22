@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Select, DatePicker, Input } from "antd";
-import useModal from "../ModalHook/useModal";
+import useModal from "../../../hooks/useModal";
 import { WarningFilled } from "@ant-design/icons";
 
 export default function PrizeZoneHeader() {

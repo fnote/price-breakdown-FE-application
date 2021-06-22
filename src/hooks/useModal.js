@@ -1,11 +1,11 @@
 import React, {useState, useCallback} from 'react'
-import {Button, Modal as AntdModal} from 'antd'
+import {Modal as AntdModal} from 'antd'
+
 
 const useModal = () => {
   const [on, setOn] = useState(false)
   const toggle = useCallback(() => setOn(!on), [on])
   
- 
   const Modal = useCallback(
     ({onOK,onCancel ,still, ...rest}, child) => {
       return (
