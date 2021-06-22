@@ -1,15 +1,38 @@
-import React, { useState } from 'react';
-import { FileTextFilled } from '@ant-design/icons';
-import { Tabs } from 'antd';
-import AppBar from '../../components/AppBar/AppBar';
-import SearchPanel from './SearchPanel/SearchPanel';
-import PriceZoneHeader from './PriceZoneResults/PrizeZoneHeader';
-import PriceZoneTable from './PriceZoneResults/PriceZoneTable';
-import PriceZoneReview from './PriceZoneReview/PriceZoneReview';
+import React from "react";
+import AppBar from "../../components/AppBar/AppBar";
+import SearchPanel from "./SearchPanel/SearchPanel";
+import PriceZoneHeader from "../PriceZoneReassignment/PriceZoneResults/PrizeZoneHeader";
+import PriceZoneTable from "../PriceZoneReassignment/PriceZoneResults/PriceZoneTable";
+import PriceZoneReview from "./PriceZoneReview/PriceZoneReview";
+import { FileTextFilled } from "@ant-design/icons";
+import { useState } from "react";
+import { Tabs , Modal } from "antd";
 
 export default function PriceZoneRe() {
   const { TabPane } = Tabs;
   const [reviewTab, makeReviewActive] = useState(true);
+
+  const [confirmModal, setConfirmModal] = useState(false);
+
+  //Modal containers
+
+  const PriceZoneConfirm = () => {
+    return(
+      <>
+      <div className="pz-confirm-pop-base">
+      <Modal
+          title=""
+          centered
+          visible={confirmModal}
+          onOk={() => setConfirmModal(true)}
+          onCancel={() => setConfirmModal(false)}
+        >
+        
+        </Modal>
+      </div>
+      </>
+    )
+  };
 
   return (
     <div className="wrapper cloudpricing-wrapper">
@@ -49,6 +72,9 @@ export default function PriceZoneRe() {
           </Tabs>
         </div>
       </div>
+
+
+      <PriceZoneConfirm/>
     </div>
   );
 }
