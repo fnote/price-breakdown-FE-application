@@ -489,6 +489,50 @@
 // PRICE ZONE POPUPS STYLES
 // ========================
 
+
+.pz-antModal{
+  .ant-modal-content{
+    border-radius:10px !important;
+  }
+  .ant-modal-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+
+    .ant-btn{
+      border:none;
+      border-radius:0.2rem;
+    }
+    .ant-btn-primary{
+      background:$syscogreen;
+    }
+  } 
+}
+
 .pz-confirm-pop-base{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+flex-direction: column;
+width:100%;
+height:20rem;
+
+.alert{
+  color:#FFC107;
+  font-size: 5rem;
+}
+.pz-alert-main{
+  font-size: 2rem;
+  font-weight:600;
+}
+.pz-alert-sub{
+  font-size: 1.05rem;
+  font-weight:400;
+  text-align: center;
+  padding:0px 2rem;
+  margin-top:1rem;
+  color: lighten(#000,30%);
+}
 
 }

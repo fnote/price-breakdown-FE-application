@@ -9,7 +9,9 @@ const useModal = () => {
   const Modal = useCallback(
     ({onOK, ...rest}, child) => {
       return (
+        
         <AntdModal
+        className="pz-antModal"
           {...rest}
           visible={on}
           onOk={() => {

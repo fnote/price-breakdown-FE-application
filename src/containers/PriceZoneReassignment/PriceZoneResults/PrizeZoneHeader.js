@@ -1,20 +1,36 @@
 import React, { useState } from "react";
 import { Select, DatePicker } from "antd";
 import useModal from "../ModalHook/useModal";
+import { WarningFilled } from "@ant-design/icons";
 
 export default function PrizeZoneHeader() {
-
   const { on, Modal, toggle } = useModal();
 
-  // on is modal status   on || off
+  // on is the modal status =>  on || off
 
   const PriceZoneConfirm = () => {
     return (
       <div>
         {Modal(
-          { title: "Simple", onOK: () => alert("logic called from here") },
+          {
+            title: "",
+            centered: "true",
+            onOK: () => alert("ok button's logic called"),
+            okText: "Proceed",
+            cancelText: "Cancel",
+          },
 
-          <div className="pz-confirm-pop-base">hello</div>
+          <div className="pz-confirm-pop-base">
+            <div className="alert">
+              <WarningFilled />
+            </div>
+            <div className="pz-alert-main">Confirm Price Zone Change</div>
+            <div className="pz-alert-sub">
+              While performing this change, price zone for all the items
+              associated with item attribute group and all the customers
+              associated with customer group will be updated.
+            </div>
+          </div>
         )}
       </div>
     );
@@ -27,7 +43,7 @@ export default function PrizeZoneHeader() {
         <div className="pz-tabs">
           <div className="pz-tab-items">
             <div className="pz-text-wrapper">
-              <div className="pz-tab-items-top">OPCO {on ? 'on' : 'off'}</div>
+              <div className="pz-tab-items-top">OPCO {on ? "on" : "off"}</div>
               <div className="pz-tab-items-bottom">043-Houston</div>
             </div>
           </div>
