@@ -27,6 +27,7 @@ const UserDetailContextProvider = (props) => {
         if (newUserDetails && newUserDetails.authorizedPricingTransformationEnabledBunitList) {
             const modifiedUserDetails = { ...newUserDetails, businessUnitMap: createBusinessUnitMap(newUserDetails)};
             const modifiedState = { ...newStateData, userDetails: modifiedUserDetails };
+            console.log(JSON.stringify(modifiedState))
             setUserDetails(modifiedState);
         } else {
             setUserDetails(newStateData);
