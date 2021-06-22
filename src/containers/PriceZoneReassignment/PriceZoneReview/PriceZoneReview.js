@@ -1,41 +1,42 @@
-import React from "react";
-import { Table, Tag, Space } from "antd";
+/* eslint-disable react/display-name */
+import React from 'react';
+import { Table, Space } from 'antd';
 
-import ReviewSubmitter from '../PriceZoneReview/ReviewSubmitter'
-import ReviewSummery from '../PriceZoneReview/ReviewSummery'
-import AproveRejectButtons from '../PriceZoneReview/AproveRejectButtons'
+import ReviewSubmitter from './ReviewSubmitter';
+import ReviewSummery from './ReviewSummery';
+import AproveRejectButtons from './AproveRejectButtons';
 
 const columns = [
   {
-    title: "SUBMITTED BY",
-    dataIndex: "name",
-    key: "name",
+    title: 'SUBMITTED BY',
+    dataIndex: 'submitter',
+    key: 'submitter',
     width: '20%',
-    render: (cell, row, index) => (
-      <Space size="middle">
-        <ReviewSubmitter></ReviewSubmitter>
+    render: (submitter) => (
+      <Space size='middle'>
+        <ReviewSubmitter submitter={submitter} />
       </Space>
     ),
   },
   {
-    title: "SUMMARY OF CHANGES",
-    dataIndex: "opco",
-    key: "opco",
+    title: 'SUMMARY OF CHANGES',
+    dataIndex: 'opco',
+    key: 'opco',
     width: '40%',
     render: (cell, row, index) => (
-      <Space size="middle">
-        <ReviewSummery></ReviewSummery>
+      <Space size='middle'>
+        <ReviewSummery />
       </Space>
     ),
   },
   {
-    title: "ACTION",
-    dataIndex: "accept",
-    key: "accept",
+    title: 'ACTION',
+    dataIndex: 'accept',
+    key: 'accept',
     width: '20%',
     render: (cell, row, index) => (
-      <Space size="middle">
-        <AproveRejectButtons></AproveRejectButtons>
+      <Space size='middle'>
+        <AproveRejectButtons />
       </Space>
     ),
   },
@@ -44,29 +45,36 @@ const columns = [
 // sample data
 
 const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      opco: 2,
-      accept:true
+  {
+    'id': 121,
+    'businessUnitNumber': '020',
+    'itemAttributeGroup': 'VEGETABLE PUREES/SEASONINGS/PASTES',
+    'itemAttributeGroupId': '12345',
+    'customerGroupId': '221',
+    'customerAccount': '700001',
+    'customerGroup': 'El Cerro',
+    'newPriceZone': 3,
+    'status': 'APPROVED',
+    'effectiveFromDate': '20210530',
+    'submitter': {
+        'submitterId': 'vvit5827',
+        'givenName': 'Vithulan',
+        'surname': 'MV',
+        'email': 'vvit5827@sysco.com'
     },
-    {
-      key: '2',
-      name: 'Jim Green',
-      opco: 1,
-      accept:true
-     
+    'summary': {
+        'customerCount': 12,
+        'supcCount': 123
     },
-    {
-      key: '3',
-      name: 'Joe Black',
-      opco: 4,
-      accept:true
-    },
-  ];
+    'createdTime': 1621837508,
+    'approver': null,
+    'approverUpdatedTime': null,
+    'exportedTime': null
+  }
+];
 
 export default function PriceZoneReview() {
-  return <div className="pz-review-base-wrapper">
+  return <div className='pz-review-base-wrapper'>
       <Table columns={columns} dataSource={data} />
   </div>;
 }

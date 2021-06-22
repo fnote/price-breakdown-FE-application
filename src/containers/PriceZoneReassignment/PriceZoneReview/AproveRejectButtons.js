@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export default function AproveRejectButtons() {
     return (
@@ -18,5 +18,5 @@ export default function AproveRejectButtons() {
                 REJECT
               </button>
         </div>
-    )
+    );
 }
