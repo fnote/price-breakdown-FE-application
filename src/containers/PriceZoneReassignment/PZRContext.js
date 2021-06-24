@@ -27,7 +27,7 @@ const initialSearchParamsState = {
 const PZRContextProvider = (props) => {
     const [isLoading, setLoading] = useState(false);
     const [searchParams, setSearchParams] = useState({...initialSearchParamsState});
-    const [searchResultDataState, setSearchResultData] = useState(initialState);
+    const [searchResults, setSearchResultData] = useState(initialState);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
 
@@ -35,7 +35,7 @@ const PZRContextProvider = (props) => {
         setLoading(false);
         setError(null);
         setSearchResultData(data);
-        setResponse(data);
+        setResponse(data); //TODO: Why setting the response again?
     };
 
     const errorUpdateHandler = (data) => {
@@ -48,10 +48,10 @@ const PZRContextProvider = (props) => {
         <PZRContext.Provider value={{
             isLoading,
             setLoading,
-            searchParams: {...initialSearchParamsState},
+            searchParams,
             setSearchParams,
             setErrorData: errorUpdateHandler,
-            searchResults: {...initialState},
+            searchResults,
             setSearchResultData: searchParamsUpdateHandler,
             error,
             setError,
