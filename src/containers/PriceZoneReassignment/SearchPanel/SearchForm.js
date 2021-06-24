@@ -12,18 +12,20 @@ import {
 const { Option } = Select;
 
 const formRequestBody = (includeCustomer, requestData) => {
+  const opcoId = ((requestData.OpCo).split('-'))[0];
+  const attributeGroupId = ((requestData.Itemgroup).split('-'))[0];
   if (includeCustomer) {
     return JSON.stringify({
-      businessUnitNumber: requestData.OpCo,
-      itemAttributeGroupId: (requestData.Itemgroup).toString(),
+      businessUnitNumber: opcoId,
+      itemAttributeGroupId: attributeGroupId,
       customerAccount: requestData.customer,
       offset: 0,
       limit: 10,
       });
   } 
   return JSON.stringify({
-  businessUnitNumber: requestData.OpCo,
-  itemAttributeGroupId: (requestData.Itemgroup).toString(),
+  businessUnitNumber: opcoId,
+  itemAttributeGroupId: attributeGroupId,
   customerGroupId: requestData.customerGroup,
   offset: 0,
   limit: 10,
@@ -68,7 +70,7 @@ const SearchForm = () => {
       if (response.ok && responseData) {
         responseData.forEach((attributeGroup) => {
           attrributeGroupList.push(
-            <Option key={attributeGroup.id} value={attributeGroup.id}>{attributeGroup.name}</Option>
+            <Option key={attributeGroup.id} value={`${attributeGroup.id}-${attributeGroup.name}`}>{attributeGroup.name}</Option>
           );
         });
         setAttributeGroups(attrributeGroupList);
@@ -124,26 +126,28 @@ const SearchForm = () => {
   const onSubmit = (includeCustomer, values) => {
     pZRContext.setLoading(true);
     pZRContext.setResponse(null);
+    const opcoId = ((values.OpCo).split('-'))[0];
+    const attributeGroupDetails = (values.Itemgroup).split('-');
     if (includeCustomer) {
       pZRContext.setSearchParams({
         searchParams: {
           site: values.OpCo,
-          opcoId: '',
-          attributeGroupId: '',
+          opcoId,
+          attributeGroupId: attributeGroupDetails[0],
           customer: values.customer,
-          customerGroup: '',
-          attributeGroup: (values.Itemgroup).toString()
+          customerGroup: null,
+          attributeGroup: attributeGroupDetails[1]
         }
       });
     } else {
       pZRContext.setSearchParams({
         searchParams: {
           site: values.OpCo,
-          opcoId: '',
-          attributeGroupId: '',
-          customer: '',
+          opcoId,
+          attributeGroupId: attributeGroupDetails[0],
+          customer: null,
           customerGroup: values.customerGroup,
-          attributeGroup: (values.Itemgroup).toString()
+          attributeGroup: attributeGroupDetails[1]
         }
       });
     }
