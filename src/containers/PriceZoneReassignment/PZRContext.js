@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 export const PZRContext = React.createContext({
     searchParams: {},
-    setSearchParams: () => {},
+    setSearchParams: () => {
+    },
     searchResults: {},
-    setSearchResults: () => {},
+    setSearchResults: () => {
+    },
 });
 
 const initialState = {
@@ -14,19 +16,17 @@ const initialState = {
 };
 
 const initialSearchParamsState = {
-    searchParams: {
-        site: null,
-        opcoId: null,
-        customer: null,
-        customerGroup: null,
-        attributeGroup: null,
-        attributeGroupId: null,
-    }
+    site: null,
+    opcoId: null,
+    customer: null,
+    customerGroup: null,
+    attributeGroup: null,
+    attributeGroupId: null,
 };
 
 const PZRContextProvider = (props) => {
     const [isLoading, setLoading] = useState(false);
-    const [searchParamsState, setSearchParams] = useState(initialSearchParamsState);
+    const [searchParams, setSearchParams] = useState({...initialSearchParamsState});
     const [searchResultDataState, setSearchResultData] = useState(initialState);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
@@ -48,10 +48,10 @@ const PZRContextProvider = (props) => {
         <PZRContext.Provider value={{
             isLoading,
             setLoading,
-            searchParams: searchParamsState,
+            searchParams: {...initialSearchParamsState},
             setSearchParams,
             setErrorData: errorUpdateHandler,
-            searchResultData: searchResultDataState,
+            searchResults: {...initialState},
             setSearchResultData: searchParamsUpdateHandler,
             error,
             setError,

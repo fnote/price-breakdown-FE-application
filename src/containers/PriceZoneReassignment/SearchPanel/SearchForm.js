@@ -22,7 +22,7 @@ const formRequestBody = (includeCustomer, requestData) => {
       offset: 0,
       limit: 10,
       });
-  } 
+  }
   return JSON.stringify({
   businessUnitNumber: opcoId,
   itemAttributeGroupId: attributeGroupId,
@@ -206,7 +206,7 @@ const SearchForm = () => {
             </Form.Item>
             <div className="pz-customer-groupbox">
               <div className="pz-radio">
-                <Radio.Group 
+                <Radio.Group
                   defaultValue={2}>
                   <Radio value={1} onClick={() => {
                     setCustomerChecked(true);
@@ -234,7 +234,7 @@ const SearchForm = () => {
                   {
                       max: 14,
                       message: 'Should be 14 characters max'
-                  }]} 
+                  }]}
               >
                 <Form.Item name="customer" >
                   <>
@@ -258,7 +258,7 @@ const SearchForm = () => {
                   {
                       max: 15,
                       message: 'Should be 15 characters max'
-                  }]} 
+                  }]}
                 >
                 <Form.Item name="customerGroup">
                   <>
