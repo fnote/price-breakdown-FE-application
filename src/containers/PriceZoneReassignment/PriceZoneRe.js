@@ -1,23 +1,13 @@
 import React, { useState } from 'react';
-import { FileTextFilled } from '@ant-design/icons';
-import { Tabs, Modal } from 'antd';
+import { Modal } from 'antd';
 import AppBar from '../../components/AppBar/AppBar';
 import SearchPanel from './SearchPanel/SearchPanel';
-import PriceZoneHeader from './PriceZoneResults/PrizeZoneHeader';
-import PriceZoneTable from './PriceZoneResults/PriceZoneTable';
-import PriceZoneReview from './PriceZoneReview/PriceZoneReview';
+import SearchStatuses from './SearchPanel/SearchStatuses';
 import PZRContextProvider from './PZRContext';
 
 export default function PriceZoneRe() {
-  const { TabPane } = Tabs;
-  const [reviewTab, makeReviewActive] = useState(true);
-
   const [confirmModal, setConfirmModal] = useState(false);
-
-  //Modal containers
-
-  const PriceZoneConfirm = () => {
-    return(
+  const PriceZoneConfirm = () => (
       <>
       <div className="pz-confirm-pop-base">
       <Modal
@@ -27,12 +17,10 @@ export default function PriceZoneRe() {
           onOk={() => setConfirmModal(true)}
           onCancel={() => setConfirmModal(false)}
         >
-        
         </Modal>
       </div>
       </>
     );
-  };
 
   return (
     <div className="wrapper cloudpricing-wrapper">
@@ -40,38 +28,7 @@ export default function PriceZoneRe() {
       <PZRContextProvider>
         <div className="content">          
             <SearchPanel />
-            <div className="pz-wrapper  pz-no-bg">
-              {/* <PriceZoneHeader/>
-                <PriceZoneTable/> */}
-
-              <Tabs type="card">
-                <TabPane
-                  tab={
-                    <span>
-                      <FileTextFilled />
-                      Update Pricezone
-                    </span>
-                  }
-                  key="1"
-                >
-                  <PriceZoneHeader />
-                  <PriceZoneTable />
-                </TabPane>
-                {reviewTab && (
-                  <TabPane
-                    tab={
-                      <span>
-                        <FileTextFilled />
-                        Review Changes
-                      </span>
-                    }
-                    key="2"
-                  >
-                    <PriceZoneReview />
-                  </TabPane>
-                )}
-              </Tabs>
-            </div>
+            <SearchStatuses/>
         </div>
         <PriceZoneConfirm/>
       </PZRContextProvider>

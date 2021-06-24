@@ -33,6 +33,8 @@ export const getBffUrlConfig = () => {
 
     // PZR APIs
     CONFIG.pzrUpdateRequestsUrl = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-update-requests`;
+    CONFIG.priceZoneReassignmentSearchUrl = `${CONFIG.bffBaseUrl}price-zone-reassignment/search`;
+    CONFIG.priceZoneReassignmentGetItemAttributeUrl = `${CONFIG.bffBaseUrl}price-zone-reassignment/item-attribute-groups`;
 
     return CONFIG;
 };

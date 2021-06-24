@@ -11,6 +11,8 @@ const ErrorCodes = {
     PRICING_ENGINE_ERROR: 197,
     PRODUCT_INFO_API_ERROR: 2022,
     CUSTOMER_INFO_API_ERROR: 2025,
+    INVALID_CUSTOMER_ACCOUNT_PZR_ERROR: 2034,
+    INVALID_CUSTOMER_GROUP_ERROR: 2037
 };
 
 const ErrorMessages = {
@@ -26,6 +28,8 @@ const ErrorMessages = {
     PRICING_ENGINE_ERROR: 'Unexpected error occurred while pricing the product',
     PRODUCT_INFO_API_ERROR: 'Could not retrieve the product information',
     CUSTOMER_INFO_API_ERROR: 'Could not retrieve the customer information',
+    CONNECTION_ISSUE_ERROR: 'Could not retrieve the information due to connection issue',
+    INVALID_CUSTOMER_GROUP_ERROR: 'Provided customer group is incorrect'
 };
 
 const ErrorsMap = new Map([
@@ -40,7 +44,9 @@ const ErrorsMap = new Map([
     [ErrorCodes.UNEXPECTED_PRICING_ENGINE_ERROR, ErrorMessages.UNEXPECTED_PRICING_ENGINE_ERROR],
     [ErrorCodes.PRICING_ENGINE_ERROR, ErrorMessages.PRICING_ENGINE_ERROR],
     [ErrorCodes.PRODUCT_INFO_API_ERROR, ErrorMessages.PRODUCT_INFO_API_ERROR],
-    [ErrorCodes.CUSTOMER_INFO_API_ERROR, ErrorMessages.CUSTOMER_INFO_API_ERROR]
+    [ErrorCodes.CUSTOMER_INFO_API_ERROR, ErrorMessages.CUSTOMER_INFO_API_ERROR],
+    [ErrorCodes.INVALID_CUSTOMER_ACCOUNT_PZR_ERROR, ErrorMessages.INVALID_CUSTOMER_ACCOUNT_ERROR],
+    [ErrorCodes.INVALID_CUSTOMER_GROUP_ERROR, ErrorMessages.INVALID_CUSTOMER_GROUP_ERROR],
 ]);
 
 export { ErrorCodes, ErrorMessages, ErrorsMap };
