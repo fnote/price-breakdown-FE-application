@@ -100,7 +100,7 @@ const SearchForm = () => {
       .then(handleResponse)
       .then((resp) => {
         if (resp.success) {
-          pZRContext.setSearchResults({ ...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER] });
+          pZRContext.setSearchResultData({ ...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER] });
         } else {
           pZRContext.setErrorData({ ...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER] });
         }

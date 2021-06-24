@@ -8,13 +8,9 @@ export const PZRContext = React.createContext({
 });
 
 const initialState = {
-    response: null,
-    product: null,
-    recentSearches: [],
-    selectedBusinessUnit: {},
-    item: null,
-    pricePoints: null,
-    site: null,
+    totalRecords: 0,
+    offset: 0,
+    limit: 10,
 };
 
 const initialSearchParamsState = {
