@@ -1,208 +1,74 @@
-import React from 'react'
-import { Table } from "antd";
+import React, {useContext, useState} from 'react'
+import {Table} from "antd";
+import CustomPagination from '../../../components/CustomPagination';
+import {PZRContext} from "../PZRContext";
+import {calculateOffset} from '../PZRHelper';
 
 const columns = [
     {
-      title: "ITEM(SUPC)",
-      dataIndex: "item_supc",
-      defaultSortOrder: "descend",
-      sorter: (a, b) => a - b,
+        title: "ITEM(SUPC)",
+        dataIndex: "supc",
+        defaultSortOrder: "descend",
+        sorter: (a, b) => a - b,
     },
     {
-      title: "ITEM DESCRIPTION",
-      dataIndex: "item_des",
-     
+        title: "ITEM DESCRIPTION",
+        dataIndex: "product_name",
+
     },
     {
-      title: "CUSTOMER",
-      dataIndex: "customer",
-     
+        title: "CUSTOMER",
+        dataIndex: "customer_account",
+
     },
     {
-      title: "CUSTOMER NAME",
-      dataIndex: "customer_name",
+        title: "CUSTOMER NAME",
+        dataIndex: "customer_name",
     },
     {
-      title: "SOURCE ID",
-      dataIndex: "source_id",
+        title: "SOURCE ID",
+        dataIndex: "source",
     },
     {
-      title: "PRICE ZONE",
-      dataIndex: "price_zone",
+        title: "PRICE ZONE",
+        dataIndex: "price_zone",
     },
     {
-      title: "EFFECTIVE DATE",
-      dataIndex: "effective_price",
+        title: "EFFECTIVE DATE",
+        dataIndex: "effective_from_date",
     },
-   
-  ];
-  
-  const data = [
-    {
-      key: "1",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '7 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "2",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '8 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "3",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '10 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "4",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '13 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "5",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '15 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "6",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '20 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "7",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '22 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "8",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '22 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "9",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '22 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "10",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '22 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "11",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '22 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "12",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '22 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "13",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '22 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-    {
-      key: "14",
-      Obligation_Num: "ON123456",
-      Line_Num:123,
-      Transacted_Date: '22 July 2020' ,
-      Shipped_Qty: 1234,
-      Total_Catch_Weight:'6000kg',
-      Unit_Price:'$ 100.00',
-      Net_Price:'$ 85.00',
-      Create_Date_Time:'06 Jul 2020  11:15 AM'
-    },
-   
-  ];
+
+];
+
+const PAGE_SIZE = 20;
 
 export default function PriceZoneTable() {
-    function onChange(pagination, filters, sorter, extra) {
-        console.log("params", pagination, filters, sorter, extra);
-      }
+    const PZRContextData = useContext(PZRContext);
+
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const onChange = (page) => {
+        setCurrentPage(page);
+        console.log("params", page);
+        const offset = calculateOffset(page, PAGE_SIZE);
+        console.log(offset);
+        //TODO fetch and update context
+    };
+
+    const searchResults = PZRContextData.searchResults;
+
     return (
         <div className="pz-table-wrapper">
-            <Table pagination={{pageSize: 10 }}  
-      columns={columns} dataSource={data} onChange={onChange} />
+            <Table pagination={false}
+                   columns={columns}
+                   dataSource={searchResults.data && searchResults.data.item_price_zones ? searchResults.data.item_price_zones : []}
+            />
+            <CustomPagination
+                onChange={onChange}
+                total={searchResults.total_records ? searchResults.total_records : 0}
+                current={currentPage}
+                pageSize={PAGE_SIZE}
+            />
         </div>
     )
 }
