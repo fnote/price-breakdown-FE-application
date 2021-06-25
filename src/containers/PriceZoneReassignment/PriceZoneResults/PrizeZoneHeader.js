@@ -4,12 +4,12 @@ import useModal from "../../../hooks/useModal";
 import { WarningFilled } from "@ant-design/icons";
 
 export default function PrizeZoneHeader() {
-  const { on,  Modal, toggle } = useModal();
+  const { on, Modal, toggle } = useModal();
   // on is the modal status =>  on || off
 
   const { TextArea } = Input;
 
-const [submitModal , setSubmitModal] = useState(false);
+  const [submitModal, setSubmitModal] = useState(false);
 
   const ModalComponent = () => {
     return (
@@ -19,7 +19,7 @@ const [submitModal , setSubmitModal] = useState(false);
             title: "",
             centered: "true",
             onOK: () => setSubmitModal(true),
-            still:true, // modal won't close  
+            still: true, // modal won't close
             okText: "PROCEED",
             cancelText: "CANCEL",
           },
@@ -34,7 +34,6 @@ const [submitModal , setSubmitModal] = useState(false);
               associated with item attribute group and all the customers
               associated with customer group will be updated.
             </div>
-           
           </div>
         )}
       </div>
@@ -49,7 +48,7 @@ const [submitModal , setSubmitModal] = useState(false);
             title: "",
             centered: "true",
             onOK: () => setSubmitModal(false),
-            onCancel:()=>setSubmitModal(false),
+            onCancel: () => setSubmitModal(false),
             okText: "SUBMIT",
             cancelText: "CANCEL",
           },
@@ -61,9 +60,8 @@ const [submitModal , setSubmitModal] = useState(false);
               why this change was submitted.
             </div>
             <TextArea
-            className="pz-submit-text-base"
-              value={''}
-              placeholder="Submit reason goes here"
+              className="pz-submit-text-base"
+              placeholder="Please insert submit reason here"
               autoSize={{ minRows: 3, maxRows: 5 }}
             />
           </div>
@@ -71,8 +69,6 @@ const [submitModal , setSubmitModal] = useState(false);
       </div>
     );
   };
-
- 
 
   return (
     <div className="pz-header">
@@ -136,8 +132,9 @@ const [submitModal , setSubmitModal] = useState(false);
                 <button
                   type="primary"
                   htmlType="submit"
-                  className="search-btn outlined-btn"
-                  onClick={(still)=>toggle(still)}
+                  className="search-btn outlined-btn "
+                  // added "pz-disabled" class for the disabled view
+                  onClick={toggle}
                 >
                   SUBMIT CHANGE
                 </button>
@@ -150,9 +147,7 @@ const [submitModal , setSubmitModal] = useState(false);
         </div>
       </div>
       <ModalComponent />
-      {submitModal && <SubmitReason/>}
-     
-     
+      {submitModal && <SubmitReason />}
     </div>
   );
 }
