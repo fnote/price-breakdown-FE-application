@@ -25,7 +25,7 @@ const SearchForm = () => {
     const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState('');
     const [attributeGroups, setAttributeGroups] = useState('');
     const userDetailContext = useContext(UserDetailContext);
-    const {userDetails: {businessUnitMap = new Map()}} = userDetailContext.userDetailsData;
+    const { userDetails: { allowedBussinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const pZRContext = useContext(PZRContext);
     const [form] = Form.useForm();
 
@@ -55,10 +55,6 @@ const SearchForm = () => {
 
     const handleChangeCustomerGroup = (event) => {
         setCustomerGroupTextBoxValue(event.target.value);
-    };
-
-    const onReset = () => {
-        form.resetFields();
     };
 
     const onSubmit = (values) => {
@@ -122,7 +118,7 @@ const SearchForm = () => {
                                 }}
                                 showSearch
                             >
-                                {getBusinessUnits(businessUnitMap)}
+                                {getBusinessUnits(allowedBussinessUnitMap)}
                             </Select>
                         </Form.Item>
                         <div className="pz-customer-groupbox">

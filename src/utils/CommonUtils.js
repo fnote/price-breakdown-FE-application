@@ -37,6 +37,17 @@ export const createBusinessUnitMap = ({ authorizedPricingTransformationEnabledBu
     return new Map();
 };
 
+export const createBusinessUnitMapForPZR = ({ allActiveOpcos }) => {
+    if (allActiveOpcos && allActiveOpcos instanceof Array) {
+        const mappedAllowedBusinessUnits = allActiveOpcos.map(({ bunit_id, bunit_name }) => [
+            bunit_id, mapBusinessUnit({ bunit_id, bunit_name })
+        ]);
+        return new Map(mappedAllowedBusinessUnits);
+    }
+
+    return new Map();
+};
+
 export const formatBusinessUnit = (businessUnitId, businessUnits) => {
     const businessUnit = businessUnits.get(businessUnitId);
     return (businessUnit) ? `${businessUnit.id} - ${businessUnit.name}` : businessUnitId;
