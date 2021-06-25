@@ -1,8 +1,12 @@
 import React, {useContext, useState} from 'react'
 import {Table} from "antd";
-import CustomPagination from '../../../components/CustomPagination';
+
 import {PZRContext} from "../PZRContext";
+
 import {calculateOffset} from '../PZRHelper';
+import {DEFAULT_PAGE_SIZE, PZRFetchSearchResults} from '../PZRSearchHandler';
+import CustomPagination from '../../../components/CustomPagination';
+
 
 const columns = [
     {
@@ -40,7 +44,6 @@ const columns = [
 
 ];
 
-const PAGE_SIZE = 20;
 
 export default function PriceZoneTable() {
     const PZRContextData = useContext(PZRContext);
@@ -50,15 +53,20 @@ export default function PriceZoneTable() {
     const onChange = (page) => {
         setCurrentPage(page);
         console.log("params", page);
-        const offset = calculateOffset(page, PAGE_SIZE);
+        const offset = calculateOffset(page, DEFAULT_PAGE_SIZE);
+        PZRFetchSearchResults({
+            ...PZRContextData.searchParams,
+            offset: offset,
+            limit: DEFAULT_PAGE_SIZE
+        }, PZRContextData);
         console.log(offset);
-        //TODO fetch and update context
     };
 
     const searchResults = PZRContextData.searchResults;
 
     return (
         <div className="pz-table-wrapper">
+
             <Table pagination={false}
                    columns={columns}
                    dataSource={searchResults.data && searchResults.data.item_price_zones ? searchResults.data.item_price_zones : []}
@@ -67,7 +75,7 @@ export default function PriceZoneTable() {
                 onChange={onChange}
                 total={searchResults.total_records ? searchResults.total_records : 0}
                 current={currentPage}
-                pageSize={PAGE_SIZE}
+                pageSize={DEFAULT_PAGE_SIZE}
             />
         </div>
     )

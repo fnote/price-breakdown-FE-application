@@ -1,36 +1,12 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {Form, Input, Select, Radio} from 'antd';
-import {getBusinessUnits} from '../PriceZoneReassignmentHelper';
+
 import {UserDetailContext} from '../../UserDetailContext';
-import {getBffUrlConfig} from '../../../utils/Configs';
 import {PZRContext} from '../PZRContext';
-import {
-    CORRELATION_ID_HEADER,
-    NOT_APPLICABLE_LABEL,
-} from '../../../constants/Constants';
 
-const {Option} = Select;
-
-const formRequestBody = (includeCustomer, requestData) => {
-    const opcoId = ((requestData.OpCo).split('-'))[0];
-    const attributeGroupId = ((requestData.Itemgroup).split('-'))[0];
-    if (includeCustomer) {
-        return JSON.stringify({
-            business_unit_number: opcoId,
-            item_attribute_group_id: attributeGroupId,
-            customer_account: requestData.customer,
-            offset: 0,
-            limit: 10,
-        });
-    }
-    return JSON.stringify({
-        business_unit_number: opcoId,
-        item_attribute_group_id: attributeGroupId,
-        customer_group: requestData.customerGroup,
-        offset: 0,
-        limit: 10,
-    });
-};
+import {getBusinessUnits, getAttributeGroups} from '../PZRHelper';
+import {PZRFetchSearchResults} from '../PZRSearchHandler';
+import {getBffUrlConfig} from '../../../utils/Configs';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -53,28 +29,13 @@ const SearchForm = () => {
     const pZRContext = useContext(PZRContext);
     const [form] = Form.useForm();
 
-    const handleResponse = (response) => {
-        const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
-        return response.json().then((json) => {
-            if (response.ok) {
-                return {success: true, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
-            }
-            return {success: false, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
-        });
-    };
-
     const handleGetAttributeGroupResponse = (response) => {
-        const attrributeGroupList = [];
-        return response.json().then((json) => {
-            const responseData = json.attribute_groups;
-            if (response.ok && responseData) {
-                responseData.forEach((attributeGroup) => {
-                    attrributeGroupList.push(
-                        <Option key={attributeGroup.id}
-                                value={`${attributeGroup.id}-${attributeGroup.name}`}>{attributeGroup.name}</Option>
-                    );
-                });
-                setAttributeGroups(attrributeGroupList);
+        return response.json().then((respBody) => {
+            console.log(respBody);
+            if (!respBody || !respBody.attribute_groups) {
+                //TODO Handle failure here
+            } else {
+                setAttributeGroups(getAttributeGroups(respBody.attribute_groups));
             }
         });
     };
@@ -88,32 +49,6 @@ const SearchForm = () => {
         credentials: 'include'
     }).then(handleGetAttributeGroupResponse);
 
-    const priceZoneReassignmentRequestHandler = (includeCustomer, requestData) => {
-        fetch(getBffUrlConfig().priceZoneReassignmentSearchUrl, {
-            method: 'POST',
-            body: formRequestBody(includeCustomer, requestData),
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
-        })
-            .then(handleResponse)
-            .then((resp) => {
-                if (resp.success) {
-                    console.log("seed response");
-                    console.log(resp.data);
-                    pZRContext.setSearchResultData({...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER]});
-                } else {
-                    pZRContext.setErrorData({...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER]});
-                }
-                return null;
-            })
-            .catch((e) => {
-                pZRContext.setErrorData(e);
-            });
-    };
-
     const handleChangeCustomer = (event) => {
         setCustomerTextBoxValue(event.target.value);
     };
@@ -126,31 +61,21 @@ const SearchForm = () => {
         form.resetFields();
     };
 
-    const onSubmit = (includeCustomer, values) => {
-        pZRContext.setLoading(true);
+    const onSubmit = (values) => {
+        console.log(values);
         pZRContext.setResponse(null);
-        const opcoId = ((values.OpCo).split('-'))[0];
-        const attributeGroupDetails = (values.Itemgroup).split('-');
-        if (includeCustomer) {
-            pZRContext.setSearchParams({
-                site: values.OpCo,
-                opcoId,
-                attributeGroupId: attributeGroupDetails[0],
-                customer: values.customer,
-                customerGroup: null,
-                attributeGroup: attributeGroupDetails[1]
-            });
-        } else {
-            pZRContext.setSearchParams({
-                site: values.OpCo,
-                opcoId,
-                attributeGroupId: attributeGroupDetails[0],
-                customer: null,
-                customerGroup: values.customerGroup,
-                attributeGroup: attributeGroupDetails[1]
-            });
-        }
-        priceZoneReassignmentRequestHandler(includeCustomer, values);
+        const opcoId = ((values.opco).split('-'))[0];
+        const attributeGroupDetails = (values.attributeGroup).split('-');
+        const searchParams = {
+            site: values.opco,
+            opcoId,
+            attributeGroupId: attributeGroupDetails[0],
+            customer: values.customer ? values.customer : null,
+            customerGroup: values.customerGroup ? values.customerGroup : null,
+            attributeGroup: attributeGroupDetails[1]
+        };
+        pZRContext.setSearchParams(searchParams);
+        PZRFetchSearchResults(searchParams, pZRContext);
     };
 
     useEffect(() => {
@@ -169,10 +94,10 @@ const SearchForm = () => {
                         name="nest-messages"
                         form={form}
                         validateMessages={validateMessages}
-                        onFinish={(value) => onSubmit(isCustomerChecked, value)}
+                        onFinish={(value) => onSubmit(value)}
                     >
                         <Form.Item
-                            name="OpCo"
+                            name="opco"
                             label="OpCo"
                             className="pz-linebreak pz-linebreak-item-group"
                             rules={[
@@ -266,7 +191,7 @@ const SearchForm = () => {
                             </Form.Item>
                         </div>
                         <Form.Item
-                            name="Itemgroup"
+                            name="attributeGroup"
                             label="Attribute group"
                             className="pz-linebreak pz-linebreak-item-group"
                             rules={[{required: true}]}

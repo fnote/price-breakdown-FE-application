@@ -4,11 +4,12 @@ import useModal from "../../../hooks/useModal";
 import {WarningFilled} from "@ant-design/icons";
 import moment from 'moment';
 
-import {getPriceZoneOptions} from '../PZRHelper';
+import {UserDetailContext} from "../../UserDetailContext";
 import {PZRContext} from "../PZRContext";
+
+import {getPriceZoneOptions} from '../PZRHelper';
 import {getBffUrlConfig} from "../../../utils/Configs";
 import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from "../../../constants/Constants";
-import {UserDetailContext} from "../../UserDetailContext";
 
 export default function PrizeZoneHeader() {
     const {on, Modal, toggle} = useModal();
@@ -72,7 +73,7 @@ export default function PrizeZoneHeader() {
         });
     };
 
-    const priceZoneChaneHandler = () => {
+    const priceZoneChangeHandler = () => {
         setSubmitModal(false);
         fetch(getBffUrlConfig().pzrUpdateRequestsUrl, {
             method: 'POST',
@@ -130,7 +131,7 @@ export default function PrizeZoneHeader() {
                     {
                         title: "",
                         centered: "true",
-                        onOK: () => priceZoneChaneHandler(),
+                        onOK: () => priceZoneChangeHandler(),
                         onCancel: () => setSubmitModal(false),
                         okText: "SUBMIT",
                         cancelText: "CANCEL",
@@ -147,7 +148,7 @@ export default function PrizeZoneHeader() {
                             placeholder="Submit reason goes here"
                             autoSize={{minRows: 3, maxRows: 5}}
                             maxLength={1500}
-                            value={submissionReason}
+                            // value={submissionReason}
                             onChange={handleChange}
                         />
                     </div>
