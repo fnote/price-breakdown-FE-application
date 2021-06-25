@@ -133,7 +133,7 @@ export default function PrizeZoneHeader() {
                   type="primary"
                   htmlType="submit"
                   className="search-btn outlined-btn "
-
+                  // added "pz-disabled" class for the disabled view
                   onClick={toggle}
                 >
                   SUBMIT CHANGE
