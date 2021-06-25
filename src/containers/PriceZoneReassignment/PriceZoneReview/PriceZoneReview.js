@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Tag, Space } from "antd";
+import { Table, Space } from "antd";
 
 import ReviewSubmitter from "../PriceZoneReview/ReviewSubmitter";
 import ReviewSummery from "../PriceZoneReview/ReviewSummery";
@@ -280,19 +280,19 @@ export default function PriceZoneReview() {
       accept:true
     },
     {
-      key: '3',
+      key: '4',
       name: 'Joe Black',
       opco: 4,
       accept:true
     },
     {
-      key: '3',
+      key: '5',
       name: 'Joe Black',
       opco: 4,
       accept:true
     },
     {
-      key: '3',
+      key: '6',
       name: 'Joe Black',
       opco: 4,
       accept:true

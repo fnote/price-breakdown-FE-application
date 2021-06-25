@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Select, DatePicker, Input } from "antd";
+import { Select, DatePicker, Input , Tooltip } from "antd";
 import useModal from "../../../hooks/useModal";
 import { WarningFilled } from "@ant-design/icons";
 import { ReactComponent as Success } from "../../../styles/images/success.svg";
@@ -125,7 +125,9 @@ export default function PrizeZoneHeader() {
             <div className="pz-tab-items">
               <div className="pz-tab-items-top">ATTRIBUTE GROUP</div>
               <div className="pz-tab-items-bottom">
+              <Tooltip title="content goes here" color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color:'#000'}}>
                 <span className="pz-item-grp-text">Milk</span>
+                </Tooltip>
               </div>
             </div>
           </div>
