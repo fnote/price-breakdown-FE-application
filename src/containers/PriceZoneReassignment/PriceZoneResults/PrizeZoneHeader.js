@@ -109,6 +109,9 @@ export default function PrizeZoneHeader() {
                   placeholder="Select Pricezone"
                   dropdownMatchSelectWidth={false}
                   showSearch
+                  value='1'
+                  className="pz-select"
+                  
                 ></Select>
               </div>
             </div>
