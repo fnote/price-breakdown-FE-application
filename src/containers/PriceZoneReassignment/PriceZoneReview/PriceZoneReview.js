@@ -10,7 +10,7 @@ import {
   handleResponse
 } from '../../../utils/PZRUtils';
 import { REVIEW_RESULT_TABLE_PAGE_SIZE } from '../../../constants/PZRContants';
-import { PZRContext } from '../PZRContext';
+// import { PZRContext } from '../PZRContext';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummery from './ReviewSummery';
 import AproveRejectButtons from './AproveRejectButtons';
@@ -18,18 +18,19 @@ import CustomPagination from '../../../components/CustomPagination';
 import businessUnitMap from '../../../constants/BusinessUnits';
 
 export default function PriceZoneReview() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataResetIndex, setDataResetIndex] = useState(0);
+  const [dataStore, setDataStore] = useState({});
   const [totalResultCount, setTotalResultCount] = useState(REVIEW_RESULT_TABLE_PAGE_SIZE);
   const [resultLoading, setResultLoading] = useState(false);
 
-  const pzrContext = useContext(PZRContext);
-
   const dataSource = useMemo(() => {
-    const currentPageData = pzrContext.dataStore[pzrContext.currentPage];
+    const currentPageData = dataStore[currentPage];
     if (currentPageData) {
-      return pzrContext.dataStore[pzrContext.currentPage].map((record) => formatPZRequest(record, { businessUnitMap }));
+      return dataStore[currentPage].map((record) => formatPZRequest(record, { businessUnitMap }));
     }
     return [];
-  }, [pzrContext.dataStore, pzrContext.currentPage]);
+  }, [dataStore, currentPage]);
 
   const { on, Modal, toggle } = useModal();
 
@@ -48,9 +49,9 @@ export default function PriceZoneReview() {
     .then((resp) => {
       if (resp.success) {
         const { totalRecords, data: { pzUpdateRequests } } = resp.data;
-        const updatedDataStore = { ...pzrContext.dataStore, [page]: pzUpdateRequests };
+        const updatedDataStore = { ...dataStore, [page]: pzUpdateRequests };
         setTotalResultCount(totalRecords);
-        pzrContext.setDataStore(updatedDataStore);
+        setDataStore(updatedDataStore);
       } else {
         // todo: handle error scenario with a message to user
         console.log(resp);
@@ -67,18 +68,27 @@ export default function PriceZoneReview() {
   };
 
   const loadTableData = (page = 1) => {
-    console.log('loading data');
-    if (!pzrContext.dataStore[page]) {
+    if (!dataStore[page]) {
       fetchPZChangeRequests(page);
     }
   };
 
   const cleanInvalidData = () => {
-    if (pzrContext.dataResetIndex > 0) {
-      const dataStoreCopy = { ...pzrContext.dataStore };
+    if (dataResetIndex > 0) {
+      const dataStoreCopy = { ...dataStore };
       Object.keys(dataStoreCopy).forEach((key) => delete dataStoreCopy[key]);
-      pzrContext.setDataStore(dataStoreCopy);
+      setDataStore(dataStoreCopy);
     }
+  };
+
+  const approve = (row, index) => {
+    console.log(row);
+    console.log(index);
+  };
+
+  const reject = (row, index) => {
+    console.log(row);
+    console.log(index);
   };
 
   useEffect(() => {
@@ -115,7 +125,7 @@ export default function PriceZoneReview() {
       width: '20%',
       render: (cell, row, index) => (
         <Space size='middle'>
-          <AproveRejectButtons row={row} index={index}/>
+          <AproveRejectButtons row={row} index={index} approve={approve} reject={reject}/>
         </Space>
       ),
     },
@@ -166,10 +176,10 @@ export default function PriceZoneReview() {
       {!resultLoading ? renderDataTable() : renderLoader()}
       <CustomPagination
         total={totalResultCount}
-        current={pzrContext.currentPage}
+        current={currentPage}
         onChange={(current) => {
           if (!resultLoading) {
-            pzrContext.setCurrentPage(current);
+            setCurrentPage(current);
             cleanInvalidData();
             loadTableData(current);
           }
