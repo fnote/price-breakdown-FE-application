@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Select, DatePicker, Input } from "antd";
 import useModal from "../../../hooks/useModal";
 import { WarningFilled } from "@ant-design/icons";
+import {ReactComponent as Success } from '../../../styles/images/success.svg'
 
 export default function PrizeZoneHeader() {
   const { on, Modal, toggle } = useModal();
@@ -18,7 +19,7 @@ export default function PrizeZoneHeader() {
           {
             title: "",
             centered: "true",
-            onOK: () => setSubmitModal(true),
+            onOK: () => setSubmitModal('submit-reason'),
             still: true, // modal won't close
             okText: "PROCEED",
             cancelText: "CANCEL",
@@ -47,8 +48,9 @@ export default function PrizeZoneHeader() {
           {
             title: "",
             centered: "true",
-            onOK: () => setSubmitModal(false),
+            onOK: () => setSubmitModal('success-modal'),
             onCancel: () => setSubmitModal(false),
+            still: true, // modal won't close
             okText: "SUBMIT",
             cancelText: "CANCEL",
           },
@@ -69,6 +71,33 @@ export default function PrizeZoneHeader() {
       </div>
     );
   };
+
+  const SubmitSuccess = () => {
+    return (
+      <div>
+        {Modal(
+          {
+            title: "",
+            centered: "true",
+            onOK: () => setSubmitModal(false),
+            onCancel: () => setSubmitModal(false),
+            okText: "SUBMIT",
+            cancelText: "CANCEL",
+          },
+
+          <div className="pz-confirm-pop-base">
+            <div className="pz-alert-sr-sub">
+              <Success/>
+              Submitted Successfully
+            </div>
+           
+          </div>
+        )}
+      </div>
+    );
+  };
+
+
 
   return (
     <div className="pz-header">
@@ -109,9 +138,7 @@ export default function PrizeZoneHeader() {
                   placeholder="Select Pricezone"
                   dropdownMatchSelectWidth={false}
                   showSearch
-                  value='1'
                   className="pz-select"
-                  
                 ></Select>
               </div>
             </div>
@@ -150,7 +177,14 @@ export default function PrizeZoneHeader() {
         </div>
       </div>
       <ModalComponent />
-      {submitModal && <SubmitReason />}
+     
+    
+      {
+        {
+          'submit-reason': <SubmitReason />,
+          'success-modal':<SubmitSuccess />
+        }[submitModal]
+      }
     </div>
   );
 }

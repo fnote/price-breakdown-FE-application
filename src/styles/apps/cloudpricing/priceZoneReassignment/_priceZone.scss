@@ -533,9 +533,6 @@ height:20rem;
 //  Popup ReferenceTable
 // =======================
 
-.pz-pop-table{
-background:#F6E176;
-}
 
 
 
@@ -570,6 +567,52 @@ background:#F6E176;
 
 }
 
+}
+
+.pz-confirm-pop-base-table{
+  .pz-pop-table{
+
+  .pop-table-summary{
+    width:100%;
+    height:5rem;
+    display: flex;
+    align-items: center;
+
+
+    .pop-sum-customer-grp,.pop-sum-Attrib-grp{
+      
+      height:auto;
+      padding:1rem 1rem;
+      display: flex;
+      flex-direction: column;
+
+   .pop-sum-tag{
+        background:#76E0F6;
+        text-align: center;
+        font-size:1.5rem;
+        border-radius:4px;
+        margin-top:0.3rem;
+      }
+      .pop-sum-total{
+        font-size:1rem;
+        margin-top:0.3rem;
+      }
+    }
+    .pop-sum-Attrib-grp{
+      margin-left: 10px;
+      .pz-tag-blue{
+        background:#F6E176;
+      }
+    }
+
+  }
+
+  .pz-pop-table-ant{
+   
+    margin-top:2rem;
+  }
+  
+  }
 }
 
 // =========================
