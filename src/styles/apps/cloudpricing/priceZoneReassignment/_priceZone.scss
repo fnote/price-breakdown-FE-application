@@ -141,7 +141,7 @@
         .pz-tabs-combine {
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           width: calc(100% / 4);
           box-shadow: 0px 0px 8px 1.5px rgba(204, 204, 204, 0.5),
             0px 10px 1px #fff;
@@ -188,6 +188,11 @@
       display: inline-block;
       padding: 4px;
       border-radius: 3px;
+      width: 7rem;
+      white-space: none;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
     }
   }
 
@@ -513,10 +518,22 @@
 .pz-confirm-pop-base{
   display: flex;
   align-items: center;
-  justify-content: center;
+
 flex-direction: column;
 width:100%;
 height:20rem;
+
+
+// =======================
+//  Popup ReferenceTable
+// =======================
+
+.pz-pop-table{
+background:#F6E176;
+}
+
+
+
 
 .alert{
   color:#FFC107;
@@ -560,4 +577,14 @@ height:20rem;
    
 }
 
+}
+
+
+// ===============================
+//         Other styles
+// ===============================
+
+.pz-disabled{
+  pointer-events: none !important;
+  filter: grayscale(0.7);
 }
