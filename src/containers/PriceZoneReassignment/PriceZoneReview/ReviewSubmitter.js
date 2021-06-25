@@ -2,7 +2,7 @@ import React from 'react';
 import {FileTextFilled} from '@ant-design/icons';
 import { Tooltip } from 'antd';
 
-export default function ReviewSubmitter({ submitter: { submitterId, givenName, surname }}) {
+export default function ReviewSubmitter({ submission: { id, givenName, surname, createdTime }}) {
     return (
         <div className="pz-review-wrapper">
           
@@ -12,11 +12,11 @@ export default function ReviewSubmitter({ submitter: { submitterId, givenName, s
            {givenName} {surname}
            </div>
            <div className="pz-review-name-id">
-           ({submitterId})
+           ({id})
            </div>
            </div>
            <div className="pz-review-date">
-           04 Aug 2020
+           {createdTime}
            </div>
            <div className="pz-review-note">
                <Tooltip title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt, perferendis! Dignissimos corporis autem repellendus repudiandae officia in laboriosam nostrum corrupti." color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>

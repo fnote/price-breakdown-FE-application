@@ -1,31 +1,41 @@
 /* eslint-disable react/display-name */
-import React from 'react';
-import { Table, Space } from 'antd';
-
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+import { Table, Space, Spin } from 'antd';
+import {getBffUrlConfig} from '../../../utils/Configs';
+import {
+  formatPZRequest,
+  generatePaginationParams,
+  constructRequestUrl,
+  handleResponse
+} from '../../../utils/PZRUtils';
+import { REVIEW_RESULT_TABLE_PAGE_SIZE } from '../../../constants/PZRContants';
+import { PZRContext } from '../PZRContext';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummery from './ReviewSummery';
 import AproveRejectButtons from './AproveRejectButtons';
+import CustomPagination from '../../../components/CustomPagination';
+import businessUnitMap from '../../../constants/BusinessUnits';
 
 const columns = [
   {
     title: 'SUBMITTED BY',
-    dataIndex: 'submitter',
-    key: 'submitter',
+    dataIndex: 'submission',
+    key: 'submission',
     width: '20%',
-    render: (submitter) => (
+    render: (submission) => (
       <Space size='middle'>
-        <ReviewSubmitter submitter={submitter} />
+        <ReviewSubmitter submission={submission} />
       </Space>
     ),
   },
   {
     title: 'SUMMARY OF CHANGES',
-    dataIndex: 'opco',
-    key: 'opco',
+    dataIndex: 'changeSummary',
+    key: 'changeSummary',
     width: '40%',
-    render: (cell, row, index) => (
+    render: (changeSummary) => (
       <Space size='middle'>
-        <ReviewSummery />
+        <ReviewSummery changeSummary={changeSummary}/>
       </Space>
     ),
   },
@@ -42,39 +52,101 @@ const columns = [
   },
 ];
 
-// sample data
-
-const data = [
-  {
-    'id': 121,
-    'businessUnitNumber': '020',
-    'itemAttributeGroup': 'VEGETABLE PUREES/SEASONINGS/PASTES',
-    'itemAttributeGroupId': '12345',
-    'customerGroupId': '221',
-    'customerAccount': '700001',
-    'customerGroup': 'El Cerro',
-    'newPriceZone': 3,
-    'status': 'APPROVED',
-    'effectiveFromDate': '20210530',
-    'submitter': {
-        'submitterId': 'vvit5827',
-        'givenName': 'Vithulan',
-        'surname': 'MV',
-        'email': 'vvit5827@sysco.com'
-    },
-    'summary': {
-        'customerCount': 12,
-        'supcCount': 123
-    },
-    'createdTime': 1621837508,
-    'approver': null,
-    'approverUpdatedTime': null,
-    'exportedTime': null
-  }
-];
-
 export default function PriceZoneReview() {
-  return <div className='pz-review-base-wrapper'>
-      <Table columns={columns} dataSource={data} />
-  </div>;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataResetIndex, setDataResetIndex] = useState(0);
+  const [dataStore, setDataStore] = useState({});
+  const [totalResultCount, setTotalResultCount] = useState(REVIEW_RESULT_TABLE_PAGE_SIZE);
+  const [resultLoading, setResultLoading] = useState(false);
+
+  const dataSource = useMemo(() => {
+    const currentPageData = dataStore[currentPage];
+    if (currentPageData) {
+      return dataStore[currentPage].map((record) => formatPZRequest(record, { businessUnitMap }));
+    }
+    return [];
+  }, [dataStore, currentPage]);
+
+  const fetchPZChangeRequests = (page) => {
+    const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
+    const requestUrl = constructRequestUrl(getBffUrlConfig().getPZUpdateRequests, paginationParams);
+    setResultLoading(true);
+    fetch(requestUrl, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      },
+      credentials: 'include'
+    })
+    .then(handleResponse)
+    .then((resp) => {
+      if (resp.success) {
+        const { totalRecords, data: { pzUpdateRequests } } = resp.data;
+        const updatedDataStore = { ...dataStore, [page]: pzUpdateRequests };
+        setTotalResultCount(totalRecords);
+        setDataStore(updatedDataStore);
+      } else {
+        // todo: handle error scenario with a message to user
+        console.log(resp);
+      }
+      setResultLoading(false);
+    })
+    .catch((err) => {
+      // todo: handle error scenario with a message to user
+      console.log(err);
+    })
+    .finally(() => {
+      setResultLoading(false);
+    });
+  };
+
+  const loadTableData = (page = 1) => {
+    if (!dataStore[page]) {
+      fetchPZChangeRequests(page);
+    }
+  };
+
+  const cleanInvalidData = () => {
+    if (dataResetIndex > 0) {
+      const dataStoreCopy = { ...dataStore };
+      Object.keys(dataStoreCopy).forEach((key) => delete dataStoreCopy[key]);
+      setDataStore(dataStoreCopy);
+    }
+  };
+
+  useEffect(() => {
+    loadTableData();
+  }, []);
+
+  const renderLoader = () => (
+    <Space size="middle" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+      <Spin size="large" />
+    </Space>
+  );
+
+  const renderDataTable = () => (
+    <Table
+      columns={columns}
+      dataSource={dataSource}
+      pagination={false}
+    />
+  );
+
+  return (
+    <div className='pz-review-base-wrapper'>
+      {!resultLoading ? renderDataTable() : renderLoader()}
+      <CustomPagination
+        total={totalResultCount}
+        current={currentPage}
+        onChange={(current) => {
+          if (!resultLoading) {
+            setCurrentPage(current);
+            cleanInvalidData();
+            loadTableData(current);
+          }
+        }}
+        pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
+      />
+    </div>
+  );
 }
