@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Select, DatePicker, Input , Tooltip } from "antd";
+import { Select, DatePicker, Input, Tooltip } from "antd";
 import useModal from "../../../hooks/useModal";
 import { WarningFilled } from "@ant-design/icons";
 import { ReactComponent as Success } from "../../../styles/images/success.svg";
 
 export default function PrizeZoneHeader() {
-  const { on, Modal, toggle ,  } = useModal();
+  const { on, Modal, toggle } = useModal();
   // on is the modal status =>  on || off
 
   const { TextArea } = Input;
@@ -83,14 +83,13 @@ export default function PrizeZoneHeader() {
             onCancel: () => setSubmitModal(false),
             okText: "OK",
             cancelText: "",
-            noCancel:true // no cancel button
-            
+            noCancel: true, // no cancel button
           },
 
           <div className="pz-confirm-pop-base-success">
             <div className="pz-confirm-wrapper-success">
               <div className="pz-success-anim">
-                <Success className="pz-success-anim-logo"/>
+                <Success className="pz-success-anim-logo" />
               </div>
               <div className="pz-success-text">Submitted Successfully</div>
             </div>
@@ -115,18 +114,38 @@ export default function PrizeZoneHeader() {
         <div className="pz-tabs pz-tabs-combine">
           <div className="pz-tabs-combine-l">
             <div className="pz-tab-items">
-              <div className="pz-tab-items-top">CUSTOMER GROUP</div>
-              <div className="pz-tab-items-bottom">
-                <span className="pz-cutomer-grp-text">31223</span>
-              </div>
+              {1 == 2 ? (
+                <>
+                  <div className="pz-tab-items-top">CUSTOMER GROUP</div>
+                  <div className="pz-tab-items-bottom">
+                    <span className="pz-cutomer-grp-text">31223</span>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="pz-tab-items-top">CUSTOMER </div>
+                  <div className="pz-tab-items-bottom">
+                    <span className="pz-cutomer-grp-text-no-bg">055437</span>
+                    <div className="pz-customer-group-bottom">
+                      <span  className="pz-customer-group-bottom-text">Customer Group</span>
+                      <span className="pz-customer-group-bottom-tag">31223</span>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
           <div className="pz-tabs-combine-r">
             <div className="pz-tab-items">
               <div className="pz-tab-items-top">ATTRIBUTE GROUP</div>
               <div className="pz-tab-items-bottom">
-              <Tooltip title="content goes here" color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color:'#000'}}>
-                <span className="pz-item-grp-text">Milk</span>
+                <Tooltip
+                  title="content goes here"
+                  color="#fff"
+                  overlayClassName="pz-tooltip"
+                  overlayStyle={{ color: "#000" }}
+                >
+                  <span className="pz-item-grp-text">Milk</span>
                 </Tooltip>
               </div>
             </div>
@@ -180,7 +199,6 @@ export default function PrizeZoneHeader() {
         </div>
       </div>
 
-  
       <ModalComponent />
 
       {
