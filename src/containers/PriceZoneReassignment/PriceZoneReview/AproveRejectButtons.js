@@ -17,6 +17,7 @@ export default function AproveRejectButtons() {
             onOK: () => toggle, // success
             okText: "SUBMIT",
             cancelText: "CANCEL",
+           
           },
 
           <div className="pz-confirm-pop-base">

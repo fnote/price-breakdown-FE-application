@@ -346,7 +346,7 @@ export default function PriceZoneReview() {
   };
   return (
     <div className="pz-review-base-wrapper">
-      <Table columns={columns} dataSource={data}  pagination={{ defaultPageSize: 4 }} />
+      <Table columns={columns} dataSource={data}  pagination={{ pageSize: 4 , defaultPageSize:4 }}  />
       <ReferenceTable />
     </div>
   );

@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Select, DatePicker, Input } from "antd";
 import useModal from "../../../hooks/useModal";
 import { WarningFilled } from "@ant-design/icons";
-import {ReactComponent as Success } from '../../../styles/images/success.svg'
+import { ReactComponent as Success } from "../../../styles/images/success.svg";
 
 export default function PrizeZoneHeader() {
-  const { on, Modal, toggle } = useModal();
+  const { on, Modal, toggle ,  } = useModal();
   // on is the modal status =>  on || off
 
   const { TextArea } = Input;
@@ -19,7 +19,7 @@ export default function PrizeZoneHeader() {
           {
             title: "",
             centered: "true",
-            onOK: () => setSubmitModal('submit-reason'),
+            onOK: () => setSubmitModal("submit-reason"),
             still: true, // modal won't close
             okText: "PROCEED",
             cancelText: "CANCEL",
@@ -48,7 +48,7 @@ export default function PrizeZoneHeader() {
           {
             title: "",
             centered: "true",
-            onOK: () => setSubmitModal('success-modal'),
+            onOK: () => setSubmitModal("success-modal"),
             onCancel: () => setSubmitModal(false),
             still: true, // modal won't close
             okText: "SUBMIT",
@@ -81,23 +81,24 @@ export default function PrizeZoneHeader() {
             centered: "true",
             onOK: () => setSubmitModal(false),
             onCancel: () => setSubmitModal(false),
-            okText: "SUBMIT",
-            cancelText: "CANCEL",
+            okText: "OK",
+            cancelText: "",
+            noCancel:true // no cancel button
+            
           },
 
-          <div className="pz-confirm-pop-base">
-            <div className="pz-alert-sr-sub">
-              <Success/>
-              Submitted Successfully
+          <div className="pz-confirm-pop-base-success">
+            <div className="pz-confirm-wrapper-success">
+              <div className="pz-success-anim">
+                <Success className="pz-success-anim-logo"/>
+              </div>
+              <div className="pz-success-text">Submitted Successfully</div>
             </div>
-           
           </div>
         )}
       </div>
     );
   };
-
-
 
   return (
     <div className="pz-header">
@@ -176,13 +177,14 @@ export default function PrizeZoneHeader() {
           </div>
         </div>
       </div>
+
+  
       <ModalComponent />
-     
-    
+
       {
         {
-          'submit-reason': <SubmitReason />,
-          'success-modal':<SubmitSuccess />
+          "submit-reason": <SubmitReason />,
+          "success-modal": <SubmitSuccess />,
         }[submitModal]
       }
     </div>
