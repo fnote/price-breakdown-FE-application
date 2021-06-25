@@ -7,6 +7,8 @@ export default function AproveRejectButtons({ row, index, approve, reject }) {
 
   const { TextArea } = Input;
 
+  const inputElement = useRef(null);
+
   const RejectReasonModal = () => {
     return (
       <div>
@@ -14,7 +16,13 @@ export default function AproveRejectButtons({ row, index, approve, reject }) {
           {
             title: "",
             centered: "true",
-            onOK: () => toggle, // success
+            onOK: () => {
+              toggle();
+              console.log(inputElement.current);
+              if (inputElement.current) {
+                console.log(inputElement.current.state.value);
+              }
+            },
             okText: "SUBMIT",
             cancelText: "CANCEL",
           },
@@ -29,6 +37,7 @@ export default function AproveRejectButtons({ row, index, approve, reject }) {
               className="pz-submit-text-base"
               placeholder="Please insert reject reason here"
               autoSize={{ minRows: 5, maxRows: 8 }}
+              ref={inputElement}
             />
           </div>
         )}
