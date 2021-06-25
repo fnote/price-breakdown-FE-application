@@ -3,6 +3,7 @@ import { Select, DatePicker, Input, Tooltip } from "antd";
 import useModal from "../../../hooks/useModal";
 import { WarningFilled } from "@ant-design/icons";
 import { ReactComponent as Success } from "../../../styles/images/success.svg";
+import { ReactComponent as Warning } from "../../../styles/images/warning.svg";
 
 export default function PrizeZoneHeader() {
   const { on, Modal, toggle } = useModal();
@@ -27,7 +28,7 @@ export default function PrizeZoneHeader() {
 
           <div className="pz-confirm-pop-base">
             <div className="alert">
-              <WarningFilled />
+             <Warning className="pz-warning-anim-logo"/>
             </div>
             <div className="pz-alert-main">Confirm Price Zone Change</div>
             <div className="pz-alert-sub">

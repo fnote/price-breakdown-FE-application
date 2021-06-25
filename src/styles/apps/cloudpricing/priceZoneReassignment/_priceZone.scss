@@ -604,8 +604,10 @@
   // =======================
 
   .alert {
-    color: #ffc107;
-    font-size: 5rem;
+    .pz-warning-anim-logo{
+width:8rem;
+height:8rem;
+    }
   }
   .pz-alert-main,
   .pz-alert-sr-main {
