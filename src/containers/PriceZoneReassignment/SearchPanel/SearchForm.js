@@ -64,14 +64,16 @@ const SearchForm = () => {
     const onSubmit = (values) => {
         console.log(values);
         pZRContext.setResponse(null);
+        const customer = isCustomerChecked ? values.customer : null;
+        const customerGroup = !isCustomerChecked ? values.customerGroup : null;
         const opcoId = ((values.opco).split('-'))[0];
         const attributeGroupDetails = (values.attributeGroup).split('-');
         const searchParams = {
             site: values.opco,
             opcoId,
             attributeGroupId: attributeGroupDetails[0],
-            customer: values.customer ? values.customer : null,
-            customerGroup: values.customerGroup ? values.customerGroup : null,
+            customer: customer ? values.customer : null,
+            customerGroup: customerGroup ? values.customerGroup : null,
             attributeGroup: attributeGroupDetails[1]
         };
         pZRContext.setSearchParams(searchParams);

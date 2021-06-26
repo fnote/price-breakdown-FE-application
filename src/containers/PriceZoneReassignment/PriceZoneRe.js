@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FileTextFilled } from '@ant-design/icons';
-import { Tabs, Modal } from 'antd';
+import { Tabs } from 'antd';
 import AppBar from '../../components/AppBar/AppBar';
 import SearchPanel from './SearchPanel/SearchPanel';
 import PriceZoneHeader from './PriceZoneResults/PrizeZoneHeader';
@@ -29,7 +29,7 @@ export default function PriceZoneRe() {
                   tab={
                     <span>
                       <FileTextFilled />
-                      Update Pricezone
+                      Update Price Zone
                     </span>
                   }
                   key="1"
@@ -53,7 +53,6 @@ export default function PriceZoneRe() {
               </Tabs>
             </div>
         </div>
-        <PriceZoneConfirm/>
       </PZRContextProvider>
     </div>
   );

@@ -27,7 +27,8 @@ const formRequestBody = (requestData) => {
 };
 
 export const PZRFetchSearchResults = (requestData, pZRContext) => {
-    pZRContext.isSearchLoading(true);
+
+    pZRContext.setSearchLoading(true);
     fetch(getBffUrlConfig().priceZoneReassignmentSearchUrl, {
         method: 'POST',
         body: formRequestBody(requestData),
@@ -50,6 +51,6 @@ export const PZRFetchSearchResults = (requestData, pZRContext) => {
             pZRContext.setErrorData(e);
         })
         .finally(() => {
-            pZRContext.isSearchLoading(false);
+            pZRContext.setSearchLoading(false);
         });
 };

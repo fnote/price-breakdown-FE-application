@@ -47,7 +47,7 @@ const PZRContextProvider = (props) => {
 
     return (
         <PZRContext.Provider value={{
-            isSearchLoading: isSearchLoading,
+            isSearchLoading,
             setSearchLoading,
             searchParams,
             setSearchParams,

@@ -1,7 +1,6 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useRef} from "react";
 import {Select, DatePicker, Input, Tooltip} from "antd";
 import useModal from "../../../hooks/useModal";
-import {WarningFilled} from "@ant-design/icons";
 import moment from 'moment';
 
 import {UserDetailContext} from "../../UserDetailContext";
@@ -10,9 +9,8 @@ import {PZRContext} from "../PZRContext";
 import {getPriceZoneOptions} from '../PZRHelper';
 import {getBffUrlConfig} from "../../../utils/Configs";
 import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from "../../../constants/Constants";
-import { WarningFilled } from "@ant-design/icons";
-import { ReactComponent as Success } from "../../../styles/images/success.svg";
-import { ReactComponent as Warning } from "../../../styles/images/warning.svg";
+import {ReactComponent as Success} from "../../../styles/images/success.svg";
+import {ReactComponent as Warning} from "../../../styles/images/warning.svg";
 
 export default function PrizeZoneHeader() {
     const {on, Modal, toggle} = useModal();
@@ -20,7 +18,7 @@ export default function PrizeZoneHeader() {
 
     const {TextArea} = Input;
 
-  const [submitModal, setSubmitModal] = useState(false);
+    const [submitModal, setSubmitModal] = useState(false);
     const getDefaultEffectiveDate = () => {
         // Returning next monday as the default
         return moment().startOf('isoWeek').add(1, 'week');
@@ -29,42 +27,41 @@ export default function PrizeZoneHeader() {
     const PZRContextData = useContext(PZRContext);
     const userDetailContext = useContext(UserDetailContext);
 
-    const [submitModal, setSubmitModal] = useState(false);
     const [newPriceZone, setNewPriceZone] = useState(0);
     const [isSubmitDisabled, setSubmitDisabled] = useState(true);
     const [effectiveDate, setEffectiveDate] = useState(getDefaultEffectiveDate().format("YYYYMMDD"));
     const [effectiveDay, setEffectiveDay] = useState(getDefaultEffectiveDate().format("ddd"));
-    const [submissionReason, setSubmissionReason] = useState('');
+    const submissionReasonInput = useRef(null);
 
 
-  const ModalComponent = () => {
-    return (
-      <div>
-        {Modal(
-          {
-            title: "",
-            centered: "true",
-            onOK: () => setSubmitModal("submit-reason"),
-            still: true, // modal won't close
-            okText: "PROCEED",
-            cancelText: "CANCEL",
-          },
+    const ModalComponent = () => {
+        return (
+            <div>
+                {Modal(
+                    {
+                        title: "",
+                        centered: "true",
+                        onOK: () => setSubmitModal("submit-reason"),
+                        still: true, // modal won't close
+                        okText: "PROCEED",
+                        cancelText: "CANCEL",
+                    },
 
-          <div className="pz-confirm-pop-base">
-            <div className="alert">
-             <Warning className="pz-warning-anim-logo"/>
+                    <div className="pz-confirm-pop-base">
+                        <div className="alert">
+                            <Warning className="pz-warning-anim-logo"/>
+                        </div>
+                        <div className="pz-alert-main">Confirm Price Zone Change</div>
+                        <div className="pz-alert-sub">
+                            While performing this change, price zone for all the items
+                            associated with item attribute group and all the customers
+                            associated with customer group will be updated.
+                        </div>
+                    </div>
+                )}
             </div>
-            <div className="pz-alert-main">Confirm Price Zone Change</div>
-            <div className="pz-alert-sub">
-              While performing this change, price zone for all the items
-              associated with item attribute group and all the customers
-              associated with customer group will be updated.
-            </div>
-          </div>
-        )}
-      </div>
-    );
-  };
+        );
+    };
 
     const handleResponse = (response) => {
         const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
@@ -77,7 +74,6 @@ export default function PrizeZoneHeader() {
     };
 
     const priceZoneChangeHandler = () => {
-        setSubmitModal("success-modal");
         fetch(getBffUrlConfig().pzrUpdateRequestsUrl, {
             method: 'POST',
             body: formRequestBody(),
@@ -90,6 +86,7 @@ export default function PrizeZoneHeader() {
             .then(handleResponse)
             .then((resp) => {
                 if (resp.success) {
+                    setSubmitModal("success-modal");
                     //TODO: Handle success
                 } else {
                     //TODO: Handle failure
@@ -103,7 +100,10 @@ export default function PrizeZoneHeader() {
 
     const formRequestBody = () => {
         const userDetailsObj = userDetailContext.userDetailsData.userDetails;
-
+        const submissionReason = (submissionReasonInput.current && submissionReasonInput.current.state
+            && submissionReasonInput.current.state.value) ?
+            submissionReasonInput.current.state.value : '';
+        console.log(submissionReason);
         return JSON.stringify({
             businessUnitNumber: PZRContextData.searchParams.opcoId,
             itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
@@ -123,11 +123,6 @@ export default function PrizeZoneHeader() {
     };
 
     const SubmitReason = () => {
-
-        const handleChange = (event) => {
-            setSubmissionReason(event.target.value)
-        };
-
         return (
             <div>
                 {Modal(
@@ -141,52 +136,51 @@ export default function PrizeZoneHeader() {
                         cancelText: "CANCEL",
                     },
 
-          <div className="pz-confirm-pop-base">
-            <div className="pz-alert-sr-main">Submit Reason</div>
-            <div className="pz-alert-sr-sub">
-              Please provide a reason which would be sent to the reviewer as to
-              why this change was submitted.
+                    <div className="pz-confirm-pop-base">
+                        <div className="pz-alert-sr-main">Submit Reason</div>
+                        <div className="pz-alert-sr-sub">
+                            Please provide a reason which would be sent to the reviewer as to
+                            why this change was submitted.
+                        </div>
+                        <TextArea
+                            className="pz-submit-text-base"
+                            placeholder="Please insert submit reason here"
+                            autoSize={{minRows: 3, maxRows: 5}}
+                            maxLength={1500}
+                            ref={submissionReasonInput}
+                        />
+                    </div>
+                )}
             </div>
-            <TextArea
-              className="pz-submit-text-base"
-              placeholder="Please insert submit reason here"
-              autoSize={{ minRows: 3, maxRows: 5 }}
-              maxLength={1500}
-                // value={submissionReason}
-              onChange={handleChange}
-            />
-          </div>
-        )}
-      </div>
-    );
-  };
+        );
+    };
 
-  const SubmitSuccess = () => {
-    return (
-      <div>
-        {Modal(
-          {
-            title: "",
-            centered: "true",
-            onOK: () => setSubmitModal(false),
-            onCancel: () => setSubmitModal(false),
-            okText: "OK",
-            cancelText: "",
-            noCancel: true, // no cancel button
-          },
+    const SubmitSuccess = () => {
+        return (
+            <div>
+                {Modal(
+                    {
+                        title: "",
+                        centered: "true",
+                        onOK: () => setSubmitModal(false),
+                        onCancel: () => setSubmitModal(false),
+                        okText: "OK",
+                        cancelText: "",
+                        noCancel: true, // no cancel button
+                    },
 
-          <div className="pz-confirm-pop-base-success">
-            <div className="pz-confirm-wrapper-success">
-              <div className="pz-success-anim">
-                <Success className="pz-success-anim-logo" />
-              </div>
-              <div className="pz-success-text">Submitted Successfully</div>
+                    <div className="pz-confirm-pop-base-success">
+                        <div className="pz-confirm-wrapper-success">
+                            <div className="pz-success-anim">
+                                <Success className="pz-success-anim-logo"/>
+                            </div>
+                            <div className="pz-success-text">Submitted Successfully</div>
+                        </div>
+                    </div>
+                )}
             </div>
-          </div>
-        )}
-      </div>
-    );
-  };
+        );
+    };
     const onPriceZoneChange = (value) => {
         console.log(userDetailContext.userDetailsData);
         setNewPriceZone(value);
@@ -204,6 +198,14 @@ export default function PrizeZoneHeader() {
         setEffectiveDay(effectiveFrom.format("ddd"));
     };
 
+    const getCustomerGroupOfCustomer = () => {
+        if (!PZRContextData.searchResults || !PZRContextData.searchResults.data || !PZRContextData.searchResults.data.customer_group) {
+            return null;
+        }
+
+        return PZRContextData.searchResults.data.customer_group;
+    };
+
     return (
         <div className="pz-header">
             <div className="pz-header-title"></div>
@@ -219,17 +221,46 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs pz-tabs-combine">
                     <div className="pz-tabs-combine-l">
                         <div className="pz-tab-items">
-                            <div className="pz-tab-items-top">CUSTOMER GROUP</div>
-                            <div className="pz-tab-items-bottom">
-                                <span className="pz-cutomer-grp-text">{PZRContextData.searchParams.customerGroup}</span>
-                            </div>
+                            {PZRContextData.searchParams.customerGroup ? (
+                                <>
+                                    <div className="pz-tab-items-top">CUSTOMER GROUP</div>
+                                    <div className="pz-tab-items-bottom">
+                                        <span className="pz-cutomer-grp-text">31223</span>
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <div className="pz-tab-items-top">CUSTOMER</div>
+                                    <div className="pz-tab-items-bottom">
+                                        <span
+                                            className="pz-cutomer-grp-text-no-bg">{PZRContextData.searchParams.customer}
+                                        </span>
+                                        {getCustomerGroupOfCustomer() ? (
+                                            <div className="pz-customer-group-bottom">
+                                                <span className="pz-customer-group-bottom-text">Customer Group</span>
+                                                <span
+                                                    className="pz-customer-group-bottom-tag">{getCustomerGroupOfCustomer()}</span>
+                                            </div>
+                                        ) : (<div/>)
+                                        }
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                     <div className="pz-tabs-combine-r">
                         <div className="pz-tab-items">
                             <div className="pz-tab-items-top">ATTRIBUTE GROUP</div>
                             <div className="pz-tab-items-bottom">
-                                <span className="pz-item-grp-text">{PZRContextData.searchParams.attributeGroup}</span>
+                                <Tooltip
+                                    title={PZRContextData.searchParams.attributeGroup}
+                                    color="#fff"
+                                    overlayClassName="pz-tooltip"
+                                    overlayStyle={{color: "#000"}}
+                                >
+                                    <span
+                                        className="pz-item-grp-text">{PZRContextData.searchParams.attributeGroup}</span>
+                                </Tooltip>
                             </div>
                         </div>
                     </div>
@@ -240,10 +271,11 @@ export default function PrizeZoneHeader() {
                             <div className="pz-tab-items-top">PRICE ZONE</div>
                             <div className="pz-tab-items-bottom">
                                 <Select
-                                    placeholder="Select PriceZone"
+                                    placeholder="Select Pricezone"
                                     dropdownMatchSelectWidth={false}
                                     showSearch
                                     onChange={onPriceZoneChange}
+                                    className="pz-select"
                                 >
                                     {getPriceZoneOptions()}
                                 </Select>
@@ -254,7 +286,7 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs pz-separator">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
-                            <div className="pz-tab-items-top">EFFECTIVE DATE ({effectiveDay})</div>
+                            <div className="pz-tab-items-top">EFFECTIVE DATE ( {effectiveDay} )</div>
                             <div className="pz-tab-items-bottom">
                                 <DatePicker
                                     defaultValue={getDefaultEffectiveDate}
@@ -274,8 +306,8 @@ export default function PrizeZoneHeader() {
                                 <button
                                     type="primary"
                                     htmlType="submit"
-                                    className="search-btn outlined-btn"
-                                    onClick={(still) => toggle(still)}
+                                    className={isSubmitDisabled ? "pz-disabled" : "search-btn outlined-btn "}
+                                    onClick={toggle}
                                     disabled={isSubmitDisabled}
                                 >
                                     SUBMIT CHANGE
@@ -288,120 +320,15 @@ export default function PrizeZoneHeader() {
                     </div>
                 </div>
             </div>
+
             <ModalComponent/>
-            {submitModal && <SubmitReason/>}
 
-
+            {
+                {
+                    "submit-reason": <SubmitReason/>,
+                    "success-modal": <SubmitSuccess/>,
+                }[submitModal]
+            }
         </div>
     );
-  return (
-    <div className="pz-header">
-      <div className="pz-header-title"></div>
-      <div className="pz-tab-section">
-        <div className="pz-tabs">
-          <div className="pz-tab-items">
-            <div className="pz-text-wrapper">
-              <div className="pz-tab-items-top">OPCO {on ? "on" : "off"}</div>
-              <div className="pz-tab-items-bottom">043-Houston</div>
-            </div>
-          </div>
-        </div>
-        <div className="pz-tabs pz-tabs-combine">
-          <div className="pz-tabs-combine-l">
-            <div className="pz-tab-items">
-              {1 == 2 ? (
-                <>
-                  <div className="pz-tab-items-top">CUSTOMER GROUP</div>
-                  <div className="pz-tab-items-bottom">
-                    <span className="pz-cutomer-grp-text">31223</span>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="pz-tab-items-top">CUSTOMER </div>
-                  <div className="pz-tab-items-bottom">
-                    <span className="pz-cutomer-grp-text-no-bg">055437</span>
-                    <div className="pz-customer-group-bottom">
-                      <span  className="pz-customer-group-bottom-text">Customer Group</span>
-                      <span className="pz-customer-group-bottom-tag">31223</span>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-          <div className="pz-tabs-combine-r">
-            <div className="pz-tab-items">
-              <div className="pz-tab-items-top">ATTRIBUTE GROUP</div>
-              <div className="pz-tab-items-bottom">
-                <Tooltip
-                  title="content goes here"
-                  color="#fff"
-                  overlayClassName="pz-tooltip"
-                  overlayStyle={{ color: "#000" }}
-                >
-                  <span className="pz-item-grp-text">Milk</span>
-                </Tooltip>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="pz-tabs">
-          <div className="pz-tab-items">
-            <div className="pz-text-wrapper">
-              <div className="pz-tab-items-top">PRICE ZONE</div>
-              <div className="pz-tab-items-bottom">
-                <Select
-                  placeholder="Select Pricezone"
-                  dropdownMatchSelectWidth={false}
-                  showSearch
-                  className="pz-select"
-                ></Select>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="pz-tabs pz-separator">
-          <div className="pz-tab-items">
-            <div className="pz-text-wrapper">
-              <div className="pz-tab-items-top">EFFECTIVE DATE ( mon )</div>
-              <div className="pz-tab-items-bottom">
-                <DatePicker />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="pz-tabs">
-          <div className="pz-tab-items">
-            <div className="pz-text-wrapper">
-              <div className="pz-tab-items-top"></div>
-              <div className="pz-tab-items-bottom">
-                <button
-                  type="primary"
-                  htmlType="submit"
-                  className="search-btn outlined-btn "
-                  // added "pz-disabled" class for the disabled view
-                  onClick={toggle}
-                >
-                  SUBMIT CHANGE
-                </button>
-                <div className="pz-review-reminder">
-                  Will be sent for review
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <ModalComponent />
-
-      {
-        {
-          "submit-reason": <SubmitReason />,
-          "success-modal": <SubmitSuccess />,
-        }[submitModal]
-      }
-    </div>
-  );
 }
