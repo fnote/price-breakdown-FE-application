@@ -12,32 +12,13 @@ export default function PriceZoneRe() {
   const { TabPane } = Tabs;
   const [reviewTab, makeReviewActive] = useState(true);
 
-  const [confirmModal, setConfirmModal] = useState(false);
 
-  //Modal containers
-
-  const PriceZoneConfirm = () => {
-    return(
-      <>
-      <div className="pz-confirm-pop-base">
-      <Modal
-          title=""
-          centered
-          visible={confirmModal}
-          onOk={() => setConfirmModal(true)}
-          onCancel={() => setConfirmModal(false)}
-        >
-        </Modal>
-      </div>
-      </>
-    );
-  };
 
   return (
     <div className="wrapper cloudpricing-wrapper">
       <AppBar />
       <PZRContextProvider>
-        <div className="content">          
+        <div className="content">
             <SearchPanel />
             <div className="pz-wrapper  pz-no-bg">
               {/* <PriceZoneHeader/>
