@@ -3,8 +3,8 @@ import {Table} from "antd";
 
 import {PZRContext} from "../PZRContext";
 
-import {calculateOffset} from '../PZRHelper';
-import {DEFAULT_PAGE_SIZE, PZRFetchSearchResults} from '../PZRSearchHandler';
+import {calculateOffset} from '../PZRUtils/PZRHelper';
+import {DEFAULT_PAGE_SIZE, PZRFetchSearchResults} from '../PZRUtils/PZRSearchHandler';
 import CustomPagination from '../../../components/CustomPagination';
 
 
@@ -69,11 +69,12 @@ export default function PriceZoneTable() {
 
             <Table pagination={false}
                    columns={columns}
-                   dataSource={searchResults.data && searchResults.data.item_price_zones ? searchResults.data.item_price_zones : []}
+                   dataSource={searchResults && searchResults.data && searchResults.data.item_price_zones ? searchResults.data.item_price_zones : []}
+                   loading={PZRContextData.isSearchTableLoading}
             />
             <CustomPagination
                 onChange={onChange}
-                total={searchResults.total_records ? searchResults.total_records : 0}
+                total={searchResults && searchResults.total_records ? searchResults.total_records : 0}
                 current={currentPage}
                 pageSize={DEFAULT_PAGE_SIZE}
             />

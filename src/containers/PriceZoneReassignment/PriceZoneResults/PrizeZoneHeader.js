@@ -6,7 +6,7 @@ import moment from 'moment';
 import {UserDetailContext} from "../../UserDetailContext";
 import {PZRContext} from "../PZRContext";
 
-import {getPriceZoneOptions} from '../PZRHelper';
+import {getPriceZoneOptions} from '../PZRUtils/PZRHelper';
 import {getBffUrlConfig} from "../../../utils/Configs";
 import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from "../../../constants/Constants";
 import {ReactComponent as Success} from "../../../styles/images/success.svg";
@@ -87,6 +87,7 @@ export default function PrizeZoneHeader() {
             .then((resp) => {
                 if (resp.success) {
                     setSubmitModal("success-modal");
+                    PZRContextData.resetAfterSubmission();
                     //TODO: Handle success
                 } else {
                     //TODO: Handle failure
@@ -108,13 +109,13 @@ export default function PrizeZoneHeader() {
             businessUnitNumber: PZRContextData.searchParams.opcoId,
             itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
             itemAttributeGroupId: PZRContextData.searchParams.attributeGroupId,
-            customerGroup: PZRContextData.searchParams.customerGroup, //TODO: Get this from response
+            customerGroup: getCustomerGroupOfCustomer(),
             customerAccount: PZRContextData.searchParams.customer ? PZRContextData.searchParams.customer : null,
             newPriceZone: newPriceZone,
             effectiveFromDate: effectiveDate,
             submissionNote: submissionReason,
             submitter: {
-                id: userDetailsObj.username ? userDetailsObj.username : 'blah112',
+                id: userDetailsObj.username ? userDetailsObj.username : 'blah112',  //TODO: Remove this later, test purpose only
                 givenName: userDetailsObj.firstName ? userDetailsObj.firstName : 'hero',
                 surname: userDetailsObj.lastName ? userDetailsObj.lastName : 'honda',
                 email: userDetailsObj.email ? userDetailsObj.email : 'blah@sysco.com'
@@ -225,7 +226,8 @@ export default function PrizeZoneHeader() {
                                 <>
                                     <div className="pz-tab-items-top">CUSTOMER GROUP</div>
                                     <div className="pz-tab-items-bottom">
-                                        <span className="pz-cutomer-grp-text">31223</span>
+                                        <span
+                                            className="pz-cutomer-grp-text">{PZRContextData.searchParams.customerGroup}</span>
                                     </div>
                                 </>
                             ) : (
@@ -322,7 +324,6 @@ export default function PrizeZoneHeader() {
             </div>
 
             <ModalComponent/>
-
             {
                 {
                     "submit-reason": <SubmitReason/>,

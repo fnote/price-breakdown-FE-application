@@ -4,8 +4,8 @@ import {Form, Input, Select, Radio} from 'antd';
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
 
-import {getBusinessUnits, getAttributeGroups} from '../PZRHelper';
-import {PZRFetchSearchResults} from '../PZRSearchHandler';
+import {getBusinessUnits, getAttributeGroups} from '../PZRUtils/PZRHelper';
+import {PZRFetchSearchResults} from '../PZRUtils/PZRSearchHandler';
 import {getBffUrlConfig} from '../../../utils/Configs';
 
 /* eslint-disable no-template-curly-in-string */
@@ -61,9 +61,13 @@ const SearchForm = () => {
         form.resetFields();
     };
 
+    const restSearchForm = () => {
+        form.resetFields();
+    };
+
     const onSubmit = (values) => {
         console.log(values);
-        pZRContext.setResponse(null);
+        pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;
         const opcoId = ((values.opco).split('-'))[0];
@@ -76,7 +80,9 @@ const SearchForm = () => {
             customerGroup: customerGroup ? values.customerGroup : null,
             attributeGroup: attributeGroupDetails[1]
         };
+        pZRContext.setSearchLoading(true);
         pZRContext.setSearchParams(searchParams);
+        pZRContext.setSearchResetFunc({resetForm: restSearchForm});
         PZRFetchSearchResults(searchParams, pZRContext);
     };
 

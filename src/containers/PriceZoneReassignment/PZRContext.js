@@ -10,12 +10,6 @@ export const PZRContext = React.createContext({
 
 });
 
-const initialSearchResultsState = {
-    totalRecords: 0,
-    offset: 0,
-    limit: 10,
-};
-
 const initialSearchParamsState = {
     site: null,
     opcoId: null,
@@ -28,21 +22,32 @@ const initialSearchParamsState = {
 const PZRContextProvider = (props) => {
     const [isSearchLoading, setSearchLoading] = useState(false);
     const [searchParams, setSearchParams] = useState({...initialSearchParamsState});
-    const [searchResults, setSearchResults] = useState(initialSearchResultsState);
-    const [error, setError] = useState(null);
+    const [searchResults, setSearchResults] = useState(null);
+    const [searchError, setSearchError] = useState(null);
     const [response, setResponse] = useState(null);
+    const [isSearchTableLoading, setSearchTableLoading] = useState(false);
+    const [searchResetFunc, setSearchResetFunc] = useState(null);
 
     const setSearchResultsData = (data) => {
         setSearchLoading(false);
-        setError(null);
+        setSearchError(null);
         setSearchResults(data);
         setResponse(data); //TODO: Why setting the response again?
     };
 
     const errorUpdateHandler = (data) => {
         setSearchLoading(false);
-        setError(data);
+        setSearchError(data);
         setResponse(null);
+    };
+
+    const resetSubmissionState = () => {
+        setSearchParams({...initialSearchParamsState});
+        setSearchResults(null);
+        if (searchResetFunc) {
+            searchResetFunc.resetForm();
+        }
+        setSearchResetFunc(null);
     };
 
     return (
@@ -54,10 +59,14 @@ const PZRContextProvider = (props) => {
             setErrorData: errorUpdateHandler,
             searchResults,
             setSearchResults: setSearchResultsData,
-            error,
-            setError,
+            searchError,
+            setSearchError,
             response,
-            setResponse
+            setResponse,
+            isSearchTableLoading,
+            setSearchTableLoading,
+            resetAfterSubmission: resetSubmissionState,
+            setSearchResetFunc
         }}>
             {props.children}
         </PZRContext.Provider>
