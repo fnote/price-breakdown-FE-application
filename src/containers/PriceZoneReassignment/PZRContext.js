@@ -27,6 +27,7 @@ const PZRContextProvider = (props) => {
     const [response, setResponse] = useState(null);
     const [isSearchTableLoading, setSearchTableLoading] = useState(false);
     const [searchResetFunc, setSearchResetFunc] = useState(null);
+    const [isFirstSubmissionDone, setFirstSubmissionDone] = useState(false);
 
     const setSearchResultsData = (data) => {
         setSearchLoading(false);
@@ -48,6 +49,7 @@ const PZRContextProvider = (props) => {
             searchResetFunc.resetForm();
         }
         setSearchResetFunc(null);
+        setFirstSubmissionDone(true);
     };
 
     return (
@@ -66,7 +68,8 @@ const PZRContextProvider = (props) => {
             isSearchTableLoading,
             setSearchTableLoading,
             resetAfterSubmission: resetSubmissionState,
-            setSearchResetFunc
+            setSearchResetFunc,
+            isFirstSubmissionDone
         }}>
             {props.children}
         </PZRContext.Provider>

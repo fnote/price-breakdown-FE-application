@@ -48,6 +48,22 @@ const renderError = ({errorCode, message, correlationId}) => (
     </div>
 );
 
+const renderContinueSearch = () => (
+    <div className="search-statuses">
+        <div className="section-wrapper">
+            <div className="welcome-message message-block">
+                <div className="title">
+                    <i className="icon fi flaticon-accounting"/> Welcome to the Price Zone Reassignment Tool
+                </div>
+                <div className="subitle-title">
+                    <i className="icon fi flaticon-arrow"/> Your price zone change request is sent for the review. Select an item attribute group and enter
+                    customer/customer group for more changes.
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
 const SearchStatuses = () => {
     const PZRContextData = useContext(PZRContext);
 
@@ -68,6 +84,9 @@ const SearchStatuses = () => {
     }
 
     if (!PZRContextData.searchResults) {
+        if (PZRContextData.isFirstSubmissionDone) {
+            return renderContinueSearch();
+        }
         return renderWelcomeMessage();
     }
 

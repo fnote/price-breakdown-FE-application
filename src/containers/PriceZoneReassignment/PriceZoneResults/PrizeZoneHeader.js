@@ -87,7 +87,6 @@ export default function PrizeZoneHeader() {
             .then((resp) => {
                 if (resp.success) {
                     setSubmitModal("success-modal");
-                    PZRContextData.resetAfterSubmission();
                     //TODO: Handle success
                 } else {
                     //TODO: Handle failure
@@ -163,9 +162,10 @@ export default function PrizeZoneHeader() {
                     {
                         title: "",
                         centered: "true",
-                        onOK: () => setSubmitModal(false),
-                        onCancel: () => setSubmitModal(false),
+                        onOK: resetSearch,
+                        onCancel: resetSearch,
                         okText: "OK",
+                        still: true,
                         cancelText: "",
                         noCancel: true, // no cancel button
                     },
@@ -181,6 +181,11 @@ export default function PrizeZoneHeader() {
                 )}
             </div>
         );
+    };
+
+    const resetSearch = () => {
+        PZRContextData.resetAfterSubmission();
+        setSubmitModal(false)
     };
     const onPriceZoneChange = (value) => {
         console.log(userDetailContext.userDetailsData);
