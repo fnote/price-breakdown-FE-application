@@ -7,9 +7,10 @@ export const PZRContext = React.createContext({
     searchResults: {},
     setSearchResults: () => {
     },
+
 });
 
-const initialState = {
+const initialSearchResultsState = {
     totalRecords: 0,
     offset: 0,
     limit: 10,
@@ -25,34 +26,34 @@ const initialSearchParamsState = {
 };
 
 const PZRContextProvider = (props) => {
-    const [isLoading, setLoading] = useState(false);
+    const [isSearchLoading, setSearchLoading] = useState(false);
     const [searchParams, setSearchParams] = useState({...initialSearchParamsState});
-    const [searchResults, setSearchResultData] = useState(initialState);
+    const [searchResults, setSearchResults] = useState(initialSearchResultsState);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
 
-    const searchParamsUpdateHandler = (data) => {
-        setLoading(false);
+    const setSearchResultsData = (data) => {
+        setSearchLoading(false);
         setError(null);
-        setSearchResultData(data);
+        setSearchResults(data);
         setResponse(data); //TODO: Why setting the response again?
     };
 
     const errorUpdateHandler = (data) => {
-        setLoading(false);
+        setSearchLoading(false);
         setError(data);
         setResponse(null);
     };
 
     return (
         <PZRContext.Provider value={{
-            isLoading,
-            setLoading,
+            isSearchLoading: isSearchLoading,
+            setSearchLoading,
             searchParams,
             setSearchParams,
             setErrorData: errorUpdateHandler,
             searchResults,
-            setSearchResultData: searchParamsUpdateHandler,
+            setSearchResults: setSearchResultsData,
             error,
             setError,
             response,

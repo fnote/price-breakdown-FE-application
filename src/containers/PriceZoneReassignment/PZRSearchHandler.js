@@ -27,8 +27,7 @@ const formRequestBody = (requestData) => {
 };
 
 export const PZRFetchSearchResults = (requestData, pZRContext) => {
-    pZRContext.setLoading(true);
-
+    pZRContext.isSearchLoading(true);
     fetch(getBffUrlConfig().priceZoneReassignmentSearchUrl, {
         method: 'POST',
         body: formRequestBody(requestData),
@@ -41,9 +40,7 @@ export const PZRFetchSearchResults = (requestData, pZRContext) => {
         .then(handleResponse)
         .then((resp) => {
             if (resp.success) {
-                console.log("seed response");
-                console.log(resp.data);
-                pZRContext.setSearchResultData({...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER]});
+                pZRContext.setSearchResults({...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER]});
             } else {
                 pZRContext.setErrorData({...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER]});
             }
@@ -51,5 +48,8 @@ export const PZRFetchSearchResults = (requestData, pZRContext) => {
         })
         .catch((e) => {
             pZRContext.setErrorData(e);
+        })
+        .finally(() => {
+            pZRContext.isSearchLoading(false);
         });
 };
