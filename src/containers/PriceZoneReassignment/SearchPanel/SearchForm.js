@@ -20,9 +20,14 @@ const validateMessages = {
 };
 
 const SearchForm = () => {
-    const [isCustomerChecked, setCustomerChecked] = useState(false);
-    const [customerTextboxValue, setCustomerTextBoxValue] = useState('');
-    const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState('');
+
+    const isCustomerCheckedInitState = false;
+    const customerTextboxValueInitState = '';
+    const customerGroupTextboxValueInitState = '';
+
+    const [isCustomerChecked, setCustomerChecked] = useState(isCustomerCheckedInitState);
+    const [customerTextboxValue, setCustomerTextBoxValue] = useState(customerTextboxValueInitState);
+    const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState(customerGroupTextboxValueInitState);
     const [attributeGroups, setAttributeGroups] = useState('');
     const userDetailContext = useContext(UserDetailContext);
     const {userDetails: {businessUnitMap = new Map()}} = userDetailContext.userDetailsData;
@@ -63,6 +68,9 @@ const SearchForm = () => {
 
     const restSearchForm = () => {
         form.resetFields();
+        setCustomerGroupTextBoxValue(customerGroupTextboxValueInitState);
+        setCustomerTextBoxValue(customerTextboxValueInitState);
+        setCustomerChecked(isCustomerCheckedInitState);
     };
 
     const onSubmit = (values) => {
