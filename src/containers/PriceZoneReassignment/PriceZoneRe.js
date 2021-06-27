@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import { FileTextFilled } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import AppBar from '../../components/AppBar/AppBar';
@@ -6,10 +6,13 @@ import SearchPanel from './SearchPanel/SearchPanel';
 import PriceZoneHeader from './PriceZoneResults/PrizeZoneHeader';
 import PriceZoneTable from './PriceZoneResults/PriceZoneTable';
 import PriceZoneReview from './PriceZoneReview/PriceZoneReview';
+import {UserDetailContext} from '../UserDetailContext';
 
 export default function PriceZoneRe() {
   const { TabPane } = Tabs;
   const [reviewTab, makeReviewActive] = useState(true);
+  const userDetailContext = useContext(UserDetailContext);
+  const cipzUserRole = userDetailContext.userDetailsData.userDetails.cipzRole;
 
   return (
     <div className="wrapper cloudpricing-wrapper">
@@ -33,7 +36,7 @@ export default function PriceZoneRe() {
               <PriceZoneHeader />
               <PriceZoneTable />
             </TabPane>
-            {reviewTab && (
+            {reviewTab && cipzUserRole !== 'cipz_submitter' && (
               <TabPane
                 tab={
                   <span>

@@ -23,14 +23,16 @@ import UnsupportedBrowserScreen from '../components/UnsupportedBrowser/Unsupport
 import BrowserDetector from '../utils/BrowserDetector';
 import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
 import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/UnsupportedBrowserTopAlert';
+import Navigation from "../components/AppBar/Navigation";
 
-const Application = () => (
+const Application = (user, cipzUser) => (
     <Switch>
         <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
             <FileUpload/>
         </Route>
         <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
-            <PriceValidation/>
+            {user !== '' ? <PriceValidation/> : <PriceZoneRe/>}
+            {/*<PriceValidation/>*/}
         </Route>
         <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
             <HistoryInquiry/>
@@ -80,7 +82,12 @@ export default function ApplicationBase() {
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = auth.isUserLoginCompleted() ? Application() : <Login/>;
+        const userRole = userDetailContext.userDetailsData.userDetails.role;
+        const cipzUserRole = userDetailContext.userDetailsData.userDetails.cipzRole;
+        console.log('mmmmmmmmmmmmmmmmm');
+        console.log(userRole);
+        console.log(cipzUserRole);
+        component = auth.isUserLoginCompleted() ? Application(userRole, cipzUserRole) : <Login/>;
     }
 
     return (
