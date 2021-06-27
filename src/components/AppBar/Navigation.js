@@ -32,7 +32,7 @@ function Navigation() {
             {userRole !== '' && (<li className={getClassName(match, NAVIGATION_PATH_FILE_UPLOAD)}>
                 <i className="icon fi flaticon-cloud"/>Calculations via <span className="bold">File Upload</span>
             </li>)}
-        </Link>)
+        </Link>
        <Link to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
            {cipzUserRole !== '' && (<li className={getClassName(match, NAVIGATION_PATH_PRICEZONE_REASSIGNMENT)}>
                 <i className="icon fi flaticon-cloud"/>Price Zone <span className="bold">Reassignment</span>
