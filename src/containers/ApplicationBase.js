@@ -23,16 +23,14 @@ import UnsupportedBrowserScreen from '../components/UnsupportedBrowser/Unsupport
 import BrowserDetector from '../utils/BrowserDetector';
 import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
 import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/UnsupportedBrowserTopAlert';
-import Navigation from "../components/AppBar/Navigation";
 
-const Application = (user, cipzUser) => (
+const Application = (user) => (
     <Switch>
         <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
             <FileUpload/>
         </Route>
         <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
             {user !== '' ? <PriceValidation/> : <PriceZoneRe/>}
-            {/*<PriceValidation/>*/}
         </Route>
         <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
             <HistoryInquiry/>
@@ -83,8 +81,7 @@ export default function ApplicationBase() {
         component = <AppLoader/>;
     } else {
         const userRole = userDetailContext.userDetailsData.userDetails.role;
-        const cipzUserRole = userDetailContext.userDetailsData.userDetails.cipzRole;
-        component = auth.isUserLoginCompleted() ? Application(userRole, cipzUserRole) : <Login/>;
+        component = auth.isUserLoginCompleted() ? Application(userRole) : <Login/>;
     }
 
     return (
