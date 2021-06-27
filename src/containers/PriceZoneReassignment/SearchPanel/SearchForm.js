@@ -37,7 +37,6 @@ export default function SearchForm() {
               <Form.Item name="customer" label="Customer"   className="pz-linebreak pz-linebreak-item-group">
                 <Input />
               </Form.Item>
-
                 <Form.Item
                   name="customerGroup"
                   label="Customer group"
@@ -45,7 +44,6 @@ export default function SearchForm() {
                 >
                   <Input />
                 </Form.Item>
-
             </div>
 
             <Form.Item
