@@ -34,7 +34,6 @@ function Navigation() {
             </li>)}
         </Link>)
        <Link to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
-           {/*{cipzUserRole !== ''*/}
            {/* eslint-disable-next-line no-mixed-operators */}
            {cipzUserRole !== '' && (<li className={getClassName(match, NAVIGATION_PATH_PRICEZONE_REASSIGNMENT)}>
                 <i className="icon fi flaticon-cloud"/>Price Zone <span className="bold">Reassignment</span>
