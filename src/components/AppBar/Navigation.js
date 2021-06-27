@@ -11,13 +11,10 @@ import {UserDetailContext} from '../../containers/UserDetailContext';
 const getClassName = (match, componentPath) => (match.path === componentPath ? 'selected' : '');
 
 function Navigation() {
-    console.log('jjjjjjjjjjjjjjjj');
   const match = useRouteMatch();
   const userDetailContext = useContext(UserDetailContext);
   const userRole = userDetailContext.userDetailsData.userDetails.role;
   const cipzUserRole = userDetailContext.userDetailsData.userDetails.cipzRole;
-  console.log('llllllllll');
-  console.log(cipzUserRole);
 
   return (
     <ul className="navigation">

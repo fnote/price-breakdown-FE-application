@@ -84,9 +84,6 @@ export default function ApplicationBase() {
     } else {
         const userRole = userDetailContext.userDetailsData.userDetails.role;
         const cipzUserRole = userDetailContext.userDetailsData.userDetails.cipzRole;
-        console.log('mmmmmmmmmmmmmmmmm');
-        console.log(userRole);
-        console.log(cipzUserRole);
         component = auth.isUserLoginCompleted() ? Application(userRole, cipzUserRole) : <Login/>;
     }
 
