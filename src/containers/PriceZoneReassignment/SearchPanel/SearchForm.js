@@ -2,7 +2,6 @@ import React from "react";
 import { Form, Input, Checkbox, Select, Radio, DatePicker } from "antd";
 
 export default function SearchForm() {
-  // const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
   return (
     <div>
       <>
