@@ -12,7 +12,6 @@ function PriceValidation() {
   return (
     <div className="wrapper cloudpricing-wrapper">
       <AppBar />
-
       <div className="content">
           <PriceValidationContextProvider>
               {userRole !== '' && (<SearchPanel />)}
