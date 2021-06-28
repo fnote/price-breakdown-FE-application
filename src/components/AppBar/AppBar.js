@@ -9,7 +9,7 @@ function AppBar() {
     return (
         <div className="appbar" id="appbar">
             <img src={logo} alt="Sysco Cloud Pricing" className="logo"/>
-            <Navigation />
+            <Navigation/>
             <a className="need-help-header-link" href={HELP_PAGE_URL} target="_BLANK" rel="noopener noreferrer">
                 <QuestionCircleOutlined className="icdon"/> Need Help?
             </a>
