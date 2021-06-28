@@ -4,8 +4,8 @@ import {Form, Input, Select, Radio} from 'antd';
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
 
-import {getBusinessUnits, getAttributeGroups} from '../PZRHelper';
-import {PZRFetchSearchResults} from '../PZRSearchHandler';
+import {getBusinessUnits, getAttributeGroups} from '../PZRUtils/PZRHelper';
+import {PZRFetchSearchResults} from '../PZRUtils/PZRSearchHandler';
 import {getBffUrlConfig} from '../../../utils/Configs';
 
 /* eslint-disable no-template-curly-in-string */
@@ -20,9 +20,14 @@ const validateMessages = {
 };
 
 const SearchForm = () => {
-    const [isCustomerChecked, setCustomerChecked] = useState(false);
-    const [customerTextboxValue, setCustomerTextBoxValue] = useState('');
-    const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState('');
+
+    const isCustomerCheckedInitState = false;
+    const customerTextboxValueInitState = '';
+    const customerGroupTextboxValueInitState = '';
+
+    const [isCustomerChecked, setCustomerChecked] = useState(isCustomerCheckedInitState);
+    const [customerTextboxValue, setCustomerTextBoxValue] = useState(customerTextboxValueInitState);
+    const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState(customerGroupTextboxValueInitState);
     const [attributeGroups, setAttributeGroups] = useState('');
     const userDetailContext = useContext(UserDetailContext);
     const { userDetails: { allowedBussinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
@@ -57,20 +62,35 @@ const SearchForm = () => {
         setCustomerGroupTextBoxValue(event.target.value);
     };
 
+    const onReset = () => {
+        form.resetFields();
+    };
+
+    const restSearchForm = () => {
+        form.resetFields();
+        setCustomerGroupTextBoxValue(customerGroupTextboxValueInitState);
+        setCustomerTextBoxValue(customerTextboxValueInitState);
+        setCustomerChecked(isCustomerCheckedInitState);
+    };
+
     const onSubmit = (values) => {
         console.log(values);
-        pZRContext.setResponse(null);
+        pZRContext.setSearchResults(null);
+        const customer = isCustomerChecked ? values.customer : null;
+        const customerGroup = !isCustomerChecked ? values.customerGroup : null;
         const opcoId = ((values.opco).split('-'))[0];
         const attributeGroupDetails = (values.attributeGroup).split('-');
         const searchParams = {
             site: values.opco,
             opcoId,
             attributeGroupId: attributeGroupDetails[0],
-            customer: values.customer ? values.customer : null,
-            customerGroup: values.customerGroup ? values.customerGroup : null,
+            customer: customer ? values.customer : null,
+            customerGroup: customerGroup ? values.customerGroup : null,
             attributeGroup: attributeGroupDetails[1]
         };
+        pZRContext.setSearchLoading(true);
         pZRContext.setSearchParams(searchParams);
+        pZRContext.setSearchResetFunc({resetForm: restSearchForm});
         PZRFetchSearchResults(searchParams, pZRContext);
     };
 

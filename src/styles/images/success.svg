@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!-- priceZone tool success Animation -->
+<!-- author vihanga nivarthana -->
+
+<svg xmlns="http://www.w3.org/2000/svg" id="pz-animGroup_941" data-name="Group 941" width="61.582" height="61.582" viewBox="0 0 61.582 61.582">
+    <style>
+@keyframes pz-anima0_t { 0% { transform: translate(30.791px,30.791px) scale(0,0); } 50% { transform: translate(30.791px,30.791px) scale(1,1); } 100% { transform: translate(30.791px,30.791px) scale(1,1); } }
+@keyframes pz-anima1_t { 0% { transform: translate(30.791px,30.791px) scale(0,0); } 20% { transform: translate(30.791px,30.791px) scale(0,0); } 60% { transform: translate(30.791px,30.791px) scale(1,1); } 100% { transform: translate(30.791px,30.791px) scale(1,1); } }
+@keyframes pz-anima2_do { 0% { stroke-dashoffset: 100px; } 30% { stroke-dashoffset: 100px; animation-timing-function: cubic-bezier(0.42,0,0.58,1); } 80% { stroke-dashoffset: 0px; } 100% { stroke-dashoffset: 0px; } }
+@keyframes pz-anima3_do { 0% { stroke-dashoffset: 100px; } 50% { stroke-dashoffset: 100px; animation-timing-function: cubic-bezier(0.42,0,0.58,1); } 100% { stroke-dashoffset: 0px; } }
+    </style>
+    <ellipse rx="30.791" ry="30.791" fill="#5ab659" stroke="none" opacity="0.8" transform="translate(30.791,30.791) scale(0,0)" style="animation: 1s linear both pz-anima0_t;"/>
+    <ellipse rx="30.791" ry="30.791" fill="#5ab659" stroke="none" transform="translate(30.791,30.791) scale(0,0)" style="animation: 1s linear both pz-anima1_t;"/>
+    <path d="M2.173,2.022L12.579,11.522L32.573,-8.478" fill="none" stroke-linecap="round" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" stroke-dashoffset="100" stroke-dasharray="100" opacity="0.8" transform="translate(13.418,29.269)" style="animation: 1s linear both pz-anima2_do;"/>
+    <path d="M2.173,2.022L12.579,11.522L32.573,-8.478" fill="none" stroke-linecap="round" stroke="#ffffff" stroke-width="6" stroke-linejoin="round" stroke-dashoffset="100" stroke-dasharray="100" transform="translate(13.418,29.269)" style="animation: 1s linear both pz-anima3_do;"/>
+</svg>

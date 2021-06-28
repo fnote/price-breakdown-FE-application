@@ -1,7 +1,7 @@
-import {getBffUrlConfig} from "../../utils/Configs";
-import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from "../../constants/Constants";
+import {getBffUrlConfig} from "../../../utils/Configs";
+import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from "../../../constants/Constants";
 
-export const DEFAULT_PAGE_SIZE = 20;
+export const DEFAULT_PAGE_SIZE = 5;
 export const DEFAULT_OFFSET = 0;
 
 
@@ -17,7 +17,8 @@ const handleResponse = (response) => {
 
 const formRequestBody = (requestData) => {
     return JSON.stringify({
-        business_unit_number: requestData.opcoId,
+        // business_unit_number: requestData.opcoId,
+        business_unit_number: '019', //TODO: test purpose only, remove this
         item_attribute_group_id: requestData.attributeGroupId,
         customer_account: requestData.customer ? requestData.customer : null,
         customer_group: requestData.customerGroup ? requestData.customerGroup : null,
@@ -27,8 +28,8 @@ const formRequestBody = (requestData) => {
 };
 
 export const PZRFetchSearchResults = (requestData, pZRContext) => {
-    pZRContext.setLoading(true);
 
+    pZRContext.setSearchTableLoading(true);
     fetch(getBffUrlConfig().priceZoneReassignmentSearchUrl, {
         method: 'POST',
         body: formRequestBody(requestData),
@@ -41,9 +42,7 @@ export const PZRFetchSearchResults = (requestData, pZRContext) => {
         .then(handleResponse)
         .then((resp) => {
             if (resp.success) {
-                console.log("seed response");
-                console.log(resp.data);
-                pZRContext.setSearchResultData({...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER]});
+                pZRContext.setSearchResults({...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER]});
             } else {
                 pZRContext.setErrorData({...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER]});
             }
@@ -51,5 +50,9 @@ export const PZRFetchSearchResults = (requestData, pZRContext) => {
         })
         .catch((e) => {
             pZRContext.setErrorData(e);
+        })
+        .finally(() => {
+            pZRContext.setSearchLoading(false);
+            pZRContext.setSearchTableLoading(false);
         });
 };

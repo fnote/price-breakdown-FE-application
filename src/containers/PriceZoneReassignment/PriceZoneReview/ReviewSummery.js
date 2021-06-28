@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ReviewSummery() {
   return (
-    <div className="pz-review-wrapper">
+    <div className="pz-review-wrapper pz-cursor">
       <div className="pz-review-sum-left">
         <div className="pz-review-sum-left-pz">
           <span>pricezone</span>
