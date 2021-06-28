@@ -1,16 +1,20 @@
 /* eslint-disable react/display-name */
 import React, { useState, useEffect, useContext, useMemo } from 'react';
 import { Table, Space, Spin } from 'antd';
-import useModal from "../../../hooks/useModal";
+import useModal from '../../../hooks/useModal';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
   formatPZRequest,
   generatePaginationParams,
   constructRequestUrl,
-  handleResponse
+  handleResponse,
+  constructPatchPayload,
+  removeCompletedRequest,
+  calculateResetIndex
 } from '../../../utils/PZRUtils';
 import { REVIEW_RESULT_TABLE_PAGE_SIZE } from '../../../constants/PZRContants';
 // import { PZRContext } from '../PZRContext';
+import { UserDetailContext } from '../../UserDetailContext';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummery from './ReviewSummery';
 import AproveRejectButtons from './AproveRejectButtons';
@@ -23,6 +27,13 @@ export default function PriceZoneReview() {
   const [dataStore, setDataStore] = useState({});
   const [totalResultCount, setTotalResultCount] = useState(REVIEW_RESULT_TABLE_PAGE_SIZE);
   const [resultLoading, setResultLoading] = useState(false);
+  // const userDetailsContext = useContext(UserDetailContext);
+  const reviewer = {
+    id: 'sams5625',
+    givenName: 'Sanjaya',
+    surname: 'Amarasinghe',
+    email: 'sams5625@sysco.com'
+  };
 
   const dataSource = useMemo(() => {
     const currentPageData = dataStore[currentPage];
@@ -36,7 +47,7 @@ export default function PriceZoneReview() {
 
   const fetchPZChangeRequests = (page) => {
     const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
-    const requestUrl = constructRequestUrl(getBffUrlConfig().getPZUpdateRequests, paginationParams);
+    const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests, paginationParams);
     setResultLoading(true);
     fetch(requestUrl, {
       method: 'GET',
@@ -64,6 +75,37 @@ export default function PriceZoneReview() {
     })
     .finally(() => {
       setResultLoading(false);
+    });
+  };
+
+  const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }) => {
+    const payload = constructPatchPayload({ id }, { reviewNote, status }, reviewer);
+    const requestUrl = getBffUrlConfig().pzUpdateRequests;
+    fetch(requestUrl, {
+      method: 'PATCH',
+      body: payload,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+    .then(handleResponse)
+    .then((resp) => {
+      console.log(resp);
+      if (resp.success) {
+        console.log(dataStore);
+        console.log(currentPage);
+        const updatedDataStore = removeCompletedRequest(dataStore, currentPage, index);
+        setDataStore(updatedDataStore);
+        setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
+      } else {
+        // todo: handle error scenario with a message to user
+      }
+    })
+    .catch((err) => {
+      // todo: handle error scenario with a message to user
+      console.log(err);
     });
   };
 
@@ -125,7 +167,7 @@ export default function PriceZoneReview() {
       width: '20%',
       render: (cell, row, index) => (
         <Space size='middle'>
-          <AproveRejectButtons row={row} index={index} approve={approve} reject={reject}/>
+          <AproveRejectButtons row={row} index={index} approve={approve} reject={reject} handle={approveRejectPZChangeRequests}/>
         </Space>
       ),
     },
@@ -136,16 +178,16 @@ export default function PriceZoneReview() {
       <div>
         {Modal(
           {
-            title: "",
-            centered: "true",
+            title: '',
+            centered: 'true',
             onOK: () => toggle,
-            okText: "PROCEED",
-            cancelText: "CANCEL",
-            width:500
+            okText: 'PROCEED',
+            cancelText: 'CANCEL',
+            width: 500
           },
 
-          <div className="pz-confirm-pop-base">
-            <div className="pz-pop-table">
+          <div className='pz-confirm-pop-base'>
+            <div className='pz-pop-table'>
             <Table columns={columns} dataSource={dataSource} />
             </div>
           </div>
@@ -155,8 +197,8 @@ export default function PriceZoneReview() {
   };
 
   const renderLoader = () => (
-    <Space size="middle" style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-      <Spin size="large" />
+    <Space size='middle' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+      <Spin size='large' />
     </Space>
   );
 

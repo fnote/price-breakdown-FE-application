@@ -44,3 +44,22 @@ export const handleResponse = (response) => {
         return { success: false, data: json, headers: { [CORRELATION_ID_HEADER]: correlationId } };
     });
 };
+
+export const constructPatchPayload = ({ id: requestId }, { reviewNote, status }, reviewer) => JSON.stringify({
+    requestId,
+    reviewer,
+    reviewNote,
+    status
+});
+
+export const removeCompletedRequest = (dataStore, currentPage, index) => {
+    const dataSource = dataStore[currentPage];
+    const itemsBeforeIndex = dataSource.slice(0, index);
+    const itemsAfterIndex = dataSource.slice(index + 1, dataSource.length);
+    const updatedPage = [...itemsBeforeIndex, ...itemsAfterIndex];
+    return { ...dataStore, [currentPage]: updatedPage };
+};
+
+export const calculateResetIndex = (currentIndex, currentPage) => {
+    return currentIndex > currentPage ? currentPage : currentIndex;
+};
