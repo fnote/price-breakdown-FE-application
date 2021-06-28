@@ -25,6 +25,7 @@ export default function AproveRejectButtons() {
             },
             okText: "SUBMIT",
             cancelText: "CANCEL",
+           
           },
 
           <div className="pz-confirm-pop-base">
