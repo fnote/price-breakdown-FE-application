@@ -11,6 +11,7 @@ import {getBffUrlConfig} from "../../../utils/Configs";
 import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from "../../../constants/Constants";
 import {ReactComponent as Success} from "../../../styles/images/success.svg";
 import {ReactComponent as Warning} from "../../../styles/images/warning.svg";
+import {ReactComponent as Loader} from "../../../styles/images/priceZone_loader.svg";
 
 export default function PrizeZoneHeader() {
     const {on, Modal, toggle} = useModal();
@@ -74,6 +75,8 @@ export default function PrizeZoneHeader() {
     };
 
     const priceZoneChangeHandler = () => {
+
+       setSubmitModal("loading"); //ADDED FOR TESTING
         fetch(getBffUrlConfig().pzrUpdateRequestsUrl, {
             method: 'POST',
             body: formRequestBody(),
@@ -181,6 +184,31 @@ export default function PrizeZoneHeader() {
                 )}
             </div>
         );
+    };
+
+    const LoadingState = () => {
+      return (
+        <div>
+          {Modal(
+            {
+              title: "",
+              centered: "true",
+              onOK: () => toggle,
+              onCancel: () => toggle,
+              okText: "OK",
+              cancelText: "",
+              noCancel: true, // no cancel button
+              noOk: true, // no ok button
+            },
+  
+            <div className="pz-loading-pop-base">
+              <div className="pz-loading-pop-wrapper">
+                <Loader className="pz-loading-anim"/>
+              </div>
+            </div>
+          )}
+        </div>
+      );
     };
 
     const resetSearch = () => {
@@ -329,10 +357,12 @@ export default function PrizeZoneHeader() {
             </div>
 
             <ModalComponent/>
+            
             {
                 {
                     "submit-reason": <SubmitReason/>,
                     "success-modal": <SubmitSuccess/>,
+                    "loading": <LoadingState/>
                 }[submitModal]
             }
         </div>
