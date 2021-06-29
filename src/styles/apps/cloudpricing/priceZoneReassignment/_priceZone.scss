@@ -126,10 +126,6 @@
             font-weight: 600;
             font-size: 1.15rem;
           }
-
-          
-
-
           .pz-tab-items-bottom {
             width: 100%;
             padding-bottom: 5px;
@@ -700,20 +696,4 @@ height:8rem;
 .pz-disabled {
   pointer-events: none !important;
   filter: grayscale(0.7);
-}
-
-// main tab view styles
-
-.pz-maintab-item{
-  display: flex;
-  align-items: center;
-  width: 12rem;
-  justify-content: space-evenly;
-
-  .pz-icon-tab{
-    font-size:1.4rem;
-  }
-  .pz-main-tab-sub{
-    margin-left:0.5rem;
-  }
 }
