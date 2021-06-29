@@ -26,7 +26,7 @@ function Navigation() {
 
         <Link to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
             <li className={getClassName(match, NAVIGATION_PATH_PRICEZONE_REASSIGNMENT)}>
-                <i className="icon fi flaticon-cloud"/>pricezone <span className="bold">Reassignment</span>
+                <i className="icon fi flaticon-price-zone"/>pricezone <span className="bold">Reassignment</span>
             </li>
         </Link>
     </ul>

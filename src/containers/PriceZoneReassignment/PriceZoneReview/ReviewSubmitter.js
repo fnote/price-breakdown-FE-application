@@ -19,7 +19,7 @@ export default function ReviewSubmitter() {
            </div>
            <div className="pz-review-note">
                <Tooltip title="Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt, perferendis! Dignissimos corporis autem repellendus repudiandae officia in laboriosam nostrum corrupti." color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color:'#000'}}>
-           <FileTextFilled />
+               <i className="icon fi flaticon-note"/>
            </Tooltip>
            </div>
            

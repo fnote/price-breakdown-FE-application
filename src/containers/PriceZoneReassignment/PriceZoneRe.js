@@ -29,7 +29,7 @@ export default function PriceZoneRe() {
             <TabPane
               tab={
                 <span>
-                  <FileTextFilled />
+                    <i className="icon fi flaticon-price-zone"/>
                   Update Pricezone
                 </span>
               }
