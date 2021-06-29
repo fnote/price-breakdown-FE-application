@@ -194,7 +194,9 @@ export default function PrizeZoneHeader() {
               title: "",
               centered: "true",
               onOK: () => toggle,
-              onCancel: () => toggle,
+              maskClosable:false, // won't close on mask click
+              closable:false, // won't close from close icon
+              keyboard:false, // won't close from keyboard events (esc)
               okText: "OK",
               cancelText: "",
               noCancel: true, // no cancel button
@@ -204,6 +206,7 @@ export default function PrizeZoneHeader() {
             <div className="pz-loading-pop-base">
               <div className="pz-loading-pop-wrapper">
                 <Loader className="pz-loading-anim"/>
+               <span className="pz-loading-text"> Please wait ...</span>
               </div>
             </div>
           )}
