@@ -107,7 +107,7 @@ export default function PrizeZoneHeader() {
         <div className="pz-tabs">
           <div className="pz-tab-items">
             <div className="pz-text-wrapper">
-              <div className="pz-tab-items-top">OPCO {on ? "on" : "off"}</div>
+              <div className="pz-tab-items-top">OPCO</div>
               <div className="pz-tab-items-bottom">043-Houston</div>
             </div>
           </div>
@@ -118,7 +118,7 @@ export default function PrizeZoneHeader() {
               {1 == 2 ? (
                 <>
                   <div className="pz-tab-items-top">CUSTOMER GROUP</div>
-                  <div className="pz-tab-items-bottom">
+                  <div className="pz-tab-items-bottom ">
                     <span className="pz-cutomer-grp-text">31223</span>
                   </div>
                 </>
@@ -186,7 +186,6 @@ export default function PrizeZoneHeader() {
                   type="primary"
                   htmlType="submit"
                   className="search-btn outlined-btn "
-                  // added "pz-disabled" class for the disabled view
                   onClick={toggle}
                 >
                   SUBMIT CHANGE
