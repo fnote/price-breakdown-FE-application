@@ -4,20 +4,24 @@ import { CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL } from '../constants/Consta
 const formatTime = (timestamp) => new Date(timestamp).toLocaleDateString();
 export const formatPZRequest = ({
     createdTime, submitter, newPriceZone, businessUnitNumber, effectiveFromDate,
-    customerGroup, customerAccount, itemAttributeGroup, itemAttributeGroupId, ...rem
+    customerGroup, customerAccount, itemAttributeGroup, itemAttributeGroupId,
+    summary, id, submissionNote, ...rem
 }, { businessUnitMap }) => ({
     submission: {
         createdTime: formatTime(createdTime),
+        submissionNote,
         ...submitter,
     },
     changeSummary: {
+        id,
         businessUnit: formatBusinessUnit(businessUnitNumber, businessUnitMap),
         newPriceZone,
         effectiveFromDate,
         customerGroup,
         customerAccount,
         itemAttributeGroup,
-        itemAttributeGroupId
+        itemAttributeGroupId,
+        ...summary
     },
     other: {
         ...rem,

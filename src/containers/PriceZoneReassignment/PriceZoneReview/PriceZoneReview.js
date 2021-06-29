@@ -12,12 +12,16 @@ import {
   removeCompletedRequest,
   calculateResetIndex
 } from '../../../utils/PZRUtils';
-import { REVIEW_RESULT_TABLE_PAGE_SIZE } from '../../../constants/PZRContants';
+import {
+  REVIEW_RESULT_TABLE_PAGE_SIZE,
+  PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL
+} from '../../../constants/PZRContants';
 // import { PZRContext } from '../PZRContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummery from './ReviewSummery';
 import AproveRejectButtons from './AproveRejectButtons';
+import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
 import businessUnitMap from '../../../constants/BusinessUnits';
 
@@ -27,6 +31,7 @@ export default function PriceZoneReview() {
   const [dataStore, setDataStore] = useState({});
   const [totalResultCount, setTotalResultCount] = useState(REVIEW_RESULT_TABLE_PAGE_SIZE);
   const [resultLoading, setResultLoading] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState({ id: 1 });
   // const userDetailsContext = useContext(UserDetailContext);
   const reviewer = {
     id: 'sams5625',
@@ -47,7 +52,8 @@ export default function PriceZoneReview() {
 
   const fetchPZChangeRequests = (page) => {
     const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
-    const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests, paginationParams);
+    const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
+      { ...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL });
     setResultLoading(true);
     fetch(requestUrl, {
       method: 'GET',
@@ -118,232 +124,19 @@ export default function PriceZoneReview() {
   const cleanInvalidData = () => {
     if (dataResetIndex > 0) {
       const dataStoreCopy = { ...dataStore };
-      Object.keys(dataStoreCopy).forEach((key) => delete dataStoreCopy[key]);
+      Object.keys(dataStoreCopy)
+        .forEach((key) => {
+          if (key >= dataResetIndex) {
+            delete dataStoreCopy[key];
+          }
+        });
       setDataStore(dataStoreCopy);
     }
   };
 
-  const approve = (row, index) => {
-    console.log(row);
-    console.log(index);
-  };
-
-  const reject = (row, index) => {
-    console.log(row);
-    console.log(index);
-  };
-
-const datareference = [
-  {
-    key: "1",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "2",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "3",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "4",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "5",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "6",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "7",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "8",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "9",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "10",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "11",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "12",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "13",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "14",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "15",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "16",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "17",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "18",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "19",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-];
-
-const columnsreference = [
-  {
-    title: "ITEM(SUPC)",
-    dataIndex: "item_supc",
-    defaultSortOrder: "descend",
-    sorter: (a, b) => a - b,
-  },
-  {
-    title: "ITEM DESCRIPTION",
-    dataIndex: "item_des",
-  },
-  {
-    title: "CUSTOMER",
-    dataIndex: "customer",
-  },
-  {
-    title: "CUSTOMER NAME",
-    dataIndex: "customer_name",
-  },
-  {
-    title: "SOURCE ID",
-    dataIndex: "source_id",
-  },
-  {
-    title: "PRICE ZONE",
-    dataIndex: "price_zone",
-  },
-  {
-    title: "EFFECTIVE DATE",
-    dataIndex: "effective_price",
-  },
-];
-
   useEffect(() => {
     loadTableData();
   }, []);
-
 
   const columns = [
     {
@@ -363,7 +156,14 @@ const columnsreference = [
       key: 'changeSummary',
       width: '40%',
       render: (changeSummary) => (
-        <Space size='middle' onClick={toggle}>
+        <Space
+          size='middle'
+          onClick={() => {
+            console.log(changeSummary);
+            setSelectedRecord(changeSummary);
+            toggle();
+          }}
+        >
           <ReviewSummery changeSummary={changeSummary} />
         </Space>
       ),
@@ -375,51 +175,9 @@ const columnsreference = [
       width: '20%',
       render: (cell, row, index) => (
         <Space size='middle'>
-          <AproveRejectButtons row={row} index={index} approve={approve} reject={reject} handle={approveRejectPZChangeRequests}/>
+          <AproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests}/>
         </Space>
       ),
-    },
-  ];
-
-
-
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      opco: 2,
-      accept:true
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      opco: 1,
-      accept:true
-     
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      opco: 4,
-      accept:true
-    },
-    {
-      key: '4',
-      name: 'Joe Black',
-      opco: 4,
-      accept:true
-    },
-    {
-      key: '5',
-      name: 'Joe Black',
-      opco: 4,
-      accept:true
-    },
-    {
-      key: '6',
-      name: 'Joe Black',
-      opco: 4,
-      accept:true
     },
   ];
   
@@ -431,35 +189,12 @@ const columnsreference = [
             title: '',
             centered: 'true',
             onOK: () => toggle,
-            okText: "PROCEED",
-            cancelText: "CANCEL",
-            width: "60vw",
-            footer: "", // no buttons
+            okText: 'PROCEED',
+            cancelText: 'CANCEL',
+            width: '60vw',
+            footer: '', // no buttons
           },
-
-          <div className="pz-confirm-pop-base-table">
-            <div className="pz-pop-table">
-              <div className="pop-table-summary">
-                <div className="pop-sum-customer-grp">
-                    <div className="pop-sum-text">CUSTOMER GROUP</div>
-                    <div className="pop-sum-tag">31223</div>
-                    <div className="pop-sum-total">241 Customers</div>
-                </div>
-                <div className="pop-sum-Attrib-grp">
-                <div className="pop-sum-text">ATTRIBUTE  GROUP</div>
-                    <div className="pop-sum-tag pz-tag-blue">Milk</div>
-                    <div className="pop-sum-total">221 Items</div>
-                </div>
-              </div>
-              <Table
-                columns={columnsreference}
-                pagination={{ defaultPageSize: 10 }}
-                dataSource={datareference}
-                style={{ width: "60vw", height: "60vh" }}
-                className="pz-pop-table-ant"
-              />
-            </div>
-          </div>
+          <ReferenceDataTable record={selectedRecord}/>
         )}
       </div>
     );
@@ -478,7 +213,7 @@ const columnsreference = [
         dataSource={dataSource}
         pagination={false}
       />
-      <ReferenceTable/>
+      {selectedRecord && <ReferenceTable record={selectedRecord}/>}      
     </>    
   );
 
