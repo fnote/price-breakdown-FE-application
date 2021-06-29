@@ -712,6 +712,19 @@ new
   
   .pz-confirm-pop-base-table {
     .pz-pop-table {
+  
+      .ant-table-thead > tr > th,
+      .ant-table-tbody > tr > td {
+        border-bottom: 0.076rem solid #f0f0f0;
+        border-right: 0.076rem dashed rgba(0, 0, 0, 0.1) !important;
+        padding-left: 2.307rem !important;
+        &:nth-last-child(1) {
+          border-right: none !important;
+        }
+      }
+  
+  
+  
       .pop-table-summary {
         width: 100%;
         height: 5rem;
@@ -725,16 +738,26 @@ new
           display: flex;
           flex-direction: column;
   
+          .pop-sum-text{
+            font-size: 1rem;
+            margin-top:1rem;
+            color: $textstandard;
+            font-weight: 500;
+          }
+  
           .pop-sum-tag {
             background: #76e0f6;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             border-radius: 4px;
             margin-top: 0.3rem;
+            color: $textstandard;
+            font-weight: 700;
           }
           .pop-sum-total {
-            font-size: 1rem;
-            margin-top: 0.3rem;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: $textstandard;
           }
         }
         .pop-sum-Attrib-grp {
@@ -746,7 +769,12 @@ new
       }
   
       .pz-pop-table-ant {
-        margin-top: 2rem;
+        margin-top: 3rem;
+        width:auto !important;
+        .ant-table-cell{
+          font-size:1rem;
+          font-weight: 500;
+        }
       }
     }
   }
