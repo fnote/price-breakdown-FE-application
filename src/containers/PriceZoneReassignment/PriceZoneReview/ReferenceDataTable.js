@@ -3,17 +3,14 @@ import { Table, Space, Spin } from 'antd';
 import CustomPagination from '../../../components/CustomPagination';
 import {
     REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE
-  } from '../../../constants/PZRContants';
+} from '../../../constants/PZRContants';
 import {
-formatPZRequest,
-generatePaginationParams,
-constructRequestUrl,
-handleResponse,
-constructPatchPayload,
-removeCompletedRequest,
-calculateResetIndex
+    generatePaginationParams,
+    constructRequestUrl,
+    handleResponse,
+    formatPZReferenceRecord
 } from '../../../utils/PZRUtils';
-import {getBffUrlConfig} from '../../../utils/Configs';
+import { getBffUrlConfig } from '../../../utils/Configs';
   
 const columns = [
     {
@@ -49,7 +46,8 @@ const columns = [
 ];
 
 export default function ReferenceDataTable({
-    record: { id, customerAccount, customerGroup, itemAttributeGroup, customerCount, supcCount }
+    record: { id, customerAccount, customerGroup, itemAttributeGroup, customerCount, supcCount },
+    setSelectedRecord
 }) {
     const [currentPage, setCurrentPage] = useState(1);
     const [dataStore, setDataStore] = useState({});
@@ -59,8 +57,7 @@ export default function ReferenceDataTable({
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
         if (currentPageData) {
-            // .map((record) => formatPZRequest(record));
-          return dataStore[currentPage];
+          return dataStore[currentPage].map((record) => formatPZReferenceRecord(record));
         }
         return [];
     }, [dataStore, currentPage]);
@@ -109,6 +106,7 @@ export default function ReferenceDataTable({
 
     useEffect(() => {
         loadPageData();
+        return () => setSelectedRecord(null);
     }, []);    
 
     const renderLoader = () => (

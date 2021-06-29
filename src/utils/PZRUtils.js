@@ -1,14 +1,19 @@
+import moment from 'moment';
 import { formatBusinessUnit } from './CommonUtils';
 import { CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL } from '../constants/Constants';
+import { PZ_DISPLAY_DATE_FORMAT } from '../constants/PZRContants';
 
-const formatTime = (timestamp) => new Date(timestamp).toLocaleDateString();
+export const formatDate = (dateStr) => moment(dateStr, 'YYYYMMDD').format(PZ_DISPLAY_DATE_FORMAT);
+
+export const formatUnixEpoch = (epoch) => moment(epoch).format(PZ_DISPLAY_DATE_FORMAT);
+
 export const formatPZRequest = ({
     createdTime, submitter, newPriceZone, businessUnitNumber, effectiveFromDate,
     customerGroup, customerAccount, itemAttributeGroup, itemAttributeGroupId,
     summary, id, submissionNote, ...rem
 }, { businessUnitMap }) => ({
     submission: {
-        createdTime: formatTime(createdTime),
+        createdTime: formatUnixEpoch(createdTime),
         submissionNote,
         ...submitter,
     },
@@ -16,7 +21,7 @@ export const formatPZRequest = ({
         id,
         businessUnit: formatBusinessUnit(businessUnitNumber, businessUnitMap),
         newPriceZone,
-        effectiveFromDate,
+        effectiveFromDate: formatDate(effectiveFromDate),
         customerGroup,
         customerAccount,
         itemAttributeGroup,
@@ -27,6 +32,8 @@ export const formatPZRequest = ({
         ...rem,
     }
 });
+
+export const formatPZReferenceRecord = (record) => ({ ...record, effectiveFrom: formatDate(record.effectiveFrom)});
 
 export const generatePaginationOffset = (page, pageSize) => (page - 1) * pageSize;
 
@@ -65,5 +72,8 @@ export const removeCompletedRequest = (dataStore, currentPage, index) => {
 };
 
 export const calculateResetIndex = (currentIndex, currentPage) => {
+    if (currentIndex === 0) {
+        return currentPage;
+    }
     return currentIndex > currentPage ? currentPage : currentIndex;
 };

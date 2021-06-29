@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import useModal from '../../../hooks/useModal';
 import { Input } from 'antd';
 
-export default function AproveRejectButtons({ row, index, handle }) {
+export default function AproveRejectButtons({ row, index, handle, disable }) {
   const { on, Modal, toggle } = useModal();
 
   const { TextArea } = Input;
@@ -24,7 +24,7 @@ export default function AproveRejectButtons({ row, index, handle }) {
                 console.log(inputElement.current.state.value);
                 reviewNote = inputElement.current.state.value;
               }
-              handle({ id: row.other.id, index }, { reviewNote, status: 'REJECTED' });
+              handle({ id: row.changeSummary.id, index }, { reviewNote, status: 'REJECTED' });
             },
             okText: 'SUBMIT',
             cancelText: 'CANCEL',
@@ -55,7 +55,9 @@ export default function AproveRejectButtons({ row, index, handle }) {
         htmlType='submit'
         className='search-btn outlined-btn'
         onClick={() => {
-          handle({ id: row.other.id, index }, { reviewNote: '', status: 'APPROVED' });
+          if (!disable) {
+            handle({ id: row.changeSummary.id, index }, { reviewNote: '', status: 'APPROVED' });
+          }
         }}
       >
         APPROVE
@@ -65,7 +67,9 @@ export default function AproveRejectButtons({ row, index, handle }) {
         htmlType='submit'
         className='search-btn reject-btn outlined-btn'
         onClick={() => {
-          toggle();
+          if (!disable) {
+            toggle();
+          }
           // reject(row, index);          
         }}
       >

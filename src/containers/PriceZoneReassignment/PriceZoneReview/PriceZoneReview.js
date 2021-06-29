@@ -10,13 +10,13 @@ import {
   handleResponse,
   constructPatchPayload,
   removeCompletedRequest,
-  calculateResetIndex
+  calculateResetIndex,
 } from '../../../utils/PZRUtils';
 import {
   REVIEW_RESULT_TABLE_PAGE_SIZE,
   PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL
 } from '../../../constants/PZRContants';
-// import { PZRContext } from '../PZRContext';
+import { PZRContext } from '../PZRContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummery from './ReviewSummery';
@@ -31,7 +31,8 @@ export default function PriceZoneReview() {
   const [dataStore, setDataStore] = useState({});
   const [totalResultCount, setTotalResultCount] = useState(REVIEW_RESULT_TABLE_PAGE_SIZE);
   const [resultLoading, setResultLoading] = useState(false);
-  const [selectedRecord, setSelectedRecord] = useState({ id: 1 });
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [approveRejectProgressing, setApproveRejectProgressing] = useState(false);
   // const userDetailsContext = useContext(UserDetailContext);
   const reviewer = {
     id: 'sams5625',
@@ -48,9 +49,11 @@ export default function PriceZoneReview() {
     return [];
   }, [dataStore, currentPage]);
 
-  const { on, Modal, toggle } = useModal();
+  const pzrContext = useContext(PZRContext);
 
-  const fetchPZChangeRequests = (page) => {
+  const { Modal, toggle } = useModal();
+
+  const fetchPZChangeRequests = (page, store) => {
     const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
     const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
       { ...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL });
@@ -66,7 +69,7 @@ export default function PriceZoneReview() {
     .then((resp) => {
       if (resp.success) {
         const { totalRecords, data: { pzUpdateRequests } } = resp.data;
-        const updatedDataStore = { ...dataStore, [page]: pzUpdateRequests };
+        const updatedDataStore = { ...store, [page]: pzUpdateRequests };
         setTotalResultCount(totalRecords);
         setDataStore(updatedDataStore);
       } else {
@@ -84,7 +87,8 @@ export default function PriceZoneReview() {
     });
   };
 
-  const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }) => {
+  const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }) => {    
+    setApproveRejectProgressing(true);
     const payload = constructPatchPayload({ id }, { reviewNote, status }, reviewer);
     const requestUrl = getBffUrlConfig().pzUpdateRequests;
     fetch(requestUrl, {
@@ -112,12 +116,15 @@ export default function PriceZoneReview() {
     .catch((err) => {
       // todo: handle error scenario with a message to user
       console.log(err);
+    })
+    .finally(() => {
+      setApproveRejectProgressing(false);
     });
   };
 
-  const loadTableData = (page = 1) => {
-    if (!dataStore[page]) {
-      fetchPZChangeRequests(page);
+  const loadTableData = (page = 1, store = {}) => {
+    if (!store[page]) {
+      fetchPZChangeRequests(page, store);
     }
   };
 
@@ -131,7 +138,10 @@ export default function PriceZoneReview() {
           }
         });
       setDataStore(dataStoreCopy);
+      setDataResetIndex(0);
+      return dataStoreCopy;
     }
+    return dataStore;
   };
 
   useEffect(() => {
@@ -175,7 +185,7 @@ export default function PriceZoneReview() {
       width: '20%',
       render: (cell, row, index) => (
         <Space size='middle'>
-          <AproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests}/>
+          <AproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests} disable={approveRejectProgressing}/>
         </Space>
       ),
     },
@@ -192,9 +202,10 @@ export default function PriceZoneReview() {
             okText: 'PROCEED',
             cancelText: 'CANCEL',
             width: '60vw',
-            footer: '', // no buttons
+            footer: '', // no buttons,
+            maskClosable: false
           },
-          <ReferenceDataTable record={selectedRecord}/>
+          <ReferenceDataTable record={selectedRecord} setSelectedRecord={setSelectedRecord}/>
         )}
       </div>
     );
@@ -226,8 +237,8 @@ export default function PriceZoneReview() {
         onChange={(current) => {
           if (!resultLoading) {
             setCurrentPage(current);
-            cleanInvalidData();
-            loadTableData(current);
+            const updatedDataStore = cleanInvalidData(current);
+            loadTableData(current, updatedDataStore);
           }
         }}
         pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
