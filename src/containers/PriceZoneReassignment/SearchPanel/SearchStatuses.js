@@ -5,7 +5,7 @@ import RequestId from '../../../components/RequestId';
 import {PZRContext} from "../PZRContext";
 
 const renderWelcomeMessage = () => (
-    <div className="search-statuses">
+    <div className="search-statuses cipz-empty-search">
         <div className="section-wrapper">
             <div className="welcome-message message-block">
                 <div className="title">
@@ -21,7 +21,7 @@ const renderWelcomeMessage = () => (
 );
 
 const renderLoader = () => (
-    <div className="search-statuses">
+    <div className="search-statuses cipz-empty-search">
         <div className="section-wrapper">
             <div className="loading message-block">
                 <div className="title">
@@ -33,7 +33,7 @@ const renderLoader = () => (
 );
 
 const renderError = ({errorCode, message, correlationId}) => (
-    <div className="search-statuses">
+    <div className="search-statuses cipz-empty-search">
         <div className="section-wrapper">
             <div className="error message-block">
                 <div className="title">
@@ -49,7 +49,7 @@ const renderError = ({errorCode, message, correlationId}) => (
 );
 
 const renderContinueSearch = () => (
-    <div className="search-statuses">
+    <div className="search-statuses cipz-empty-search">
         <div className="section-wrapper">
             <div className="welcome-message message-block">
                 <div className="title">
