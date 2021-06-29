@@ -9,7 +9,7 @@ const renderWelcomeMessage = () => (
         <div className="section-wrapper">
             <div className="welcome-message message-block">
                 <div className="title">
-                    <i className="icon fi flaticon-accounting"/> Welcome to the Price Zone Reassignment Tool
+                <i className="icon fi flaticon-price-zone"/> Welcome to the Price Zone Reassignment Tool
                 </div>
                 <div className="subitle-title">
                     <i className="icon fi flaticon-arrow"/> To start select an item attribute group and enter
@@ -53,7 +53,8 @@ const renderContinueSearch = () => (
         <div className="section-wrapper">
             <div className="welcome-message message-block">
                 <div className="title">
-                    <i className="icon fi flaticon-accounting"/> Welcome to the Price Zone Reassignment Tool
+               
+                    <i className="icon fi flaticon-price-zone"/> Welcome to the Price Zone Reassignment Tool
                 </div>
                 <div className="subitle-title">
                     <i className="icon fi flaticon-arrow"/> Your price zone change request is sent for the review. Select an item attribute group and enter
@@ -83,7 +84,7 @@ const SearchStatuses = () => {
         return renderError({errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR});
     }
 
-    if (!PZRContextData.searchResults) {
+    if (!PZRContextData.searchResults) { // removed ! for debug
         if (PZRContextData.isFirstSubmissionDone) {
             return renderContinueSearch();
         }
