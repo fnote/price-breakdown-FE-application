@@ -28,10 +28,11 @@ export default function PriceZoneRe() {
           <Tabs type="card">
             <TabPane
               tab={
-                <span>
-                    <i className="icon fi flaticon-price-zone"/>
-                  Update Pricezone
-                </span>
+                <div className="pz-maintab-item">
+                    <i className="icon fi flaticon-price-zone pz-icon-tab"/>
+                
+                  <div className="pz-main-tab-sub">  Update Pricezone</div>
+                </div>
               }
               key="1"
             >
@@ -41,10 +42,11 @@ export default function PriceZoneRe() {
             {reviewTab && (
               <TabPane
                 tab={
-                  <span>
-                    <FileTextFilled />
-                    Review Changes
-                  </span>
+                  <div className="pz-maintab-item">
+                    <i className="icon fi flaticon-pz-review pz-icon-tab"/>
+                  
+                    <div className="pz-main-tab-sub">  Review Changes</div>
+                  </div>
                 }
                 key="2"
               >
