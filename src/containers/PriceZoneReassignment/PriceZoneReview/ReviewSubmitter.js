@@ -1,5 +1,4 @@
 import React from 'react';
-import {FileTextFilled} from '@ant-design/icons';
 import { Tooltip } from 'antd';
 
 export default function ReviewSubmitter({ submission: { id, givenName, surname, createdTime, submissionNote }}) {
@@ -19,9 +18,9 @@ export default function ReviewSubmitter({ submission: { id, givenName, surname, 
            {createdTime}
            </div>
            <div className="pz-review-note">
-                <Tooltip title={submissionNote} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
-                    <FileTextFilled />
-                </Tooltip>
+               <Tooltip title={submissionNote} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
+               <i className="icon fi flaticon-note"/>
+           </Tooltip>
            </div>
 
         </div>
