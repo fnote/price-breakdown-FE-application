@@ -80,7 +80,7 @@ export default function ApplicationBase() {
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        const userRole = userDetailContext.userDetailsData.userDetails.role;
+        const userRole = userDetailContext?.userDetailsData?.userDetails?.role;
         component = auth.isUserLoginCompleted() ? Application(userRole) : <Login/>;
     }
 
