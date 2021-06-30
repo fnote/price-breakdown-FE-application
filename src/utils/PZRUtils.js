@@ -8,7 +8,7 @@ export const formatDate = (dateStr) => moment(dateStr, 'YYYYMMDD').format(PZ_DIS
 export const formatUnixEpoch = (epoch) => moment(epoch).format(PZ_DISPLAY_DATE_FORMAT);
 
 export const formatPZRequest = ({
-    createdTime, submitter, newPriceZone, businessUnitNumber, effectiveFromDate,
+    createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate,
     customerGroup, customerAccount, itemAttributeGroup, itemAttributeGroupId,
     summary, id, submissionNote, ...rem
 }, { businessUnitMap }) => ({
@@ -21,6 +21,7 @@ export const formatPZRequest = ({
         id,
         businessUnit: formatBusinessUnit(businessUnitNumber, businessUnitMap),
         newPriceZone,
+        oldPriceZone,
         effectiveFromDate: formatDate(effectiveFromDate),
         customerGroup,
         customerAccount,
