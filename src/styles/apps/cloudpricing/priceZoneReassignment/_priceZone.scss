@@ -40,6 +40,10 @@
 .pz-linebreak-item-group {
   display: flex;
   align-items: center;
+  .ant-form-item-label > label {
+    height: auto !important;
+    white-space: pre-wrap;
+  }
 }
 
 // pricezone container styles
@@ -125,6 +129,7 @@
           .pz-tab-items-top {
             font-weight: 600;
             font-size: 1.15rem;
+            color: $textstandard;
           }
           .pz-tab-items-bottom {
             width: 100%;
@@ -138,31 +143,44 @@
               min-width: 10rem;
             }
 
-            .pz-cutomer-grp-text-no-bg{
-              font-size:2.5rem;
+            .pz-cutomer-grp-text-no-bg {
+              font-size: 2.5rem;
+              color: $textstandard;
+              font-weight: 800;
             }
-            .pz-customer-group-bottom{
-              
+            .pz-customer-group-bottom {
               display: flex;
               align-items: center;
-              justify-content:space-evenly;
+              justify-content: center;
 
-              .pz-customer-group-bottom-text{
-                  font-size: 0.9rem;
-                  font-style: italic;
-                  font-weight: 400;
+              .pz-customer-group-bottom-text {
+                font-size: 0.9rem;
+                font-style: italic;
+                font-weight: 400;
+                padding-right: 0.5rem;
+                color: $textstandard;
               }
-              .pz-customer-group-bottom-tag{
+              .pz-customer-group-bottom-tag {
                 background: #76e0f6;
                 font-size: 1.2rem;
                 padding: 0.2rem;
-                border-radius:0.2rem;
+                border-radius: 0.2rem;
+                color: $textstandard;
               }
             }
-
           }
           .pz-text-wrapper {
             text-align: left;
+
+            .pz-opco-text-bold {
+              font-size: 1.7rem;
+              color: #62737e;
+              font-weight: 800;
+              width: 11rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
           }
         }
         .pz-tabs-combine {
@@ -209,6 +227,7 @@
     }
     .pz-item-grp-text {
       background: #f6e176;
+      color: $textstandard;
     }
     .pz-item-grp-text,
     .pz-cutomer-grp-text {
@@ -238,6 +257,27 @@
     padding: 40px 5px;
     box-shadow: 0px -2px 5px rgba(204, 204, 204, 0.5);
     margin-top: 0.6rem;
+
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      border-bottom: 0.076rem solid #f0f0f0;
+      border-right: 0.076rem dashed rgba(0, 0, 0, 0.1) !important;
+      padding-left: 2.307rem !important;
+      &:nth-last-child(1) {
+        border-right: none !important;
+      }
+    }
+
+    .ant-table-thead {
+      height: 4rem !important;
+      padding-bottom: 11rem !important;
+    }
+
+    .ant-table-cell {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: $textstandard;
+    }
   }
 
   .pz-review-reminder {
@@ -252,23 +292,23 @@
     font-style: italic;
   }
 
-  tr {
-    th {
-      &:nth-child(2) {
-        border-left: 1px dashed rgba(0, 0, 0, 0.137);
-        border-right: 1px dashed rgba(0, 0, 0, 0.137);
-      }
-    }
-  }
+  // tr {
+  //   th {
+  //     &:nth-child(2) {
+  //       border-left: 1px dashed rgba(0, 0, 0, 0.137);
+  //       border-right: 1px dashed rgba(0, 0, 0, 0.137);
+  //     }
+  //   }
+  // }
 
-  .ant-table-row {
-    .ant-table-cell {
-      &:nth-child(2) {
-        border-left: 1px dashed rgba(0, 0, 0, 0.137);
-        border-right: 1px dashed rgba(0, 0, 0, 0.137);
-      }
-    }
-  }
+  // .ant-table-row {
+  //   .ant-table-cell {
+  //     &:nth-child(2) {
+  //       border-left: 1px dashed rgba(0, 0, 0, 0.137);
+  //       border-right: 1px dashed rgba(0, 0, 0, 0.137);
+  //     }
+  //   }
+  // }
 }
 
 // override content styles background
@@ -604,9 +644,9 @@
   // =======================
 
   .alert {
-    .pz-warning-anim-logo{
-width:8rem;
-height:8rem;
+    .pz-warning-anim-logo {
+      width: 8rem;
+      height: 8rem;
     }
   }
   .pz-alert-main,
@@ -635,6 +675,35 @@ height:8rem;
 
   .pz-submit-text-base {
     margin-top: 10px;
+  }
+}
+
+// ===================
+//   Loading state
+// ===================
+
+.pz-loading-pop-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 25rem;
+
+  .pz-loading-pop-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .pz-loading-anim {
+      width: 8rem;
+      height: 8rem;
+    }
+    .pz-loading-text {
+      margin-top: 3rem;
+      font-size: 1.2rem;
+    }
   }
 }
 
@@ -696,4 +765,26 @@ height:8rem;
 .pz-disabled {
   pointer-events: none !important;
   filter: grayscale(0.7);
+}
+
+// empty message border
+
+.cipz-empty-search {
+  border: none !important;
+}
+
+// main tab view styles
+
+.pz-maintab-item {
+  display: flex;
+  align-items: center;
+  width: 12rem;
+  justify-content: space-evenly;
+
+  .pz-icon-tab {
+    font-size: 1.4rem;
+  }
+  .pz-main-tab-sub {
+    margin-left: 0.5rem;
+  }
 }
