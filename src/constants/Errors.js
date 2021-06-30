@@ -12,8 +12,9 @@ const ErrorCodes = {
     PRODUCT_INFO_API_ERROR: 2022,
     CUSTOMER_INFO_API_ERROR: 2025,
 
-    // PZR ERRORS
-
+    // SEED Errors
+    SEED_NO_RESULTS_ERROR: 101001,
+    SEED_UNKNOWN_ERROR: 101000,
     INVALID_CUSTOMER_ACCOUNT_PZR_ERROR: 5000,
     INVALID_CUSTOMER_GROUP_ERROR: 5001,
     ITEM_ATTRIBUTE_GROUP_FETCH_ERROR: 4028
@@ -55,8 +56,24 @@ const ErrorsMap = new Map([
     [ErrorCodes.INVALID_CUSTOMER_GROUP_ERROR, ErrorMessages.INVALID_CUSTOMER_GROUP_ERROR],
 ]);
 
+export const CIPZErrorMessages = {
+    FETCH_ITEM_ATTRIBUTE_ERROR_TITLE: 'Sorry we could not retrieve the attribute group information. Please refresh again.',
+    FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE: 'Could not retrieve the attribute group information due to connection issue.',
+    FETCH_SEARCH_RESULTS_TITLE: 'Sorry we could not retrieve the information. Please try again later.',
+    FETCH_SEARCH_RESULTS_MESSAGE: 'Could not retrieve the information due to connection issue.',
+    UNKNOWN_ERROR_OCCURRED: 'Something went wrong. Please try again later',
+    GENERIC_SEED_SEARCH_ERROR: 'Error occurred while fetching the search results from SEED'
+};
+
+export const CIPZErrorsMap = {
+    "102010": "Provided business unit is invalid",
+    "102021": "Provided customer account is invalid",
+    "102023": "Provided customer group is invalid",
+    "102033": "Provided item attribute group is invalid",
+};
+
 // http Error Code
 export const HTTP_INTERNAL_SERVER_ERROR = 500;
 export const HTTP_NOT_FOUND_ERROR = 400;
 
-export { ErrorCodes, ErrorMessages, ErrorsMap };
+export {ErrorCodes, ErrorMessages, ErrorsMap};
