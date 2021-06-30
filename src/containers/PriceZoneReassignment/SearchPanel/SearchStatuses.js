@@ -117,6 +117,7 @@ const SearchStatuses = () => {
                 if (httpStatus !== HTTP_NOT_FOUND_ERROR) {
                     const notificationDetails = notificationMap.get(errorCode);
                     openNotificationWithIcon('error', notificationDetails.title, notificationDetails.message);
+                    PZRContextData.setErrorData(null);
                 }
             }
 
@@ -124,6 +125,7 @@ const SearchStatuses = () => {
                 if (httpStatus !== HTTP_NOT_FOUND_ERROR) {
                     const notificationDetails = notificationMap.get(errorCode);
                     openNotificationWithIcon('error', notificationDetails.title, notificationDetails.message);
+                    PZRContextData.setErrorData(null);
                 }
             }
 
