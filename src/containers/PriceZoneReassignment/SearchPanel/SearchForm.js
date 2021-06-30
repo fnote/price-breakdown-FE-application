@@ -149,7 +149,7 @@ const SearchForm = () => {
                         <div className="pz-customer-groupbox">
                             <div className="pz-radio">
                                 <Radio.Group
-                                    defaultValue={2}>
+                                    value={isCustomerChecked ? 1 : 2}>
                                     <Radio value={1} onClick={() => {
                                         setCustomerChecked(true);
                                         setCustomerGroupTextBoxValue('');
