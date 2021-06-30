@@ -76,7 +76,7 @@ export default function PrizeZoneHeader() {
 
     const priceZoneChangeHandler = () => {
 
-       setSubmitModal("loading"); //ADDED FOR TESTING
+        setSubmitModal("loading");
         fetch(getBffUrlConfig().pzrUpdateRequestsUrl, {
             method: 'POST',
             body: formRequestBody(),
@@ -90,7 +90,6 @@ export default function PrizeZoneHeader() {
             .then((resp) => {
                 if (resp.success) {
                     setSubmitModal("success-modal");
-                    //TODO: Handle success
                 } else {
                     //TODO: Handle failure
                 }
@@ -106,7 +105,6 @@ export default function PrizeZoneHeader() {
         const submissionReason = (submissionReasonInput.current && submissionReasonInput.current.state
             && submissionReasonInput.current.state.value) ?
             submissionReasonInput.current.state.value : '';
-        console.log(submissionReason);
         return JSON.stringify({
             businessUnitNumber: PZRContextData.searchParams.opcoId,
             itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
@@ -187,31 +185,31 @@ export default function PrizeZoneHeader() {
     };
 
     const LoadingState = () => {
-      return (
-        <div>
-          {Modal(
-            {
-              title: "",
-              centered: "true",
-              onOK: () => toggle,
-              maskClosable:false, // won't close on mask click
-              closable:false, // won't close from close icon
-              keyboard:false, // won't close from keyboard events (esc)
-              okText: "OK",
-              cancelText: "",
-              noCancel: true, // no cancel button
-              noOk: true, // no ok button
-            },
+        return (
+            <div>
+                {Modal(
+                    {
+                        title: "",
+                        centered: "true",
+                        onOK: () => toggle,
+                        maskClosable: false, // won't close on mask click
+                        closable: false, // won't close from close icon
+                        keyboard: false, // won't close from keyboard events (esc)
+                        okText: "OK",
+                        cancelText: "",
+                        noCancel: true, // no cancel button
+                        noOk: true, // no ok button
+                    },
 
-            <div className="pz-loading-pop-base">
-              <div className="pz-loading-pop-wrapper">
-                <Loader className="pz-loading-anim"/>
-               <span className="pz-loading-text"> Please wait ...</span>
-              </div>
+                    <div className="pz-loading-pop-base">
+                        <div className="pz-loading-pop-wrapper">
+                            <Loader className="pz-loading-anim"/>
+                            <span className="pz-loading-text"> Please wait ...</span>
+                        </div>
+                    </div>
+                )}
             </div>
-          )}
-        </div>
-      );
+        );
     };
 
     const resetSearch = () => {
@@ -219,7 +217,6 @@ export default function PrizeZoneHeader() {
         setSubmitModal(false)
     };
     const onPriceZoneChange = (value) => {
-        console.log(userDetailContext.userDetailsData);
         setNewPriceZone(value);
         setSubmitDisabled(false);
     };
@@ -236,11 +233,11 @@ export default function PrizeZoneHeader() {
     };
 
     const getCustomerGroupOfCustomer = () => {
-        if (!PZRContextData.searchResults || !PZRContextData.searchResults.data || !PZRContextData.searchResults.data.customer_group) {
+        if (!PZRContextData.searchResults || !PZRContextData.searchResults.data || !PZRContextData.searchResults.data.customer_group_id) {
             return null;
         }
 
-        return PZRContextData.searchResults.data.customer_group;
+        return PZRContextData.searchResults.data.customer_group_id;
     };
 
     return (
