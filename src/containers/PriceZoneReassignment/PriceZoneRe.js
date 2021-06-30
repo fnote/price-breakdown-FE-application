@@ -12,46 +12,47 @@ export default function PriceZoneRe() {
   const { TabPane } = Tabs;
   const [reviewTab, makeReviewActive] = useState(true);
 
+
+
   return (
     <div className="wrapper cloudpricing-wrapper">
       <AppBar />
       <PZRContextProvider>
-        <div className="content">
-          <SearchPanel />
-          <div className="pz-wrapper  pz-no-bg">
-            <Tabs type="card">
+      <div className="content">
+        <SearchPanel />
+        <div className="pz-wrapper  pz-no-bg">
+          <Tabs type="card">
+            <TabPane
+              tab={
+                <div className="pz-maintab-item">
+                    <i className="icon fi flaticon-price-zone pz-icon-tab"/>
+
+                  <div className="pz-main-tab-sub">  Update Pricezone</div>
+                </div>
+              }
+              key="1"
+            >
+
+                <SearchStatuses />
+                <PzUpdateComponent />
+            </TabPane>
+            {reviewTab && (
               <TabPane
                 tab={
                   <div className="pz-maintab-item">
-                    <i className="icon fi flaticon-price-zone pz-icon-tab" />
+                    <i className="icon fi flaticon-pz-review pz-icon-tab"/>
 
-                    <div className="pz-main-tab-sub"> Update Pricezone</div>
+                    <div className="pz-main-tab-sub">  Review Changes</div>
                   </div>
                 }
-                key="1"
+                key="2"
               >
-
-
-                <SearchStatuses /> 
-                <PzUpdateComponent />
+                <PriceZoneReview />
               </TabPane>
-              {reviewTab && (
-                <TabPane
-                  tab={
-                    <div className="pz-maintab-item">
-                      <i className="icon fi flaticon-pz-review pz-icon-tab" />
-
-                      <div className="pz-main-tab-sub"> Review Changes</div>
-                    </div>
-                  }
-                  key="2"
-                >
-                  <PriceZoneReview />
-                </TabPane>
-              )}
-            </Tabs>
-          </div>
+            )}
+          </Tabs>
         </div>
+      </div>
       </PZRContextProvider>
     </div>
   );

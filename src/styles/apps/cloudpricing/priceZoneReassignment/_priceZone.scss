@@ -329,6 +329,16 @@
     height: 10rem !important;
     padding-bottom: 0.5rem;
   }
+
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    border-bottom: 0.076rem solid #f0f0f0;
+    border-right: 0.076rem dashed rgba(0, 0, 0, 0.1) !important;
+    padding-left: 2.307rem !important;
+    &:nth-last-child(1) {
+      border-right: none !important;
+    }
+  }
 }
 
 .pz-review-wrapper {
