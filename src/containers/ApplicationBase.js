@@ -15,7 +15,6 @@ import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION , NAVIGATI
 import UnsupportedBrowser from "../components/UnsupportedBrowser";
 import BrowserDetector from "../utils/BrowserDetector";
 import {SUPPORTED_WEB_BROWSERS} from '../constants/Constants'
-import ToperrorBar from "../components/ToperrorBar"
 
 const Application = () => (
     <Switch>
@@ -63,20 +62,7 @@ export default function ApplicationBase() {
         }
     });
 
-    let component;
-
-    
-    
-    if(!browserDetector.isSupported()){
-        component =  <UnsupportedBrowser
-            browserName={browserDetector.getBrowserName()}
-            browserVersion={browserDetector.getBrowserVersion()}
-            fullBrowserVersion={browserDetector.getFullBrowserVersion()}/>;
-    } else if (appLoaderContext.appLoadingState) {
-        component = <AppLoader/>;
-    } else {
-        component = !auth.isUserLoginCompleted() ? Application() : <Login/>;
-    }
+    const component = Application();
 
     return (
 
