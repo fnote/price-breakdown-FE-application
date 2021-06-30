@@ -1,8 +1,10 @@
-import React, {useContext} from 'react';
-import {SyncOutlined} from '@ant-design/icons';
-import {ErrorCodes, ErrorMessages, ErrorsMap} from '../../../constants/Errors';
+import React, { useContext } from 'react';
+import { SyncOutlined } from '@ant-design/icons';
+import { notification } from 'antd';
+import { ErrorCodes, ErrorMessages, ErrorsMap, HTTP_INTERNAL_SERVER_ERROR, HTTP_NOT_FOUND_ERROR } from '../../../constants/Errors';
 import RequestId from '../../../components/RequestId';
-import {PZRContext} from "../PZRContext";
+import { PZRContext } from '../PZRContext';
+import {notificationMap} from '../../../constants/NotificationDataMap';
 
 const renderWelcomeMessage = () => (
     <div className="search-statuses cipz-empty-search">
@@ -42,7 +44,29 @@ const renderError = ({errorCode, message, correlationId}) => (
                 <div className="subitle-title">
                     Error {errorCode} - {message}
                 </div>
-                <RequestId requestId={correlationId}/>
+                <RequestId requestId={correlationId} />
+            </div>
+        </div>
+    </div>
+);
+
+const emptyResponse = (correlationId) => (
+    <div className="search-statuses">
+        <div className="section-wrapper">
+            <div className="info message-block">
+                <div className="title">
+                    <i className="icon fi flaticon-error-1" />  Your search did not found any match.
+                </div>
+                <div className="subitle-title">
+                    Suggestions
+                </div>
+                <div className="subitle-title">
+                    <ul>
+                    <li>Make sure right OpCo is selected.</li>
+                    <li>Make sure entered Customer or Customer Group are valid.</li>
+                    </ul>
+                </div>
+                <RequestId requestId={correlationId} />
             </div>
         </div>
     </div>
@@ -53,7 +77,6 @@ const renderContinueSearch = () => (
         <div className="section-wrapper">
             <div className="welcome-message message-block">
                 <div className="title">
-               
                     <i className="icon fi flaticon-price-zone"/> Welcome to the Price Zone Reassignment Tool
                 </div>
                 <div className="subitle-title">
@@ -68,23 +91,56 @@ const renderContinueSearch = () => (
 const SearchStatuses = () => {
     const PZRContextData = useContext(PZRContext);
 
+    const openNotificationWithIcon = (type, description, msg) => {
+        notification[type]({
+            message: msg,
+            description,
+        });
+    };
+
     if (PZRContextData.isSearchLoading) {
         return renderLoader();
     }
 
-    if (PZRContextData.searchError) {
-        const {errorCode, correlationId} = PZRContextData.searchError;
-        if (errorCode) {
-            const message = ErrorsMap.get(errorCode);
-            if (message) {
-                return renderError({errorCode, message, correlationId});
-            }
+    if (PZRContextData.searchResults) {
+        const { correlationId } = PZRContextData.searchResults;
+        const isResponseEmpty = PZRContext.isResponseEmpty;
+        if (isResponseEmpty) {
+            return emptyResponse(correlationId);
         }
-
-        return renderError({errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR});
     }
 
-    if (!PZRContextData.searchResults) { // removed ! for debug
+    if (PZRContextData.searchError) {
+        const { errorCode, correlationId, httpStatus } = PZRContextData.searchError;
+        if (errorCode) {
+            if (errorCode === ErrorCodes.ITEM_ATTRIBUTE_GROUP_FETCH_ERROR) {
+                if (httpStatus !== HTTP_NOT_FOUND_ERROR) {
+                    const notificationDetails = notificationMap.get(errorCode);
+                    openNotificationWithIcon('error', notificationDetails.title, notificationDetails.message);
+                }
+            }
+
+            if ([ErrorCodes.INVALID_CUSTOMER_ACCOUNT_PZR_ERROR, ErrorCodes.INVALID_CUSTOMER_GROUP_ERROR].includes(errorCode)) {
+                if (httpStatus !== HTTP_NOT_FOUND_ERROR) {
+                    const notificationDetails = notificationMap.get(errorCode);
+                    openNotificationWithIcon('error', notificationDetails.title, notificationDetails.message);
+                }
+            }
+
+            if (httpStatus === HTTP_NOT_FOUND_ERROR) {
+                const message = ErrorsMap.get(errorCode);
+                if (message) {
+                    return renderError({ errorCode: ErrorCodes.UNEXPECTED_ERROR, message, correlationId });
+                }
+                return renderError({ errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
+            }
+        }
+        if (httpStatus !== HTTP_INTERNAL_SERVER_ERROR) {
+            return renderError({ errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
+        }
+    }
+
+    if (!PZRContextData.searchResults) {
         if (PZRContextData.isFirstSubmissionDone) {
             return renderContinueSearch();
         }
