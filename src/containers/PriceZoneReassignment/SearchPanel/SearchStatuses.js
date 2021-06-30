@@ -130,9 +130,9 @@ const SearchStatuses = () => {
             if (httpStatus === HTTP_NOT_FOUND_ERROR) {
                 const message = ErrorsMap.get(errorCode);
                 if (message) {
-                    return emptyResponse(correlationId);
+                    return renderError({ errorCode: ErrorCodes.UNEXPECTED_ERROR, message, correlationId });
                 }
-                return emptyResponse(correlationId);
+                return renderError({ errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
             }
         }
         if (httpStatus !== HTTP_INTERNAL_SERVER_ERROR) {
