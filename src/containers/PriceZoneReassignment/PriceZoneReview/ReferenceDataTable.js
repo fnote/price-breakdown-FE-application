@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Table, Space, Spin } from 'antd';
+import { Table } from 'antd';
 import CustomPagination from '../../../components/CustomPagination';
 import {
     REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE
@@ -107,13 +107,7 @@ export default function ReferenceDataTable({
     useEffect(() => {
         loadPageData();
         return () => setSelectedRecord(null);
-    }, []);    
-
-    const renderLoader = () => (
-        <Space size='middle' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-            <Spin size='large' />
-        </Space>
-    );
+    }, []);
 
     const renderCustomerInfo = () => {
         if (customerGroup) {
@@ -152,15 +146,16 @@ export default function ReferenceDataTable({
                 dataSource={dataSource}
                 style={{ width: '60vw', height: '60vh' }}
                 className='pz-pop-table-ant'
+                loading={resultLoading}
             />
             <CustomPagination
                 total={totalResultCount}
                 current={currentPage}
                 onChange={(current) => {
-                if (!resultLoading) {
-                    setCurrentPage(current);
-                    loadPageData(current);
-                }
+                    if (!resultLoading) {
+                        setCurrentPage(current);
+                        loadPageData(current);
+                    }
                 }}
                 pageSize={REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE}
             />
@@ -170,7 +165,7 @@ export default function ReferenceDataTable({
     return (
         <div className='pz-confirm-pop-base-table'>
             <div className='pz-pop-table'>
-                {!resultLoading ? renderTable() : renderLoader()}
+                {renderTable()}
             </div>
       </div>
     );

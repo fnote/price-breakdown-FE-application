@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { Table, Space, Spin } from 'antd';
+import { Table, Space, Spin, notification } from 'antd';
 import useModal from '../../../hooks/useModal';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
@@ -53,6 +53,13 @@ export default function PriceZoneReview() {
 
   const { Modal, toggle } = useModal();
 
+  const openNotificationWithIcon = (type, description, msg) => {
+    notification[type]({
+        message: msg,
+        description,
+    });
+  };
+
   const fetchPZChangeRequests = (page, store) => {
     const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
     const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
@@ -79,6 +86,7 @@ export default function PriceZoneReview() {
       setResultLoading(false);
     })
     .catch((err) => {
+      openNotificationWithIcon('error', 'Failed to fetch', 'Failure');
       // todo: handle error scenario with a message to user
       console.log(err);
     })
@@ -203,7 +211,7 @@ export default function PriceZoneReview() {
             cancelText: 'CANCEL',
             width: '60vw',
             footer: '', // no buttons,
-            maskClosable: false
+            // maskClosable: false
           },
           <ReferenceDataTable record={selectedRecord} setSelectedRecord={setSelectedRecord}/>
         )}
@@ -223,6 +231,7 @@ export default function PriceZoneReview() {
         columns={columns}
         dataSource={dataSource}
         pagination={false}
+        loading={resultLoading}
       />
       {selectedRecord && <ReferenceTable record={selectedRecord}/>}      
     </>    
@@ -230,7 +239,7 @@ export default function PriceZoneReview() {
 
   return (
     <div className='pz-review-base-wrapper'>
-      {!resultLoading ? renderDataTable() : renderLoader()}
+      {renderDataTable()}
       <CustomPagination
         total={totalResultCount}
         current={currentPage}
