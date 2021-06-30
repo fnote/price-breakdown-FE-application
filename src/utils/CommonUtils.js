@@ -15,7 +15,6 @@ import {
     UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE,
     UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
 } from '../constants/Constants';
-import {any} from "prop-types";
 
 const BUSINESS_UNIT_NAME_SPLITTER = 'Sysco ';
 
@@ -90,7 +89,7 @@ export const grantViewPermissionsToScreens = (role, screen) => {
     if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUBMITTER || role === ROLE_CIPZ_SUPPORT) && (screen === SCREEN_CIPZ_REASSIGNMENT)) {
         return true;
     }
-    if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUBMITTER) && (screen === SCREEN_PRICE_VALIDATION || screen === SCREEN_FILE_UPLOAD)) {
+    if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUBMITTER) && (screen === SCREEN_PRICE_VALIDATION || screen === SCREEN_FILE_UPLOAD || screen === SCREEN_HISTORY_INQUIRY)) {
         return false;
     }
     if (role === ROLE_CIPZ_SUBMITTER && screen === SCREEN_CIPZ_REVIEW) {
@@ -105,7 +104,7 @@ export const grantViewPermissionsToScreens = (role, screen) => {
     if (role === ROLE_CIPZ_SUPPORT && (screen === SCREEN_CIPZ_REASSIGNMENT || screen === SCREEN_CIPZ_REVIEW)) {
         return true;
     }
-
+        return false;
 };
 
 /**

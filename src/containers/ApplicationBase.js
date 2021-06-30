@@ -15,10 +15,10 @@ import {
     NAVIGATION_PATH_PRICE_VALIDATION,
     SUPPORTED_WEB_BROWSERS,
     NAVIGATION_PATH_HISTORY_INQUIRY,
-    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT
+    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT, SCREEN_PRICE_VALIDATION
 } from '../constants/Constants';
 
-import {unsupportedBrowserState} from '../utils/CommonUtils';
+import {grantViewPermissionsToScreens, unsupportedBrowserState} from '../utils/CommonUtils';
 import UnsupportedBrowserScreen from '../components/UnsupportedBrowser/UnsupportedBrowserScreen';
 import BrowserDetector from '../utils/BrowserDetector';
 import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
@@ -30,7 +30,7 @@ const Application = (user) => (
             <FileUpload/>
         </Route>
         <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
-            {user !== '' ? <PriceValidation/> : <PriceZoneRe/>}
+            {grantViewPermissionsToScreens(user, SCREEN_PRICE_VALIDATION) ? <PriceValidation/> : <PriceZoneRe/>}
         </Route>
         <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
             <HistoryInquiry/>
