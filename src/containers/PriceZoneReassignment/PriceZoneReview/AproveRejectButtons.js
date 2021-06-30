@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import useModal from "../../../hooks/useModal";
 import { Input } from "antd";
 
-export default function AproveRejectButtons() {
+export default function AproveRejectButtons({ row, index, approve, reject }) {
   const { on, Modal, toggle } = useModal();
 
   const { TextArea } = Input;
@@ -52,6 +52,9 @@ export default function AproveRejectButtons() {
         type="primary"
         htmlType="submit"
         className="search-btn outlined-btn"
+        onClick={() => {
+          approve(row, index);
+        }}
       >
         APPROVE
       </button>
@@ -59,7 +62,10 @@ export default function AproveRejectButtons() {
         type="primary"
         htmlType="submit"
         className="search-btn reject-btn outlined-btn"
-        onClick={toggle}
+        onClick={() => {
+          toggle();
+          reject(row, index);
+        }}
       >
         REJECT
       </button>
