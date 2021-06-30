@@ -313,7 +313,7 @@ export default function PrizeZoneHeader() {
                                 <button
                                     type="primary"
                                     htmlType="submit"
-                                    className={isSubmitDisabled ? "pz-disabled" : "search-btn outlined-btn "}
+                                    className={isSubmitDisabled ? "search-btn outlined-btn pz-disabled" : "search-btn outlined-btn"}
                                     onClick={toggle}
                                     disabled={isSubmitDisabled}
                                 >
