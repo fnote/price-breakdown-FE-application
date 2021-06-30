@@ -92,7 +92,6 @@ const SearchForm = () => {
     };
 
     const onSubmit = (values) => {
-        console.log(values);
         pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;

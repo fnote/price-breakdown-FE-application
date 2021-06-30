@@ -76,7 +76,7 @@ export default function PrizeZoneHeader() {
 
     const priceZoneChangeHandler = () => {
 
-        setSubmitModal("loading"); //ADDED FOR TESTING
+        setSubmitModal("loading");
         fetch(getBffUrlConfig().pzrUpdateRequestsUrl, {
             method: 'POST',
             body: formRequestBody(),
@@ -90,7 +90,6 @@ export default function PrizeZoneHeader() {
             .then((resp) => {
                 if (resp.success) {
                     setSubmitModal("success-modal");
-                    //TODO: Handle success
                 } else {
                     //TODO: Handle failure
                 }
@@ -106,7 +105,6 @@ export default function PrizeZoneHeader() {
         const submissionReason = (submissionReasonInput.current && submissionReasonInput.current.state
             && submissionReasonInput.current.state.value) ?
             submissionReasonInput.current.state.value : '';
-        console.log(submissionReason);
         return JSON.stringify({
             businessUnitNumber: PZRContextData.searchParams.opcoId,
             itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
@@ -219,7 +217,6 @@ export default function PrizeZoneHeader() {
         setSubmitModal(false)
     };
     const onPriceZoneChange = (value) => {
-        console.log(userDetailContext.userDetailsData);
         setNewPriceZone(value);
         setSubmitDisabled(false);
     };
