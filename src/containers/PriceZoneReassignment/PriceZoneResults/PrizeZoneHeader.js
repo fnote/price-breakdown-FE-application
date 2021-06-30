@@ -76,7 +76,7 @@ export default function PrizeZoneHeader() {
 
     const priceZoneChangeHandler = () => {
 
-       setSubmitModal("loading"); //ADDED FOR TESTING
+        setSubmitModal("loading"); //ADDED FOR TESTING
         fetch(getBffUrlConfig().pzrUpdateRequestsUrl, {
             method: 'POST',
             body: formRequestBody(),
@@ -187,31 +187,31 @@ export default function PrizeZoneHeader() {
     };
 
     const LoadingState = () => {
-      return (
-        <div>
-          {Modal(
-            {
-              title: "",
-              centered: "true",
-              onOK: () => toggle,
-              maskClosable:false, // won't close on mask click
-              closable:false, // won't close from close icon
-              keyboard:false, // won't close from keyboard events (esc)
-              okText: "OK",
-              cancelText: "",
-              noCancel: true, // no cancel button
-              noOk: true, // no ok button
-            },
+        return (
+            <div>
+                {Modal(
+                    {
+                        title: "",
+                        centered: "true",
+                        onOK: () => toggle,
+                        maskClosable: false, // won't close on mask click
+                        closable: false, // won't close from close icon
+                        keyboard: false, // won't close from keyboard events (esc)
+                        okText: "OK",
+                        cancelText: "",
+                        noCancel: true, // no cancel button
+                        noOk: true, // no ok button
+                    },
 
-            <div className="pz-loading-pop-base">
-              <div className="pz-loading-pop-wrapper">
-                <Loader className="pz-loading-anim"/>
-               <span className="pz-loading-text"> Please wait ...</span>
-              </div>
+                    <div className="pz-loading-pop-base">
+                        <div className="pz-loading-pop-wrapper">
+                            <Loader className="pz-loading-anim"/>
+                            <span className="pz-loading-text"> Please wait ...</span>
+                        </div>
+                    </div>
+                )}
             </div>
-          )}
-        </div>
-      );
+        );
     };
 
     const resetSearch = () => {
@@ -236,11 +236,11 @@ export default function PrizeZoneHeader() {
     };
 
     const getCustomerGroupOfCustomer = () => {
-        if (!PZRContextData.searchResults || !PZRContextData.searchResults.data || !PZRContextData.searchResults.data.customer_group) {
+        if (!PZRContextData.searchResults || !PZRContextData.searchResults.data || !PZRContextData.searchResults.data.customer_group_id) {
             return null;
         }
 
-        return PZRContextData.searchResults.data.customer_group;
+        return PZRContextData.searchResults.data.customer_group_id;
     };
 
     return (
