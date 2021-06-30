@@ -15,9 +15,7 @@ import { getBffUrlConfig } from '../../../utils/Configs';
 const columns = [
     {
         title: 'ITEM(SUPC)',
-        dataIndex: 'supc',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a - b,
+        dataIndex: 'supc',    
     },
     {
         title: 'ITEM DESCRIPTION',
