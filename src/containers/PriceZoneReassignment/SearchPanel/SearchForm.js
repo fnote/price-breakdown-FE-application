@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {Form, Input, Select, Radio, notification} from 'antd';
+import {Form, Input, Select, Radio} from 'antd';
 
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -8,7 +8,6 @@ import {getBusinessUnits, getAttributeGroups} from '../PZRUtils/PZRHelper';
 import {PZRFetchSearchResults} from '../PZRUtils/PZRSearchHandler';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from '../../../constants/Constants';
-import { HTTP_INTERNAL_SERVER_ERROR } from '../../../constants/Errors';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -34,13 +33,6 @@ const SearchForm = () => {
     const { userDetails: { allowedBussinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const pZRContext = useContext(PZRContext);
     const [form] = Form.useForm();
-
-    const openNotificationWithIcon = (type, description, msg) => {
-        notification[type]({
-            message: msg,
-            description,
-        });
-    };
 
     const handleGetAttributeGroupResponse = (response) => {
         const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
@@ -80,10 +72,6 @@ const SearchForm = () => {
         setCustomerGroupTextBoxValue(event.target.value);
     };
 
-    const onReset = () => {
-        form.resetFields();
-    };
-
     const restSearchForm = () => {
         form.resetFields();
         setCustomerGroupTextBoxValue(customerGroupTextboxValueInitState);
@@ -92,7 +80,6 @@ const SearchForm = () => {
     };
 
     const onSubmit = (values) => {
-        console.log(values);
         pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;

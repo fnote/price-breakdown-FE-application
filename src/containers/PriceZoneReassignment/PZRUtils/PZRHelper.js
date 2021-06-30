@@ -1,7 +1,7 @@
 import React from 'react';
 import {Select} from 'antd';
 
-import {AVAILABLE_PRICE_ZONES} from '../../../constants/Constants'
+import {AVAILABLE_PRICE_ZONES} from '../../../constants/Constants';
 
 const {Option} = Select;
 
