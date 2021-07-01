@@ -21,8 +21,7 @@ const handleResponse = (response) => {
 
 const formRequestBody = (requestData) => {
     return JSON.stringify({
-        // business_unit_number: requestData.opcoId,
-        business_unit_number: '019', //TODO: test purpose only, remove this
+        business_unit_number: requestData.opcoId,
         item_attribute_group_id: requestData.attributeGroupId,
         customer_account: requestData.customer ? requestData.customer : null,
         customer_group_id: requestData.customerGroup ? requestData.customerGroup : null,
