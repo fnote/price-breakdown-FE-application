@@ -248,7 +248,7 @@ const SearchForm = () => {
                                 type="primary"
                                 htmlType="submit"
                                 className="search-btn outlined-btn"
-                                disabled= {isSearchDisabled ? 'true' : 'false'}
+                                disabled= {isSearchDisabled}
                             >
                                 Search
                             </button>
