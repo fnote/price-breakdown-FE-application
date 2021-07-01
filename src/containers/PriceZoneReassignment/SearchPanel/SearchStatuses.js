@@ -8,6 +8,7 @@ import {
     HTTP_INTERNAL_SERVER_ERROR
 } from '../../../constants/Errors';
 import RequestId from '../../../components/RequestId';
+import {RequestIdForEmptyResponse} from '../../../components/RequestId';
 import {PZRContext} from '../PZRContext';
 
 const renderWelcomeMessage = () => (
@@ -64,13 +65,13 @@ const emptyResponse = (correlationId) => (
                 <div className="subitle-title">
                     Suggestions
                 </div>
-                <div>
+                <div className="pz-search-suggestion-list">
                     <ul>
                         <li>Make sure right OpCo is selected.</li>
                         <li>Make sure entered Customer or Customer Group are valid.</li>
                     </ul>
                 </div>
-                <RequestId requestId={correlationId}/>
+                <RequestIdForEmptyResponse requestId={correlationId}/>
             </div>
         </div>
     </div>

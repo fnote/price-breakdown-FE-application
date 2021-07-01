@@ -64,7 +64,7 @@
     width: 100%;
 
     .ant-tabs-nav-wrap {
-      border-top-left-radius: 20px;
+      border-top-left-radius: 13px;
     }
 
     .ant-tabs-nav {
@@ -72,6 +72,7 @@
     }
     .ant-tabs-tabpane {
       background: #fff;
+      border-radius: 13px;
     }
 
     .pz-header {
@@ -291,24 +292,6 @@
     margin-top: 0.4rem;
     font-style: italic;
   }
-
-  // tr {
-  //   th {
-  //     &:nth-child(2) {
-  //       border-left: 1px dashed rgba(0, 0, 0, 0.137);
-  //       border-right: 1px dashed rgba(0, 0, 0, 0.137);
-  //     }
-  //   }
-  // }
-
-  // .ant-table-row {
-  //   .ant-table-cell {
-  //     &:nth-child(2) {
-  //       border-left: 1px dashed rgba(0, 0, 0, 0.137);
-  //       border-right: 1px dashed rgba(0, 0, 0, 0.137);
-  //     }
-  //   }
-  // }
 }
 
 // override content styles background
@@ -326,7 +309,7 @@
 .pz-review-base-wrapper {
   width: 100%;
   .ant-table-row-level-0 {
-    height: 10rem !important;
+    height: 12rem !important;
     padding-bottom: 0.5rem;
   }
 
@@ -358,18 +341,43 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+
+    .pz-review-name-username {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $textstandard;
+      width: 10rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: pre;
+    }
+
+    .pz-review-name-id {
+      color: $textstandard;
+      font-size: 1.1rem;
+    }
   }
   .pz-review-date {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
+    color: $textstandard;
+    font-weight: 400;
+    justify-content: center;
   }
   .pz-review-note {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+
+    .pz-review-note-icon {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: $textstandard;
+    }
   }
 }
 
@@ -382,7 +390,7 @@
 // ==============================
 
 .pz-review-sum-left {
-  width: 100%;
+  width: 60%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -420,33 +428,28 @@
         .pz-zone-from-to-base {
           display: flex;
           position: relative;
-          // &::before{
-          //   content: '';
-          //   position: absolute;
-          //   top:0;
-          //   left:0;
-          //   width:100%;
-          //   height:50%;
-          //   border-bottom: 1.4px dashed red;
-          //   z-index: 1;
-          // }
+
           .pz-zone-from,
           .pz-zone-to {
-            //min-width:2rem;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-
             z-index: 2;
           }
           .pz-zone-from {
             padding-right: 1rem;
+            color: $bluegrey;
+            font-size: 2rem;
+            font-weight: 800;
           }
           .pz-zone-to {
             padding-left: 1rem;
+            font-size: 2rem;
+            font-weight: 800;
+            color: $syscogreen;
           }
           .pz-zone-separator {
-            width: 2rem;
+            width: 2.5rem;
             position: relative;
             display: flex;
             align-items: center;
@@ -455,7 +458,7 @@
               content: "";
               width: 100%;
               height: 0.5rem;
-              border-bottom: 1px dashed red;
+              border-bottom: 1px dashed $textstandard;
             }
           }
         }
@@ -469,6 +472,13 @@
     justify-content: center;
     .pz-review-opco {
       font-size: 1.5rem;
+      font-weight: 600;
+      color: #62737e;
+      font-weight: 600;
+      width: 18rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: pre;
     }
   }
 }
@@ -516,17 +526,55 @@
     .pz-right-bottom {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
+
       .pz-effective-date-text {
         width: 100%;
       }
       .pz-effective-date {
         width: 100%;
-
+        color: $textstandard;
+        font-weight: 800;
         font-size: 1.5rem;
+      }
+      .pz-right-bottom-right {
+        margin-left: 3rem;
+
+        .pz-attrib-base {
+          display: flex;
+          align-items: center;
+
+          .pz-attrib-info {
+            margin-left: 1.5rem;
+          }
+        }
+      }
+
+      .pz-right-bottom-left,
+      .pz-right-bottom-right {
+        .pz-customer-total,
+        .pz-attrib-total {
+          margin-top: 0.4rem;
+          font-size: 0.9rem;
+        }
       }
     }
   }
+}
+
+// All Caps
+
+.pz-caps {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  padding-bottom: 0.3rem;
+}
+
+// Highlighted large text
+
+.pz-main-text {
+  font-size: 2rem !important;
+  font-weight: 800;
+  color: $bluegrey;
 }
 
 // APROVE REJECT BUTTONS
@@ -570,6 +618,12 @@
   background: #f6e176;
   text-align: center;
   border-radius: 5px;
+  width: 7rem !important;
+  white-space: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 0.5rem;
+  overflow: hidden;
 }
 
 // ========================
@@ -585,6 +639,7 @@
     align-items: center;
     justify-content: center;
     flex-direction: row-reverse;
+    padding: 1.5rem;
 
     .ant-btn {
       border: none;
@@ -617,6 +672,10 @@
       .pz-success-anim-logo {
         width: 6rem;
         height: 6rem;
+      }
+      .pz-success-anim-review-logo {
+        width: 10rem;
+        height: 10rem;
       }
     }
     .pz-success-text {
@@ -719,6 +778,16 @@
 
 .pz-confirm-pop-base-table {
   .pz-pop-table {
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      border-bottom: 0.076rem solid #f0f0f0;
+      border-right: 0.076rem dashed rgba(0, 0, 0, 0.1) !important;
+      padding-left: 2.307rem !important;
+      &:nth-last-child(1) {
+        border-right: none !important;
+      }
+    }
+
     .pop-table-summary {
       width: 100%;
       height: 5rem;
@@ -732,16 +801,26 @@
         display: flex;
         flex-direction: column;
 
+        .pop-sum-text {
+          font-size: 1rem;
+          margin-top: 1rem;
+          color: $textstandard;
+          font-weight: 500;
+        }
+
         .pop-sum-tag {
           background: #76e0f6;
           text-align: center;
-          font-size: 1.5rem;
+          font-size: 1.6rem;
           border-radius: 4px;
           margin-top: 0.3rem;
+          color: $textstandard;
+          font-weight: 700;
         }
         .pop-sum-total {
-          font-size: 1rem;
-          margin-top: 0.3rem;
+          font-size: 0.9rem;
+          margin-top: 0.5rem;
+          color: $textstandard;
         }
       }
       .pop-sum-Attrib-grp {
@@ -753,7 +832,12 @@
     }
 
     .pz-pop-table-ant {
-      margin-top: 2rem;
+      margin-top: 3rem;
+      width: auto !important;
+      .ant-table-cell {
+        font-size: 1rem;
+        font-weight: 500;
+      }
     }
   }
 }
@@ -777,6 +861,23 @@
   filter: grayscale(0.7);
 }
 
+// pagination align right
+.pz-table-wrapper,
+.pz-review-base-wrapper {
+  .ant-pagination {
+    justify-content: flex-end;
+    width: 100%;
+    padding: 5px;
+    padding: 0.5rem 1rem !important;
+  }
+}
+
+// pop over styles
+
+#pz-pop-confirm-custom {
+  width: 18rem;
+}
+
 // empty message border
 
 .cipz-empty-search {
@@ -797,4 +898,39 @@
   .pz-main-tab-sub {
     margin-left: 0.5rem;
   }
+}
+
+// search status suggestions
+
+.pz-search-suggestion-list {
+  margin:1.5rem 0.2rem;
+
+  ul {
+    padding-left: 0.8rem;
+    position: relative;
+    &::before{
+      position: absolute;
+      left:0;
+      top:0;
+      width:5px;
+      height:100%;
+      content:'';
+      border-left:1.5px dashed $syscoblue;
+      
+     
+    }
+    li{
+      color:$textstandard !important;
+     
+    }
+    
+  }
+}
+.pz-request-id{
+  
+
+    color: #c02019;
+.pz-req-id-icon{
+  margin:0 0 0 1rem;
+}
 }

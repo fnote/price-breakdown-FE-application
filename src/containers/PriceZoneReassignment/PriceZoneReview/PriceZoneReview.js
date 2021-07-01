@@ -1,353 +1,368 @@
-import React from "react";
-import { Table, Space } from "antd";
+/* eslint-disable react/display-name */
+import React, { useState, useEffect, useContext, useMemo } from 'react';
+import { Table, Space, Spin } from 'antd';
+import useModal from '../../../hooks/useModal';
+import {getBffUrlConfig} from '../../../utils/Configs';
+import {
+  formatPZRequest,
+  generatePaginationParams,
+  constructRequestUrl,
+  handleResponse,
+  constructPatchPayload,
+  removeCompletedRequest,
+  calculateResetIndex,
+} from '../../../utils/PZRUtils';
+import {
+  REVIEW_RESULT_TABLE_PAGE_SIZE,
+  PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL
+} from '../../../constants/PZRContants';
+import { PZRContext } from '../PZRContext';
+import { UserDetailContext } from '../../UserDetailContext';
+import ReviewSubmitter from './ReviewSubmitter';
+import ReviewSummery from './ReviewSummery';
+import AproveRejectButtons from './AproveRejectButtons';
+import ReferenceDataTable from './ReferenceDataTable';
+import CustomPagination from '../../../components/CustomPagination';
+import businessUnitMap from '../../../constants/BusinessUnits';
 
-import ReviewSubmitter from "../PriceZoneReview/ReviewSubmitter";
-import ReviewSummery from "../PriceZoneReview/ReviewSummery";
-import AproveRejectButtons from "../PriceZoneReview/AproveRejectButtons";
 
-import useModal from "../../../hooks/useModal";
 
-// =========================
-// Referance table temp data
-// =========================
+const populate = async () => ({
+  totalRecords: 10,
+  offset: 1,
+  limit: 3,
+  data: {
+     pzUpdateRequests: [
+        {
+           id: 121,
+           businessUnitNumber: '019',
+           itemAttributeGroup: 'Milk',
+           itemAttributeGroupId: '12345',
+           customerGroup: '8287',
+           newPriceZone: 3,
+           oldPriceZone: "2",
+           status: 'APPROVED',
+           effectiveFromDate: '20210530',
+           exportedEffectiveFromDate: '20210531',
+           submitter: {
+              id: 'tjay5771',
+              givenName: 'Tharuka',
+              surname: 'Jayalath',
+              email: 'vvit5827@sysco.com',
+           },
+           submissionNote: 'Price zone assignment is incorrect',
+           createdTime: 1621837508000,
+           reviewer: {
+              'id':'sams5625',
+              'givenName':'Sanjaya',
+              'surname':'Amarasinghe',
+              'email':'sams5625@sysco.com'
+           },
+           'reviewNote':'',
+           'reviewedTime':null,
+           'exportedTime':null,
+           'summary':{
+              'customerCount': 3,
+              'supcCount': 3
+           }
+        },
+        {
+           'id':122,
+           'businessUnitNumber':'038',
+           'itemAttributeGroup':'Bacon',
+           'itemAttributeGroupId':'12345',
+           'customerAccount':'700001',
+           'customerGroup':'8287',
+           'newPriceZone':4,
+           oldPriceZone: "5",
+           'status':'PENDING_APPROVAL',
+           'effectiveFromDate':'20210530',
+           'exportedEffectiveFromDate':'20210531',
+           'submitter':{
+              'id':'vvit5827',
+              'givenName':'Vithulan',
+              'surname':'MV',
+              'email':'vvit5827@sysco.com'
+           },
+           'submissionNote':'Price zone assignment is incorrect',
+           'createdTime':1621837508000,
+           'reviewer':{
+              'id':'sams5625',
+              'givenName':'Sanjaya',
+              'surname':'Amarasinghe',
+              'email':'sams5625@sysco.com'
+           },
+           'reviewNote':'',
+           'reviewedTime':null,
+           'exportedTime':null,
+           'summary':{
+              'customerCount':20,
+              'supcCount':10
+           }
+        },
+        {
+           'id':124,
+           'businessUnitNumber':'068',
+           'itemAttributeGroup':'Cheese',
+           'itemAttributeGroupId':'12345',
+           'customerAccount':'700001',
+           'newPriceZone':3,
+           oldPriceZone: "Multiple",
+           'status':'REJECTED',
+           'effectiveFromDate':'20210530',
+           'exportedEffectiveFromDate':'20210531',
+           'submitter':{
+              'id':'iasa0862',
+              'givenName':'Asanka',
+              'surname':'Indunil',
+              'email':'vvit5827@sysco.com'
+           },
+           'submissionNote':'Price zone assignment is incorrect. This should be approved ASAP',
+           'createdTime': 1624959117644,
+           'reviewer':{
+              'id':'sams5625',
+              'givenName':'Sanjaya',
+              'surname':'Amarasinghe',
+              'email':'sams5625@sysco.com'
+           },
+           'reviewedTime':null,
+           'reviewNote':'',
+           'exportedTime':null,
+           'summary':{
+              'customerCount':30,
+              'supcCount':15
+           }
+        }
+     ]
+  },
+});
 
-const datareference = [
-  {
-    key: "1",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "2",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "3",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "4",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "5",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "6",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "7",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "8",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "9",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "10",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "11",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "12",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "13",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "14",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "15",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "16",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "17",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "18",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-  {
-    key: "19",
-    item_supc: "10101",
-    item_des: "item description",
-    customer: "customer description",
-    source_id: "001001",
-    price_zone: "1",
-    effective_price: "100$",
-  },
-];
 
-const columnsreference = [
-  {
-    title: "ITEM(SUPC)",
-    dataIndex: "item_supc",
-    defaultSortOrder: "descend",
-    sorter: (a, b) => a - b,
-  },
-  {
-    title: "ITEM DESCRIPTION",
-    dataIndex: "item_des",
-  },
-  {
-    title: "CUSTOMER",
-    dataIndex: "customer",
-  },
-  {
-    title: "CUSTOMER NAME",
-    dataIndex: "customer_name",
-  },
-  {
-    title: "SOURCE ID",
-    dataIndex: "source_id",
-  },
-  {
-    title: "PRICE ZONE",
-    dataIndex: "price_zone",
-  },
-  {
-    title: "EFFECTIVE DATE",
-    dataIndex: "effective_price",
-  },
-];
+
+
+
 
 export default function PriceZoneReview() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [dataResetIndex, setDataResetIndex] = useState(0);
+  const [dataStore, setDataStore] = useState({});
+  const [totalResultCount, setTotalResultCount] = useState(REVIEW_RESULT_TABLE_PAGE_SIZE);
+  const [resultLoading, setResultLoading] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState(null);
+  const [approveRejectProgressing, setApproveRejectProgressing] = useState(false);
+  // const userDetailsContext = useContext(UserDetailContext);
+  const reviewer = {
+    id: 'sams5625',
+    givenName: 'Sanjaya',
+    surname: 'Amarasinghe',
+    email: 'sams5625@sysco.com'
+  };
 
+  const dataSource = useMemo(() => {
+    const currentPageData = dataStore[currentPage];
+    if (currentPageData) {
+      return dataStore[currentPage].map((record) => formatPZRequest(record, { businessUnitMap }));
+    }
+    return [];
+  }, [dataStore, currentPage]);
+
+  const pzrContext = useContext(PZRContext);
+
+  const { Modal, toggle } = useModal();
+
+  const fetchPZChangeRequests = (page, store) => {
+    // const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
+    // const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
+    //   { ...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL });
+    // setResultLoading(true);
+    // fetch(requestUrl, {
+    //   method: 'GET',
+    //   headers: {
+    //     Accept: 'application/json'
+    //   },
+    //   credentials: 'include'
+    // })
+    // .then(handleResponse)
+    console.log('test')
+    populate()
+    .then((resp) => {
+      // if (resp.success) {
+        const { totalRecords, data: { pzUpdateRequests } } = resp;
+        const updatedDataStore = { ...store, [page]: pzUpdateRequests };
+        setTotalResultCount(totalRecords);
+        setDataStore(updatedDataStore);
+      // } else {
+      //   // todo: handle error scenario with a message to user
+      //   console.log(resp);
+      // }
+      setResultLoading(false);
+    })
+    .catch((err) => {
+      // todo: handle error scenario with a message to user
+      console.log(err);
+    })
+    .finally(() => {
+      setResultLoading(false);
+    });
+  };
+
+  const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }) => {    
+    setApproveRejectProgressing(true);
+    const payload = constructPatchPayload({ id }, { reviewNote, status }, reviewer);
+    const requestUrl = getBffUrlConfig().pzUpdateRequests;
+    fetch(requestUrl, {
+      method: 'PATCH',
+      body: payload,
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include'
+    })
+    .then(handleResponse)
+    .then((resp) => {
+      console.log(resp);
+      if (resp.success) {
+        console.log(dataStore);
+        console.log(currentPage);
+        const updatedDataStore = removeCompletedRequest(dataStore, currentPage, index);
+        setDataStore(updatedDataStore);
+        setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
+      } else {
+        // todo: handle error scenario with a message to user
+      }
+    })
+    .catch((err) => {
+      // todo: handle error scenario with a message to user
+      console.log(err);
+    })
+    .finally(() => {
+      setApproveRejectProgressing(false);
+    });
+  };
+
+  const loadTableData = (page = 1, store = {}) => {
+    if (!store[page]) {
+      fetchPZChangeRequests(page, store);
+    }
+  };
+
+  const cleanInvalidData = () => {
+    if (dataResetIndex > 0) {
+      const dataStoreCopy = { ...dataStore };
+      Object.keys(dataStoreCopy)
+        .forEach((key) => {
+          if (key >= dataResetIndex) {
+            delete dataStoreCopy[key];
+          }
+        });
+      setDataStore(dataStoreCopy);
+      setDataResetIndex(0);
+      return dataStoreCopy;
+    }
+    return dataStore;
+  };
+
+  useEffect(() => {
+    loadTableData();
+  }, []);
 
   const columns = [
     {
-      title: "SUBMITTED BY",
-      dataIndex: "name",
-      key: "name",
-      width: "20%",
-      render: (cell, row, index) => (
-        <Space size="middle">
-          <ReviewSubmitter></ReviewSubmitter>
+      title: 'SUBMITTED BY',
+      dataIndex: 'submission',
+      key: 'submission',
+      width: '20%',
+      render: (submission) => (
+        <Space size='middle'>
+          <ReviewSubmitter submission={submission} />
         </Space>
       ),
     },
     {
-      title: "SUMMARY OF CHANGES",
-      dataIndex: "opco",
-      key: "opco",
-      width: "40%",
-      render: (cell, row, index) => (
-        <Space size="middle" onClick={toggle}>
-          <ReviewSummery></ReviewSummery>
+      title: 'SUMMARY OF CHANGES',
+      dataIndex: 'changeSummary',
+      key: 'changeSummary',
+      width: '40%',
+      render: (changeSummary) => (
+        <Space
+          size='middle'
+          onClick={() => {
+            console.log(changeSummary);
+            setSelectedRecord(changeSummary);
+            toggle();
+          }}
+        >
+          <ReviewSummery changeSummary={changeSummary} />
         </Space>
       ),
     },
     {
-      title: "ACTION",
-      dataIndex: "accept",
-      key: "accept",
-      width: "20%",
+      title: 'ACTION',
+      dataIndex: 'accept',
+      key: 'accept',
+      width: '20%',
       render: (cell, row, index) => (
-        <Space size="middle">
-          <AproveRejectButtons></AproveRejectButtons>
+        <Space size='middle'>
+          <AproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests} disable={approveRejectProgressing}/>
         </Space>
       ),
     },
   ];
-
-
-
-  const data = [
-    {
-      key: '1',
-      name: 'John Brown',
-      opco: 2,
-      accept:true
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      opco: 1,
-      accept:true
-     
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      opco: 4,
-      accept:true
-    },
-    {
-      key: '4',
-      name: 'Joe Black',
-      opco: 4,
-      accept:true
-    },
-    {
-      key: '5',
-      name: 'Joe Black',
-      opco: 4,
-      accept:true
-    },
-    {
-      key: '6',
-      name: 'Joe Black',
-      opco: 4,
-      accept:true
-    },
-  ];
-
-
-  const { on, Modal, toggle } = useModal();
-  // on is the modal status =>  on || off
-
+  
   const ReferenceTable = () => {
     return (
       <div>
         {Modal(
           {
-            title: "",
-            centered: "true",
+            title: '',
+            centered: 'true',
             onOK: () => toggle,
-            okText: "PROCEED",
-            cancelText: "CANCEL",
-            width: "60vw",
-            footer: "", // no buttons
+            okText: 'PROCEED',
+            cancelText: 'CANCEL',
+            width: '60vw',
+            footer: '', // no buttons,
+            maskClosable: false
           },
-
-          <div className="pz-confirm-pop-base-table">
-            <div className="pz-pop-table">
-              <div className="pop-table-summary">
-                <div className="pop-sum-customer-grp">
-                    <div className="pop-sum-text">CUSTOMER GROUP</div>
-                    <div className="pop-sum-tag">31223</div>
-                    <div className="pop-sum-total">241 Customers</div>
-                </div>
-                <div className="pop-sum-Attrib-grp">
-                <div className="pop-sum-text">ATTRIBUTE  GROUP</div>
-                    <div className="pop-sum-tag pz-tag-blue">Milk</div>
-                    <div className="pop-sum-total">221 Items</div>
-                </div>
-              </div>
-              <Table
-                columns={columnsreference}
-                pagination={{ defaultPageSize: 10 }}
-                dataSource={datareference}
-                style={{ width: "60vw", height: "60vh" }}
-                className="pz-pop-table-ant"
-              />
-            </div>
-          </div>
+          <ReferenceDataTable record={selectedRecord} setSelectedRecord={setSelectedRecord}/>
         )}
       </div>
     );
   };
+
+  const renderLoader = () => (
+    <Space size='middle' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+      <Spin size='large' />
+    </Space>
+  );
+
+  const renderDataTable = () => (
+    <>
+      <Table
+        columns={columns}
+        dataSource={dataSource}
+        pagination={false}
+      />
+      {selectedRecord && <ReferenceTable record={selectedRecord}/>}      
+    </>    
+  );
+
   return (
-    <div className="pz-review-base-wrapper">
-      <Table columns={columns} dataSource={data}  pagination={{ pageSize: 4 , defaultPageSize:4 }}  />
-      <ReferenceTable />
+    <div className='pz-review-base-wrapper'>
+      {!resultLoading ? renderDataTable() : renderLoader()}
+      <CustomPagination
+    
+        total={totalResultCount}
+        current={currentPage}
+        onChange={(current) => {
+          if (!resultLoading) {
+            setCurrentPage(current);
+            const updatedDataStore = cleanInvalidData(current);
+            loadTableData(current, updatedDataStore);
+          }
+        }}
+        pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
+      />
     </div>
   );
 }

@@ -137,10 +137,10 @@ export default function PrizeZoneHeader() {
             effectiveFromDate: effectiveDate,
             submissionNote: submissionReason,
             submitter: {
-                id: userDetailsObj.username ? userDetailsObj.username : 'blah112',  //TODO: Remove this later, test purpose only
-                givenName: userDetailsObj.firstName ? userDetailsObj.firstName : 'hero',
-                surname: userDetailsObj.lastName ? userDetailsObj.lastName : 'honda',
-                email: userDetailsObj.email ? userDetailsObj.email : 'blah@sysco.com'
+                id: userDetailsObj.username ? userDetailsObj.username : 'vvit5827',  //TODO: Remove this later, test purpose only
+                givenName: userDetailsObj.firstName ? userDetailsObj.firstName : 'Vithulan',
+                surname: userDetailsObj.lastName ? userDetailsObj.lastName : 'MV',
+                email: userDetailsObj.email ? userDetailsObj.email : 'vvit5827@sysco.com'
             }
         });
     };
@@ -273,7 +273,14 @@ export default function PrizeZoneHeader() {
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
                             <div className="pz-tab-items-top">OPCO</div>
-                            <div className="pz-tab-items-bottom">{PZRContextData.searchParams.site}</div>
+                            <Tooltip 
+                                    title={PZRContextData.searchParams.site}
+                                    color="#fff"
+                                    overlayClassName="pz-tooltip"
+                                    overlayStyle={{color: "#000"}}
+                                >
+                            <div className="pz-tab-items-bottom pz-opco-text-bold">{PZRContextData.searchParams.site}</div>
+                            </Tooltip>
                         </div>
                     </div>
                 </div>
