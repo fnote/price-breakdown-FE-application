@@ -5,7 +5,7 @@ import {PZRContext} from "./PZRContext";
 
 export default function PzUpdateComponent() {
     const PZRContextData = useContext(PZRContext);
-    if (!PZRContextData.searchResults) {
+    if (PZRContextData.searchResults) {
         return null;
     }
     return (
