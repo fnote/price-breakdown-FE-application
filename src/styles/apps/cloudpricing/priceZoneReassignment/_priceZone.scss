@@ -928,9 +928,32 @@
     }
   }
 }
+
 .pz-request-id {
   color: #c02019;
   .pz-req-id-icon {
     margin: 0 0 0 1rem;
   }
+}
+
+// pz error block
+
+.pz-error-block{
+  
+  position: relative;
+  font-size:1.5rem;
+  margin: 1.5rem 0.2rem;
+  padding-left: 1rem;
+  color:$syscored;
+
+  &::before{
+    position:absolute;
+    top:0;
+    left:0;
+    height:100%;
+    width:2rem;
+    border-left:1.5px dashed $syscored;
+    content: '';
+  }
+
 }
