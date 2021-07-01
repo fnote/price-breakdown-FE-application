@@ -30,6 +30,7 @@ export default function PrizeZoneHeader() {
     const userDetailContext = useContext(UserDetailContext);
 
     const [newPriceZone, setNewPriceZone] = useState(0);
+    const [referenceId, setReferenceId] = useState(0);
     const [isSubmitDisabled, setSubmitDisabled] = useState(true);
     const [effectiveDate, setEffectiveDate] = useState(getDefaultEffectiveDate().format("YYYYMMDD"));
     const [effectiveDay, setEffectiveDay] = useState(getDefaultEffectiveDate().format("ddd"));
@@ -106,6 +107,8 @@ export default function PrizeZoneHeader() {
             .then(handleResponse)
             .then((resp) => {
                 if (resp.success) {
+                    const requestId = resp.data && resp.data.requestId ? resp.data.requestId : 0;
+                    setReferenceId(requestId);
                     setSubmitModal("success-modal");
                 } else {
                     handleError(resp);
@@ -126,7 +129,6 @@ export default function PrizeZoneHeader() {
             submissionReasonInput.current.state.value : '';
         return JSON.stringify({
             businessUnitNumber: PZRContextData.searchParams.opcoId,
-            // businessUnitNumber: "019",       //TODO: Test purpose, remove
             itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
             itemAttributeGroupId: PZRContextData.searchParams.attributeGroupId,
             customerGroup: getCustomerGroupOfCustomer(),
@@ -197,6 +199,8 @@ export default function PrizeZoneHeader() {
                                 <Success className="pz-success-anim-logo"/>
                             </div>
                             <div className="pz-success-text">Submitted Successfully</div>
+                            {referenceId ?
+                                <div className="pz-alert-sub">Reference Number - {referenceId}</div> : <div/>}
                         </div>
                     </div>
                 )}
@@ -234,7 +238,8 @@ export default function PrizeZoneHeader() {
 
     const resetSearch = () => {
         PZRContextData.resetAfterSubmission();
-        setSubmitModal(false)
+        setSubmitModal(false);
+        setReferenceId(0);
     };
     const onPriceZoneChange = (value) => {
         setNewPriceZone(value);
