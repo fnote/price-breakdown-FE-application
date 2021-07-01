@@ -19,12 +19,6 @@ const initialSearchParamsState = {
     attributeGroupId: null,
 };
 
-const initialNotificationData = {
-    type: null,
-    description: null,
-    message: null
-};
-
 const PZRContextProvider = (props) => {
     const [isSearchLoading, setSearchLoading] = useState(false);
     const [searchParams, setSearchParams] = useState({...initialSearchParamsState});

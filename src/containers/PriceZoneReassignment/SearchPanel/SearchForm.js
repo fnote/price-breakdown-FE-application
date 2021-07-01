@@ -8,7 +8,8 @@ import {getBusinessUnits, getAttributeGroups} from '../PZRUtils/PZRHelper';
 import {PZRFetchSearchResults} from '../PZRUtils/PZRSearchHandler';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from '../../../constants/Constants';
-import { HTTP_INTERNAL_SERVER_ERROR } from '../../../constants/Errors';
+
+import {CIPZErrorMessages} from '../../../constants/Errors'
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -31,16 +32,9 @@ const SearchForm = () => {
     const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState(customerGroupTextboxValueInitState);
     const [attributeGroups, setAttributeGroups] = useState('');
     const userDetailContext = useContext(UserDetailContext);
-    const { userDetails: { allowedBussinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
+    const {userDetails: {allowedBussinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const pZRContext = useContext(PZRContext);
     const [form] = Form.useForm();
-
-    const openNotificationWithIcon = (type, description, msg) => {
-        notification[type]({
-            message: msg,
-            description,
-        });
-    };
 
     const handleGetAttributeGroupResponse = (response) => {
         const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
@@ -48,10 +42,20 @@ const SearchForm = () => {
             if (response.ok) {
                 return {success: true, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
             }
-            return {success: false, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}, httpStatus: response.status};
+            return {
+                success: false,
+                data: json,
+                headers: {[CORRELATION_ID_HEADER]: correlationId},
+                httpStatus: response.status
+            };
         });
     };
-
+    const openNotificationWithIcon = (type, description, title) => {
+        notification[type]({
+            message: title,
+            description,
+        });
+    };
     const getAttributeGroupDataFromBff = () => fetch(getBffUrlConfig().priceZoneReassignmentGetItemAttributeUrl, {
         method: 'GET',
         headers: {
@@ -59,18 +63,19 @@ const SearchForm = () => {
             'Content-Type': 'application/json'
         },
         credentials: 'include'
-    }).then(handleGetAttributeGroupResponse)
-    .then((resp) => {
-        if (resp.success) {
-            setAttributeGroups(getAttributeGroups(resp.data.attribute_groups));
-            pZRContext.setErrorData(null);
-        } else {
-            pZRContext.setErrorData({...resp.data, correlationId: resp.headers[CORRELATION_ID_HEADER], httpStatus: resp.httpStatus});
-        }
-        return null;
-    }).catch((e) => {
-        pZRContext.setErrorData(e);
-    });
+    })
+        .then(handleGetAttributeGroupResponse)
+        .then((resp) => {
+            if (resp.success) {
+                setAttributeGroups(getAttributeGroups(resp.data.attribute_groups));
+                pZRContext.setErrorData(null);
+            } else {
+                openNotificationWithIcon('error', CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+            }
+            return null;
+        }).catch((e) => {
+            openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+        });
 
     const handleChangeCustomer = (event) => {
         setCustomerTextBoxValue(event.target.value);
@@ -78,10 +83,6 @@ const SearchForm = () => {
 
     const handleChangeCustomerGroup = (event) => {
         setCustomerGroupTextBoxValue(event.target.value);
-    };
-
-    const onReset = () => {
-        form.resetFields();
     };
 
     const restSearchForm = () => {
@@ -92,7 +93,6 @@ const SearchForm = () => {
     };
 
     const onSubmit = (values) => {
-        console.log(values);
         pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;
@@ -162,7 +162,7 @@ const SearchForm = () => {
                         <div className="pz-customer-groupbox">
                             <div className="pz-radio">
                                 <Radio.Group
-                                    defaultValue={2}>
+                                    value={isCustomerChecked ? 1 : 2}>
                                     <Radio value={1} onClick={() => {
                                         setCustomerChecked(true);
                                         setCustomerGroupTextBoxValue('');
