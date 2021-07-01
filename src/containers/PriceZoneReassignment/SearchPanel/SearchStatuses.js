@@ -4,7 +4,8 @@ import {notification} from 'antd';
 import {
     ErrorCodes,
     CIPZErrorMessages,
-    CIPZErrorsMap
+    PZRSEEDErrorsMap,
+    HTTP_INTERNAL_SERVER_ERROR
 } from '../../../constants/Errors';
 import RequestId from '../../../components/RequestId';
 import {PZRContext} from '../PZRContext';
@@ -107,8 +108,11 @@ const SearchStatuses = () => {
     }
 
     if (PZRContextData.searchError) {
-        // Only SEED Error can reach here
-        const {errorCode, correlationId} = PZRContextData.searchError;
+        // Only SEED Error, BFF Joi validation and unknown errors can reach here and
+        const {errorCode, correlationId, httpStatus} = PZRContextData.searchError;
+        if (httpStatus === HTTP_INTERNAL_SERVER_ERROR) {
+            openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_MESSAGE, CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED);
+        }
         if (errorCode) {
             if (errorCode === ErrorCodes.SEED_NO_RESULTS_ERROR) {
                 return emptyResponse(correlationId);
@@ -120,7 +124,7 @@ const SearchStatuses = () => {
                 return null;
             }
 
-            const renderMessage = CIPZErrorsMap[errorCode] ? CIPZErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_SEED_SEARCH_ERROR;
+            const renderMessage = PZRSEEDErrorsMap[errorCode] ? PZRSEEDErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_SEED_SEARCH_ERROR;
             return renderError({errorCode: errorCode, message: renderMessage, correlationId: correlationId});
         }
 

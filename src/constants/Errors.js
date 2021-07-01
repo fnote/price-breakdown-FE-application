@@ -62,14 +62,31 @@ export const CIPZErrorMessages = {
     FETCH_SEARCH_RESULTS_TITLE: 'Sorry we could not retrieve the information. Please try again later.',
     FETCH_SEARCH_RESULTS_MESSAGE: 'Could not retrieve the information due to connection issue.',
     UNKNOWN_ERROR_OCCURRED: 'Something went wrong. Please try again later',
-    GENERIC_SEED_SEARCH_ERROR: 'Error occurred while fetching the search results from SEED'
+    GENERIC_SEED_SEARCH_ERROR: 'Error occurred while fetching the search results from SEED',
+    GENERIC_CIPZ_POST_ERROR_MESSAGE: "Error occurred while processing price zone change request. Make sure all values are correct",
+    UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE: "Unexpected Error occurred while processing price zone change request. Please try again later.",
+    CIPZ_POST_ERROR_TITLE: "Sorry we could not update the requested price zone. Please try again later."
+};
+
+export const PZRSEEDErrorsMap = {
+    "102010": "Provided business unit is invalid in SEED",
+    "102021": "Provided customer account is invalid in SEED",
+    "102023": "Provided customer group is invalid in SEED",
+    "102033": "Provided item attribute group is invalid in SEED",
 };
 
 export const CIPZErrorsMap = {
     "102010": "Provided business unit is invalid",
-    "102021": "Provided customer account is invalid",
-    "102023": "Provided customer group is invalid",
-    "102033": "Provided item attribute group is invalid",
+    "102011": "Provided business unit is not active yet",
+    "102022": "Either Customer or Customer group should be provided",
+    "102040": "Provided price zone is invalid",
+    "102050": "Cannot get submitter details, Please try re-login",
+    "102051": "Cannot get submitter details, Please try re-login",
+    "102052": "Submission note must be provided",
+    "102070": "Provided effective from date is invalid",
+    "102080": "Your search did not find any match in SEED, Make sure correct OpCo, Customer/Customer Group is provided",
+    "102081": "An error occurred from SEED while processing your request. Please try again later",
+    "101000": "Could not update the requested price zone due to connection issue.",
 };
 
 // http Error Code

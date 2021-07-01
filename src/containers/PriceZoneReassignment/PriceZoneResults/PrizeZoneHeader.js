@@ -1,5 +1,5 @@
 import React, {useContext, useState, useRef} from "react";
-import {Select, DatePicker, Input, Tooltip} from "antd";
+import {Select, DatePicker, Input, Tooltip, notification} from "antd";
 import useModal from "../../../hooks/useModal";
 import moment from 'moment';
 
@@ -12,6 +12,7 @@ import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from "../../../constants/Co
 import {ReactComponent as Success} from "../../../styles/images/success.svg";
 import {ReactComponent as Warning} from "../../../styles/images/warning.svg";
 import {ReactComponent as Loader} from "../../../styles/images/priceZone_loader.svg";
+import {CIPZErrorMessages, CIPZErrorsMap} from '../../../constants/Errors';
 
 export default function PrizeZoneHeader() {
     const {on, Modal, toggle} = useModal();
@@ -74,6 +75,21 @@ export default function PrizeZoneHeader() {
         });
     };
 
+    const handleError = (response) => {
+        if (!response || !response.data || response.data.errorCode) {
+            openNotificationWithIcon('error', CIPZErrorMessages.UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
+        }
+        const {errorCode} = {...response.data};
+        const errorMessage = errorCode && CIPZErrorsMap[errorCode] ? CIPZErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_CIPZ_POST_ERROR_MESSAGE;
+        openNotificationWithIcon('error', errorMessage, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
+    };
+
+    const openNotificationWithIcon = (type, description, title) => {
+        notification[type]({
+            message: title,
+            description,
+        });
+    };
     const priceZoneChangeHandler = () => {
 
         setSubmitModal("loading");
@@ -91,12 +107,14 @@ export default function PrizeZoneHeader() {
                 if (resp.success) {
                     setSubmitModal("success-modal");
                 } else {
-                    //TODO: Handle failure
+                    handleError(resp);
+                    setSubmitModal("submit-reason");
                 }
                 return null;
             })
             .catch((e) => {
-                //TODO: Handle error
+                setSubmitModal("submit-reason");
+                openNotificationWithIcon('error', CIPZErrorMessages.UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
             });
     };
 
