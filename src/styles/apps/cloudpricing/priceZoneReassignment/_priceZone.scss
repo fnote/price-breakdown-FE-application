@@ -148,6 +148,11 @@
               font-size: 2.5rem;
               color: $textstandard;
               font-weight: 800;
+              width: 18rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              
             }
             .pz-customer-group-bottom {
               display: flex;
@@ -225,6 +230,7 @@
     }
     .pz-cutomer-grp-text {
       background: #76e0f6;
+      color: $textstandard;
     }
     .pz-item-grp-text {
       background: #f6e176;
