@@ -1,17 +1,21 @@
-import React, { useContext } from 'react';
-import { SyncOutlined } from '@ant-design/icons';
-import { notification } from 'antd';
-import { ErrorCodes, ErrorMessages, ErrorsMap, HTTP_INTERNAL_SERVER_ERROR, HTTP_NOT_FOUND_ERROR } from '../../../constants/Errors';
+import React, {useContext} from 'react';
+import {SyncOutlined} from '@ant-design/icons';
+import {notification} from 'antd';
+import {
+    ErrorCodes,
+    CIPZErrorMessages,
+    PZRSEEDErrorsMap,
+    HTTP_INTERNAL_SERVER_ERROR
+} from '../../../constants/Errors';
 import RequestId from '../../../components/RequestId';
-import { PZRContext } from '../PZRContext';
-import {notificationMap} from '../../../constants/NotificationDataMap';
+import {PZRContext} from '../PZRContext';
 
 const renderWelcomeMessage = () => (
     <div className="search-statuses cipz-empty-search">
         <div className="section-wrapper">
             <div className="welcome-message message-block">
                 <div className="title">
-                <i className="icon fi flaticon-price-zone"/> Welcome to the Price Zone Reassignment Tool
+                    <i className="icon fi flaticon-price-zone"/> Welcome to the Price Zone Reassignment Tool
                 </div>
                 <div className="subitle-title">
                     <i className="icon fi flaticon-arrow"/> To start select an item attribute group and enter
@@ -39,34 +43,34 @@ const renderError = ({errorCode, message, correlationId}) => (
         <div className="section-wrapper">
             <div className="error message-block">
                 <div className="title">
-                    <i className="icon fi flaticon-error-1"/> Sorry we could not retrieve this item.
+                    <i className="icon fi flaticon-error-1"/> Sorry we could not retrieve search results
                 </div>
                 <div className="subitle-title">
                     Error {errorCode} - {message}
                 </div>
-                <RequestId requestId={correlationId} />
+                <RequestId requestId={correlationId}/>
             </div>
         </div>
     </div>
 );
 
 const emptyResponse = (correlationId) => (
-    <div className="search-statuses">
+    <div className="search-statuses cipz-empty-search">
         <div className="section-wrapper">
             <div className="info message-block">
                 <div className="title">
-                    <i className="icon fi flaticon-error-1" />  Your search did not found any match.
+                    <i className="icon fi flaticon-error-1"/> Your search did not find any match.
                 </div>
                 <div className="subitle-title">
                     Suggestions
                 </div>
-                <div className="subitle-title">
+                <div>
                     <ul>
-                    <li>Make sure right OpCo is selected.</li>
-                    <li>Make sure entered Customer or Customer Group are valid.</li>
+                        <li>Make sure right OpCo is selected.</li>
+                        <li>Make sure entered Customer or Customer Group are valid.</li>
                     </ul>
                 </div>
-                <RequestId requestId={correlationId} />
+                <RequestId requestId={correlationId}/>
             </div>
         </div>
     </div>
@@ -80,7 +84,8 @@ const renderContinueSearch = () => (
                     <i className="icon fi flaticon-price-zone"/> Welcome to the Price Zone Reassignment Tool
                 </div>
                 <div className="subitle-title">
-                    <i className="icon fi flaticon-arrow"/> Your price zone change request is sent for the review. Select an item attribute group and enter
+                    <i className="icon fi flaticon-arrow"/> Your price zone change request is sent for the review.
+                    Select an item attribute group and enter
                     customer/customer group for more changes.
                 </div>
             </div>
@@ -102,42 +107,30 @@ const SearchStatuses = () => {
         return renderLoader();
     }
 
-    if (PZRContextData.searchResults) {
-        const { correlationId } = PZRContextData.searchResults;
-        const isResponseEmpty = PZRContext.isResponseEmpty;
-        if (isResponseEmpty) {
-            return emptyResponse(correlationId);
-        }
-    }
-
     if (PZRContextData.searchError) {
-        const { errorCode, correlationId, httpStatus } = PZRContextData.searchError;
+        // Only SEED Error, BFF Joi validation and unknown errors can reach here and
+        const {errorCode, correlationId, httpStatus} = PZRContextData.searchError;
+        if (httpStatus === HTTP_INTERNAL_SERVER_ERROR) {
+            openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_MESSAGE, CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED);
+            PZRContextData.setErrorData(null);
+            return null;
+        }
         if (errorCode) {
-            if (errorCode === ErrorCodes.ITEM_ATTRIBUTE_GROUP_FETCH_ERROR) {
-                if (httpStatus !== HTTP_NOT_FOUND_ERROR) {
-                    const notificationDetails = notificationMap.get(errorCode);
-                    openNotificationWithIcon('error', notificationDetails.title, notificationDetails.message);
-                }
+            if (errorCode === ErrorCodes.SEED_NO_RESULTS_ERROR) {
+                return emptyResponse(correlationId);
             }
 
-            if ([ErrorCodes.INVALID_CUSTOMER_ACCOUNT_PZR_ERROR, ErrorCodes.INVALID_CUSTOMER_GROUP_ERROR].includes(errorCode)) {
-                if (httpStatus !== HTTP_NOT_FOUND_ERROR) {
-                    const notificationDetails = notificationMap.get(errorCode);
-                    openNotificationWithIcon('error', notificationDetails.title, notificationDetails.message);
-                }
+            if (errorCode === ErrorCodes.SEED_UNKNOWN_ERROR) {
+                openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_MESSAGE, CIPZErrorMessages.FETCH_SEARCH_RESULTS_TITLE);
+                PZRContextData.setErrorData(null);
+                return null;
             }
 
-            if (httpStatus === HTTP_NOT_FOUND_ERROR) {
-                const message = ErrorsMap.get(errorCode);
-                if (message) {
-                    return renderError({ errorCode: ErrorCodes.UNEXPECTED_ERROR, message, correlationId });
-                }
-                return renderError({ errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
-            }
+            const renderMessage = PZRSEEDErrorsMap[errorCode] ? PZRSEEDErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_SEED_SEARCH_ERROR;
+            return renderError({errorCode: errorCode, message: renderMessage, correlationId: correlationId});
         }
-        if (httpStatus !== HTTP_INTERNAL_SERVER_ERROR) {
-            return renderError({ errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
-        }
+
+        return renderError({errorCode: ErrorCodes.UNEXPECTED_ERROR, message: CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED});
     }
 
     if (!PZRContextData.searchResults) {

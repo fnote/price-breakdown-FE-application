@@ -1,5 +1,5 @@
 import React, {useContext, useState, useRef} from "react";
-import {Select, DatePicker, Input, Tooltip} from "antd";
+import {Select, DatePicker, Input, Tooltip, notification} from "antd";
 import useModal from "../../../hooks/useModal";
 import moment from 'moment';
 
@@ -12,6 +12,7 @@ import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from "../../../constants/Co
 import {ReactComponent as Success} from "../../../styles/images/success.svg";
 import {ReactComponent as Warning} from "../../../styles/images/warning.svg";
 import {ReactComponent as Loader} from "../../../styles/images/priceZone_loader.svg";
+import {CIPZErrorMessages, CIPZErrorsMap} from '../../../constants/Errors';
 
 export default function PrizeZoneHeader() {
     const {on, Modal, toggle} = useModal();
@@ -29,6 +30,7 @@ export default function PrizeZoneHeader() {
     const userDetailContext = useContext(UserDetailContext);
 
     const [newPriceZone, setNewPriceZone] = useState(0);
+    const [referenceId, setReferenceId] = useState(0);
     const [isSubmitDisabled, setSubmitDisabled] = useState(true);
     const [effectiveDate, setEffectiveDate] = useState(getDefaultEffectiveDate().format("YYYYMMDD"));
     const [effectiveDay, setEffectiveDay] = useState(getDefaultEffectiveDate().format("ddd"));
@@ -74,9 +76,25 @@ export default function PrizeZoneHeader() {
         });
     };
 
+    const handleError = (response) => {
+        if (!response || !response.data || !response.data.errorCode) {
+            openNotificationWithIcon('error', CIPZErrorMessages.UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
+            return;
+        }
+        const {errorCode} = {...response.data};
+        const errorMessage = errorCode && CIPZErrorsMap[errorCode] ? CIPZErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_CIPZ_POST_ERROR_MESSAGE;
+        openNotificationWithIcon('error', errorMessage, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
+    };
+
+    const openNotificationWithIcon = (type, description, title) => {
+        notification[type]({
+            message: title,
+            description,
+        });
+    };
     const priceZoneChangeHandler = () => {
 
-        setSubmitModal("loading"); //ADDED FOR TESTING
+        setSubmitModal("loading");
         fetch(getBffUrlConfig().pzrUpdateRequestsUrl, {
             method: 'POST',
             body: formRequestBody(),
@@ -89,15 +107,18 @@ export default function PrizeZoneHeader() {
             .then(handleResponse)
             .then((resp) => {
                 if (resp.success) {
+                    const requestId = resp.data && resp.data.requestId ? resp.data.requestId : 0;
+                    setReferenceId(requestId);
                     setSubmitModal("success-modal");
-                    //TODO: Handle success
                 } else {
-                    //TODO: Handle failure
+                    handleError(resp);
+                    setSubmitModal("submit-reason");
                 }
                 return null;
             })
             .catch((e) => {
-                //TODO: Handle error
+                setSubmitModal("submit-reason");
+                openNotificationWithIcon('error', CIPZErrorMessages.UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
             });
     };
 
@@ -106,7 +127,6 @@ export default function PrizeZoneHeader() {
         const submissionReason = (submissionReasonInput.current && submissionReasonInput.current.state
             && submissionReasonInput.current.state.value) ?
             submissionReasonInput.current.state.value : '';
-        console.log(submissionReason);
         return JSON.stringify({
             businessUnitNumber: PZRContextData.searchParams.opcoId,
             itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
@@ -179,6 +199,8 @@ export default function PrizeZoneHeader() {
                                 <Success className="pz-success-anim-logo"/>
                             </div>
                             <div className="pz-success-text">Submitted Successfully</div>
+                            {referenceId ?
+                                <div className="pz-alert-sub">Reference Number - {referenceId}</div> : <div/>}
                         </div>
                     </div>
                 )}
@@ -216,10 +238,10 @@ export default function PrizeZoneHeader() {
 
     const resetSearch = () => {
         PZRContextData.resetAfterSubmission();
-        setSubmitModal(false)
+        setSubmitModal(false);
+        setReferenceId(0);
     };
     const onPriceZoneChange = (value) => {
-        console.log(userDetailContext.userDetailsData);
         setNewPriceZone(value);
         setSubmitDisabled(false);
     };

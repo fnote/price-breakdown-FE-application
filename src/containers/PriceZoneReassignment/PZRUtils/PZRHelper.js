@@ -1,7 +1,7 @@
 import React from 'react';
 import {Select} from 'antd';
 
-import {AVAILABLE_PRICE_ZONES} from '../../../constants/Constants'
+import {AVAILABLE_PRICE_ZONES} from '../../../constants/Constants';
 
 const {Option} = Select;
 
@@ -33,7 +33,7 @@ export const calculateOffset = (currentPage, pageSize) => {
 
 export const getBusinessUnits = (businessUnitsMaps) => {
     const businessUnitsMap = new Map([
-        ['011', {id: '011', shortName: 'Temp'}]
+        ['019', {id: '019', shortName: 'Sysco Cincinnati'}], ['011', {id: '011', shortName: 'Temp'}]
     ]);
 
     const businessUnitOptions = [];
