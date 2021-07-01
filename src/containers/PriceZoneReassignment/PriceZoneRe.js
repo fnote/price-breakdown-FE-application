@@ -15,45 +15,43 @@ export default function PriceZoneRe() {
   return (
     <div className="wrapper cloudpricing-wrapper">
       <AppBar />
-      <div className="content">
-        <PZRContextProvider>
-          <SearchPanel />
-          <div className="pz-wrapper  pz-no-bg">
-            {/* <PriceZoneHeader/>
-              <PriceZoneTable/> */}
+      <PZRContextProvider>
+        <div className="content">          
+            <SearchPanel />
+            <div className="pz-wrapper  pz-no-bg">
+              {/* <PriceZoneHeader/>
+                <PriceZoneTable/> */}
 
-            <Tabs type="card">
-              <TabPane
-                tab={
-                  <div className="pz-maintab-item">
-                      <i className="icon fi flaticon-price-zone pz-icon-tab"/>
-                  
-                    <div className="pz-main-tab-sub">  Update Pricezone</div>
-                  </div>
-                }
-                key="1"
-              >
-                <PriceZoneHeader />
-                <PriceZoneTable />
-              </TabPane>
-              {reviewTab && (
+              <Tabs type="card">
                 <TabPane
                   tab={
-                    <div className="pz-maintab-item">
-                      <i className="icon fi flaticon-pz-review pz-icon-tab"/>
-                    
-                      <div className="pz-main-tab-sub">  Review Changes</div>
-                    </div>
+                    <span>
+                      <FileTextFilled />
+                      Update Pricezone
+                    </span>
                   }
-                  key="2"
+                  key="1"
                 >
-                  <PriceZoneReview />
+                  <PriceZoneHeader />
+                  <PriceZoneTable />
                 </TabPane>
-              )}
-            </Tabs>
-          </div>
-        </PZRContextProvider>
-      </div>
+                {reviewTab && (
+                  <TabPane
+                    tab={
+                      <span>
+                        <FileTextFilled />
+                        Review Changes
+                      </span>
+                    }
+                    key="2"
+                  >
+                    <PriceZoneReview />
+                  </TabPane>
+                )}
+              </Tabs>
+            </div>
+        </div>
+      </PZRContextProvider>
     </div>
   );
 }
