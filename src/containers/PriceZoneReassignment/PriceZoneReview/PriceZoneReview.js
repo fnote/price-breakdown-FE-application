@@ -232,6 +232,7 @@ export default function PriceZoneReview() {
     <div className='pz-review-base-wrapper'>
       {!resultLoading ? renderDataTable() : renderLoader()}
       <CustomPagination
+    
         total={totalResultCount}
         current={currentPage}
         onChange={(current) => {
