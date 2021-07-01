@@ -899,3 +899,38 @@
     margin-left: 0.5rem;
   }
 }
+
+// search status suggestions
+
+.pz-search-suggestion-list {
+  margin:1.5rem 0.2rem;
+
+  ul {
+    padding-left: 0.8rem;
+    position: relative;
+    &::before{
+      position: absolute;
+      left:0;
+      top:0;
+      width:5px;
+      height:100%;
+      content:'';
+      border-left:1.5px dashed $syscoblue;
+      
+     
+    }
+    li{
+      color:$textstandard !important;
+     
+    }
+    
+  }
+}
+.pz-request-id{
+  
+
+    color: #c02019;
+.pz-req-id-icon{
+  margin:0 0 0 1rem;
+}
+}

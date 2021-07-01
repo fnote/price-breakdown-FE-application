@@ -64,7 +64,7 @@ const emptyResponse = (correlationId) => (
                 <div className="subitle-title">
                     Suggestions
                 </div>
-                <div>
+                <div className="pz-search-suggestion-list">
                     <ul>
                         <li>Make sure right OpCo is selected.</li>
                         <li>Make sure entered Customer or Customer Group are valid.</li>
@@ -102,9 +102,11 @@ const SearchStatuses = () => {
             description,
         });
     };
+    return emptyResponse("aabc");
 
     if (PZRContextData.isSearchLoading) {
         return renderLoader();
+        
     }
 
     if (PZRContextData.searchError) {
