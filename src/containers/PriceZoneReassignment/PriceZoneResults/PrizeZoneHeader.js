@@ -137,10 +137,10 @@ export default function PrizeZoneHeader() {
             effectiveFromDate: effectiveDate,
             submissionNote: submissionReason,
             submitter: {
-                id: userDetailsObj.username ? userDetailsObj.username : 'blah112',  //TODO: Remove this later, test purpose only
-                givenName: userDetailsObj.firstName ? userDetailsObj.firstName : 'hero',
-                surname: userDetailsObj.lastName ? userDetailsObj.lastName : 'honda',
-                email: userDetailsObj.email ? userDetailsObj.email : 'blah@sysco.com'
+                id: userDetailsObj.username ? userDetailsObj.username : 'vvit5827',  //TODO: Remove this later, test purpose only
+                givenName: userDetailsObj.firstName ? userDetailsObj.firstName : 'Vithulan',
+                surname: userDetailsObj.lastName ? userDetailsObj.lastName : 'MV',
+                email: userDetailsObj.email ? userDetailsObj.email : 'vvit5827@sysco.com'
             }
         });
     };
