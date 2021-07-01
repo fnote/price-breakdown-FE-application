@@ -73,14 +73,11 @@ const SearchForm = () => {
                 setSearchDisabled(false);
             } else {
                 setSearchDisabled(true);
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                 openNotificationWithIcon('error', CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
-                pZRContext.setSearchError(null);
             }
             return null;
         }).catch((e) => {
             openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
-            pZRContext.setSearchError(null);
         });
 
     const handleChangeCustomer = (event) => {
