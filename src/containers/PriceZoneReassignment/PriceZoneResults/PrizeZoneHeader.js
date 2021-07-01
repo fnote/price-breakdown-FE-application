@@ -76,8 +76,9 @@ export default function PrizeZoneHeader() {
     };
 
     const handleError = (response) => {
-        if (!response || !response.data || response.data.errorCode) {
+        if (!response || !response.data || !response.data.errorCode) {
             openNotificationWithIcon('error', CIPZErrorMessages.UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
+            return;
         }
         const {errorCode} = {...response.data};
         const errorMessage = errorCode && CIPZErrorsMap[errorCode] ? CIPZErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_CIPZ_POST_ERROR_MESSAGE;
@@ -125,6 +126,7 @@ export default function PrizeZoneHeader() {
             submissionReasonInput.current.state.value : '';
         return JSON.stringify({
             businessUnitNumber: PZRContextData.searchParams.opcoId,
+            // businessUnitNumber: "019",       //TODO: Test purpose, remove
             itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
             itemAttributeGroupId: PZRContextData.searchParams.attributeGroupId,
             customerGroup: getCustomerGroupOfCustomer(),
