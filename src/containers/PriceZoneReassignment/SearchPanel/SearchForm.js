@@ -32,7 +32,6 @@ const SearchForm = () => {
     const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState(customerGroupTextboxValueInitState);
     const [attributeGroups, setAttributeGroups] = useState('');
     const [isSearchDisabled, setSearchDisabled] = useState(false);
-    const [isSearchFormLoaded, setSearchFormLoaded]= useState(false);
     const userDetailContext = useContext(UserDetailContext);
     const {userDetails: {allowedBussinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const pZRContext = useContext(PZRContext);
@@ -117,11 +116,7 @@ const SearchForm = () => {
     };
 
     useEffect(() => {
-        if (!isSearchFormLoaded) {
-            getAttributeGroupDataFromBff();
-            setSearchFormLoaded(true);
-          }
-        return () => {};
+        getAttributeGroupDataFromBff();
     }, []);
 
     return (
