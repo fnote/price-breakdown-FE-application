@@ -64,7 +64,7 @@
     width: 100%;
 
     .ant-tabs-nav-wrap {
-      border-top-left-radius: 20px;
+      border-top-left-radius: 13px;
     }
 
     .ant-tabs-nav {
@@ -72,6 +72,7 @@
     }
     .ant-tabs-tabpane {
       background: #fff;
+    border-radius: 13px;
     }
 
     .pz-header {
@@ -278,6 +279,10 @@
       font-size: 1.1rem;
       color: $textstandard;
     }
+
+
+
+   
   }
 
   .pz-review-reminder {
@@ -775,7 +780,21 @@
 .pz-disabled {
   pointer-events: none !important;
   filter: grayscale(0.7);
+ 
 }
+
+ // pagination align right
+ .pz-table-wrapper,.pz-review-base-wrapper{
+
+ .ant-pagination{
+  justify-content: flex-end;
+  width:100%;
+  padding: 5px;
+  padding: 0.5rem 1rem !important;
+}
+ }
+
+
 
 // empty message border
 

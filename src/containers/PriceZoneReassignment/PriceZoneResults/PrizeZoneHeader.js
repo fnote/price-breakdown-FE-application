@@ -273,7 +273,14 @@ export default function PrizeZoneHeader() {
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
                             <div className="pz-tab-items-top">OPCO</div>
-                            <div className="pz-tab-items-bottom">{PZRContextData.searchParams.site}</div>
+                            <Tooltip 
+                                    title={PZRContextData.searchParams.site}
+                                    color="#fff"
+                                    overlayClassName="pz-tooltip"
+                                    overlayStyle={{color: "#000"}}
+                                >
+                            <div className="pz-tab-items-bottom pz-opco-text-bold">{PZRContextData.searchParams.site}</div>
+                            </Tooltip>
                         </div>
                     </div>
                 </div>
