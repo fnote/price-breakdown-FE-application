@@ -31,6 +31,7 @@ const SearchForm = () => {
     const [customerTextboxValue, setCustomerTextBoxValue] = useState(customerTextboxValueInitState);
     const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState(customerGroupTextboxValueInitState);
     const [attributeGroups, setAttributeGroups] = useState('');
+    const [isSearchDisabled, setSearchDisabled] = useState(false);
     const userDetailContext = useContext(UserDetailContext);
     const {userDetails: {allowedBussinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const pZRContext = useContext(PZRContext);
@@ -69,12 +70,17 @@ const SearchForm = () => {
             if (resp.success) {
                 setAttributeGroups(getAttributeGroups(resp.data.attribute_groups));
                 pZRContext.setErrorData(null);
+                setSearchDisabled(false);
             } else {
+                setSearchDisabled(true);
+                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
                 openNotificationWithIcon('error', CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+                pZRContext.setSearchError(null);
             }
             return null;
         }).catch((e) => {
             openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+            pZRContext.setSearchError(null);
         });
 
     const handleChangeCustomer = (event) => {
@@ -245,6 +251,7 @@ const SearchForm = () => {
                                 type="primary"
                                 htmlType="submit"
                                 className="search-btn outlined-btn"
+                                disabled= {isSearchDisabled ? 'true' : 'false'}
                             >
                                 Search
                             </button>
