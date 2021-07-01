@@ -287,7 +287,7 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs pz-tabs-combine">
                     <div className="pz-tabs-combine-l">
                         <div className="pz-tab-items">
-                            {PZRContextData.searchParams.customerGroup ? (
+                            {PZRContextData.searchParams.customerGroup ? ( 
                                 <>
                                     <div className="pz-tab-items-top">CUSTOMER GROUP</div>
                                     <div className="pz-tab-items-bottom">
@@ -299,9 +299,9 @@ export default function PrizeZoneHeader() {
                                 <>
                                     <div className="pz-tab-items-top">CUSTOMER</div>
                                     <div className="pz-tab-items-bottom">
-                                        <span
+                                        <div
                                             className="pz-cutomer-grp-text-no-bg">{PZRContextData.searchParams.customer}
-                                        </span>
+                                        </div>
                                         {getCustomerGroupOfCustomer() ? (
                                             <div className="pz-customer-group-bottom">
                                                 <span className="pz-customer-group-bottom-text">Customer Group</span>
