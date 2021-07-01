@@ -1,13 +1,18 @@
 import React, { useRef, useState } from 'react';
 import useModal from '../../../hooks/useModal';
-import { Input } from 'antd';
+import { Input , Popconfirm } from 'antd';
+
+import { ReactComponent as ReviewSuccess } from "../../../styles/images/pz-review-sucess.svg";
+import { ReactComponent as ReviewReject } from "../../../styles/images/pz-review-reject.svg";
 
 export default function AproveRejectButtons({ row, index, handle, disable }) {
   const { on, Modal, toggle } = useModal();
+  const [activeModal , setActivemodal]=useState('');
 
   const { TextArea } = Input;
 
   const inputElement = useRef(null);
+
 
   const RejectReasonModal = () => {
     return (
@@ -48,8 +53,92 @@ export default function AproveRejectButtons({ row, index, handle, disable }) {
     );
   };
 
+// Aprove Success modal
+
+const AproveSuccess = () => {
+  return (
+    <div>
+      {Modal(
+        {
+          title: "",
+          centered: "true",
+          // onOK: ,
+          // onCancel: ,
+          okText: "OK",
+          cancelText: "",
+          noCancel: true, // no cancel button
+        },
+
+        <div className="pz-confirm-pop-base-success">
+          <div className="pz-confirm-wrapper-success">
+            <div className="pz-success-anim">
+              <ReviewSuccess className="pz-success-anim-logo" />
+            </div>
+            <div className="pz-success-text">Successfully Approved !</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Reject Success modal
+
+const RejectSuccess = () => {
+  return (
+    <div>
+      {Modal(
+        {
+          title: "",
+          centered: "true",
+          // onOK: () ,
+          // onCancel: ,
+          okText: "OK",
+          cancelText: "",
+          noCancel: true, // no cancel button
+        },
+
+        <div className="pz-confirm-pop-base-success">
+          <div className="pz-confirm-wrapper-success">
+            <div className="pz-success-anim">
+              <ReviewReject className="pz-success-anim-logo" />
+            </div>
+            <div className="pz-success-text">Successfully Rejected !</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// Loading Modal 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   return (
     <div className='pz-aprove-reject-wrapper'>
+      <Popconfirm
+        id="pz-pop-confirm-custom"
+        title="Are you sure?"
+        // visible={}
+        // onVisibleChange={}
+        // onConfirm={}
+        //  onCancel={}
+
+        okText="Yes"
+        cancelText="No"
+      >
       <button
         type='primary'
         htmlType='submit'
@@ -62,6 +151,7 @@ export default function AproveRejectButtons({ row, index, handle, disable }) {
       >
         APPROVE
       </button>
+      </Popconfirm>
       <button
         type='primary'
         htmlType='submit'
@@ -76,6 +166,13 @@ export default function AproveRejectButtons({ row, index, handle, disable }) {
         REJECT
       </button>
       <RejectReasonModal />
+
+      {
+        {
+          "aprove-success-modal": <AproveSuccess />,
+          "reject-success-modal": <RejectSuccess />,
+        }[activeModal]
+      }
     </div>
   );
 }
