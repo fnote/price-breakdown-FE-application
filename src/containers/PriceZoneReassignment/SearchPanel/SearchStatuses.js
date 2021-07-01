@@ -112,6 +112,7 @@ const SearchStatuses = () => {
         const {errorCode, correlationId, httpStatus} = PZRContextData.searchError;
         if (httpStatus === HTTP_INTERNAL_SERVER_ERROR) {
             openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_MESSAGE, CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED);
+            PZRContextData.setErrorData(null);
             return null;
         }
         if (errorCode) {
