@@ -4,6 +4,7 @@ import { Input , Popconfirm } from 'antd';
 
 import { ReactComponent as ReviewSuccess } from "../../../styles/images/pz-review-sucess.svg";
 import { ReactComponent as ReviewReject } from "../../../styles/images/pz-review-reject.svg";
+import {ReactComponent as Loader} from "../../../styles/images/priceZone_loader.svg";
 
 export default function AproveRejectButtons({ row, index, handle, disable }) {
   const { on, Modal, toggle } = useModal();
@@ -72,7 +73,7 @@ const AproveSuccess = () => {
         <div className="pz-confirm-pop-base-success">
           <div className="pz-confirm-wrapper-success">
             <div className="pz-success-anim">
-              <ReviewSuccess className="pz-success-anim-logo" />
+              <ReviewSuccess className="pz-success-anim-review-logo" />
             </div>
             <div className="pz-success-text">Successfully Approved !</div>
           </div>
@@ -101,7 +102,7 @@ const RejectSuccess = () => {
         <div className="pz-confirm-pop-base-success">
           <div className="pz-confirm-wrapper-success">
             <div className="pz-success-anim">
-              <ReviewReject className="pz-success-anim-logo" />
+              <ReviewReject className="pz-success-anim-review-logo" />
             </div>
             <div className="pz-success-text">Successfully Rejected !</div>
           </div>
@@ -112,6 +113,33 @@ const RejectSuccess = () => {
 };
 
 // Loading Modal 
+
+const LoadingState = () => {
+  return (
+      <div>
+          {Modal(
+              {
+                  title: "",
+                  centered: "true",
+                  maskClosable: false, // won't close on mask click
+                  closable: false, // won't close from close icon
+                  keyboard: false, // won't close from keyboard events (esc)
+                  okText: "OK",
+                  cancelText: "",
+                  noCancel: true, // no cancel button
+                  noOk: true, // no ok button
+              },
+
+              <div className="pz-loading-pop-base">
+                  <div className="pz-loading-pop-wrapper">
+                      <Loader className="pz-loading-anim"/>
+                      <span className="pz-loading-text"> Please wait ...</span>
+                  </div>
+              </div>
+          )}
+      </div>
+  );
+};
 
 
 
@@ -128,12 +156,13 @@ const RejectSuccess = () => {
 
   return (
     <div className='pz-aprove-reject-wrapper'>
+     
       <Popconfirm
         id="pz-pop-confirm-custom"
         title="Are you sure?"
         // visible={}
         // onVisibleChange={}
-        // onConfirm={}
+         onConfirm={toggle}
         //  onCancel={}
 
         okText="Yes"
@@ -167,10 +196,13 @@ const RejectSuccess = () => {
       </button>
       <RejectReasonModal />
 
+     
+
       {
         {
           "aprove-success-modal": <AproveSuccess />,
           "reject-success-modal": <RejectSuccess />,
+          "loading-state": <LoadingState/>
         }[activeModal]
       }
     </div>

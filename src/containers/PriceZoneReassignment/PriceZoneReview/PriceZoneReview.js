@@ -25,6 +25,123 @@ import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
 import businessUnitMap from '../../../constants/BusinessUnits';
 
+
+
+const populate = async () => ({
+  totalRecords: 10,
+  offset: 1,
+  limit: 3,
+  data: {
+     pzUpdateRequests: [
+        {
+           id: 121,
+           businessUnitNumber: '019',
+           itemAttributeGroup: 'Milk',
+           itemAttributeGroupId: '12345',
+           customerGroup: '8287',
+           newPriceZone: 3,
+           oldPriceZone: "2",
+           status: 'APPROVED',
+           effectiveFromDate: '20210530',
+           exportedEffectiveFromDate: '20210531',
+           submitter: {
+              id: 'tjay5771',
+              givenName: 'Tharuka',
+              surname: 'Jayalath',
+              email: 'vvit5827@sysco.com',
+           },
+           submissionNote: 'Price zone assignment is incorrect',
+           createdTime: 1621837508000,
+           reviewer: {
+              'id':'sams5625',
+              'givenName':'Sanjaya',
+              'surname':'Amarasinghe',
+              'email':'sams5625@sysco.com'
+           },
+           'reviewNote':'',
+           'reviewedTime':null,
+           'exportedTime':null,
+           'summary':{
+              'customerCount': 3,
+              'supcCount': 3
+           }
+        },
+        {
+           'id':122,
+           'businessUnitNumber':'038',
+           'itemAttributeGroup':'Bacon',
+           'itemAttributeGroupId':'12345',
+           'customerAccount':'700001',
+           'customerGroup':'8287',
+           'newPriceZone':4,
+           oldPriceZone: "5",
+           'status':'PENDING_APPROVAL',
+           'effectiveFromDate':'20210530',
+           'exportedEffectiveFromDate':'20210531',
+           'submitter':{
+              'id':'vvit5827',
+              'givenName':'Vithulan',
+              'surname':'MV',
+              'email':'vvit5827@sysco.com'
+           },
+           'submissionNote':'Price zone assignment is incorrect',
+           'createdTime':1621837508000,
+           'reviewer':{
+              'id':'sams5625',
+              'givenName':'Sanjaya',
+              'surname':'Amarasinghe',
+              'email':'sams5625@sysco.com'
+           },
+           'reviewNote':'',
+           'reviewedTime':null,
+           'exportedTime':null,
+           'summary':{
+              'customerCount':20,
+              'supcCount':10
+           }
+        },
+        {
+           'id':124,
+           'businessUnitNumber':'068',
+           'itemAttributeGroup':'Cheese',
+           'itemAttributeGroupId':'12345',
+           'customerAccount':'700001',
+           'newPriceZone':3,
+           oldPriceZone: "Multiple",
+           'status':'REJECTED',
+           'effectiveFromDate':'20210530',
+           'exportedEffectiveFromDate':'20210531',
+           'submitter':{
+              'id':'iasa0862',
+              'givenName':'Asanka',
+              'surname':'Indunil',
+              'email':'vvit5827@sysco.com'
+           },
+           'submissionNote':'Price zone assignment is incorrect. This should be approved ASAP',
+           'createdTime': 1624959117644,
+           'reviewer':{
+              'id':'sams5625',
+              'givenName':'Sanjaya',
+              'surname':'Amarasinghe',
+              'email':'sams5625@sysco.com'
+           },
+           'reviewedTime':null,
+           'reviewNote':'',
+           'exportedTime':null,
+           'summary':{
+              'customerCount':30,
+              'supcCount':15
+           }
+        }
+     ]
+  },
+});
+
+
+
+
+
+
 export default function PriceZoneReview() {
   const [currentPage, setCurrentPage] = useState(1);
   const [dataResetIndex, setDataResetIndex] = useState(0);
@@ -54,28 +171,30 @@ export default function PriceZoneReview() {
   const { Modal, toggle } = useModal();
 
   const fetchPZChangeRequests = (page, store) => {
-    const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
-    const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
-      { ...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL });
-    setResultLoading(true);
-    fetch(requestUrl, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json'
-      },
-      credentials: 'include'
-    })
-    .then(handleResponse)
+    // const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
+    // const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
+    //   { ...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL });
+    // setResultLoading(true);
+    // fetch(requestUrl, {
+    //   method: 'GET',
+    //   headers: {
+    //     Accept: 'application/json'
+    //   },
+    //   credentials: 'include'
+    // })
+    // .then(handleResponse)
+    console.log('test')
+    populate()
     .then((resp) => {
-      if (resp.success) {
-        const { totalRecords, data: { pzUpdateRequests } } = resp.data;
+      // if (resp.success) {
+        const { totalRecords, data: { pzUpdateRequests } } = resp;
         const updatedDataStore = { ...store, [page]: pzUpdateRequests };
         setTotalResultCount(totalRecords);
         setDataStore(updatedDataStore);
-      } else {
-        // todo: handle error scenario with a message to user
-        console.log(resp);
-      }
+      // } else {
+      //   // todo: handle error scenario with a message to user
+      //   console.log(resp);
+      // }
       setResultLoading(false);
     })
     .catch((err) => {
