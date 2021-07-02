@@ -5,47 +5,47 @@ import {extractTransactions} from "../../../utils/PricingUtils";
 
 const columns = [
   {
-    title: "Obligation Num",
+    title: "OBLIGATION NUM",
     dataIndex: "obligationId",
   },
   {
-    title: "Line Num",
+    title: "LINE NUM",
     dataIndex: "lineNumber",
 
   },
   {
-    title: "Transacted Date",
+    title: "TRANSACTED DATE",
     dataIndex: "transactionDate",
     defaultSortOrder: "descend",
     sorter: (a, b) => a.Transacted_Date - b.Transacted_Date,
   },
   {
-    title: "Shipped qty",
+    title: "SHIPPED QTY",
     dataIndex: "shippedQuantity",
   },
   {
-    title: "Total Catch Weight",
+    title: "TOTAL CWT",
     dataIndex: "totalCatchWeight",
   },
   {
-    title: "Unit Price",
+    title: "UNIT PRICE",
     dataIndex: "unitPrice",
   },
   {
-    title: "Net Price",
+    title: "NET PRICE",
     dataIndex: "netPrice",
     style: {color: 'red !important'}
   },
   {
-    title: "Extended Price",
+    title: "EXTENDED PRICE",
     dataIndex: "extendedPrice",
   },
   {
-    title: "Price source",
+    title: "PRICE SOURCE",
     dataIndex: "priceSourceType",
   },
   {
-    title: "Create Date / Time",
+    title: "CREATE DATE / TIME",
     dataIndex: ['createDateTime'],
   },
 ];
