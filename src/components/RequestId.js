@@ -8,7 +8,7 @@ function RequestId(props) {
     <div className="request-id">
       Request Id - {requestId}
       <Tooltip title="This is a unique ID for your request. You may be requested to provide this for support purposes.">
-        <InfoCircleOutlined className="pz-req-id-icon"/>
+        <InfoCircleOutlined />
       </Tooltip>
     </div>
   );

@@ -24,7 +24,8 @@ const ErrorCodes = {
 const ErrorMessages = {
     UNEXPECTED_ERROR: 'Something went wrong',
     PERISCOPE_NOT_ENABLED_OPCO_ERROR: 'The service is not enabled for this business unit',
-    INVALID_CUSTOMER_ACCOUNT_ERROR: 'Your search did not found any match.',
+    INVALID_CUSTOMER_ACCOUNT_ERROR: 'Provided customer account is incorrect',
+    INVALID_CUSTOMER_ACCOUNT_PZR_ERROR: 'Your search did not found any match',
     INVALID_CUSTOMER_ACCOUNT_TYPE_ERROR: 'Provided customer is not eligible for this pricing',
     INVALID_OLD_PRICE_REQUEST_DATE_ERROR: 'Provided date is too far into the past',
     INVALID_FUTURE_PRICE_REQUEST_DATE_ERROR: 'Provided date is too far into the future',
@@ -35,7 +36,7 @@ const ErrorMessages = {
     PRODUCT_INFO_API_ERROR: 'Could not retrieve the product information',
     CUSTOMER_INFO_API_ERROR: 'Could not retrieve the customer information',
     CONNECTION_ISSUE_ERROR: 'Could not retrieve the information due to connection issue',
-    INVALID_CUSTOMER_GROUP_ERROR: 'Your search did not found any match.',
+    INVALID_CUSTOMER_GROUP_ERROR: 'Your search did not found any match',
     SEARCH_NOT_FOUND: 'Search not found',
 };
 
@@ -52,7 +53,7 @@ const ErrorsMap = new Map([
     [ErrorCodes.PRICING_ENGINE_ERROR, ErrorMessages.PRICING_ENGINE_ERROR],
     [ErrorCodes.PRODUCT_INFO_API_ERROR, ErrorMessages.PRODUCT_INFO_API_ERROR],
     [ErrorCodes.CUSTOMER_INFO_API_ERROR, ErrorMessages.CUSTOMER_INFO_API_ERROR],
-    [ErrorCodes.INVALID_CUSTOMER_ACCOUNT_PZR_ERROR, ErrorMessages.INVALID_CUSTOMER_ACCOUNT_ERROR],
+    [ErrorCodes.INVALID_CUSTOMER_ACCOUNT_PZR_ERROR, ErrorMessages.INVALID_CUSTOMER_ACCOUNT_PZR_ERROR],
     [ErrorCodes.INVALID_CUSTOMER_GROUP_ERROR, ErrorMessages.INVALID_CUSTOMER_GROUP_ERROR],
 ]);
 
