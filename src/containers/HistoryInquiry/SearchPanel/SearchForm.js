@@ -57,7 +57,7 @@ const SearchForm = () => {
   const requestContext = useContext(RequestContext);
   const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
   const bUnitMap = getBusinessUnits(businessUnitMap);
-  const initialValues = setHistoryInquiryInitialValues(requestContext, businessUnitMap);
+  const initialValues = setHistoryInquiryInitialValues(requestContext);
 
   const handleResponse = (response) => {
     const correlationId =
@@ -148,7 +148,7 @@ const SearchForm = () => {
                 <button
                     type="reset"
                     className="search-refresh-btn refresh-outlined-btn" >
-                    <i className="icon fi flaticon-refresh"/>
+                    <i className="icon fi flaticon-refresh"/> CLEAR
                 </button>
             </Form.Item>
           <Form.Item

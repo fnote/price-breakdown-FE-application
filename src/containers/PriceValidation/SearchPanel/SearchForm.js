@@ -135,7 +135,7 @@ const SearchForm = () => {
                 <button
                     type="reset"
                     className="search-refresh-btn refresh-outlined-btn" >
-                    <i className="icon fi flaticon-refresh"/>
+                    <i className="icon fi flaticon-refresh"/> clear
                 </button>
             </Form.Item>
           <Form.Item
