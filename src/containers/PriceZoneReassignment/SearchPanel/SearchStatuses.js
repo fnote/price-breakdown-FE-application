@@ -46,7 +46,7 @@ const renderError = ({errorCode, message, correlationId}) => (
                 <div className="title">
                     <i className="icon fi flaticon-error-1"/> Sorry we could not retrieve search results
                 </div>
-                <div className="subitle-title">
+                <div className="pz-error-block">
                     Error {errorCode} - {message}
                 </div>
                 <RequestId requestId={correlationId}/>
