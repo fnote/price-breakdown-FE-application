@@ -57,7 +57,7 @@ const SearchForm = () => {
   const requestContext = useContext(RequestContext);
   const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
   const bUnitMap = getBusinessUnits(businessUnitMap);
-  const initialValues = setHistoryInquiryInitialValues(requestContext, businessUnitMap);
+  const initialValues = setHistoryInquiryInitialValues(requestContext, bUnitMap);
 
   const handleResponse = (response) => {
     const correlationId =
