@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
-import { SyncOutlined } from '@ant-design/icons';
-import { PriceValidationContext } from '../../PriceValidation/PriceValidationContext';
-import { ErrorCodes, ErrorMessages, ErrorsMap } from '../../../constants/Errors';
+import {SyncOutlined} from '@ant-design/icons';
+import {HistoryInquiryContext} from "../HistoryInquiryContext";
+import {ErrorCodes, ErrorMessages, ErrorsMap} from '../../../constants/Errors';
 import RequestId from '../../../components/RequestId';
 
 const renderWelcomeMessage = () => (
@@ -9,12 +9,12 @@ const renderWelcomeMessage = () => (
       <div className="section-wrapper">
         <div className="welcome-message message-block">
           <div className="title">
-            <i className="icon fi flaticon-pricing-journey" /> Welcome to the Pricing
+            <i className="icon fi flaticon-pricing-journey"/> Welcome to the Pricing
             History Inquiry Tool
           </div>
           <div className="subitle-title">
-            <i className="icon fi flaticon-arrow" /> To begin fill in the fields
-            to your left to see pricing details.
+            <i className="icon fi flaticon-arrow"/> To begin fill in the fields
+            to your left to see history inquiry details.
           </div>
         </div>
       </div>
@@ -26,7 +26,7 @@ const renderLoader = () => (
       <div className="section-wrapper">
         <div className="loading message-block">
           <div className="title">
-            <SyncOutlined spin className="icon" /> Retrieving Pricing
+            <SyncOutlined spin className="icon"/> Retrieving History inquiry
             Information
           </div>
         </div>
@@ -51,24 +51,24 @@ const renderError = ({ errorCode, message, correlationId }) => (
 );
 
 const SearchStatuses = () => {
-  const priceValidationContext = useContext(PriceValidationContext);
+  const historyInquiryContext = useContext(HistoryInquiryContext);
 
-  const { response } = priceValidationContext.priceData;
+  const {response} = historyInquiryContext.historyInquiryData;
 
-  if (priceValidationContext.isLoading) {
+  if (historyInquiryContext.isLoading) {
     return renderLoader();
   }
 
-  if (priceValidationContext.error) {
-    const { errorCode, correlationId } = priceValidationContext.error;
-      if (errorCode) {
-        const message = ErrorsMap.get(errorCode);
-        if (message) {
-          return renderError({ errorCode, message, correlationId });
-        }
+  if (historyInquiryContext.error) {
+    const {errorCode, correlationId} = historyInquiryContext.error;
+    if (errorCode) {
+      const message = ErrorsMap.get(errorCode);
+      if (message) {
+        return renderError({errorCode, message, correlationId});
       }
+    }
 
-    return renderError({errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR });
+    return renderError({errorCode: ErrorCodes.UNEXPECTED_ERROR, message: ErrorMessages.UNEXPECTED_ERROR});
   }
 
   if (!response) {
