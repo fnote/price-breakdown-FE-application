@@ -19,7 +19,7 @@ export default function ReviewSubmitter({ submission: { id, givenName, surname, 
            </div>
            <div className="pz-review-note">
                <Tooltip title={submissionNote} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
-               <i className="icon fi flaticon-note"/>
+               <i className="icon fi flaticon-note pz-review-note-icon "/>
            </Tooltip>
            </div>
 

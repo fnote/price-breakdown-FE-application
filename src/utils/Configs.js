@@ -31,6 +31,10 @@ export const getBffUrlConfig = () => {
     // Pricing apis
     CONFIG.priceDataEndpoint = `${CONFIG.bffBaseUrl}pricing/pricing-data`;
 
+    // PZR APIs
+    CONFIG.pzrUpdateRequestsUrl = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-update-requests`;
+    CONFIG.priceZoneReassignmentSearchUrl = `${CONFIG.bffBaseUrl}price-zone-reassignment/search`;
+    CONFIG.priceZoneReassignmentGetItemAttributeUrl = `${CONFIG.bffBaseUrl}price-zone-reassignment/item-attribute-groups`;
     // CIPZ apis
     CONFIG.pzUpdateRequests = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-update-requests`;
     CONFIG.pzUpdates = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-updates/:request_id`;

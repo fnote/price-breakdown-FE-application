@@ -3,7 +3,12 @@ import { Select } from 'antd';
 
 const { Option } = Select;
 
-export const getBusinessUnits = (businessUnitsMap) => {
+export const getBusinessUnits = (businessUnitsMaps) => {
+
+    var businessUnitsMap = new Map([
+        ['011', { id: '011', shortName: 'Temp'}]
+      ]);
+
     const businessUnitOptions = [];
     if (businessUnitsMap) {
         businessUnitsMap.forEach(((businessUnit) => {

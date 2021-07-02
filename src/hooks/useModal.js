@@ -9,13 +9,14 @@ const useModal = () => {
   const toggle = useCallback(() => setOn(!on), [on])
   
   const Modal = useCallback(
-    ({onOK,onCancel,noCancel ,still, ...rest}, child) => {
+    ({onOK,onCancel,noCancel , noOk ,still, ...rest}, child) => {
       return (
         <AntdModal
         className="pz-antModal"
           {...rest}
           visible={on}
           cancelButtonProps={{ style: noCancel && { display: 'none' } }}
+          okButtonProps={{ style: noOk && { display: 'none' } }}
          
           onOk={() => {
             onOK && onOK()

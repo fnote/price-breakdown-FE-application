@@ -1,5 +1,6 @@
 import React from 'react';
 import {ExclamationCircleOutlined} from '@ant-design/icons'
+import { Tooltip } from 'antd';
 
 export default function ReviewSummery({ changeSummary: {
   businessUnit,
@@ -30,7 +31,9 @@ export default function ReviewSummery({ changeSummary: {
       <div className="pz-review-sum-left-opco">
         <span className="pz-caps">opco</span>
         <div className="pz-review-sum-left-opco">
+        <Tooltip title={businessUnit} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
           <div className="pz-review-opco">{businessUnit}</div>
+          </Tooltip>
         </div>
       </div>
     </div>
