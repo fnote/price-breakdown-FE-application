@@ -65,7 +65,7 @@ class Auth {
                     errorType: null
                 };
 
-                if (data.status === 401) {
+                if (data.status === 200) {
                     payloadData.isLoginSucceeded = true;
                     payloadData.userDetails = data.userDetailResponse;
                     this.setUserLoggedInState(AUTH_STATE_COMPLETED);
