@@ -76,6 +76,7 @@ export default function PriceZoneTable() {
                 total={searchResults && searchResults.total_records ? searchResults.total_records : 0}
                 current={currentPage}
                 pageSize={DEFAULT_PAGE_SIZE}
+                disabled={PZRContextData.isSearchTableLoading}
             />
         </div>
     )

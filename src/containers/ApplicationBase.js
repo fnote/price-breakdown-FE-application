@@ -4,7 +4,6 @@ import {notification} from 'antd';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
-import HistoryInquiry from './HistoryInquiry/HistoryInquiry';
 import PriceZoneRe from './PriceZoneReassignment/PriceZoneRe';
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
@@ -14,7 +13,6 @@ import {
     NAVIGATION_PATH_FILE_UPLOAD,
     NAVIGATION_PATH_PRICE_VALIDATION,
     SUPPORTED_WEB_BROWSERS,
-    NAVIGATION_PATH_HISTORY_INQUIRY,
     NAVIGATION_PATH_PRICEZONE_REASSIGNMENT
 } from '../constants/Constants';
 
@@ -31,9 +29,6 @@ const Application = () => (
         </Route>
         <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
             <PriceValidation/>
-        </Route>
-        <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
-            <HistoryInquiry/>
         </Route>
         <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
             <PriceZoneRe/>
