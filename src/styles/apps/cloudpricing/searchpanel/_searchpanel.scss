@@ -238,5 +238,33 @@
       }
     }
   }
+  .search-refresh-btn-wrapper {
+    margin-left: 14rem;
+    background: $textalternative;
+    align-content: flex-end;
+  }
+  .search-refresh-btn {
+    background: $textalternative;
+    border: lightgray;
+    color: darken($syscoblue, 5%);
+    font-size: 1rem;
+    width: calc(0.1% );
+    margin-left: 0rem;
+
+
+    &:active {
+      opacity: 0.4;
+    }
+    &:hover {
+      color: $syscodarkblue;
+      opacity: 1.7;
+      transform: scale(1.03);
+    }
+    @include breakpoint(xs) {
+      padding: 0;
+      margin-left: auto;
+    }
+  }
 }
+
 @import "_searchstatuses.scss";
