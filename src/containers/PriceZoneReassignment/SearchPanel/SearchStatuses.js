@@ -93,15 +93,15 @@ const renderContinueSearch = () => (
     </div>
 );
 
+const openNotificationWithIcon = (type, description, msg) => {
+    notification[type]({
+        message: msg,
+        description,
+    });
+};
+
 const SearchStatuses = () => {
     const PZRContextData = useContext(PZRContext);
-
-    const openNotificationWithIcon = (type, description, msg) => {
-        notification[type]({
-            message: msg,
-            description,
-        });
-    };
 
     if (PZRContextData.isSearchLoading) {
         return renderLoader();

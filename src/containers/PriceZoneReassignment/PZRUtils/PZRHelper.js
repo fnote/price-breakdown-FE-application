@@ -33,11 +33,7 @@ export const calculateOffset = (currentPage, pageSize) => {
     return (currentPage - 1) * pageSize;
 };
 
-export const getBusinessUnits = (businessUnitsMaps) => {
-    const businessUnitsMap = new Map([
-        ['019', {id: '019', shortName: 'Sysco Cincinnati'}], ['011', {id: '011', shortName: 'Temp'}]
-    ]);
-
+export const getBusinessUnits = (businessUnitsMap) => {
     const businessUnitOptions = [];
     if (businessUnitsMap) {
         businessUnitsMap.forEach(((businessUnit) => {

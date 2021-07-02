@@ -14,6 +14,39 @@ import {ReactComponent as Warning} from "../../../styles/images/warning.svg";
 import {ReactComponent as Loader} from "../../../styles/images/priceZone_loader.svg";
 import {CIPZErrorMessages, CIPZErrorsMap} from '../../../constants/Errors';
 
+const openNotificationWithIcon = (type, description, title) => {
+    notification[type]({
+        message: title,
+        description,
+    });
+};
+
+const handleResponse = (response) => {
+    const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
+    return response.json().then((json) => {
+        if (response.ok) {
+            return {success: true, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
+        }
+        return {success: false, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
+    });
+};
+
+const handleError = (response) => {
+    if (!response || !response.data || !response.data.errorCode) {
+        openNotificationWithIcon('error', CIPZErrorMessages.UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
+        return;
+    }
+    const {errorCode} = {...response.data};
+    const errorMessage = errorCode && CIPZErrorsMap[errorCode] ? CIPZErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_CIPZ_POST_ERROR_MESSAGE;
+    openNotificationWithIcon('error', errorMessage, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
+};
+
+const disabledDate = (current) => {
+    return current.day() === 0 || current.day() === 6 ||        // Disabling weekends
+        current < moment().endOf('day') ||             // Disabling past days
+        current > moment().startOf('isoWeek').add(1, 'week');   //Disabling future date after next monday
+};
+
 export default function PrizeZoneHeader() {
     const {Modal, toggle} = useModal();
     // on is the modal status =>  on || off
@@ -36,62 +69,39 @@ export default function PrizeZoneHeader() {
     const [effectiveDay, setEffectiveDay] = useState(getDefaultEffectiveDate().format("ddd"));
     const submissionReasonInput = useRef(null);
 
+    const submitReasonModal = "submit-reason";
 
-    const ModalComponent = () => {
-        return (
-            <div>
-                {Modal(
-                    {
-                        title: "",
-                        centered: "true",
-                        onOK: () => setSubmitModal("submit-reason"),
-                        still: true, // modal won't close
-                        okText: "PROCEED",
-                        cancelText: "CANCEL",
-                    },
-
-                    <div className="pz-confirm-pop-base">
-                        <div className="alert">
-                            <Warning className="pz-warning-anim-logo"/>
-                        </div>
-                        <div className="pz-alert-main">Confirm Price Zone Change</div>
-                        <div className="pz-alert-sub">
-                            While performing this change, price zone for all the items
-                            associated with item attribute group and all the customers
-                            associated with customer group will be updated.
-                        </div>
-                    </div>
-                )}
-            </div>
-        );
-    };
-
-    const handleResponse = (response) => {
-        const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
-        return response.json().then((json) => {
-            if (response.ok) {
-                return {success: true, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
-            }
-            return {success: false, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
-        });
-    };
-
-    const handleError = (response) => {
-        if (!response || !response.data || !response.data.errorCode) {
-            openNotificationWithIcon('error', CIPZErrorMessages.UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
-            return;
+    const getCustomerGroupOfCustomer = () => {
+        if (!PZRContextData.searchResults || !PZRContextData.searchResults.data || !PZRContextData.searchResults.data.customer_group_id) {
+            return null;
         }
-        const {errorCode} = {...response.data};
-        const errorMessage = errorCode && CIPZErrorsMap[errorCode] ? CIPZErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_CIPZ_POST_ERROR_MESSAGE;
-        openNotificationWithIcon('error', errorMessage, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
+
+        return PZRContextData.searchResults.data.customer_group_id;
     };
 
-    const openNotificationWithIcon = (type, description, title) => {
-        notification[type]({
-            message: title,
-            description,
+    const formRequestBody = () => {
+        const userDetailsObj = userDetailContext.userDetailsData.userDetails;
+        const submissionReason = (submissionReasonInput.current && submissionReasonInput.current.state
+            && submissionReasonInput.current.state.value) ?
+            submissionReasonInput.current.state.value : '';
+        return JSON.stringify({
+            businessUnitNumber: PZRContextData.searchParams.opcoId,
+            itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
+            itemAttributeGroupId: PZRContextData.searchParams.attributeGroupId,
+            customerGroup: getCustomerGroupOfCustomer(),
+            customerAccount: PZRContextData.searchParams.customer ? PZRContextData.searchParams.customer : null,
+            newPriceZone: newPriceZone,
+            effectiveFromDate: effectiveDate,
+            submissionNote: submissionReason,
+            submitter: {
+                id: userDetailsObj.username,
+                givenName: userDetailsObj.firstName,
+                surname: userDetailsObj.lastName,
+                email: userDetailsObj.email
+            }
         });
     };
+
     const priceZoneChangeHandler = () => {
 
         setSubmitModal("loading");
@@ -112,37 +122,68 @@ export default function PrizeZoneHeader() {
                     setSubmitModal("success-modal");
                 } else {
                     handleError(resp);
-                    setSubmitModal("submit-reason");
+                    setSubmitModal(submitReasonModal);
                 }
                 return null;
             })
-            .catch((e) => {
-                setSubmitModal("submit-reason");
+            .catch(() => {
+                setSubmitModal(submitReasonModal);
                 openNotificationWithIcon('error', CIPZErrorMessages.UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
             });
     };
 
-    const formRequestBody = () => {
-        const userDetailsObj = userDetailContext.userDetailsData.userDetails;
-        const submissionReason = (submissionReasonInput.current && submissionReasonInput.current.state
-            && submissionReasonInput.current.state.value) ?
-            submissionReasonInput.current.state.value : '';
-        return JSON.stringify({
-            businessUnitNumber: PZRContextData.searchParams.opcoId,
-            itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
-            itemAttributeGroupId: PZRContextData.searchParams.attributeGroupId,
-            customerGroup: getCustomerGroupOfCustomer(),
-            customerAccount: PZRContextData.searchParams.customer ? PZRContextData.searchParams.customer : null,
-            newPriceZone: newPriceZone,
-            effectiveFromDate: effectiveDate,
-            submissionNote: submissionReason,
-            submitter: {
-                id: userDetailsObj.username ? userDetailsObj.username : 'vvit5827',  //TODO: Remove this later, test purpose only
-                givenName: userDetailsObj.firstName ? userDetailsObj.firstName : 'Vithulan',
-                surname: userDetailsObj.lastName ? userDetailsObj.lastName : 'MV',
-                email: userDetailsObj.email ? userDetailsObj.email : 'vvit5827@sysco.com'
-            }
-        });
+    const resetSearch = () => {
+        PZRContextData.resetAfterSubmission();
+        setSubmitModal(false);
+        setReferenceId(0);
+    };
+    const onPriceZoneChange = (value) => {
+        setNewPriceZone(value);
+        setSubmitDisabled(false);
+    };
+
+    const onDateChange = (effectiveFrom) => {
+        setEffectiveDate(effectiveFrom.format("YYYYMMDD"));
+        setEffectiveDay(effectiveFrom.format("ddd"));
+    };
+
+    const renderCustomerGroupComponent = () => {
+        return getCustomerGroupOfCustomer() ? (
+            <div className="pz-customer-group-bottom">
+                <span className="pz-customer-group-bottom-text">Customer Group</span>
+                <span
+                    className="pz-customer-group-bottom-tag">{getCustomerGroupOfCustomer()}</span>
+            </div>
+        ) : (<div/>)
+    };
+
+    const ModalComponent = () => {
+        return (
+            <div>
+                {Modal(
+                    {
+                        title: "",
+                        centered: "true",
+                        onOK: () => setSubmitModal(submitReasonModal),
+                        still: true, // modal won't close
+                        okText: "PROCEED",
+                        cancelText: "CANCEL",
+                    },
+
+                    <div className="pz-confirm-pop-base">
+                        <div className="alert">
+                            <Warning className="pz-warning-anim-logo"/>
+                        </div>
+                        <div className="pz-alert-main">Confirm Price Zone Change</div>
+                        <div className="pz-alert-sub">
+                            While performing this change, price zone for all the items
+                            associated with item attribute group and all the customers
+                            associated with customer group will be updated.
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
     };
 
     const SubmitReason = () => {
@@ -236,50 +277,22 @@ export default function PrizeZoneHeader() {
         );
     };
 
-    const resetSearch = () => {
-        PZRContextData.resetAfterSubmission();
-        setSubmitModal(false);
-        setReferenceId(0);
-    };
-    const onPriceZoneChange = (value) => {
-        setNewPriceZone(value);
-        setSubmitDisabled(false);
-    };
-
-    const disabledDate = (current) => {
-        return current.day() === 0 || current.day() === 6 ||        // Disabling weekends
-            current < moment().endOf('day') ||             // Disabling past days
-            current > moment().startOf('isoWeek').add(1, 'week');   //Disabling future date after next monday
-    };
-
-    const onDateChange = (effectiveFrom) => {
-        setEffectiveDate(effectiveFrom.format("YYYYMMDD"));
-        setEffectiveDay(effectiveFrom.format("ddd"));
-    };
-
-    const getCustomerGroupOfCustomer = () => {
-        if (!PZRContextData.searchResults || !PZRContextData.searchResults.data || !PZRContextData.searchResults.data.customer_group_id) {
-            return null;
-        }
-
-        return PZRContextData.searchResults.data.customer_group_id;
-    };
-
     return (
         <div className="pz-header">
-            <div className="pz-header-title"></div>
+            <div className="pz-header-title"/>
             <div className="pz-tab-section">
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
                             <div className="pz-tab-items-top">OPCO</div>
-                            <Tooltip 
-                                    title={PZRContextData.searchParams.site}
-                                    color="#fff"
-                                    overlayClassName="pz-tooltip"
-                                    overlayStyle={{color: "#000"}}
-                                >
-                            <div className="pz-tab-items-bottom pz-opco-text-bold">{PZRContextData.searchParams.site}</div>
+                            <Tooltip
+                                title={PZRContextData.searchParams.site}
+                                color="#fff"
+                                overlayClassName="pz-tooltip"
+                                overlayStyle={{color: "#000"}}
+                            >
+                                <div
+                                    className="pz-tab-items-bottom pz-opco-text-bold">{PZRContextData.searchParams.site}</div>
                             </Tooltip>
                         </div>
                     </div>
@@ -287,7 +300,7 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs pz-tabs-combine">
                     <div className="pz-tabs-combine-l">
                         <div className="pz-tab-items">
-                            {PZRContextData.searchParams.customerGroup ? ( 
+                            {PZRContextData.searchParams.customerGroup ? (
                                 <>
                                     <div className="pz-tab-items-top">CUSTOMER GROUP</div>
                                     <div className="pz-tab-items-bottom">
@@ -302,14 +315,7 @@ export default function PrizeZoneHeader() {
                                         <div
                                             className="pz-cutomer-grp-text-no-bg">{PZRContextData.searchParams.customer}
                                         </div>
-                                        {getCustomerGroupOfCustomer() ? (
-                                            <div className="pz-customer-group-bottom">
-                                                <span className="pz-customer-group-bottom-text">Customer Group</span>
-                                                <span
-                                                    className="pz-customer-group-bottom-tag">{getCustomerGroupOfCustomer()}</span>
-                                            </div>
-                                        ) : (<div/>)
-                                        }
+                                        {renderCustomerGroupComponent()}
                                     </div>
                                 </>
                             )}
@@ -368,11 +374,10 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
-                            <div className="pz-tab-items-top"></div>
+                            <div className="pz-tab-items-top"/>
                             <div className="pz-tab-items-bottom">
                                 <button
                                     type="primary"
-                                    htmlType="submit"
                                     className={isSubmitDisabled ? "search-btn outlined-btn pz-disabled" : "search-btn outlined-btn "}
                                     onClick={toggle}
                                     disabled={isSubmitDisabled}

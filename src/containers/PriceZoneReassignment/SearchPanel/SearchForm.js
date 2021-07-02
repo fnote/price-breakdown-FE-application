@@ -23,6 +23,28 @@ const validateMessages = {
     },
 };
 
+const openNotificationWithIcon = (type, description, title) => {
+    notification[type]({
+        message: title,
+        description,
+    });
+};
+
+const handleGetAttributeGroupResponse = (response) => {
+    const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
+    return response.json().then((json) => {
+        if (response.ok) {
+            return {success: true, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
+        }
+        return {
+            success: false,
+            data: json,
+            headers: {[CORRELATION_ID_HEADER]: correlationId},
+            httpStatus: response.status
+        };
+    });
+};
+
 const SearchForm = () => {
     const isCustomerCheckedInitState = false;
     const customerTextboxValueInitState = '';
@@ -34,30 +56,11 @@ const SearchForm = () => {
     const [attributeGroups, setAttributeGroups] = useState('');
     const [isSearchDisabled, setSearchDisabled] = useState(false);
     const userDetailContext = useContext(UserDetailContext);
-    const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData; //TODO
+    const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const pZRContext = useContext(PZRContext);
     const [form] = Form.useForm();
 
-    const handleGetAttributeGroupResponse = (response) => {
-        const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
-        return response.json().then((json) => {
-            if (response.ok) {
-                return {success: true, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
-            }
-            return {
-                success: false,
-                data: json,
-                headers: {[CORRELATION_ID_HEADER]: correlationId},
-                httpStatus: response.status
-            };
-        });
-    };
-    const openNotificationWithIcon = (type, description, title) => {
-        notification[type]({
-            message: title,
-            description,
-        });
-    };
+
     const getAttributeGroupDataFromBff = () => fetch(getBffUrlConfig().priceZoneReassignmentGetItemAttributeUrl, {
         method: 'GET',
         headers: {
@@ -79,7 +82,7 @@ const SearchForm = () => {
                 }
             }
             return null;
-        }).catch((e) => {
+        }).catch(() => {
             if (!auth.shouldFetchUserDetailsAgain(userDetailContext)) {
                 openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
             }
@@ -174,11 +177,11 @@ const SearchForm = () => {
                                     <Radio value={1} onClick={() => {
                                         setCustomerChecked(true);
                                         setCustomerGroupTextBoxValue('');
-                                    }}></Radio>
+                                    }}/>
                                     <Radio value={2} onClick={() => {
                                         setCustomerChecked(false);
                                         setCustomerTextBoxValue('');
-                                    }}></Radio>
+                                    }}/>
                                 </Radio.Group>
                             </div>
                             <Form.Item
@@ -251,9 +254,8 @@ const SearchForm = () => {
                         <Form.Item className="search-btn-wrapper">
                             <button
                                 type="primary"
-                                htmlType="submit"
                                 className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
-                                disabled= {isSearchDisabled}
+                                disabled={isSearchDisabled}
                             >
                                 Search
                             </button>
