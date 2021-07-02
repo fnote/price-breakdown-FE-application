@@ -10,46 +10,48 @@ import {
     AGREEMENT_CODE_P,
     AGREEMENT_CODE_T,
     APPLICATION_LOCALE,
+    AVAILABLE_PRICE_ZONES,
     CURRENCY_SYMBOL_USD,
     DESCRIPTION_CUSTOMER_NET_PRICE,
+    DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
     DESCRIPTION_DISCOUNT_PRICE,
+    DESCRIPTION_EXCEPTION,
     DESCRIPTION_LOCAL_SEGMENT_REF_PRICE,
     DESCRIPTION_ORDER_NET_PRICE,
+    DESCRIPTION_PRICE_RULE,
     DESCRIPTION_ROUNDING,
-    DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
     DESCRIPTION_VOLUME_TIERS,
     DISCOUNT_CASE_VOLUME,
     DISCOUNT_NAMES_MAP,
     DISCOUNT_TYPE_PREQUALIFIED,
     DISCOUNT_TYPE_REF_PRICE,
     EMPTY_ADJUSTMENT_VALUE_INDICATOR,
+    FRACTION_DIGITS_CHANGING_MARGIN_VALUE,
+    NOT_APPLICABLE_LABEL,
+    PERCENTAGE_FRACTION_DIGITS,
+    PERCENTAGE_SIGN,
+    PRICE_FRACTION_DIGITS_THREE,
+    PRICE_FRACTION_DIGITS_TWO,
     PRICE_SOURCE_DISCOUNT_SERVICE,
     PRICE_SOURCE_SUS,
     PRICE_SOURCE_SYSTEM,
     PRICE_UNIT_CASE,
-    PRICE_UNIT_SPLIT,
     PRICE_UNIT_POUND,
+    PRICE_UNIT_SPLIT,
     SPLIT_STATUS_NO,
     SPLIT_STATUS_YES,
+    UNKNOWN_BASE_VALUE_NAME,
     VOLUME_TIER_OPERATOR_BETWEEN,
     VOLUME_TIER_RANGE_CONNECTOR_AND,
-    VOLUME_TIER_RANGE_CONNECTOR_TO,
     VOLUME_TIER_RANGE_CONNECTOR_EMPTY,
+    VOLUME_TIER_RANGE_CONNECTOR_TO,
     VOLUME_TIER_RANGE_END_ABOVE,
     VOLUME_TIER_RANGE_END_EMPTY,
-    PRICE_FRACTION_DIGITS_TWO,
-    PRICE_FRACTION_DIGITS_THREE,
-    PERCENTAGE_FRACTION_DIGITS,
-    DESCRIPTION_EXCEPTION,
-    AVAILABLE_PRICE_ZONES,
-    NOT_APPLICABLE_LABEL,
-    FRACTION_DIGITS_CHANGING_MARGIN_VALUE,
-    DESCRIPTION_PRICE_RULE,
-    PERCENTAGE_SIGN,
-    UNKNOWN_BASE_VALUE_NAME,
 } from '../constants/Constants';
+import React from "react";
+import moment from "moment";
 
-const getFractionDigits = ({ perWeightFlag, useFixedFractionDigits, digits }) => {
+const getFractionDigits = ({perWeightFlag, useFixedFractionDigits, digits}) => {
     if (useFixedFractionDigits) {
         return digits;
     }
@@ -79,7 +81,7 @@ export const getFormattedPercentageValue = (factor) => convertFactorToPercentage
 
 export const getReadableDiscountName = (name) => DISCOUNT_NAMES_MAP.get(name);
 
-export const getPriceUnit = ({ splitFlag, perWeightFlag }) => {
+export const getPriceUnit = ({splitFlag, perWeightFlag}) => {
     if (perWeightFlag) {
         return PRICE_UNIT_POUND;
     }
@@ -87,6 +89,8 @@ export const getPriceUnit = ({ splitFlag, perWeightFlag }) => {
 };
 
 export const generateDateObject = (dateString) => new Date(dateString.slice(0, 4), dateString.slice(4, 6) - 1, dateString.slice(6, 8));
+
+export const generateTimeObject = (timeString) => moment(timeString, ['HHmmss']).format('hh:mm:ss A');
 
 export const generateReadableDate = (dateString) => generateDateObject(dateString)
     .toLocaleDateString(APPLICATION_LOCALE, {
@@ -187,11 +191,31 @@ export const extractSiteInfo = ({ customerAccount, customerName, customerType, b
 
 export const getSplitStatusBySplitFlag = (splitFlag) => (splitFlag === true ? SPLIT_STATUS_YES : SPLIT_STATUS_NO);
 
-export const extractRequestInfo = ({ priceRequestDate, product: { splitFlag, quantity }}) => ({
+export const extractRequestInfo = ({priceRequestDate, product: {splitFlag, quantity}}) => ({
     priceRequestDate: generateReadableDate(priceRequestDate),
     splitStatus: getSplitStatusBySplitFlag(splitFlag),
     quantity
 });
+
+export const extractHistoryInquiryRequestInfo = ({fromDate, toDate, product: {splitFlag}}) => ({
+    fromDate: fromDate === "" ? "" : generateReadableDate(fromDate),
+    toDate: toDate === "" ? "" : generateReadableDate(toDate),
+    splitStatus: getSplitStatusBySplitFlag(splitFlag)
+});
+
+export const extractTransactions = (transactionHistory) => {
+    console.log("here");
+    transactionHistory.map((transaction) => {
+        transaction.transactionDate = generateReadableDate(transaction.transactionDate);
+        const perWeightFlag = transaction.perWeightFlag === SPLIT_STATUS_YES;
+        transaction.unitPrice = formatPrice(transaction.unitPrice, { perWeightFlag });
+        transaction.netPrice = formatPrice(transaction.netPrice, { perWeightFlag });
+        transaction.extendedPrice = formatPrice(transaction.extendedPrice, { perWeightFlag });
+        transaction.createDate = generateReadableDate(transaction.createDate);
+        transaction.createTime = generateTimeObject(transaction.createTime);
+        transaction.createDateTime = `${transaction.createDate} / ${transaction.createTime}`;
+    })
+};
 
 /**
  * Decides whether to use a fixed number of fraction digits for a value

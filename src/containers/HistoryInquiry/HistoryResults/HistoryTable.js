@@ -1,219 +1,74 @@
 import React from "react";
-import { Table } from "antd";
+import {Table} from "antd";
+import {extractTransactions} from "../../../utils/PricingUtils";
+
 
 const columns = [
   {
     title: "Obligation Num",
-    dataIndex: "Obligation_Num",
+    dataIndex: "obligationId",
   },
   {
     title: "Line Num",
-    dataIndex: "Line_Num",
-   
+    dataIndex: "lineNumber",
+
   },
   {
     title: "Transacted Date",
-    dataIndex: "Transacted_Date",
+    dataIndex: "transactionDate",
     defaultSortOrder: "descend",
     sorter: (a, b) => a.Transacted_Date - b.Transacted_Date,
   },
   {
     title: "Shipped qty",
-    dataIndex: "Shipped_Qty",
+    dataIndex: "shippedQuantity",
   },
   {
     title: "Total Catch Weight",
-    dataIndex: "Total_Catch_Weight",
+    dataIndex: "totalCatchWeight",
   },
   {
-    title: "Unit Price/AP cost",
-    dataIndex: "Unit_Price",
+    title: "Unit Price",
+    dataIndex: "unitPrice",
   },
   {
     title: "Net Price",
-    dataIndex: "Net_Price",
-    style:{color:'red !important'}
+    dataIndex: "netPrice",
+    style: {color: 'red !important'}
+  },
+  {
+    title: "Extended Price",
+    dataIndex: "extendedPrice",
+  },
+  {
+    title: "Price source",
+    dataIndex: "priceSourceType",
   },
   {
     title: "Create Date / Time",
-    dataIndex: "Create_Date_Time",
+    dataIndex: ['createDateTime'],
   },
 ];
 
-const data = [
-  {
-    key: "1",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '7 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "2",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '8 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "3",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '10 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "4",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '13 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "5",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '15 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "6",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '20 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "7",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '22 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "8",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '22 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "9",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '22 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "10",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '22 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "11",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '22 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "12",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '22 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "13",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '22 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
-  {
-    key: "14",
-    Obligation_Num: "ON123456",
-    Line_Num:123,
-    Transacted_Date: '22 July 2020' ,
-    Shipped_Qty: 1234,
-    Total_Catch_Weight:'6000kg',
-    Unit_Price:'$ 100.00',
-    Net_Price:'$ 85.00',
-    Create_Date_Time:'06 Jul 2020  11:15 AM'
-  },
- 
-];
-
-export default function HistoryTable() {
+export default function HistoryTable({historyInquiryData: {product: {transactionHistory}}}) {
   function onChange(pagination, filters, sorter, extra) {
     console.log("params", pagination, filters, sorter, extra);
   }
+
+  extractTransactions(transactionHistory);
+
   return (
-    <div className="history-table">
+      <div className="history-table">
         <div className="history-table-header">
-       <div className="history-table-header-wrapper">
-       <i class="icon fi flaticon-pricing-journey history-title-icon"></i>
-      <div className="history-table-title">
-      Recent Transactions
-      </div>
-       </div>
+          <div className="history-table-header-wrapper">
+            <div className="history-table-title">
+              Transaction History
+            </div>
+          </div>
         </div>
-      <Table pagination={{pageSize: 10 }}  
-      columns={columns} dataSource={data} onChange={onChange} />
-    </div>
+        <Table pagination={{pageSize: 10}}
+               rowKey={transactionHistory.obligationId + transactionHistory.lineNumber}
+               columns={columns} dataSource={transactionHistory} onChange={onChange}/>
+      </div>
   );
 }

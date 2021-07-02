@@ -77,6 +77,7 @@ export const PERCENTAGE_FRACTION_DIGITS = 2;
 
 export const AVAILABLE_PRICE_ZONES = [1, 2, 3, 4, 5];
 export const NOT_APPLICABLE_LABEL = 'N/A';
+export const NOT_PROVIDED_LABEL = 'N/P';
 
 export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
 
@@ -89,6 +90,8 @@ export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
 export const NAVIGATION_PATH_FILE_UPLOAD = '/file-upload';
 export const NAVIGATION_PATH_HISTORY_INQUIRY = '/history-inquiry';
 
+export const PRICE_VALIDATION_REQUEST = "price_validation";
+export const HISTORY_INQUIRY_REQUEST = "history_inquiry";
 export const FILE_UPLOADING_DONE = 'done';
 export const FILE_UPLOADING_ERROR = 'error';
 export const FILE_APPEAR_NOTIFICATION = 'Submitted file(s) will appear in the file list shortly!';
