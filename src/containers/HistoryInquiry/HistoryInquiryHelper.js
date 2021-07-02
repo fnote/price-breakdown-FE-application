@@ -2,9 +2,10 @@
 export const setHistoryInquiryInitialValues = (requestContext, bUnitMap) => {
     if (requestContext.isPriceValidationRequest) {
         const {baseRequest: {site, customer, supc, split}} = requestContext.requestData;
-        const businessUnit = bUnitMap.find(site);
+        console.log(site, bUnitMap.get(site));
+        const businessUnit = bUnitMap.get(site);
         return {
-            site: businessUnit,
+            site: `${businessUnit.id} - ${businessUnit.name}`,
             supc: supc,
             customer: customer,
             rangeDate: "",
@@ -15,9 +16,10 @@ export const setHistoryInquiryInitialValues = (requestContext, bUnitMap) => {
             baseRequest: {site, customer, supc, split},
             historyInquiryRequest: {startDate, endDate}
         } = requestContext.requestData;
-        const businessUnit = bUnitMap.find(site);
+        console.log(site, bUnitMap.get(site));
+        const businessUnit = bUnitMap.get(site);
         return {
-            site: businessUnit,
+            site: `${businessUnit.id} - ${businessUnit.name}`,
             customer: customer,
             supc: supc,
             rangeDate: {startDate, endDate},

@@ -204,7 +204,7 @@ export const extractHistoryInquiryRequestInfo = ({fromDate, toDate, product: {sp
 
 export const extractTransactions = (transactionHistory) => {
     console.log("here");
-    return transactionHistory.map((transaction) => {
+    transactionHistory.forEach((transaction) => {
         transaction.transactionDate = generateReadableDate(transaction.transactionDate);
         const perWeightFlag = transaction.perWeightFlag === SPLIT_STATUS_YES;
         transaction.unitPrice = formatPrice(transaction.unitPrice, { perWeightFlag });
