@@ -24,6 +24,7 @@ import AproveRejectButtons from './AproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
 import businessUnitMap from '../../../constants/BusinessUnits';
+import { CIPZErrorMessages } from '../../../constants/Errors';
 
 export default function PriceZoneReview() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -80,15 +81,13 @@ export default function PriceZoneReview() {
         setTotalResultCount(totalRecords);
         setDataStore(updatedDataStore);
       } else {
-        // todo: handle error scenario with a message to user
-        console.log(resp);
+        openNotificationWithIcon('error',
+         CIPZErrorMessages.FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
       }
       setResultLoading(false);
     })
-    .catch((err) => {
-      openNotificationWithIcon('error', 'Failed to fetch', 'Failure');
-      // todo: handle error scenario with a message to user
-      console.log(err);
+    .catch(() => {
+      openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
     })
     .finally(() => {
       setResultLoading(false);
@@ -110,23 +109,27 @@ export default function PriceZoneReview() {
     })
     .then(handleResponse)
     .then((resp) => {
-      console.log(resp);
       if (resp.success) {
         successCallback();
-        console.log(dataStore);
-        console.log(currentPage);
         const updatedDataStore = removeCompletedRequest(dataStore, currentPage, index);
         setDataStore(updatedDataStore);
         setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
       } else {
         failureCallback();
-        // todo: handle error scenario with a message to user
+        if (status === 'APPROVED') {
+          openNotificationWithIcon('error', CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_MESSAGE, CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE);
+        } else if (status === 'REJECTED') {
+          openNotificationWithIcon('error', CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_MESSAGE, CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_TITLE);
+        }
       }
     })
-    .catch((err) => {
+    .catch(() => {
       failureCallback();
-      // todo: handle error scenario with a message to user
-      console.log(err);
+      if (status === 'APPROVED') {
+        openNotificationWithIcon('error', CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_MESSAGE, CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE);
+      } else if (status === 'REJECTED') {
+        openNotificationWithIcon('error', CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_MESSAGE, CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_TITLE);
+      }
     })
     .finally(() => {
       setApproveRejectProgressing(false);

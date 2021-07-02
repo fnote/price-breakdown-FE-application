@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { Table } from 'antd';
+import { Table, notification } from 'antd';
 import CustomPagination from '../../../components/CustomPagination';
 import {
     REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE
@@ -11,6 +11,7 @@ import {
     formatPZReferenceRecord
 } from '../../../utils/PZRUtils';
 import { getBffUrlConfig } from '../../../utils/Configs';
+import { CIPZErrorMessages } from '../../../constants/Errors';
   
 const columns = [
     {
@@ -52,6 +53,13 @@ export default function ReferenceDataTable({
     const [resultLoading, setResultLoading] = useState(false);
     const [totalResultCount, setTotalResultCount] = useState(REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE);
 
+    const openNotificationWithIcon = (type, description, msg) => {
+        notification[type]({
+            message: msg,
+            description,
+        });
+      };
+
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
         if (currentPageData) {
@@ -82,14 +90,13 @@ export default function ReferenceDataTable({
             setTotalResultCount(totalRecords);
             setDataStore(updatedDataStore);
           } else {
-            // todo: handle error scenario with a message to user
-            console.log(resp);
+            openNotificationWithIcon('error',
+            CIPZErrorMessages.FETCH_CIPZ_REFERENCE_TABLE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
           }
           setResultLoading(false);
         })
         .catch((err) => {
-          // todo: handle error scenario with a message to user
-          console.log(err);
+            openNotificationWithIcon('error', CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE, CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED,);
         })
         .finally(() => {
           setResultLoading(false);
