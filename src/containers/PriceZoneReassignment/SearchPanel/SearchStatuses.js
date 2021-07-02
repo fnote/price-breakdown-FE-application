@@ -7,8 +7,7 @@ import {
     PZRSEEDErrorsMap,
     HTTP_INTERNAL_SERVER_ERROR
 } from '../../../constants/Errors';
-import RequestId from '../../../components/RequestId';
-import {RequestIdForEmptyResponse} from '../../../components/RequestId';
+import {PZRRequestId} from '../../../components/RequestId';
 import {PZRContext} from '../PZRContext';
 
 const renderWelcomeMessage = () => (
@@ -49,7 +48,7 @@ const renderError = ({errorCode, message, correlationId}) => (
                 <div className="pz-error-block">
                     Error {errorCode} - {message}
                 </div>
-                <RequestId requestId={correlationId}/>
+                <PZRRequestId requestId={correlationId}/>
             </div>
         </div>
     </div>
@@ -71,7 +70,7 @@ const emptyResponse = (correlationId) => (
                         <li>Make sure entered Customer or Customer Group are valid.</li>
                     </ul>
                 </div>
-                <RequestIdForEmptyResponse requestId={correlationId}/>
+                <PZRRequestId requestId={correlationId}/>
             </div>
         </div>
     </div>

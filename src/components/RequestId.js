@@ -14,7 +14,7 @@ function RequestId(props) {
   );
 }
 
-export function RequestIdForEmptyResponse(props) {
+export function PZRRequestId(props) {
     const { requestId } = props;
     return (
         <div className="pz-request-id">
