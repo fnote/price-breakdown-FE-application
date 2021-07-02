@@ -1,7 +1,7 @@
-import PriceZoneHeader from "./PriceZoneResults/PrizeZoneHeader";
-import PriceZoneTable from "./PriceZoneResults/PriceZoneTable";
-import React, {useContext} from "react";
-import {PZRContext} from "./PZRContext";
+import React, {useContext} from 'react';
+import PriceZoneHeader from './PriceZoneResults/PrizeZoneHeader';
+import PriceZoneTable from './PriceZoneResults/PriceZoneTable';
+import {PZRContext} from './PZRContext';
 
 export default function PzUpdateComponent() {
     const PZRContextData = useContext(PZRContext);
@@ -13,5 +13,5 @@ export default function PzUpdateComponent() {
             <PriceZoneHeader/>
             <PriceZoneTable/>
         </div>
-    )
+    );
 }

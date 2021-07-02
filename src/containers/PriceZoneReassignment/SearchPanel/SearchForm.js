@@ -9,7 +9,7 @@ import {PZRFetchSearchResults} from '../PZRUtils/PZRSearchHandler';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from '../../../constants/Constants';
 
-import {CIPZErrorMessages} from '../../../constants/Errors'
+import {CIPZErrorMessages} from '../../../constants/Errors';
 import {auth} from '../../../utils/security/Auth';
 
 /* eslint-disable no-template-curly-in-string */
@@ -59,7 +59,6 @@ const SearchForm = () => {
     const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const pZRContext = useContext(PZRContext);
     const [form] = Form.useForm();
-
 
     const getAttributeGroupDataFromBff = () => fetch(getBffUrlConfig().priceZoneReassignmentGetItemAttributeUrl, {
         method: 'GET',

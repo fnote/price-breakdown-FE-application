@@ -1,18 +1,11 @@
 import React from 'react';
-import {ExclamationCircleOutlined} from '@ant-design/icons'
+import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {Tooltip} from 'antd';
 
 export default function ReviewSummary({
                                           changeSummary: {
-                                              businessUnit,
-                                              newPriceZone,
-                                              oldPriceZone,
-                                              effectiveFromDate,
-                                              customerGroup,
-                                              customerAccount,
-                                              itemAttributeGroup,
-                                              customerCount,
-                                              supcCount
+                                              businessUnit, newPriceZone, oldPriceZone, effectiveFromDate, customerGroup,
+                                              customerAccount, itemAttributeGroup, customerCount, supcCount
                                           }
                                       }) {
     return (

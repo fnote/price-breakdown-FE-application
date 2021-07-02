@@ -2,10 +2,10 @@ import React, {useContext} from 'react';
 import {Tabs} from 'antd';
 import AppBar from '../../components/AppBar/AppBar';
 import SearchPanel from './SearchPanel/SearchPanel';
-import PZRContextProvider from "./PZRContext";
-import SearchStatuses from "./SearchPanel/SearchStatuses";
+import PZRContextProvider from './PZRContext';
+import SearchStatuses from './SearchPanel/SearchStatuses';
 import PriceZoneReview from './PriceZoneReview/PriceZoneReview';
-import PzUpdateComponent from "./PzUpdateComponent";
+import PzUpdateComponent from './PzUpdateComponent';
 
 import {UserDetailContext} from '../UserDetailContext';
 import {grantViewPermissionsToScreens} from '../../utils/CommonUtils';
@@ -15,7 +15,6 @@ export default function PriceZoneRe() {
     const {TabPane} = Tabs;
     const userDetailContext = useContext(UserDetailContext);
     const cipzUserRole = userDetailContext?.userDetailsData?.userDetails?.cipzRole;
-
 
     return (
         <div className="wrapper cloudpricing-wrapper">

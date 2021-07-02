@@ -29,9 +29,7 @@ export const getAttributeGroups = (attributeGroupsResponse) => {
     return {attributeGroups, attributeGroupMap};
 };
 
-export const calculateOffset = (currentPage, pageSize) => {
-    return (currentPage - 1) * pageSize;
-};
+export const calculateOffset = (currentPage, pageSize) => (currentPage - 1) * pageSize;
 
 export const getBusinessUnits = (businessUnitsMap) => {
     const businessUnitOptions = [];

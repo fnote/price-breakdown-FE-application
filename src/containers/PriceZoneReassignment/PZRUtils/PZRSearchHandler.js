@@ -1,5 +1,5 @@
-import {getBffUrlConfig} from "../../../utils/Configs";
-import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from "../../../constants/Constants";
+import {getBffUrlConfig} from '../../../utils/Configs';
+import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from '../../../constants/Constants';
 
 export const DEFAULT_PAGE_SIZE = 5;
 export const DEFAULT_OFFSET = 0;
@@ -19,8 +19,7 @@ const handleResponse = (response) => {
     });
 };
 
-const formRequestBody = (requestData) => {
-    return JSON.stringify({
+const formRequestBody = (requestData) => JSON.stringify({
         business_unit_number: requestData.opcoId,
         item_attribute_group_id: requestData.attributeGroupId,
         customer_account: requestData.customer ? requestData.customer : null,
@@ -28,10 +27,8 @@ const formRequestBody = (requestData) => {
         offset: requestData.offset ? requestData.offset : DEFAULT_OFFSET,
         limit: requestData.limit ? requestData.limit : DEFAULT_PAGE_SIZE,
     });
-};
 
 export const PZRFetchSearchResults = (requestData, pZRContext) => {
-
     pZRContext.setSearchTableLoading(true);
     fetch(getBffUrlConfig().priceZoneReassignmentSearchUrl, {
         method: 'POST',

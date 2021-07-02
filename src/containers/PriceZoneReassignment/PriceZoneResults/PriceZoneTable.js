@@ -1,8 +1,8 @@
-import React, {useContext, useState} from 'react'
-import {Table} from "antd";
-import moment from "moment";
+import React, {useContext, useState} from 'react';
+import {Table} from 'antd';
+import moment from 'moment';
 
-import {PZRContext} from "../PZRContext";
+import {PZRContext} from '../PZRContext';
 
 import {calculateOffset} from '../PZRUtils/PZRHelper';
 import {DEFAULT_PAGE_SIZE, PZRFetchSearchResults} from '../PZRUtils/PZRSearchHandler';
@@ -12,39 +12,38 @@ const formatDate = (dateStr) => moment(dateStr, 'YYYYMMDD').format('DD MMM YYYY'
 
 const columns = [
     {
-        title: "ITEM(SUPC)",
-        dataIndex: "supc",
+        title: 'ITEM(SUPC)',
+        dataIndex: 'supc',
     },
     {
-        title: "ITEM DESCRIPTION",
-        dataIndex: "product_name",
+        title: 'ITEM DESCRIPTION',
+        dataIndex: 'product_name',
 
     },
     {
-        title: "CUSTOMER",
-        dataIndex: "customer_account",
+        title: 'CUSTOMER',
+        dataIndex: 'customer_account',
 
     },
     {
-        title: "CUSTOMER NAME",
-        dataIndex: "customer_name",
+        title: 'CUSTOMER NAME',
+        dataIndex: 'customer_name',
     },
     {
-        title: "SOURCE ID",
-        dataIndex: "source",
+        title: 'SOURCE ID',
+        dataIndex: 'source',
     },
     {
-        title: "PRICE ZONE",
-        dataIndex: "price_zone",
+        title: 'PRICE ZONE',
+        dataIndex: 'price_zone',
     },
     {
-        title: "EFFECTIVE DATE",
-        dataIndex: "effective_from_date",
+        title: 'EFFECTIVE DATE',
+        dataIndex: 'effective_from_date',
         render: formatDate
     },
 
 ];
-
 
 export default function PriceZoneTable() {
     const PZRContextData = useContext(PZRContext);
@@ -56,7 +55,7 @@ export default function PriceZoneTable() {
         const offset = calculateOffset(page, DEFAULT_PAGE_SIZE);
         PZRFetchSearchResults({
             ...PZRContextData.searchParams,
-            offset: offset,
+            offset,
             limit: DEFAULT_PAGE_SIZE
         }, PZRContextData);
     };
@@ -79,5 +78,5 @@ export default function PriceZoneTable() {
                 disabled={PZRContextData.isSearchTableLoading}
             />
         </div>
-    )
+    );
 }
