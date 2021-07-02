@@ -185,3 +185,18 @@ export const COMPLETED_FILE = 'completed file';
 export const ONLINE_STATUS_CHECK_INTERVAL = 10000;
 export const ONLINE_STATUS_CHECK_URL = '/favicon.ico?d=';
 export const ONLINE_STATUS_OFFLINE_MSG = 'Please check the internet connection!';
+
+// user roles
+export const ROLE_APP_ADMIN = 'appadmin';
+export const ROLE_GENERAL_USER = 'generaluser';
+export const ROLE_CIPZ_REVIEWER = 'cipz_reviewer';
+export const ROLE_CIPZ_SUBMITTER = 'cipz_submitter';
+export const ROLE_CIPZ_SUPPORT = 'cipz_support_user';
+
+// screens
+export const SCREEN_FILE_UPLOAD = 'file_upload_screen';
+export const SCREEN_PRICE_VALIDATION = 'price_validation_screen';
+export const SCREEN_HISTORY_INQUIRY = 'history_inquiry_screen';
+export const SCREEN_CIPZ_REVIEW = 'cipz_reviewer_tab';
+export const SCREEN_CIPZ_PZ_UPDATE = 'cipz_price_zone_update_tab';
+export const SCREEN_CIPZ_REASSIGNMENT = 'cipz_reassignment_tab';

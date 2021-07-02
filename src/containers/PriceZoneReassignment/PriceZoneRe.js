@@ -1,15 +1,21 @@
-import React, {useState} from "react";
-import {Tabs} from "antd";
-import AppBar from "../../components/AppBar/AppBar";
-import SearchPanel from "./SearchPanel/SearchPanel";
-import PzUpdateComponent from "./PzUpdateComponent";
-import PriceZoneReview from "./PriceZoneReview/PriceZoneReview";
+import React, {useContext, useState} from 'react';
+import {Tabs} from 'antd';
+import AppBar from '../../components/AppBar/AppBar';
+import SearchPanel from './SearchPanel/SearchPanel';
 import PZRContextProvider from "./PZRContext";
 import SearchStatuses from "./SearchPanel/SearchStatuses";
+import PriceZoneReview from './PriceZoneReview/PriceZoneReview';
+import PzUpdateComponent from "./PzUpdateComponent";
+
+import {UserDetailContext} from '../UserDetailContext';
+import {grantViewPermissionsToScreens} from '../../utils/CommonUtils';
+import {SCREEN_CIPZ_REVIEW} from '../../constants/Constants';
 
 export default function PriceZoneRe() {
     const {TabPane} = Tabs;
     const [reviewTab, makeReviewActive] = useState(true);
+    const userDetailContext = useContext(UserDetailContext);
+    const cipzUserRole = userDetailContext?.userDetailsData?.userDetails?.cipzRole;
 
 
     return (
@@ -33,7 +39,7 @@ export default function PriceZoneRe() {
                                 <SearchStatuses/>
                                 <PzUpdateComponent/>
                             </TabPane>
-                            {reviewTab && (
+                            {reviewTab && grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_REVIEW) && (
                                 <TabPane
                                     tab={
                                         <div className="pz-maintab-item">
