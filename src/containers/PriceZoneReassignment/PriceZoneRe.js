@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {Tabs} from 'antd';
 import AppBar from '../../components/AppBar/AppBar';
 import SearchPanel from './SearchPanel/SearchPanel';
@@ -13,7 +13,6 @@ import {SCREEN_CIPZ_REVIEW} from '../../constants/Constants';
 
 export default function PriceZoneRe() {
     const {TabPane} = Tabs;
-    const [reviewTab, makeReviewActive] = useState(true);
     const userDetailContext = useContext(UserDetailContext);
     const cipzUserRole = userDetailContext?.userDetailsData?.userDetails?.cipzRole;
 
@@ -39,7 +38,7 @@ export default function PriceZoneRe() {
                                 <SearchStatuses/>
                                 <PzUpdateComponent/>
                             </TabPane>
-                            {reviewTab && grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_REVIEW) && (
+                            {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_REVIEW) && (
                                 <TabPane
                                     tab={
                                         <div className="pz-maintab-item">

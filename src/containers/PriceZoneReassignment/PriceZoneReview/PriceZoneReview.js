@@ -19,7 +19,7 @@ import {
 import { PZRContext } from '../PZRContext';
 import { UserDetailContext } from '../../UserDetailContext';
 import ReviewSubmitter from './ReviewSubmitter';
-import ReviewSummery from './ReviewSummery';
+import ReviewSummary from './ReviewSummary';
 import AproveRejectButtons from './AproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
@@ -185,7 +185,7 @@ export default function PriceZoneReview() {
             toggle();
           }}
         >
-          <ReviewSummery changeSummary={changeSummary} />
+          <ReviewSummary changeSummary={changeSummary} />
         </Space>
       ),
     },
@@ -250,7 +250,7 @@ export default function PriceZoneReview() {
         onChange={(current) => {
           if (!resultLoading) {
             setCurrentPage(current);
-            const updatedDataStore = cleanInvalidData(current);
+            const updatedDataStore = cleanInvalidData();
             loadTableData(current, updatedDataStore);
           }
         }}

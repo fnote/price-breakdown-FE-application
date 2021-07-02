@@ -42,17 +42,6 @@ export const createBusinessUnitMap = ({ authorizedPricingTransformationEnabledBu
     return new Map();
 };
 
-export const createBusinessUnitMapForPZR = ({ allActiveOpcos }) => {
-    if (allActiveOpcos && allActiveOpcos instanceof Array) {
-        const mappedAllowedBusinessUnits = allActiveOpcos.map(({ bunit_id, bunit_name }) => [
-            bunit_id, mapBusinessUnit({ bunit_id, bunit_name })
-        ]);
-        return new Map(mappedAllowedBusinessUnits);
-    }
-
-    return new Map();
-};
-
 export const formatBusinessUnit = (businessUnitId, businessUnits) => {
     const businessUnit = businessUnits.get(businessUnitId);
     return (businessUnit) ? `${businessUnit.id} - ${businessUnit.name}` : businessUnitId;
@@ -91,7 +80,8 @@ export const checkOnlineStatus = async () => {
 
 export const grantViewPermissionsToScreens = (role, screen) => {
     // eslint-disable-next-line no-sequences,default-case
-    if ((role === ROLE_APP_ADMIN || role === ROLE_GENERAL_USER) && (screen === SCREEN_PRICE_VALIDATION || screen === SCREEN_FILE_UPLOAD || screen === SCREEN_HISTORY_INQUIRY)) {
+    if ((role === ROLE_APP_ADMIN || role === ROLE_GENERAL_USER) && (screen === SCREEN_PRICE_VALIDATION
+        || screen === SCREEN_FILE_UPLOAD || screen === SCREEN_HISTORY_INQUIRY)) {
         return true;
     }
     if ((role === ROLE_APP_ADMIN || role === ROLE_GENERAL_USER) && (screen === SCREEN_CIPZ_REASSIGNMENT)) {
@@ -100,7 +90,8 @@ export const grantViewPermissionsToScreens = (role, screen) => {
     if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUBMITTER || role === ROLE_CIPZ_SUPPORT) && (screen === SCREEN_CIPZ_REASSIGNMENT)) {
         return true;
     }
-    if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUBMITTER) && (screen === SCREEN_PRICE_VALIDATION || screen === SCREEN_FILE_UPLOAD || screen === SCREEN_HISTORY_INQUIRY)) {
+    if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUBMITTER) && (screen === SCREEN_PRICE_VALIDATION
+        || screen === SCREEN_FILE_UPLOAD || screen === SCREEN_HISTORY_INQUIRY)) {
         return false;
     }
     if (role === ROLE_CIPZ_SUBMITTER && screen === SCREEN_CIPZ_REVIEW) {
@@ -112,10 +103,7 @@ export const grantViewPermissionsToScreens = (role, screen) => {
     if (role === '') {
         return false;
     }
-    if (role === ROLE_CIPZ_SUPPORT && (screen === SCREEN_CIPZ_REASSIGNMENT || screen === SCREEN_CIPZ_REVIEW)) {
-        return true;
-    }
-        return false;
+    return role === ROLE_CIPZ_SUPPORT && (screen === SCREEN_CIPZ_REASSIGNMENT || screen === SCREEN_CIPZ_REVIEW);
 };
 
 /**

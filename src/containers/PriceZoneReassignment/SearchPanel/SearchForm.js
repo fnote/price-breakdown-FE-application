@@ -34,7 +34,7 @@ const SearchForm = () => {
     const [attributeGroups, setAttributeGroups] = useState('');
     const [isSearchDisabled, setSearchDisabled] = useState(false);
     const userDetailContext = useContext(UserDetailContext);
-    const {userDetails: {allowedBussinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
+    const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData; //TODO
     const pZRContext = useContext(PZRContext);
     const [form] = Form.useForm();
 
@@ -164,7 +164,7 @@ const SearchForm = () => {
                                 }}
                                 showSearch
                             >
-                                {getBusinessUnits(allowedBussinessUnitMap)}
+                                {getBusinessUnits(activeBusinessUnitMap)}
                             </Select>
                         </Form.Item>
                         <div className="pz-customer-groupbox">

@@ -14,7 +14,7 @@ function PricingResults() {
     const { userDetails } = userDetailContext.userDetailsData;
 
     if (response) {
-        const { correlationId } = priceValidationContext.response;    
+        const { correlationId } = priceValidationContext.response;
         return (
             <div className="pricing-results">
                 <div className="section-wrapper">

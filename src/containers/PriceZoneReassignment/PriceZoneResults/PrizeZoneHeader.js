@@ -15,7 +15,7 @@ import {ReactComponent as Loader} from "../../../styles/images/priceZone_loader.
 import {CIPZErrorMessages, CIPZErrorsMap} from '../../../constants/Errors';
 
 export default function PrizeZoneHeader() {
-    const {on, Modal, toggle} = useModal();
+    const {Modal, toggle} = useModal();
     // on is the modal status =>  on || off
 
     const {TextArea} = Input;

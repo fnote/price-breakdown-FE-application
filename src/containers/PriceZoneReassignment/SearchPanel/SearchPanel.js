@@ -13,7 +13,6 @@ const SearchPanel = () => {
       >
       <SearchForm />
       <div className="mobile-toggler" onClick={mobilePanelToggle}><CaretRightOutlined /></div>
-      {/* <RecentSearches /> */}
     </div>
   );
 };
