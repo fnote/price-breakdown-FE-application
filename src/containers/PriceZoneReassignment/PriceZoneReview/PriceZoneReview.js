@@ -95,7 +95,7 @@ export default function PriceZoneReview() {
     });
   };
 
-  const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }) => {    
+  const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }, { successCallback, failureCallback }) => {    
     setApproveRejectProgressing(true);
     const payload = constructPatchPayload({ id }, { reviewNote, status }, reviewer);
     const requestUrl = getBffUrlConfig().pzUpdateRequests;
@@ -112,16 +112,19 @@ export default function PriceZoneReview() {
     .then((resp) => {
       console.log(resp);
       if (resp.success) {
+        successCallback();
         console.log(dataStore);
         console.log(currentPage);
         const updatedDataStore = removeCompletedRequest(dataStore, currentPage, index);
         setDataStore(updatedDataStore);
         setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
       } else {
+        failureCallback();
         // todo: handle error scenario with a message to user
       }
     })
     .catch((err) => {
+      failureCallback();
       // todo: handle error scenario with a message to user
       console.log(err);
     })
