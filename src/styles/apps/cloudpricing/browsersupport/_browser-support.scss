@@ -73,6 +73,10 @@
     min-width: 20%;
     text-align: center;
     margin-top: 3.09rem;
+    #browsersupport-list-item {
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   #browsersupport-browsername {

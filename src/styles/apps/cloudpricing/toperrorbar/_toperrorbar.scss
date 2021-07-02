@@ -6,6 +6,15 @@
   opacity: 0.8;
   @include flexbox(0 0 auto, row, space-between, center);
 
+  &.status-red {
+    background: $syscored;
+    #error-bar-msg {
+      color:$textalternative !important;
+    }
+    #error-bar-right .anticon-close-circle svg{
+      fill: white;
+    }
+  }
   #error-bar-left {
     @include flexbox(0 0 auto, row, flex-start, center);
     height: 100%;
@@ -48,5 +57,9 @@
     height: 100%;
     margin-right: 1.5rem;
     cursor: pointer;
+    #close-circle {
+      font-size: 1.6rem;
+      color: $top-error-bar-close-circle-outline;
+    }
   }
 }

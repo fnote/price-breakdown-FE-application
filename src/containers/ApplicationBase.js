@@ -10,21 +10,27 @@ import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
 import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION , NAVIGATION_PATH_HISTORY_INQUIRY} from '../constants/Constants';
+import {
+    NAVIGATION_PATH_FILE_UPLOAD,
+    NAVIGATION_PATH_PRICE_VALIDATION,
+    SUPPORTED_WEB_BROWSERS
+} from '../constants/Constants';
 
-import UnsupportedBrowser from "../components/UnsupportedBrowser";
-import BrowserDetector from "../utils/BrowserDetector";
-import {SUPPORTED_WEB_BROWSERS} from '../constants/Constants'
-import ToperrorBar from "../components/ToperrorBar"
+import {unsupportedBrowserState} from '../utils/CommonUtils';
+import UnsupportedBrowserScreen from '../components/UnsupportedBrowser/UnsupportedBrowserScreen';
+import BrowserDetector from '../utils/BrowserDetector';
+import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
+import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/UnsupportedBrowserTopAlert';
 
 const Application = () => (
     <Switch>
-        <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
+        <Route path={NAVIGATION_PATH_FILE_UPLOAD}>
             <FileUpload/>
         </Route>
-        <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
+        <Route path={NAVIGATION_PATH_PRICE_VALIDATION}>
             <PriceValidation/>
         </Route>
-        <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
+        <Route path={NAVIGATION_PATH_HISTORY_INQUIRY}>
             <HistoryInquiry/>
         </Route>
     </Switch>
@@ -61,10 +67,8 @@ export default function ApplicationBase() {
 
     let component;
 
-    
-    
-    if(!browserDetector.isSupported()){
-        component =  <UnsupportedBrowser
+    if (!browserDetector.isSupported() && !unsupportedBrowserState.isSetUnsupportedBrowserScreenContinue()) {
+        component = <UnsupportedBrowserScreen
             browserName={browserDetector.getBrowserName()}
             browserVersion={browserDetector.getBrowserVersion()}
             fullBrowserVersion={browserDetector.getFullBrowserVersion()}/>;
@@ -75,9 +79,9 @@ export default function ApplicationBase() {
     }
 
     return (
-
         <React.Fragment>
-            {/* <ToperrorBar msg="Your browser isn't supported"  buttonText="Learn More" close/> */}
+            <NetworkConnectivityAlert/>
+            <UnsupportedBrowserTopAlert/>
             {component}
         </React.Fragment>
     );

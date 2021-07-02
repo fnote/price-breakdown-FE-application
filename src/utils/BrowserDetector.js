@@ -2,7 +2,7 @@ import {
     browserName,
     browserVersion,
     fullBrowserVersion
-} from "react-device-detect";
+} from 'react-device-detect';
 
 /**
  * BrowserDetector
@@ -26,8 +26,8 @@ export default class BrowserDetector {
         this.browser = {
             name: browserName,
             version: browserVersion,
-            fullBrowserVersion: fullBrowserVersion
-        }
+            fullBrowserVersion
+        };
         this.supportedBrowsers = supportedBrowsers;
     }
 
@@ -35,7 +35,7 @@ export default class BrowserDetector {
      * The Browser name
      * @returns {string}
      */
-    getBrowserName(){
+    getBrowserName() {
         return this.browser.name;
     }
 
@@ -43,7 +43,7 @@ export default class BrowserDetector {
      * The Browser main version number
      * @returns {string}
      */
-    getBrowserVersion(){
+    getBrowserVersion() {
         return this.browser.version;
     }
 
@@ -51,7 +51,7 @@ export default class BrowserDetector {
      * The Full Browser bersion number
      * @returns {string}
      */
-    getFullBrowserVersion(){
+    getFullBrowserVersion() {
         return this.browser.fullBrowserVersion;
     }
 
@@ -70,49 +70,10 @@ export default class BrowserDetector {
     }
 
     /**
-     * Checks if the current browser is from an Android device.
-     *
-     * @returns {Boolean}
+     * Sets the current browser information. Used for unit testing.
+     * @param browser
      */
-    get isAndroid() {
-        return /Android/i.test(navigator.userAgent);
-    }
-
-    /**
-     * Checks if the current browser is from a BlackBerry device.
-     *
-     * @returns {Boolean}
-     */
-    get isBlackBerry() {
-        return /BlackBerry/i.test(navigator.userAgent);
-    }
-
-    /**
-     * Checks if the current browser is from a Windows Mobile device.
-     *
-     * @returns {Boolean}
-     */
-    get isWindowsMobile() {
-        return /IEMobile/i.test(navigator.userAgent);
-    }
-
-    /**
-     * Checks if the current browser is Mobile Safari.
-     *
-     * @returns {Boolean}
-     */
-    get isIOS() {
-        return /iPhone|iPad|iPod/i.test(navigator.userAgent);
-    }
-
-    /**
-     * Checks if the current browser is a mobile browser.
-     *
-     * @returns {Boolean}
-     */
-    get isMobile() {
-        return (
-            this.isAndroid || this.isBlackBerry || this.isWindowsMobile || this.isIOS
-        );
+    setBrowser(browser) {
+        this.browser = browser;
     }
 }
