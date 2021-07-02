@@ -31,5 +31,8 @@ export const getBffUrlConfig = () => {
     // Pricing apis
     CONFIG.priceDataEndpoint = `${CONFIG.bffBaseUrl}pricing/pricing-data`;
 
+    // history inquiry apis
+    CONFIG.historyInquiryEndpoint = `${CONFIG.bffBaseUrl}pricing/transaction-history`;
+
     return CONFIG;
 };
