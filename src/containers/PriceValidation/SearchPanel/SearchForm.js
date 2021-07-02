@@ -58,7 +58,7 @@ const SearchForm = () => {
     const requestContext = useContext(RequestContext);
     const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
     const bUnitMap = getBusinessUnits(businessUnitMap);
-    const initialValues = setInitialValues(requestContext, businessUnitMap);
+    const initialValues = setInitialValues(requestContext);
   const handleResponse = (response) => {
     const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
     return response.json().then((json) => {

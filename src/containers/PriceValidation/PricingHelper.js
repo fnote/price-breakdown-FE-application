@@ -17,12 +17,10 @@ export const getBusinessUnits = (businessUnitsMap) => {
     return businessUnitOptions;
 };
 
-export const setInitialValues = (requestContext, bUnitMap) => {
+export const setInitialValues = (requestContext) => {
 
     if (requestContext.isPriceValidationRequest) {
         const {baseRequest: {site, customer, supc, split}, priceValidationRequest: {quantity, date, handPrice}} = requestContext.requestData;
-        console.log(site, bUnitMap.get(site));
-        const businessUnit = bUnitMap.get(site);
         return {
             site: site,
             supc: supc,
@@ -34,8 +32,6 @@ export const setInitialValues = (requestContext, bUnitMap) => {
         }
     } else if (requestContext.isHistoryInquiryRequest) {
         const {baseRequest: {site, customer, supc, split}} = requestContext.requestData;
-        console.log(site, bUnitMap.get(site));
-        const businessUnit = bUnitMap.get(site);
         return {
             site: site,
             customer: customer,
