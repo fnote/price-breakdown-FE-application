@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { Table, Space, Spin, notification, Popconfirm } from 'antd';
+import { Table, Space, Spin, notification } from 'antd';
 import useModal from '../../../hooks/useModal';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
