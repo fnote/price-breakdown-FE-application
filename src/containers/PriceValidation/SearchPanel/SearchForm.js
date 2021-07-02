@@ -56,9 +56,9 @@ const SearchForm = () => {
     const priceValidationContext = useContext(PriceValidationContext);
     const userDetailContext = useContext(UserDetailContext);
     const requestContext = useContext(RequestContext);
-    const initialValues = setInitialValues(requestContext);
     const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
-
+    const bUnitMap = getBusinessUnits(businessUnitMap);
+    const initialValues = setInitialValues(requestContext, bUnitMap);
   const handleResponse = (response) => {
     const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
     return response.json().then((json) => {
@@ -162,7 +162,7 @@ const SearchForm = () => {
               }}
               showSearch
             >
-              {getBusinessUnits(businessUnitMap)}
+              {bUnitMap}
             </Select>
           </Form.Item>
           <Form.Item

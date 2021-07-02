@@ -1,8 +1,10 @@
 import React from "react";
 import { NOT_PROVIDED_LABEL } from '../../../constants/Constants';
+import {formatBusinessUnit} from "../../../utils/CommonUtils";
 
 export default function HistoryBar(props) {
-    const {historyInquiryData: {historyRequest, item, site}} = props;
+    const {historyInquiryData: {historyRequest, item, site} , userData: { businessUnitMap }} = props;
+    const businessUnit = formatBusinessUnit(site.businessUnitNumber, businessUnitMap);
     return (
         <div className="history-bar-wrapper">
 
@@ -50,7 +52,7 @@ export default function HistoryBar(props) {
       <div className="history-column">
       <div className="history-column-wrapper">
           <div className="history-item history-item-title">OPCO</div>
-          <div className="history-item history-item-number-row2">{site.businessUnitNumber}</div>
+          <div className="history-item history-item-number-row2">{businessUnit}</div>
         
           <div className="history-item history-row-2">
               <div className="history-row-item">
