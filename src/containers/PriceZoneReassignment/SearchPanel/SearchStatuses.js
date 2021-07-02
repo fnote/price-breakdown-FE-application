@@ -7,7 +7,7 @@ import {
     PZRSEEDErrorsMap,
     HTTP_INTERNAL_SERVER_ERROR
 } from '../../../constants/Errors';
-import RequestId from '../../../components/RequestId';
+import {PZRRequestId} from '../../../components/RequestId';
 import {PZRContext} from '../PZRContext';
 
 const renderWelcomeMessage = () => (
@@ -48,7 +48,7 @@ const renderError = ({errorCode, message, correlationId}) => (
                 <div className="pz-error-block">
                     Error {errorCode} - {message}
                 </div>
-                <RequestId requestId={correlationId}/>
+                <PZRRequestId requestId={correlationId}/>
             </div>
         </div>
     </div>
@@ -66,11 +66,11 @@ const emptyResponse = (correlationId) => (
                 </div>
                 <div className="pz-search-suggestion-list">
                     <ul>
-                        <li>Make sure right OpCo is selected.</li>
+                        <li>Make sure correct OpCo is selected.</li>
                         <li>Make sure entered Customer or Customer Group are valid.</li>
                     </ul>
                 </div>
-                <RequestId requestId={correlationId}/>
+                <PZRRequestId requestId={correlationId}/>
             </div>
         </div>
     </div>
@@ -103,11 +103,8 @@ const SearchStatuses = () => {
         });
     };
 
-   
-
     if (PZRContextData.isSearchLoading) {
         return renderLoader();
-        
     }
 
     if (PZRContextData.searchError) {
