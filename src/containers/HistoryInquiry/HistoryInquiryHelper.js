@@ -1,4 +1,3 @@
-import React from 'react';
 
 export const setHistoryInquiryInitialValues = (requestContext, bUnitMap) => {
     if (requestContext.isPriceValidationRequest) {

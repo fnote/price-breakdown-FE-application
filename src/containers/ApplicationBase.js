@@ -24,13 +24,13 @@ import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/Unsuppo
 
 const Application = () => (
     <Switch>
-        <Route path={NAVIGATION_PATH_FILE_UPLOAD}>
+        <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
             <FileUpload/>
         </Route>
-        <Route path={NAVIGATION_PATH_PRICE_VALIDATION}>
+        <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
             <PriceValidation/>
         </Route>
-        <Route path={NAVIGATION_PATH_HISTORY_INQUIRY}>
+        <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
             <HistoryInquiry/>
         </Route>
     </Switch>

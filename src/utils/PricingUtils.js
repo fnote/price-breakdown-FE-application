@@ -48,7 +48,6 @@ import {
     VOLUME_TIER_RANGE_END_ABOVE,
     VOLUME_TIER_RANGE_END_EMPTY,
 } from '../constants/Constants';
-import React from "react";
 import moment from "moment";
 
 const getFractionDigits = ({perWeightFlag, useFixedFractionDigits, digits}) => {
@@ -205,7 +204,7 @@ export const extractHistoryInquiryRequestInfo = ({fromDate, toDate, product: {sp
 
 export const extractTransactions = (transactionHistory) => {
     console.log("here");
-    transactionHistory.map((transaction) => {
+    return transactionHistory.map((transaction) => {
         transaction.transactionDate = generateReadableDate(transaction.transactionDate);
         const perWeightFlag = transaction.perWeightFlag === SPLIT_STATUS_YES;
         transaction.unitPrice = formatPrice(transaction.unitPrice, { perWeightFlag });
