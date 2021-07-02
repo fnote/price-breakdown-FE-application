@@ -1,11 +1,11 @@
 import React from 'react';
 
 export const setHistoryInquiryInitialValues = (requestContext, bUnitMap) => {
-    console.log(bUnitMap);
     if (requestContext.isPriceValidationRequest) {
         const {baseRequest: {site, customer, supc, split}} = requestContext.requestData;
+        const businessUnit = bUnitMap.get(site);
         return {
-            site: bUnitMap.get(site),
+            site: businessUnit.id - businessUnit.shortName,
             supc: supc,
             customer: customer,
             rangeDate: "",
@@ -16,8 +16,9 @@ export const setHistoryInquiryInitialValues = (requestContext, bUnitMap) => {
             baseRequest: {site, customer, supc, split},
             historyInquiryRequest: {startDate, endDate}
         } = requestContext.requestData;
+        const businessUnit = bUnitMap.get(site);
         return {
-            site: bUnitMap.get(site),
+            site: businessUnit.id - businessUnit.shortName,
             customer: customer,
             supc: supc,
             rangeDate: {startDate, endDate},
