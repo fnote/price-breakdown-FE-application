@@ -24,7 +24,7 @@ export const setInitialValues = (requestContext, bUnitMap) => {
         console.log(site, bUnitMap.get(site));
         const businessUnit = bUnitMap.get(site);
         return {
-            site: `${businessUnit.id} - ${businessUnit.name}`,
+            site: `${businessUnit.id} - ${businessUnit.shortName}`,
             supc: supc,
             customer: customer,
             quantity: quantity,
@@ -37,7 +37,7 @@ export const setInitialValues = (requestContext, bUnitMap) => {
         console.log(site, bUnitMap.get(site));
         const businessUnit = bUnitMap.get(site);
         return {
-            site: `${businessUnit.id} - ${businessUnit.name}`,
+            site: `${businessUnit.id} - ${businessUnit.shortName}`,
             customer: customer,
             supc: supc,
             split: split,

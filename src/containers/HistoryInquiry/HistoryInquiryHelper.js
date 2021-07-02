@@ -5,7 +5,7 @@ export const setHistoryInquiryInitialValues = (requestContext, bUnitMap) => {
         console.log(site, bUnitMap.get(site));
         const businessUnit = bUnitMap.get(site);
         return {
-            site: `${businessUnit.id} - ${businessUnit.name}`,
+            site: `${businessUnit.id} - ${businessUnit.shortName}`,
             supc: supc,
             customer: customer,
             rangeDate: "",
@@ -19,7 +19,7 @@ export const setHistoryInquiryInitialValues = (requestContext, bUnitMap) => {
         console.log(site, bUnitMap.get(site));
         const businessUnit = bUnitMap.get(site);
         return {
-            site: `${businessUnit.id} - ${businessUnit.name}`,
+            site: `${businessUnit.id} - ${businessUnit.shortName}`,
             customer: customer,
             supc: supc,
             rangeDate: {startDate, endDate},
