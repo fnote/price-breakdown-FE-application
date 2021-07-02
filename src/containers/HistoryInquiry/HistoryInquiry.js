@@ -3,7 +3,7 @@ import AppBar from '../../components/AppBar/AppBar'
 import SearchPanel from './SearchPanel/SearchPanel'
 import SearchStatuses from './SearchPanel/SearchStatuses'
 import HistoryInquiryContextProvider from "./HistoryInquiryContext";
-import HistoryInquiryResults from "./HistoryResults/HistoryResults";
+import HistoryInquiryResults from "./HistoryResults/HistoryInquiryResults";
 
 
 export default function HistoryInquiry() {

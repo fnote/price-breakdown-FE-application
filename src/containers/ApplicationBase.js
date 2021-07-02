@@ -9,10 +9,10 @@ import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
-import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION , NAVIGATION_PATH_HISTORY_INQUIRY} from '../constants/Constants';
 import {
     NAVIGATION_PATH_FILE_UPLOAD,
     NAVIGATION_PATH_PRICE_VALIDATION,
+    NAVIGATION_PATH_HISTORY_INQUIRY,
     SUPPORTED_WEB_BROWSERS
 } from '../constants/Constants';
 
