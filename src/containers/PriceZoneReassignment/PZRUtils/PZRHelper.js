@@ -18,13 +18,15 @@ export const getPriceZoneOptions = () => {
 
 export const getAttributeGroups = (attributeGroupsResponse) => {
     const attributeGroups = [];
+    const attributeGroupMap = new Map();
     attributeGroupsResponse.forEach(((attributeGroup) => {
         attributeGroups.push(
             <Option key={attributeGroup.id}
-                    value={`${attributeGroup.id}-${attributeGroup.name}`}>{attributeGroup.name}</Option>
+                    value={`${attributeGroup.id}`}>{attributeGroup.name}</Option>
         );
+        attributeGroupMap.set(attributeGroup.id, attributeGroup.name);
     }));
-    return attributeGroups;
+    return {attributeGroups, attributeGroupMap};
 };
 
 export const calculateOffset = (currentPage, pageSize) => {
