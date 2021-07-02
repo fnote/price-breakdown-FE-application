@@ -186,3 +186,5 @@ export const COMPLETED_FILE = 'completed file';
 export const ONLINE_STATUS_CHECK_INTERVAL = 10000;
 export const ONLINE_STATUS_CHECK_URL = '/favicon.ico?d=';
 export const ONLINE_STATUS_OFFLINE_MSG = 'Please check the internet connection!';
+
+export const APPROVED = 'APPROVED';

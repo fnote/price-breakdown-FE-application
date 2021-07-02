@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { Table, Space, Spin, notification } from 'antd';
+import { Table, Space, Spin, notification, Popconfirm } from 'antd';
 import useModal from '../../../hooks/useModal';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
@@ -24,7 +24,8 @@ import AproveRejectButtons from './AproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
 import businessUnitMap from '../../../constants/BusinessUnits';
-import { CIPZErrorMessages } from '../../../constants/Errors';
+import { CIPZErrorMessages, ErrorCodes } from '../../../constants/Errors';
+import { APPROVED } from '../../../constants/Constants';
 
 export default function PriceZoneReview() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -116,20 +117,22 @@ export default function PriceZoneReview() {
         setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
       } else {
         failureCallback();
-        if (status === 'APPROVED') {
-          openNotificationWithIcon('error', CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_MESSAGE, CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE);
-        } else if (status === 'REJECTED') {
-          openNotificationWithIcon('error', CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_MESSAGE, CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_TITLE);
+        const errorResponseData = resp.data;
+        if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_ALREADY_APPROVED_OR_REJECTED) {
+          // Change this to  popup
+          openNotificationWithIcon('error', 'this change is already reviewed by another manager', 'This change is already reviewed by another manager');
+        } else {
+          const errorTitle = status === APPROVED ? CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE : CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_TITLE;
+          const errorMessage = status === APPROVED ? CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_MESSAGE : CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE;
+          openNotificationWithIcon('error', errorMessage, errorTitle);
         }
       }
     })
     .catch(() => {
       failureCallback();
-      if (status === 'APPROVED') {
-        openNotificationWithIcon('error', CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_MESSAGE, CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE);
-      } else if (status === 'REJECTED') {
-        openNotificationWithIcon('error', CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_MESSAGE, CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_TITLE);
-      }
+      const errorTitle = status === APPROVED ? CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE : CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_TITLE;
+      const errorMessage = status === APPROVED ? CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_MESSAGE : CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE;
+      openNotificationWithIcon('error', errorMessage, errorTitle);
     })
     .finally(() => {
       setApproveRejectProgressing(false);
