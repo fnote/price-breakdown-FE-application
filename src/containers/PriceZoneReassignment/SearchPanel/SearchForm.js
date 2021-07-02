@@ -10,6 +10,7 @@ import {getBffUrlConfig} from '../../../utils/Configs';
 import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from '../../../constants/Constants';
 
 import {CIPZErrorMessages} from '../../../constants/Errors'
+import {auth} from '../../../utils/security/Auth';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -73,11 +74,15 @@ const SearchForm = () => {
                 setSearchDisabled(false);
             } else {
                 setSearchDisabled(true);
-                openNotificationWithIcon('error', CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+                if (!auth.shouldFetchUserDetailsAgain(userDetailContext)) { // Check this is correct after auth is working
+                    openNotificationWithIcon('error', CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+                }
             }
             return null;
         }).catch((e) => {
-            openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+            if (!auth.shouldFetchUserDetailsAgain(userDetailContext)) {
+                openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+            }
         });
 
     const handleChangeCustomer = (event) => {
@@ -100,14 +105,14 @@ const SearchForm = () => {
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;
         const opcoId = ((values.opco).split('-'))[0];
-        const attributeGroupDetails = (values.attributeGroup).split('-');
+        const attributeGroupMap = attributeGroups.attributeGroupMap;
         const searchParams = {
             site: values.opco,
             opcoId,
-            attributeGroupId: attributeGroupDetails[0],
+            attributeGroupId: values.attributeGroup,
             customer: customer ? values.customer : null,
             customerGroup: customerGroup ? values.customerGroup : null,
-            attributeGroup: attributeGroupDetails[1]
+            attributeGroup: attributeGroupMap.get(Number(values.attributeGroup)),
         };
         pZRContext.setSearchLoading(true);
         pZRContext.setSearchParams(searchParams);
@@ -240,14 +245,14 @@ const SearchForm = () => {
                                 }
                                 showSearch
                             >
-                                {attributeGroups}
+                                {attributeGroups.attributeGroups}
                             </Select>
                         </Form.Item>
                         <Form.Item className="search-btn-wrapper">
                             <button
                                 type="primary"
                                 htmlType="submit"
-                                className="search-btn outlined-btn"
+                                className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
                                 disabled= {isSearchDisabled}
                             >
                                 Search
