@@ -4,7 +4,6 @@ import {ReactComponent as Warning} from '../../../styles/images/warning.svg';
 import {ReactComponent as Success} from '../../../styles/images/success.svg';
 import {ReactComponent as Loader} from '../../../styles/images/priceZone_loader.svg';
 
-// const {Modal, toggle} = useModal();
 export const submitReasonModal = 'submit-reason';
 const {TextArea} = Input;
 
