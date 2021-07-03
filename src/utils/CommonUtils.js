@@ -110,26 +110,25 @@ export const grantViewPermissionsToScreens = (role, screen) => {
  * Class to manipulate Unsupported browser alert states.
  */
 class UnsupportedBrowserState {
-
     setUnsupportedBrowserScreenContinue = () => {
         localStorage.setItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE, 'true');
-    }
+    };
 
-    isSetUnsupportedBrowserScreenContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE) !== null
+    isSetUnsupportedBrowserScreenContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE) !== null;
 
     clearUnsupportedBrowserScreenContinue = () => {
         localStorage.removeItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE);
-    }
+    };
 
     setUnsupportedBrowserAlertContinue = () => {
         localStorage.setItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE, 'true');
-    }
+    };
 
-    isSetUnsupportedBrowserAlertContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE) !== null
+    isSetUnsupportedBrowserAlertContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE) !== null;
 
     clearUnsupportedBrowserAlertContinue = () => {
         localStorage.removeItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE);
-    }
+    };
 
     /**
      * clear all the states

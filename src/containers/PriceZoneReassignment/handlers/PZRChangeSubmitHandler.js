@@ -38,10 +38,10 @@ const formRequestBody = ({PZRContextData, userDetailContext, submissionReasonInp
         effectiveFromDate: effectiveDate,
         submissionNote: submissionReasonInput?.current?.state?.value || '',
         submitter: {
-            id: userDetailsObj.username || 'abc',
-            givenName: userDetailsObj.firstName || 'aa',
-            surname: userDetailsObj.lastName || 'sss',
-            email: userDetailsObj.email || 'asa@lala.com'
+            id: userDetailsObj.username,
+            givenName: userDetailsObj.firstName,
+            surname: userDetailsObj.lastName,
+            email: userDetailsObj.email
         }
     });
 };
@@ -62,7 +62,7 @@ export const submitPriceZoneChangeRequest = ({setSubmitModal, setReferenceId, re
                 setSubmitModal('success-modal');
             } else {
                 handleError(resp);
-                setSubmitModal(submitReasonModal);
+                setSubmitModal(false);
             }
             return null;
         })

@@ -74,8 +74,15 @@ const SearchForm = () => {
         fetchSearchResults(searchParams, pZRContext);
     };
 
+    const getAttributeGroupsFromSeed = () => fetchAttributeGroups({
+        pZRContext,
+        userDetailContext,
+        setAttributeGroups,
+        setSearchDisabled
+    });
+
     useEffect(() => {
-        fetchAttributeGroups({pZRContext, userDetailContext, setAttributeGroups, setSearchDisabled});
+        getAttributeGroupsFromSeed();
     }, []);
 
     return (
