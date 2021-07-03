@@ -103,11 +103,7 @@ const SearchForm = () => {
                             name="opco"
                             label="OpCo"
                             className="pz-linebreak pz-linebreak-item-group"
-                            rules={[
-                                {
-                                    required: true,
-                                },
-                            ]}
+                            rules={[{required: true}]}
                         >
                             <Select
                                 placeholder="Select Site"
@@ -202,8 +198,7 @@ const SearchForm = () => {
                             <Select
                                 dropdownMatchSelectWidth={false}
                                 optionFilterProp="children"
-                                filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-                                }
+                                filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 showSearch
                             >
                                 {attributeGroups.attributeGroups}
