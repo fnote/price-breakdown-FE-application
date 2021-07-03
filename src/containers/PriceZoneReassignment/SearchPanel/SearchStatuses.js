@@ -1,14 +1,18 @@
+// Core
 import React, {useContext} from 'react';
 import {SyncOutlined} from '@ant-design/icons';
-import {notification} from 'antd';
+// Custom Components
+import {PZRRequestId} from '../../../components/RequestId';
+// Context
+import {PZRContext} from '../PZRContext';
+// Helper functions and Constants
+import {openNotificationWithIcon} from '../helper/PZRHelper';
 import {
     ErrorCodes,
     CIPZErrorMessages,
     PZRSEEDErrorsMap,
     HTTP_INTERNAL_SERVER_ERROR
 } from '../../../constants/Errors';
-import {PZRRequestId} from '../../../components/RequestId';
-import {PZRContext} from '../PZRContext';
 
 const renderWelcomeMessage = () => (
     <div className="search-statuses cipz-empty-search">
@@ -93,13 +97,6 @@ const renderContinueSearch = () => (
     </div>
 );
 
-const openNotificationWithIcon = (type, description, msg) => {
-    notification[type]({
-        message: msg,
-        description,
-    });
-};
-
 const SearchStatuses = () => {
     const PZRContextData = useContext(PZRContext);
 
@@ -108,24 +105,26 @@ const SearchStatuses = () => {
     }
 
     if (PZRContextData.searchError) {
-        // Only SEED Error, BFF Joi validation and unknown errors can reach here and
+        // Only SEED Error, BFF JOI validation and BFF Server errors during the search can reach here
+
         const {errorCode, correlationId, httpStatus} = PZRContextData.searchError;
-        if (httpStatus === HTTP_INTERNAL_SERVER_ERROR) {
+        if (httpStatus === HTTP_INTERNAL_SERVER_ERROR) { // Show Error notification on internal server error without resetting the page
             openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_MESSAGE, CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED);
             PZRContextData.setErrorData(null);
             return null;
         }
         if (errorCode) {
-            if (errorCode === ErrorCodes.SEED_NO_RESULTS_ERROR) {
+            if (errorCode === ErrorCodes.SEED_NO_RESULTS_ERROR) { // Show empty response screen if SEED returned this error code
                 return emptyResponse(correlationId);
             }
 
-            if (errorCode === ErrorCodes.SEED_UNKNOWN_ERROR) {
+            if (errorCode === ErrorCodes.SEED_UNKNOWN_ERROR) { // Notification for SEED server errors
                 openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_MESSAGE, CIPZErrorMessages.FETCH_SEARCH_RESULTS_TITLE);
                 PZRContextData.setErrorData(null);
                 return null;
             }
 
+            // Everything else will be shown in error page (All HTTP 400 errors from SEED/BFF)
             const renderMessage = PZRSEEDErrorsMap[errorCode] ? PZRSEEDErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_SEED_SEARCH_ERROR;
             return renderError({errorCode, message: renderMessage, correlationId});
         }

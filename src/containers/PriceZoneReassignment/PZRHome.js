@@ -1,17 +1,23 @@
+// Core
 import React, {useContext} from 'react';
 import {Tabs} from 'antd';
+
+// Components
 import AppBar from '../../components/AppBar/AppBar';
 import SearchPanel from './SearchPanel/SearchPanel';
-import PZRContextProvider from './PZRContext';
-import SearchStatuses from './SearchPanel/SearchStatuses';
-import PriceZoneReview from './PriceZoneReview/PriceZoneReview';
 import PzUpdateComponent from './PzUpdateComponent';
+import PriceZoneReview from './PriceZoneReview/PriceZoneReview';
+import SearchStatuses from './SearchPanel/SearchStatuses';
 
+// Contexts
+import PZRContextProvider from './PZRContext';
 import {UserDetailContext} from '../UserDetailContext';
+
+// Helper functions and constants
 import {grantViewPermissionsToScreens} from '../../utils/CommonUtils';
 import {SCREEN_CIPZ_REVIEW} from '../../constants/Constants';
 
-export default function PriceZoneRe() {
+export default function PZRHome() {
     const {TabPane} = Tabs;
     const userDetailContext = useContext(UserDetailContext);
     const cipzUserRole = userDetailContext?.userDetailsData?.userDetails?.cipzRole;
@@ -28,12 +34,11 @@ export default function PriceZoneRe() {
                                 tab={
                                     <div className="pz-maintab-item">
                                         <i className="icon fi flaticon-price-zone pz-icon-tab"/>
-                                        <div className="pz-main-tab-sub"> Update Pricezone</div>
+                                        <div className="pz-main-tab-sub"> Update Price Zone</div>
                                     </div>
                                 }
                                 key="1"
                             >
-
                                 <SearchStatuses/>
                                 <PzUpdateComponent/>
                             </TabPane>

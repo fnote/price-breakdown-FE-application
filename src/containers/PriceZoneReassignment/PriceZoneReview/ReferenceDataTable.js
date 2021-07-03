@@ -3,7 +3,7 @@ import {Table} from 'antd';
 import CustomPagination from '../../../components/CustomPagination';
 import {
     REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE
-} from '../../../constants/PZRContants';
+} from '../../../constants/PZRConstants';
 import {
     generatePaginationParams,
     constructRequestUrl,

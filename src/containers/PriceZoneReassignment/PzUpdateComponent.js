@@ -1,6 +1,9 @@
+// Core
 import React, {useContext} from 'react';
+// Components
 import PriceZoneHeader from './PriceZoneResults/PrizeZoneHeader';
 import PriceZoneTable from './PriceZoneResults/PriceZoneTable';
+// Context
 import {PZRContext} from './PZRContext';
 
 export default function PzUpdateComponent() {

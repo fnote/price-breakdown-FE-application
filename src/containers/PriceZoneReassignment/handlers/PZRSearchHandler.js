@@ -1,5 +1,5 @@
 import {getBffUrlConfig} from '../../../utils/Configs';
-import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from '../../../constants/Constants';
+import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL, DEFAULT_REQUEST_HEADER} from '../../../constants/Constants';
 
 export const DEFAULT_PAGE_SIZE = 5;
 export const DEFAULT_OFFSET = 0;
@@ -28,15 +28,12 @@ const formRequestBody = (requestData) => JSON.stringify({
         limit: requestData.limit ? requestData.limit : DEFAULT_PAGE_SIZE,
     });
 
-export const PZRFetchSearchResults = (requestData, pZRContext) => {
+export const fetchSearchResults = (requestData, pZRContext) => {
     pZRContext.setSearchTableLoading(true);
     fetch(getBffUrlConfig().priceZoneReassignmentSearchUrl, {
         method: 'POST',
         body: formRequestBody(requestData),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        },
+        headers: DEFAULT_REQUEST_HEADER,
         credentials: 'include'
     })
         .then((response) => handleResponse(response))

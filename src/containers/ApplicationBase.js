@@ -4,7 +4,7 @@ import {notification} from 'antd';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
-import PriceZoneRe from './PriceZoneReassignment/PriceZoneRe';
+import PZRHome from './PriceZoneReassignment/PZRHome';
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
@@ -28,10 +28,10 @@ const Application = (user) => (
             <FileUpload/>
         </Route>
         <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
-            {grantViewPermissionsToScreens(user, SCREEN_PRICE_VALIDATION) ? <PriceValidation/> : <PriceZoneRe/>}
+            {grantViewPermissionsToScreens(user, SCREEN_PRICE_VALIDATION) ? <PriceValidation/> : <PZRHome/>}
         </Route>
         <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
-            <PriceZoneRe/>
+            <PZRHome/>
         </Route>
     </Switch>
 );

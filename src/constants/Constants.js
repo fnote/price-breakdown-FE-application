@@ -200,3 +200,8 @@ export const SCREEN_HISTORY_INQUIRY = 'history_inquiry_screen';
 export const SCREEN_CIPZ_REVIEW = 'cipz_reviewer_tab';
 export const SCREEN_CIPZ_PZ_UPDATE = 'cipz_price_zone_update_tab';
 export const SCREEN_CIPZ_REASSIGNMENT = 'cipz_reassignment_tab';
+
+export const DEFAULT_REQUEST_HEADER = {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+};

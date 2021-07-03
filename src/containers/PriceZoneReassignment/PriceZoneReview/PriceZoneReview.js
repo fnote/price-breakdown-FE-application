@@ -15,7 +15,7 @@ import {
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE,
     PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL
-} from '../../../constants/PZRContants';
+} from '../../../constants/PZRConstants';
 import {PZRContext} from '../PZRContext';
 import {UserDetailContext} from '../../UserDetailContext';
 import ReviewSubmitter from './ReviewSubmitter';

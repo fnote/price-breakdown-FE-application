@@ -1,14 +1,14 @@
+// Core
 import React, {useContext, useState} from 'react';
 import {Table} from 'antd';
-import moment from 'moment';
-
-import {PZRContext} from '../PZRContext';
-
-import {calculateOffset} from '../PZRUtils/PZRHelper';
-import {DEFAULT_PAGE_SIZE, PZRFetchSearchResults} from '../PZRUtils/PZRSearchHandler';
+// Custom components
 import CustomPagination from '../../../components/CustomPagination';
-
-const formatDate = (dateStr) => moment(dateStr, 'YYYYMMDD').format('DD MMM YYYY');
+// Context
+import {PZRContext} from '../PZRContext';
+// Request Handlers
+import {DEFAULT_PAGE_SIZE, fetchSearchResults} from '../handlers/PZRSearchHandler';
+// Constants and helper functions
+import {calculateOffset, formatDate} from '../helper/PZRHelper';
 
 const columns = [
     {
@@ -42,7 +42,6 @@ const columns = [
         dataIndex: 'effective_from_date',
         render: formatDate
     },
-
 ];
 
 export default function PriceZoneTable() {
@@ -53,7 +52,7 @@ export default function PriceZoneTable() {
     const onChange = (page) => {
         setCurrentPage(page);
         const offset = calculateOffset(page, DEFAULT_PAGE_SIZE);
-        PZRFetchSearchResults({
+        fetchSearchResults({
             ...PZRContextData.searchParams,
             offset,
             limit: DEFAULT_PAGE_SIZE
@@ -67,12 +66,12 @@ export default function PriceZoneTable() {
 
             <Table pagination={false}
                    columns={columns}
-                   dataSource={searchResults && searchResults.data && searchResults.data.item_price_zones ? searchResults.data.item_price_zones : []}
+                   dataSource={searchResults?.data?.item_price_zones || []}
                    loading={PZRContextData.isSearchTableLoading}
             />
             <CustomPagination
                 onChange={onChange}
-                total={searchResults && searchResults.total_records ? searchResults.total_records : 0}
+                total={searchResults?.total_records || 0}
                 current={currentPage}
                 pageSize={DEFAULT_PAGE_SIZE}
                 disabled={PZRContextData.isSearchTableLoading}
