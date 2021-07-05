@@ -81,7 +81,7 @@ export default function PriceZoneReview() {
             return dataStore[currentPage].map((record) => formatPZRequest(record, {businessUnitMap}));
         }
         return [];
-    }, [dataStore, currentPage]);
+    }, [dataStore, currentPage, businessUnitMap]);
 
     const {Modal, toggle} = useModal();
 

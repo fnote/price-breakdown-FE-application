@@ -86,7 +86,7 @@ export default function ReferenceDataTable({
     useEffect(() => {
         loadPageData();
         return () => setSelectedRecord(null);
-    }, []);
+    }, [loadPageData, setSelectedRecord]);
 
     const renderCustomerInfo = () => {
         if (customerGroup) {
