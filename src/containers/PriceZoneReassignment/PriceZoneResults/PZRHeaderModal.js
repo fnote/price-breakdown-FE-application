@@ -14,6 +14,7 @@ export const ModalComponent = ({Modal, setSubmitModal}) => (
                 title: '',
                 centered: 'true',
                 onOK: () => setSubmitModal(submitReasonModal),
+                onCancel: () => setSubmitModal(false),
                 still: true, // modal won't close
                 okText: 'PROCEED',
                 cancelText: 'CANCEL',
