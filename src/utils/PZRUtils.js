@@ -99,3 +99,10 @@ export const constructFetchRequest = (method = HTTP_METHOD_GET, body = null) => 
     }
     return request;
 };
+
+export const generateReviewer = ({ username, firstName, lastName, email }) => ({
+    id: username,
+    givenName: firstName,
+    surname: lastName,
+    email
+});
