@@ -77,6 +77,8 @@ export const CIPZErrorMessages = {
     APPROVE_CIPZ_API_FAILIURE_MESSAGE: 'Could not approve the request due to connection issue.',
     REJECT_CIPZ_API_FAILIURE_TITLE: 'Sorry we could not reject the request. Please try again later.',
     REJECT_CIPZ_API_FAILIURE_MESSAGE: 'Could not reject the request due to connection issue.',
+    ALREADY_REVIEWED_ALERT_TITLE: 'This change is already reviewed by another manager',
+    ALREADY_REVIEWED_ALERT_MESSAGE: 'Please refresh the page to get latest pending approval items'
 };
 
 export const PZRSEEDErrorsMap = {

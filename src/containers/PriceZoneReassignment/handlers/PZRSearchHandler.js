@@ -1,32 +1,18 @@
+import {handleResponse} from '../helper/PZRHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
-import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL, DEFAULT_REQUEST_HEADER} from '../../../constants/Constants';
+import {CORRELATION_ID_HEADER, DEFAULT_REQUEST_HEADER} from '../../../constants/Constants';
 
 export const DEFAULT_PAGE_SIZE = 5;
 export const DEFAULT_OFFSET = 0;
 
-const handleResponse = (response) => {
-    const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
-    return response.json().then((json) => {
-        if (response.ok) {
-            return {success: true, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
-        }
-        return {
-            success: false,
-            data: json,
-            headers: {[CORRELATION_ID_HEADER]: correlationId},
-            httpStatus: response.status
-        };
-    });
-};
-
 const formRequestBody = (requestData) => JSON.stringify({
-        business_unit_number: requestData.opcoId,
-        item_attribute_group_id: requestData.attributeGroupId,
-        customer_account: requestData.customer ? requestData.customer : null,
-        customer_group_id: requestData.customerGroup ? requestData.customerGroup : null,
-        offset: requestData.offset ? requestData.offset : DEFAULT_OFFSET,
-        limit: requestData.limit ? requestData.limit : DEFAULT_PAGE_SIZE,
-    });
+    business_unit_number: requestData.opcoId,
+    item_attribute_group_id: requestData.attributeGroupId,
+    customer_account: requestData.customer ? requestData.customer : null,
+    customer_group_id: requestData.customerGroup ? requestData.customerGroup : null,
+    offset: requestData.offset ? requestData.offset : DEFAULT_OFFSET,
+    limit: requestData.limit ? requestData.limit : DEFAULT_PAGE_SIZE,
+});
 
 export const fetchSearchResults = (requestData, pZRContext) => {
     pZRContext.setSearchTableLoading(true);

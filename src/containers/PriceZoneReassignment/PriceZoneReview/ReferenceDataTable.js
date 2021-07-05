@@ -1,16 +1,21 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Table } from 'antd';
+// Core
+import React, {useState, useEffect, useMemo} from 'react';
+import {Table} from 'antd';
+// Custom components
 import CustomPagination from '../../../components/CustomPagination';
-import {
-    REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE
-} from '../../../constants/PZRConstants';
+// Handlers
+import {fetchPZRequestDetails} from '../handlers/PZRGetRequestDetailsHandler';
+// Utils, Configs
 import {
     generatePaginationParams,
     constructRequestUrl,
     formatPZReferenceRecord
-} from '../../../utils/PZRUtils';
-import { getBffUrlConfig } from '../../../utils/Configs';
-import { fetchPZRequestDetails} from '../handlers/PZRGetRequestDetailsHandler';
+} from '../helper/PZRHelper';
+import {getBffUrlConfig} from '../../../utils/Configs';
+// Constants
+import {
+    REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE
+} from '../../../constants/PZRConstants';
 
 const columns = [
     {

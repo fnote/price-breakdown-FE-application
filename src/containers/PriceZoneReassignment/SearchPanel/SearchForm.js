@@ -82,8 +82,10 @@ const SearchForm = () => {
     });
 
     useEffect(() => {
-        getAttributeGroupsFromSeed();
-    }, []);
+        if (attributeGroups === '') {
+            getAttributeGroupsFromSeed();
+        }
+    }, [getAttributeGroupsFromSeed]);
 
     return (
         <div>
@@ -101,7 +103,7 @@ const SearchForm = () => {
                     >
                         <Form.Item
                             name="opco"
-                            label="OpCo"
+                            label="Site"
                             className="pz-linebreak pz-linebreak-item-group"
                             rules={[{required: true}]}
                         >
