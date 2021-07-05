@@ -114,7 +114,7 @@ const SearchForm = () => {
                                     if (inputValue && option.children) {
                                         // unless the backslash is escaped, this will end up with a syntax error
                                         const pattern = inputValue.replace(/\\/g, '').toLowerCase();
-                                        return (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/) ? false 
+                                        return (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/) ? false
                                         : option.children.join('').toLowerCase().match(pattern));
                                     }
                                     return true;
