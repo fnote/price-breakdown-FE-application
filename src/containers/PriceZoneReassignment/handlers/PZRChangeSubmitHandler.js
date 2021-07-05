@@ -1,20 +1,10 @@
 // Custom components
 import {submitReasonModal} from '../PriceZoneResults/PZRHeaderModal';
 // Helper functions and constants
-import {openNotificationWithIcon} from '../helper/PZRHelper';
+import {openNotificationWithIcon, handleResponse} from '../helper/PZRHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {CIPZErrorMessages, CIPZErrorsMap} from '../../../constants/Errors';
-import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL, DEFAULT_REQUEST_HEADER} from '../../../constants/Constants';
-
-const handleResponse = (response) => {
-    const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
-    return response.json().then((json) => {
-        if (response.ok) {
-            return {success: true, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
-        }
-        return {success: false, data: json, headers: {[CORRELATION_ID_HEADER]: correlationId}};
-    });
-};
+import {DEFAULT_REQUEST_HEADER} from '../../../constants/Constants';
 
 const handleError = (response) => {
     if (!response || !response.data || !response.data.errorCode) {

@@ -1,26 +1,32 @@
 /* eslint-disable react/display-name */
+// Core
 import React, {useState, useEffect, useContext, useMemo} from 'react';
-import {Table, Space } from 'antd';
+import {Table, Space} from 'antd';
+// Custom components
 import useModal from '../../../hooks/useModal';
-import {getBffUrlConfig} from '../../../utils/Configs';
-import {
-    formatPZRequest,
-    constructPatchPayload,
-    generateReviewer
-} from '../../../utils/PZRUtils';
-import {
-    REVIEW_RESULT_TABLE_PAGE_SIZE
-} from '../../../constants/PZRConstants';
-import {UserDetailContext} from '../../UserDetailContext';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummary from './ReviewSummary';
 import AproveRejectButtons from './AproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
+// Contexts
+import {UserDetailContext} from '../../UserDetailContext';
+// Handlers
 import {fetchPZChangeRequests} from '../handlers/PZRGetSubmittedRequestsHandler';
 import {handleApproveReject} from '../handlers/PZRApproveRejectHandler';
+// utils, configs
+import {getBffUrlConfig} from '../../../utils/Configs';
+import {
+    formatPZRequest,
+    constructPatchPayload,
+    generateReviewer
+} from '../helper/PZRHelper';
+// constants
+import {
+    REVIEW_RESULT_TABLE_PAGE_SIZE
+} from '../../../constants/PZRConstants';
 
-const generateColumns = ({ setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing }) => ([
+const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing}) => ([
     {
         title: 'SUBMITTED BY',
         dataIndex: 'submission',
@@ -41,7 +47,6 @@ const generateColumns = ({ setSelectedRecord, toggle, approveRejectPZChangeReque
             <Space
                 size='middle'
                 onClick={() => {
-                    console.log(changeSummary);
                     setSelectedRecord(changeSummary);
                     toggle();
                 }}
@@ -85,9 +90,12 @@ export default function PriceZoneReview() {
 
     const {Modal, toggle} = useModal();
 
-    const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }, { successCallback, failureCallback }) => {
+    const approveRejectPZChangeRequests = ({id, index}, {reviewNote, status}, {successCallback, failureCallback}) => {
         setApproveRejectProgressing(true);
-        const payload = constructPatchPayload({ id }, { reviewNote, status }, generateReviewer(userDetailContext.userDetailsData.userDetails));
+        const payload = constructPatchPayload({id}, {
+            reviewNote,
+            status
+        }, generateReviewer(userDetailContext.userDetailsData.userDetails));
         const requestUrl = getBffUrlConfig().pzUpdateRequests;
         handleApproveReject({
             requestUrl,
@@ -107,7 +115,7 @@ export default function PriceZoneReview() {
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
-            fetchPZChangeRequests({ page, store, setResultLoading, setTotalResultCount, setDataStore });
+            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore});
         }
     };
 
@@ -151,7 +159,12 @@ export default function PriceZoneReview() {
     const renderDataTable = () => (
         <>
             <Table
-                columns={generateColumns({ setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing })}
+                columns={generateColumns({
+                    setSelectedRecord,
+                    toggle,
+                    approveRejectPZChangeRequests,
+                    approveRejectProgressing
+                })}
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
