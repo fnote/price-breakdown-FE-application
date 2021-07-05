@@ -8,32 +8,31 @@ import {openNotificationWithIcon} from '../helper/PZRHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {REVIEW_RESULT_TABLE_PAGE_SIZE,
     PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL} from '../../../constants/PZRConstants';
+import { CIPZErrorMessages } from '../../../constants/Errors';
 
 export const fetchPZChangeRequests = ({ page, store, setResultLoading, setTotalResultCount, setDataStore }) => {
     const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
     const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
-        {...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL});
+      { ...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL });
     setResultLoading(true);
     fetch(requestUrl, constructFetchRequest())
-        .then(handleResponse)
-        .then((resp) => {
-            if (resp.success) {
-                const {totalRecords, data: {pzUpdateRequests}} = resp.data;
-                const updatedDataStore = {...store, [page]: pzUpdateRequests};
-                setTotalResultCount(totalRecords);
-                setDataStore(updatedDataStore);
-            } else {
-                // todo: handle error scenario with a message to user
-                console.log(resp);
-            }
-            setResultLoading(false);
-        })
-        .catch((err) => {
-            openNotificationWithIcon('error', 'Failed to fetch', 'Failure');
-            // todo: handle error scenario with a message to user
-            console.log(err);
-        })
-        .finally(() => {
-            setResultLoading(false);
-        });
+    .then(handleResponse)
+    .then((resp) => {
+      if (resp.success) {
+        const { totalRecords, data: { pzUpdateRequests } } = resp.data;
+        const updatedDataStore = { ...store, [page]: pzUpdateRequests };
+        setTotalResultCount(totalRecords);
+        setDataStore(updatedDataStore);
+      } else {
+        openNotificationWithIcon('error',
+        CIPZErrorMessages.FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
+      }
+        setResultLoading(false);
+    })
+    .catch(() => {
+        openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
+    })
+    .finally(() => {
+        setResultLoading(false);
+    });
 };
