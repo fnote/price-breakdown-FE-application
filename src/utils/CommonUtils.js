@@ -7,11 +7,7 @@
 import {
     FILE_NAME_DISPLAY_LENGTH,
     ONLINE_STATUS_CHECK_URL,
-    ROLE_APP_ADMIN, ROLE_CIPZ_REVIEWER, ROLE_CIPZ_SUBMITTER, ROLE_CIPZ_SUPPORT,
-    ROLE_GENERAL_USER,
-    SCREEN_CIPZ_REASSIGNMENT, SCREEN_CIPZ_REVIEW,
-    SCREEN_FILE_UPLOAD, SCREEN_HISTORY_INQUIRY,
-    SCREEN_PRICE_VALIDATION,
+    ROLE_SCREEN_PERMISSIONS,
     UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE,
     UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
 } from '../constants/Constants';
@@ -78,33 +74,7 @@ export const checkOnlineStatus = async () => {
     }
 };
 
-export const grantViewPermissionsToScreens = (role, screen) => {
-    // eslint-disable-next-line no-sequences,default-case
-    if ((role === ROLE_APP_ADMIN || role === ROLE_GENERAL_USER) && (screen === SCREEN_PRICE_VALIDATION
-        || screen === SCREEN_FILE_UPLOAD || screen === SCREEN_HISTORY_INQUIRY)) {
-        return true;
-    }
-    if ((role === ROLE_APP_ADMIN || role === ROLE_GENERAL_USER) && (screen === SCREEN_CIPZ_REASSIGNMENT)) {
-        return false;
-    }
-    if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUBMITTER || role === ROLE_CIPZ_SUPPORT) && (screen === SCREEN_CIPZ_REASSIGNMENT)) {
-        return true;
-    }
-    if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUBMITTER) && (screen === SCREEN_PRICE_VALIDATION
-        || screen === SCREEN_FILE_UPLOAD || screen === SCREEN_HISTORY_INQUIRY)) {
-        return false;
-    }
-    if (role === ROLE_CIPZ_SUBMITTER && screen === SCREEN_CIPZ_REVIEW) {
-        return false;
-    }
-    if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUPPORT) && screen === SCREEN_CIPZ_REVIEW) {
-        return true;
-    }
-    if (role === '') {
-        return false;
-    }
-    return role === ROLE_CIPZ_SUPPORT && (screen === SCREEN_CIPZ_REASSIGNMENT || screen === SCREEN_CIPZ_REVIEW);
-};
+export const grantViewPermissionsToScreens = (role, screen) => ROLE_SCREEN_PERMISSIONS?.[screen]?.[role];
 
 /**
  * Class to manipulate Unsupported browser alert states.

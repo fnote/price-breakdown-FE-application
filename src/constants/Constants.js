@@ -200,6 +200,7 @@ export const SCREEN_HISTORY_INQUIRY = 'history_inquiry_screen';
 export const SCREEN_CIPZ_REVIEW = 'cipz_reviewer_tab';
 export const SCREEN_CIPZ_PZ_UPDATE = 'cipz_price_zone_update_tab';
 export const SCREEN_CIPZ_REASSIGNMENT = 'cipz_reassignment_tab';
+export const SCREEN_CIPZ_SEARCH = 'cipz_search';
 
 export const DEFAULT_REQUEST_HEADER = {
     'Accept': 'application/json, text/plain, */*',
@@ -211,3 +212,62 @@ export const HTTP_METHOD_PATCH = 'PATCH';
 export const HEADER_NAME_CONTENT_TYPE = 'Content-Type';
 export const HEADER_VALUE_APPLICATION_JSON = 'application/json';
 export const APPROVED = 'APPROVED';
+
+export const ROLE_SCREEN_PERMISSIONS = {
+    [SCREEN_FILE_UPLOAD]: {
+        [ROLE_APP_ADMIN]: true,
+        [ROLE_GENERAL_USER]: true,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: false,
+        [ROLE_CIPZ_SUPPORT]: false,
+        '': false
+    },
+    [SCREEN_PRICE_VALIDATION]: {
+        [ROLE_APP_ADMIN]: true,
+        [ROLE_GENERAL_USER]: true,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: false,
+        [ROLE_CIPZ_SUPPORT]: false,
+        '': false
+    },
+    [SCREEN_HISTORY_INQUIRY]: {
+        [ROLE_APP_ADMIN]: true,
+        [ROLE_GENERAL_USER]: true,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: false,
+        [ROLE_CIPZ_SUPPORT]: false,
+        '': false
+    },
+    [SCREEN_CIPZ_REVIEW]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
+    },
+    [SCREEN_CIPZ_PZ_UPDATE]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
+    },
+    [SCREEN_CIPZ_REASSIGNMENT]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
+    },
+    [SCREEN_CIPZ_SEARCH]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
+    }
+};
