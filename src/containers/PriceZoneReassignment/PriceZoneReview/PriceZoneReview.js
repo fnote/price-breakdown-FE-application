@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 import React, {useState, useEffect, useContext, useMemo} from 'react';
-import {Table, Space, Spin, notification} from 'antd';
+import {Table, Space, notification} from 'antd';
 import useModal from '../../../hooks/useModal';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
@@ -16,14 +16,12 @@ import {
     REVIEW_RESULT_TABLE_PAGE_SIZE,
     PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL
 } from '../../../constants/PZRConstants';
-import {PZRContext} from '../PZRContext';
 import {UserDetailContext} from '../../UserDetailContext';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummary from './ReviewSummary';
 import AproveRejectButtons from './AproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
-import businessUnitMap from '../../../constants/BusinessUnits';
 
 export default function PriceZoneReview() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,12 +31,20 @@ export default function PriceZoneReview() {
     const [resultLoading, setResultLoading] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [approveRejectProgressing, setApproveRejectProgressing] = useState(false);
-    // const userDetailsContext = useContext(UserDetailContext);
+    const userDetailContext = useContext(UserDetailContext);
+    const {
+        activeBusinessUnitMap: businessUnitMap,
+        username,
+        firstName,
+        lastName,
+        email,
+    } = userDetailContext.userDetailsData.userDetails;
+
     const reviewer = {
-        id: 'sams5625',
-        givenName: 'Sanjaya',
-        surname: 'Amarasinghe',
-        email: 'sams5625@sysco.com'
+        id: username,
+        givenName: firstName,
+        surname: lastName,
+        email
     };
 
     const dataSource = useMemo(() => {
@@ -48,8 +54,6 @@ export default function PriceZoneReview() {
         }
         return [];
     }, [dataStore, currentPage]);
-
-    const pzrContext = useContext(PZRContext);
 
     const {Modal, toggle} = useModal();
 
@@ -222,12 +226,6 @@ export default function PriceZoneReview() {
             </div>
         );
     };
-
-    const renderLoader = () => (
-        <Space size='middle' style={{display: 'flex', alignItems: 'center', flexDirection: 'column'}}>
-            <Spin size='large'/>
-        </Space>
-    );
 
     const renderDataTable = () => (
         <>
