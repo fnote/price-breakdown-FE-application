@@ -1,5 +1,4 @@
-import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName, checkOnlineStatus} from '../CommonUtils';
-import {object} from "prop-types";
+import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName, checkOnlineStatus, unsupportedBrowserState} from '../CommonUtils';
 
 const businessUnits = new Map(
     [
@@ -150,4 +149,55 @@ describe('checkOnlineStatus', () => {
         const  resp = await mockAndGetResponse(200, ()=> {throw new Error('error occurred while fetching data')});
         expect(resp).toEqual(false);
     });
+});
+
+describe('unsupportedBrowserState', () => {
+
+    const storageMap = {};
+    const unmockedGetItem = localStorage.getItem;
+    const unmockedSetItem = localStorage.setItem;
+    localStorage.getItem = (key) => {
+        return storageMap.get(key);
+    };
+
+    localStorage.setItem = (key, value) => {
+        storageMap.set(key, value);
+    };
+
+    const setAllStatesToTrueOneByOne = () => {
+        unsupportedBrowserState.setUnsupportedBrowserScreenContinue();
+        unsupportedBrowserState.setUnsupportedBrowserAlertContinue();
+    }
+
+    const clearAllStatesOneByOne = () => {
+        unsupportedBrowserState.clearUnsupportedBrowserScreenContinue();
+        unsupportedBrowserState.clearUnsupportedBrowserAlertContinue();
+    }
+
+    const verifyState = (state) => {
+        expect(unsupportedBrowserState.isSetUnsupportedBrowserScreenContinue()).toEqual(state);
+        expect(unsupportedBrowserState.isSetUnsupportedBrowserAlertContinue()).toEqual(state);
+    }
+
+    test('set,get and clear UnsupportedBrowserScreenContinue and UnsupportedBrowserAlertContinue', () => {
+        //verify initial state
+        verifyState(false);
+
+        //verify after setting to true
+        setAllStatesToTrueOneByOne();
+        verifyState(true);
+
+        //verify after clearing one by one
+        clearAllStatesOneByOne();
+        verifyState(false);
+
+        //verify after setting and clearing by function
+        setAllStatesToTrueOneByOne();
+        verifyState(true);
+        unsupportedBrowserState.clearUnsupportedBrowserStates();
+        verifyState(false);
+    });
+
+    localStorage.getItem = unmockedGetItem;
+    localStorage.setItem = unmockedGetItem;
 });
