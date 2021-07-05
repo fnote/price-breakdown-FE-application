@@ -42,7 +42,7 @@ export default function PZRHome() {
                                 <SearchStatuses/>
                                 <PzUpdateComponent/>
                             </TabPane>
-                            {/* {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_REVIEW) && ( */}
+                            {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_REVIEW) && (
                                 <TabPane
                                     tab={
                                         <div className="pz-maintab-item">
@@ -55,6 +55,7 @@ export default function PZRHome() {
                                 >
                                     <PriceZoneReview/>
                                 </TabPane>
+                            )}
                         </Tabs>
                     </div>
                 </div>
