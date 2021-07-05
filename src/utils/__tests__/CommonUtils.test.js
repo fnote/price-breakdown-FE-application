@@ -249,5 +249,5 @@ describe('unsupportedBrowserState', () => {
     });
 
     localStorage.getItem = unmockedGetItem;
-    localStorage.setItem = unmockedGetItem;
+    localStorage.setItem = unmockedSetItem;
 });
