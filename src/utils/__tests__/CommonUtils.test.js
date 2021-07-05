@@ -1,4 +1,5 @@
-import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName} from '../CommonUtils';
+import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName, checkOnlineStatus} from '../CommonUtils';
+import {object} from "prop-types";
 
 const businessUnits = new Map(
     [
@@ -121,5 +122,32 @@ describe('getDisplayFileName', () => {
 
     test('Should return a same file name when below length', () => {
         expect(getDisplayFileName('ABC_001_902839_20200202_C.txt')).toEqual('ABC_001_902839_20200202_C.txt');
+    });
+});
+
+describe('checkOnlineStatus', () => {
+
+    // helper function to mock the fetch and get response.
+    const mockAndGetResponse = async (status, error) => {
+        const unmockedFetch = global.fetch
+        global.fetch = error==null? () =>  Promise.resolve({status: status}): error;
+        const resp = await checkOnlineStatus();
+        global.fetch = unmockedFetch
+        return resp;
+    }
+
+    test('Should return true if 200 <= status < 300', async () => {
+        const  resp = await mockAndGetResponse(200);
+        expect(resp).toEqual(true);
+    });
+
+    test('Should return false if not 200 <= status < 300', async () => {
+        const  resp = await mockAndGetResponse(404);
+        expect(resp).toEqual(false);
+    });
+
+    test('Should return false upon exception', async () => {
+        const  resp = await mockAndGetResponse(200, ()=> {throw new Error('error occurred while fetching data')});
+        expect(resp).toEqual(false);
     });
 });
