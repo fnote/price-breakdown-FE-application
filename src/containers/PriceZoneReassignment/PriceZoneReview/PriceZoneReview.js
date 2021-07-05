@@ -1,20 +1,15 @@
 /* eslint-disable react/display-name */
 import React, {useState, useEffect, useContext, useMemo} from 'react';
-import {Table, Space, notification} from 'antd';
+import {Table, Space } from 'antd';
 import useModal from '../../../hooks/useModal';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
     formatPZRequest,
-    generatePaginationParams,
-    constructRequestUrl,
-    handleResponse,
     constructPatchPayload,
-    removeCompletedRequest,
-    calculateResetIndex,
+    generateReviewer
 } from '../../../utils/PZRUtils';
 import {
-    REVIEW_RESULT_TABLE_PAGE_SIZE,
-    PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL
+    REVIEW_RESULT_TABLE_PAGE_SIZE
 } from '../../../constants/PZRConstants';
 import {UserDetailContext} from '../../UserDetailContext';
 import ReviewSubmitter from './ReviewSubmitter';
@@ -22,6 +17,52 @@ import ReviewSummary from './ReviewSummary';
 import AproveRejectButtons from './AproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
+import {fetchPZChangeRequests} from '../handlers/PZRGetSubmittedRequestsHandler';
+import {handleApproveReject} from '../handlers/PZRApproveRejectHandler';
+
+const generateColumns = ({ setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing }) => ([
+    {
+        title: 'SUBMITTED BY',
+        dataIndex: 'submission',
+        key: 'submission',
+        width: '20%',
+        render: (submission) => (
+            <Space size='middle'>
+                <ReviewSubmitter submission={submission}/>
+            </Space>
+        ),
+    },
+    {
+        title: 'SUMMARY OF CHANGES',
+        dataIndex: 'changeSummary',
+        key: 'changeSummary',
+        width: '40%',
+        render: (changeSummary) => (
+            <Space
+                size='middle'
+                onClick={() => {
+                    console.log(changeSummary);
+                    setSelectedRecord(changeSummary);
+                    toggle();
+                }}
+            >
+                <ReviewSummary changeSummary={changeSummary}/>
+            </Space>
+        ),
+    },
+    {
+        title: 'ACTION',
+        dataIndex: 'accept',
+        key: 'accept',
+        width: '20%',
+        render: (cell, row, index) => (
+            <Space size='middle'>
+                <AproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests}
+                                     disable={approveRejectProgressing}/>
+            </Space>
+        ),
+    },
+]);
 
 export default function PriceZoneReview() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -31,21 +72,9 @@ export default function PriceZoneReview() {
     const [resultLoading, setResultLoading] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [approveRejectProgressing, setApproveRejectProgressing] = useState(false);
+    const [fetchNewData, setFetchNewData] = useState(false);
     const userDetailContext = useContext(UserDetailContext);
-    const {
-        activeBusinessUnitMap: businessUnitMap,
-        username,
-        firstName,
-        lastName,
-        email,
-    } = userDetailContext.userDetailsData.userDetails;
-
-    const reviewer = {
-        id: username,
-        givenName: firstName,
-        surname: lastName,
-        email
-    };
+    const {activeBusinessUnitMap: businessUnitMap} = userDetailContext.userDetailsData.userDetails;
 
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
@@ -53,93 +82,34 @@ export default function PriceZoneReview() {
             return dataStore[currentPage].map((record) => formatPZRequest(record, {businessUnitMap}));
         }
         return [];
-    }, [dataStore, currentPage]);
+    }, [dataStore, currentPage, businessUnitMap]);
 
     const {Modal, toggle} = useModal();
 
-    const openNotificationWithIcon = (type, description, msg) => {
-        notification[type]({
-            message: msg,
-            description,
-        });
-    };
-
-    const fetchPZChangeRequests = (page, store) => {
-        const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
-        const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
-            {...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL});
-        setResultLoading(true);
-        fetch(requestUrl, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json'
-            },
-            credentials: 'include'
-        })
-            .then(handleResponse)
-            .then((resp) => {
-                if (resp.success) {
-                    const {totalRecords, data: {pzUpdateRequests}} = resp.data;
-                    const updatedDataStore = {...store, [page]: pzUpdateRequests};
-                    setTotalResultCount(totalRecords);
-                    setDataStore(updatedDataStore);
-                } else {
-                    // todo: handle error scenario with a message to user
-                    console.log(resp);
-                }
-                setResultLoading(false);
-            })
-            .catch((err) => {
-                openNotificationWithIcon('error', 'Failed to fetch', 'Failure');
-                // todo: handle error scenario with a message to user
-                console.log(err);
-            })
-            .finally(() => {
-                setResultLoading(false);
-            });
-    };
-
-    const approveRejectPZChangeRequests = ({id, index}, {reviewNote, status}, {successCallback, failureCallback}) => {
+    const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }, { successCallback, failureCallback }) => {
         setApproveRejectProgressing(true);
-        const payload = constructPatchPayload({id}, {reviewNote, status}, reviewer);
+        const payload = constructPatchPayload({ id }, { reviewNote, status }, generateReviewer(userDetailContext.userDetailsData.userDetails));
         const requestUrl = getBffUrlConfig().pzUpdateRequests;
-        fetch(requestUrl, {
-            method: 'PATCH',
-            body: payload,
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
-        })
-            .then(handleResponse)
-            .then((resp) => {
-                console.log(resp);
-                if (resp.success) {
-                    successCallback();
-                    console.log(dataStore);
-                    console.log(currentPage);
-                    const updatedDataStore = removeCompletedRequest(dataStore, currentPage, index);
-                    setDataStore(updatedDataStore);
-                    setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
-                } else {
-                    failureCallback();
-                    // todo: handle error scenario with a message to user
-                }
-            })
-            .catch((err) => {
-                failureCallback();
-                // todo: handle error scenario with a message to user
-                console.log(err);
-            })
-            .finally(() => {
-                setApproveRejectProgressing(false);
-            });
+        handleApproveReject({
+            requestUrl,
+            payload,
+            dataStore,
+            currentPage,
+            index,
+            dataResetIndex,
+            status,
+            setDataStore,
+            setFetchNewData,
+            setDataResetIndex,
+            setApproveRejectProgressing,
+            successCallback,
+            failureCallback
+        });
     };
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
-            fetchPZChangeRequests(page, store);
+            fetchPZChangeRequests({ page, store, setResultLoading, setTotalResultCount, setDataStore });
         }
     };
 
@@ -159,78 +129,43 @@ export default function PriceZoneReview() {
         return dataStore;
     };
 
+    const updateDataStore = (page) => {
+        const updatedDataStore = cleanInvalidData();
+        loadTableData(page, updatedDataStore);
+    };
+
     useEffect(() => {
         loadTableData();
     }, []);
 
-    const columns = [
-        {
-            title: 'SUBMITTED BY',
-            dataIndex: 'submission',
-            key: 'submission',
-            width: '20%',
-            render: (submission) => (
-                <Space size='middle'>
-                    <ReviewSubmitter submission={submission}/>
-                </Space>
-            ),
-        },
-        {
-            title: 'SUMMARY OF CHANGES',
-            dataIndex: 'changeSummary',
-            key: 'changeSummary',
-            width: '40%',
-            render: (changeSummary) => (
-                <Space
-                    size='middle'
-                    onClick={() => {
-                        console.log(changeSummary);
-                        setSelectedRecord(changeSummary);
-                        toggle();
-                    }}
-                >
-                    <ReviewSummary changeSummary={changeSummary}/>
-                </Space>
-            ),
-        },
-        {
-            title: 'ACTION',
-            dataIndex: 'accept',
-            key: 'accept',
-            width: '20%',
-            render: (cell, row, index) => (
-                <Space size='middle'>
-                    <AproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests}
-                                         disable={approveRejectProgressing}/>
-                </Space>
-            ),
-        },
-    ];
+    useEffect(() => {
+        if (fetchNewData) {
+            updateDataStore(currentPage);
+            setFetchNewData(false);
+        }
+    }, [fetchNewData, currentPage]);
 
-    const ReferenceTable = () => {
-        return (
-            <div>
-                {Modal(
-                    {
-                        title: '',
-                        centered: 'true',
-                        onOK: () => toggle,
-                        okText: 'PROCEED',
-                        cancelText: 'CANCEL',
-                        width: '60vw',
-                        footer: '', // no buttons,
-                        // maskClosable: false
-                    },
-                    <ReferenceDataTable record={selectedRecord} setSelectedRecord={setSelectedRecord}/>
-                )}
-            </div>
-        );
-    };
+    const ReferenceTable = () => (
+        <div>
+            {Modal(
+                {
+                    title: '',
+                    centered: 'true',
+                    onOK: () => toggle,
+                    okText: 'PROCEED',
+                    cancelText: 'CANCEL',
+                    width: '60vw',
+                    footer: '',
+                },
+                <ReferenceDataTable record={selectedRecord} setSelectedRecord={setSelectedRecord}/>
+            )}
+        </div>
+    );
 
     const renderDataTable = () => (
         <>
             <Table
-                columns={columns}
+                columns={generateColumns({ setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing })}
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
@@ -243,14 +178,12 @@ export default function PriceZoneReview() {
         <div className='pz-review-base-wrapper'>
             {renderDataTable()}
             <CustomPagination
-
                 total={totalResultCount}
                 current={currentPage}
                 onChange={(current) => {
                     if (!resultLoading) {
                         setCurrentPage(current);
-                        const updatedDataStore = cleanInvalidData();
-                        loadTableData(current, updatedDataStore);
+                        updateDataStore(current);
                     }
                 }}
                 pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}

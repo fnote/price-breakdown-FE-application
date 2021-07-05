@@ -17,7 +17,10 @@ const ErrorCodes = {
     SEED_UNKNOWN_ERROR: 101000,
     INVALID_CUSTOMER_ACCOUNT_PZR_ERROR: 5000,
     INVALID_CUSTOMER_GROUP_ERROR: 5001,
-    ITEM_ATTRIBUTE_GROUP_FETCH_ERROR: 4028
+    ITEM_ATTRIBUTE_GROUP_FETCH_ERROR: 4028,
+
+    // CPIZ errors
+    CIPZ_ALREADY_APPROVED_OR_REJECTED: 102066,
 
 };
 
@@ -62,11 +65,18 @@ export const CIPZErrorMessages = {
     FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE: 'Could not retrieve the attribute group information due to connection issue.',
     FETCH_SEARCH_RESULTS_TITLE: 'Sorry we could not retrieve the information. Please try again later.',
     FETCH_SEARCH_RESULTS_MESSAGE: 'Could not retrieve the information due to connection issue.',
-    UNKNOWN_ERROR_OCCURRED: 'Something went wrong. Please try again later',
-    GENERIC_SEED_SEARCH_ERROR: 'Error occurred while fetching the search results from SEED',
-    GENERIC_CIPZ_POST_ERROR_MESSAGE: 'Error occurred while processing price zone change request. Make sure all values are correct',
+    UNKNOWN_ERROR_OCCURRED: 'Something went wrong. Please try again later.',
+    GENERIC_SEED_SEARCH_ERROR: 'Error occurred while fetching the search results from SEED.',
+    GENERIC_CIPZ_POST_ERROR_MESSAGE: 'Error occurred while processing price zone change request. Make sure all values are correct.',
     UNEXPECTED_GENERIC_CIPZ_POST_ERROR_MESSAGE: 'Unexpected Error occurred while processing price zone change request. Please try again later.',
-    CIPZ_POST_ERROR_TITLE: 'Sorry we could not update the requested price zone. Please try again later.'
+    CIPZ_POST_ERROR_TITLE: 'Sorry we could not update the requested price zone. Please try again later.',
+    FETCH_CIPZ_API_DATA_TITLE: 'Sorry we could not retrieve the information.',
+    FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE: 'Could not retrieve the approval request page due to connection issue.',
+    FETCH_CIPZ_REFERENCE_TABLE_ERROR_MESSAGE: 'Could not retrieve the reference page due to connection issue.',
+    APPROVE_CIPZ_API_FAILIURE_TITLE: 'Sorry we could not approve the request. Please try again later.',
+    APPROVE_CIPZ_API_FAILIURE_MESSAGE: 'Could not approve the request due to connection issue.',
+    REJECT_CIPZ_API_FAILIURE_TITLE: 'Sorry we could not reject the request. Please try again later.',
+    REJECT_CIPZ_API_FAILIURE_MESSAGE: 'Could not reject the request due to connection issue.',
 };
 
 export const PZRSEEDErrorsMap = {

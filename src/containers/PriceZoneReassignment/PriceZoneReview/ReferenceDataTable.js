@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useMemo} from 'react';
-import {Table} from 'antd';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Table } from 'antd';
 import CustomPagination from '../../../components/CustomPagination';
 import {
     REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE
@@ -7,10 +7,10 @@ import {
 import {
     generatePaginationParams,
     constructRequestUrl,
-    handleResponse,
     formatPZReferenceRecord
 } from '../../../utils/PZRUtils';
-import {getBffUrlConfig} from '../../../utils/Configs';
+import { getBffUrlConfig } from '../../../utils/Configs';
+import { fetchPZRequestDetails} from '../handlers/PZRGetRequestDetailsHandler';
 
 const columns = [
     {
@@ -67,33 +67,14 @@ export default function ReferenceDataTable({
             paginationParams
         );
         setResultLoading(true);
-        fetch(requestUrl, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json'
-            },
-            credentials: 'include'
-        })
-            .then(handleResponse)
-            .then((resp) => {
-                if (resp.success) {
-                    const {totalRecords, data: {pzUpdateRequests}} = resp.data;
-                    const updatedDataStore = {...dataStore, [page]: pzUpdateRequests};
-                    setTotalResultCount(totalRecords);
-                    setDataStore(updatedDataStore);
-                } else {
-                    // todo: handle error scenario with a message to user
-                    console.log(resp);
-                }
-                setResultLoading(false);
-            })
-            .catch((err) => {
-                // todo: handle error scenario with a message to user
-                console.log(err);
-            })
-            .finally(() => {
-                setResultLoading(false);
-            });
+        fetchPZRequestDetails({
+            requestUrl,
+            dataStore,
+            page,
+            setTotalResultCount,
+            setDataStore,
+            setResultLoading,
+        });
     };
 
     const loadPageData = (page = 1) => {
@@ -105,7 +86,7 @@ export default function ReferenceDataTable({
     useEffect(() => {
         loadPageData();
         return () => setSelectedRecord(null);
-    }, []);
+    }, [loadPageData, setSelectedRecord]);
 
     const renderCustomerInfo = () => {
         if (customerGroup) {

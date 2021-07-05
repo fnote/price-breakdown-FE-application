@@ -12,12 +12,12 @@ import {getBusinessUnits} from '../helper/PZRHelper';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
-    required: '${label} is required!',
+    required: '${label} is required!', // NOSONAR
     types: {
-        number: '${label} is not a valid number!',
+        number: '${label} is not a valid number!', // NOSONAR
     },
     number: {
-        range: '${label} must be between ${min} and ${max}!',
+        range: '${label} must be between ${min} and ${max}!', // NOSONAR
     },
 };
 
@@ -82,8 +82,10 @@ const SearchForm = () => {
     });
 
     useEffect(() => {
-        getAttributeGroupsFromSeed();
-    }, []);
+        if (attributeGroups === '') {
+            getAttributeGroupsFromSeed();
+        }
+    }, [getAttributeGroupsFromSeed]);
 
     return (
         <div>
