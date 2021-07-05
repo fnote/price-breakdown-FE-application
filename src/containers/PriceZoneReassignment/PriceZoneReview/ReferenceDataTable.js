@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useMemo} from 'react';
-import {Table} from 'antd';
+import React, { useState, useEffect, useMemo } from 'react';
+import { Table, notification } from 'antd';
 import CustomPagination from '../../../components/CustomPagination';
 import {
     REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE
@@ -10,8 +10,9 @@ import {
     handleResponse,
     formatPZReferenceRecord
 } from '../../../utils/PZRUtils';
-import {getBffUrlConfig} from '../../../utils/Configs';
-
+import { getBffUrlConfig } from '../../../utils/Configs';
+import { CIPZErrorMessages } from '../../../constants/Errors';
+  
 const columns = [
     {
         title: 'ITEM(SUPC)',
@@ -52,6 +53,13 @@ export default function ReferenceDataTable({
     const [resultLoading, setResultLoading] = useState(false);
     const [totalResultCount, setTotalResultCount] = useState(REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE);
 
+    const openNotificationWithIcon = (type, description, msg) => {
+        notification[type]({
+            message: msg,
+            description,
+        });
+      };
+
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
         if (currentPageData) {
@@ -68,11 +76,27 @@ export default function ReferenceDataTable({
         );
         setResultLoading(true);
         fetch(requestUrl, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json'
-            },
-            credentials: 'include'
+          method: 'GET',
+          headers: {
+            Accept: 'application/json'
+          },
+          credentials: 'include'
+        })
+        .then(handleResponse)
+        .then((resp) => {
+          if (resp.success) {
+            const { totalRecords, data: { pzUpdateRequests } } = resp.data;
+            const updatedDataStore = { ...dataStore, [page]: pzUpdateRequests };
+            setTotalResultCount(totalRecords);
+            setDataStore(updatedDataStore);
+          } else {
+            openNotificationWithIcon('error',
+            CIPZErrorMessages.FETCH_CIPZ_REFERENCE_TABLE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
+          }
+          setResultLoading(false);
+        })
+        .catch((err) => {
+            openNotificationWithIcon('error', CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE, CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED,);
         })
             .then(handleResponse)
             .then((resp) => {

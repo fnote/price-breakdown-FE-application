@@ -25,6 +25,8 @@ import ReviewSummary from './ReviewSummary';
 import AproveRejectButtons from './AproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
+import { CIPZErrorMessages, ErrorCodes } from '../../../constants/Errors';
+import { APPROVED } from '../../../constants/Constants';
 
 const generateColumns = ({ setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing }) => ([
     {
@@ -98,64 +100,74 @@ export default function PriceZoneReview() {
         });
     };
 
-    const fetchPZChangeRequests = (page, store) => {
-        const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
-        const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
-            {...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL});
-        setResultLoading(true);
-        fetch(requestUrl, constructFetchRequest())
-            .then(handleResponse)
-            .then((resp) => {
-                if (resp.success) {
-                    const {totalRecords, data: {pzUpdateRequests}} = resp.data;
-                    const updatedDataStore = {...store, [page]: pzUpdateRequests};
-                    setTotalResultCount(totalRecords);
-                    setDataStore(updatedDataStore);
-                } else {
-                    // todo: handle error scenario with a message to user
-                    console.log(resp);
-                }
-                setResultLoading(false);
-            })
-            .catch((err) => {
-                openNotificationWithIcon('error', 'Failed to fetch', 'Failure');
-                // todo: handle error scenario with a message to user
-                console.log(err);
-            })
-            .finally(() => {
-                setResultLoading(false);
-            });
-    };
+  const fetchPZChangeRequests = (page, store) => {
+    const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
+    const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
+      { ...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL });
+    setResultLoading(true);
+    fetch(requestUrl, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json'
+      },
+      credentials: 'include'
+    })
+    .then(handleResponse)
+    .then((resp) => {
+      if (resp.success) {
+        const { totalRecords, data: { pzUpdateRequests } } = resp.data;
+        const updatedDataStore = { ...store, [page]: pzUpdateRequests };
+        setTotalResultCount(totalRecords);
+        setDataStore(updatedDataStore);
+      } else {
+        openNotificationWithIcon('error',
+         CIPZErrorMessages.FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
+      }
+      setResultLoading(false);
+    })
+    .catch(() => {
+      openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
+    })
+    .finally(() => {
+      setResultLoading(false);
+    });
+  };
 
-    const approveRejectPZChangeRequests = ({id, index}, {reviewNote, status}, {successCallback, failureCallback}) => {
-        setApproveRejectProgressing(true);
-        const payload = constructPatchPayload({id}, {reviewNote, status}, generateReviewer(userDetailContext.userDetailsData.userDetails));
-        const requestUrl = getBffUrlConfig().pzUpdateRequests;
-        fetch(requestUrl, constructFetchRequest(HTTP_METHOD_PATCH, payload))
-            .then(handleResponse)
-            .then((resp) => {
-                console.log(resp);
-                if (resp.success) {
-                    successCallback();
-                    console.log(dataStore);
-                    console.log(currentPage);
-                    const updatedDataStore = removeCompletedRequest(dataStore, currentPage, index);
-                    setDataStore(updatedDataStore);
-                    setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
-                } else {
-                    failureCallback();
-                    // todo: handle error scenario with a message to user
-                }
-            })
-            .catch((err) => {
-                failureCallback();
-                // todo: handle error scenario with a message to user
-                console.log(err);
-            })
-            .finally(() => {
-                setApproveRejectProgressing(false);
-            });
-    };
+  const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }, { successCallback, failureCallback }) => {    
+    setApproveRejectProgressing(true);
+    const payload = constructPatchPayload({ id }, { reviewNote, status }, generateReviewer(userDetailContext.userDetailsData.userDetails));
+    const requestUrl = getBffUrlConfig().pzUpdateRequests;
+    fetch(requestUrl, constructFetchRequest(HTTP_METHOD_PATCH, payload))
+    .then(handleResponse)
+    .then((resp) => {
+      if (resp.success) {
+        successCallback();
+        const updatedDataStore = removeCompletedRequest(dataStore, currentPage, index);
+        setDataStore(updatedDataStore);
+        setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
+      } else {
+        failureCallback();
+        const errorResponseData = resp.data;
+        if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_ALREADY_APPROVED_OR_REJECTED) {
+          // Change this to  popup
+          openNotificationWithIcon('error', 'this change is already reviewed by another manager', 'This change is already reviewed by another manager');
+        } else {
+          const errorTitle = status === APPROVED ? CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE : CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_TITLE;
+          const errorMessage = status === APPROVED ? CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_MESSAGE : CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE;
+          openNotificationWithIcon('error', errorMessage, errorTitle);
+        }
+      }
+    })
+    .catch(() => {
+      failureCallback();
+      const errorTitle = status === APPROVED ? CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE : CIPZErrorMessages.REJECT_CIPZ_API_FAILIURE_TITLE;
+      const errorMessage = status === APPROVED ? CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_MESSAGE : CIPZErrorMessages.APPROVE_CIPZ_API_FAILIURE_TITLE;
+      openNotificationWithIcon('error', errorMessage, errorTitle);
+    })
+    .finally(() => {
+      setApproveRejectProgressing(false);
+    });
+  };
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {

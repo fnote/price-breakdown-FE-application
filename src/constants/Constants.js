@@ -210,3 +210,4 @@ export const HTTP_METHOD_GET = 'GET';
 export const HTTP_METHOD_PATCH = 'PATCH';
 export const HEADER_NAME_CONTENT_TYPE = 'Content-Type';
 export const HEADER_VALUE_APPLICATION_JSON = 'application/json';
+export const APPROVED = 'APPROVED';
