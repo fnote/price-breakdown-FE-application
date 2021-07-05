@@ -5,16 +5,16 @@ import {extractTransactions} from "../../../utils/PricingUtils";
 
 const columns = [
   {
-    title: "OBLIGATION #",
+    title: "OBLIGATION NUM",
     dataIndex: "obligationId",
   },
   {
-    title: "LINE #",
+    title: "LINE NUM",
     dataIndex: "lineNumber",
 
   },
   {
-    title: "TRANS. DATE",
+    title: "TRANSACTION DATE",
     dataIndex: "transactionDate",
     defaultSortOrder: "descend",
     sorter: (a, b) => a.transactionDate - b.transactionDate,
