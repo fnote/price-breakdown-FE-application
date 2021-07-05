@@ -61,8 +61,9 @@ export default function HistoryTable({historyInquiryData: {product: {transaction
       <div className="history-table">
         <div className="history-table-header">
           <div className="history-table-header-wrapper">
+            <i class="icon fi flaticon-pricing-journey history-title-icon"></i>
             <div className="history-table-title">
-              Transaction History
+              Recent Transactions
             </div>
           </div>
         </div>
