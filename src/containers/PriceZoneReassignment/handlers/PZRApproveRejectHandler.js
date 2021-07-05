@@ -17,6 +17,7 @@ export const handleApproveReject = ({
     dataResetIndex,
     setDataStore,
     setDataResetIndex,
+    status,
     setApproveRejectProgressing,
     successCallback,
     failureCallback

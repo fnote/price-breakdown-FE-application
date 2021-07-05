@@ -96,6 +96,7 @@ export default function PriceZoneReview() {
             currentPage,
             index,
             dataResetIndex,
+            status,
             setDataStore,
             setDataResetIndex,
             setApproveRejectProgressing,
