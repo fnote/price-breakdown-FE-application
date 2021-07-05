@@ -31,7 +31,7 @@ const rangeConfig = {
 };
 function disabledDate(current) {
     // Can not select future dates
-    return current && current > moment().endOf('day');
+    return current && current > moment().add(1,'days').endOf("day");
 }
 const formRequestBody = (requestData) => {
   console.log(requestData);

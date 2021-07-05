@@ -5,16 +5,16 @@ import {extractTransactions} from "../../../utils/PricingUtils";
 
 const columns = [
   {
-    title: "OBLIGATION NUM",
+    title: "OBLIGATION #",
     dataIndex: "obligationId",
   },
   {
-    title: "LINE NUM",
+    title: "LINE #",
     dataIndex: "lineNumber",
 
   },
   {
-    title: "TRANSACTED DATE",
+    title: "TRANS. DATE",
     dataIndex: "transactionDate",
     defaultSortOrder: "descend",
     sorter: (a, b) => a.transactionDate - b.transactionDate,
@@ -24,7 +24,7 @@ const columns = [
     dataIndex: "shippedQuantity",
   },
   {
-    title: "TOTAL CWT",
+    title: "TOTAL CATCH WEIGHT",
     dataIndex: "totalCatchWeight",
   },
   {
@@ -67,7 +67,9 @@ export default function HistoryTable({historyInquiryData: {product: {transaction
             </div>
           </div>
         </div>
-        <Table pagination={{pageSize: 10}}
+        <Table
+            pagination={{pageSize: 10}}
+            scroll={{x: 'auto', y: '30vh'}}
                rowKey={transactionHistory.obligationId + transactionHistory.lineNumber}
                columns={columns} dataSource={transactionHistory} onChange={onChange}/>
       </div>
