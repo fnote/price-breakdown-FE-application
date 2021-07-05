@@ -17,7 +17,7 @@ const columns = [
     title: "TRANSACTED DATE",
     dataIndex: "transactionDate",
     defaultSortOrder: "descend",
-    sorter: (a, b) => a.Transacted_Date - b.Transacted_Date,
+    sorter: (a, b) => a.transactionDate - b.transactionDate,
   },
   {
     title: "SHIPPED QTY",
