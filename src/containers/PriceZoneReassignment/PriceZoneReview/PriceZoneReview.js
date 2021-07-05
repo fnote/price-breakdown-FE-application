@@ -11,11 +11,13 @@ import {
     constructPatchPayload,
     removeCompletedRequest,
     calculateResetIndex,
+    constructFetchRequest
 } from '../../../utils/PZRUtils';
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE,
     PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL
 } from '../../../constants/PZRConstants';
+import {HTTP_METHOD_PATCH} from '../../../constants/Constants';
 import {UserDetailContext} from '../../UserDetailContext';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummary from './ReviewSummary';
@@ -69,13 +71,7 @@ export default function PriceZoneReview() {
         const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
             {...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL});
         setResultLoading(true);
-        fetch(requestUrl, {
-            method: 'GET',
-            headers: {
-                Accept: 'application/json'
-            },
-            credentials: 'include'
-        })
+        fetch(requestUrl, constructFetchRequest())
             .then(handleResponse)
             .then((resp) => {
                 if (resp.success) {
@@ -103,15 +99,7 @@ export default function PriceZoneReview() {
         setApproveRejectProgressing(true);
         const payload = constructPatchPayload({id}, {reviewNote, status}, reviewer);
         const requestUrl = getBffUrlConfig().pzUpdateRequests;
-        fetch(requestUrl, {
-            method: 'PATCH',
-            body: payload,
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
-        })
+        fetch(requestUrl, constructFetchRequest(HTTP_METHOD_PATCH, payload))
             .then(handleResponse)
             .then((resp) => {
                 console.log(resp);

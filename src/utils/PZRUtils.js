@@ -1,6 +1,12 @@
 import moment from 'moment';
 import {formatBusinessUnit} from './CommonUtils';
-import {CORRELATION_ID_HEADER, NOT_APPLICABLE_LABEL} from '../constants/Constants';
+import {
+    CORRELATION_ID_HEADER,
+    NOT_APPLICABLE_LABEL,
+    HTTP_METHOD_GET,
+    HEADER_NAME_CONTENT_TYPE,
+    HEADER_VALUE_APPLICATION_JSON
+} from '../constants/Constants';
 import {PZ_DISPLAY_DATE_FORMAT} from '../constants/PZRConstants';
 
 export const formatDate = (dateStr) => moment(dateStr, 'YYYYMMDD').format(PZ_DISPLAY_DATE_FORMAT);
@@ -77,4 +83,19 @@ export const calculateResetIndex = (currentIndex, currentPage) => {
         return currentPage;
     }
     return currentIndex > currentPage ? currentPage : currentIndex;
+};
+
+export const constructFetchRequest = (method = HTTP_METHOD_GET, body = null) => {
+    const request = {
+        method,
+        body,
+        credentials: 'include',
+        headers: {
+            Accept: 'application/json'
+        }
+    };
+    if (method !== HTTP_METHOD_GET) {
+        request.headers[HEADER_NAME_CONTENT_TYPE] = HEADER_VALUE_APPLICATION_JSON;
+    }
+    return request;
 };
