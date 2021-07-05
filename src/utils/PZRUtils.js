@@ -5,7 +5,7 @@ import {PZ_DISPLAY_DATE_FORMAT} from '../constants/PZRConstants';
 
 export const formatDate = (dateStr) => moment(dateStr, 'YYYYMMDD').format(PZ_DISPLAY_DATE_FORMAT);
 
-export const formatUnixEpoch = (epoch) => moment(epoch).format(PZ_DISPLAY_DATE_FORMAT);
+export const formatUnixEpoch = (epoch) => moment(epoch * 1000).format(PZ_DISPLAY_DATE_FORMAT);
 
 export const formatPZRequest = ({
                                     createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate,
