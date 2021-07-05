@@ -75,7 +75,7 @@ export const checkOnlineStatus = async () => {
 };
 
 export const grantViewPermissionsToScreens = (role, screen) => {
-    return ROLE_SCREEN_PERMISSIONS[screen][role];
+    return ROLE_SCREEN_PERMISSIONS?.[screen]?.[role];
 };
 
 /**
