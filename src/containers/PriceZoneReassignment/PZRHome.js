@@ -15,7 +15,7 @@ import {UserDetailContext} from '../UserDetailContext';
 
 // Helper functions and constants
 import {grantViewPermissionsToScreens} from '../../utils/CommonUtils';
-import {SCREEN_CIPZ_REVIEW} from '../../constants/Constants';
+import {SCREEN_CIPZ_PZ_UPDATE, SCREEN_CIPZ_REVIEW, SCREEN_CIPZ_SEARCH} from '../../constants/Constants';
 
 export default function PZRHome() {
     const {TabPane} = Tabs;
@@ -27,10 +27,10 @@ export default function PZRHome() {
             <AppBar/>
             <PZRContextProvider>
                 <div className="content">
-                    <SearchPanel/>
+                    {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_SEARCH) &&(<SearchPanel/>)}
                     <div className="pz-wrapper  pz-no-bg">
-                        <Tabs type="card">
-                            <TabPane
+                        <Tabs type="card" defaultActiveKey="2">
+                            {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_PZ_UPDATE) && (<TabPane
                                 tab={
                                     <div className="pz-maintab-item">
                                         <i className="icon fi flaticon-price-zone pz-icon-tab"/>
@@ -41,7 +41,7 @@ export default function PZRHome() {
                             >
                                 <SearchStatuses/>
                                 <PzUpdateComponent/>
-                            </TabPane>
+                            </TabPane>)}
                             {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_REVIEW) && (
                                 <TabPane
                                     tab={
