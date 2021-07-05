@@ -214,60 +214,60 @@ export const HEADER_VALUE_APPLICATION_JSON = 'application/json';
 export const APPROVED = 'APPROVED';
 
 export const ROLE_SCREEN_PERMISSIONS = {
-    file_upload_screen:{
-        appadmin:true,
-        generaluser:true,
-        cipz_submitter:false,
-        cipz_reviewer:false,
-        cipz_support_user:false,
-        '':false
+    [SCREEN_FILE_UPLOAD]: {
+        [ROLE_APP_ADMIN]: true,
+        [ROLE_GENERAL_USER]: true,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: false,
+        [ROLE_CIPZ_SUPPORT]: false,
+        '': false
     },
-    price_validation_screen:{
-        appadmin:true,
-        generaluser:true,
-        cipz_submitter:false,
-        cipz_reviewer:false,
-        cipz_support_user:false,
-        '':false
+    [SCREEN_PRICE_VALIDATION]: {
+        [ROLE_APP_ADMIN]: true,
+        [ROLE_GENERAL_USER]: true,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: false,
+        [ROLE_CIPZ_SUPPORT]: false,
+        '': false
     },
-    history_inquiry_screen:{
-        appadmin:true,
-        generaluser:true,
-        cipz_submitter:false,
-        cipz_reviewer:false,
-        cipz_support_user:false,
-        '':false
+    [SCREEN_HISTORY_INQUIRY]: {
+        [ROLE_APP_ADMIN]: true,
+        [ROLE_GENERAL_USER]: true,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: false,
+        [ROLE_CIPZ_SUPPORT]: false,
+        '': false
     },
-    cipz_reviewer_tab:{
-        appadmin:false,
-        generaluser:false,
-        cipz_submitter:false,
-        cipz_reviewer:true,
-        cipz_support_user:true,
-        '':false
+    [SCREEN_CIPZ_REVIEW]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
     },
-    cipz_price_zone_update_tab:{
-        appadmin:false,
-        generaluser:false,
-        cipz_submitter:true,
-        cipz_reviewer:true,
-        cipz_support_user:true,
-        '':false
+    [SCREEN_CIPZ_PZ_UPDATE]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
     },
-    cipz_reassignment_tab:{
-        appadmin:false,
-        generaluser:false,
-        cipz_submitter:true,
-        cipz_reviewer:true,
-        cipz_support_user:true,
-        '':false
+    [SCREEN_CIPZ_REASSIGNMENT]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
     },
-    cipz_search:{
-        appadmin:false,
-        generaluser:false,
-        cipz_submitter:true,
-        cipz_reviewer:true,
-        cipz_support_user:true,
-        '':false
+    [SCREEN_CIPZ_SEARCH]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
     }
-}
+};

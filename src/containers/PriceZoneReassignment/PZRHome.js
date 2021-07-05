@@ -27,7 +27,7 @@ export default function PZRHome() {
             <AppBar/>
             <PZRContextProvider>
                 <div className="content">
-                    {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_SEARCH) &&(<SearchPanel/>)}
+                    {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_SEARCH) && (<SearchPanel/>)}
                     <div className="pz-wrapper  pz-no-bg">
                         <Tabs type="card" defaultActiveKey="2">
                             {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_PZ_UPDATE) && (<TabPane
