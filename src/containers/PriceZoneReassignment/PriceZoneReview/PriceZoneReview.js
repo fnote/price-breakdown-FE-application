@@ -85,7 +85,7 @@ export default function PriceZoneReview() {
 
     const {Modal, toggle} = useModal();
 
-    const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }, { successCallback, failureCallback }) => {    
+    const approveRejectPZChangeRequests = ({ id, index }, { reviewNote, status }, { successCallback, failureCallback }) => {
         setApproveRejectProgressing(true);
         const payload = constructPatchPayload({ id }, { reviewNote, status }, generateReviewer(userDetailContext.userDetailsData.userDetails));
         const requestUrl = getBffUrlConfig().pzUpdateRequests;

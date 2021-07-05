@@ -73,10 +73,10 @@ export const CIPZErrorMessages = {
     FETCH_CIPZ_API_DATA_TITLE: 'Sorry we could not retrieve the information.',
     FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE: 'Could not retrieve the approval request page due to connection issue.',
     FETCH_CIPZ_REFERENCE_TABLE_ERROR_MESSAGE: 'Could not retrieve the reference page due to connection issue.',
-    APPROVE_CIPZ_API_FAILIURE_TITLE: 'Sorry we could not approve the request. Please try again later.', 
+    APPROVE_CIPZ_API_FAILIURE_TITLE: 'Sorry we could not approve the request. Please try again later.',
     APPROVE_CIPZ_API_FAILIURE_MESSAGE: 'Could not approve the request due to connection issue.',
-    REJECT_CIPZ_API_FAILIURE_TITLE: 'Sorry we could not reject the request. Please try again later.', 
-    REJECT_CIPZ_API_FAILIURE_MESSAGE: 'Could not reject the request due to connection issue.', 
+    REJECT_CIPZ_API_FAILIURE_TITLE: 'Sorry we could not reject the request. Please try again later.',
+    REJECT_CIPZ_API_FAILIURE_MESSAGE: 'Could not reject the request due to connection issue.',
 };
 
 export const PZRSEEDErrorsMap = {

@@ -11,7 +11,7 @@ import {
 } from '../../../utils/PZRUtils';
 import { getBffUrlConfig } from '../../../utils/Configs';
 import { fetchPZRequestDetails} from '../handlers/PZRGetRequestDetailsHandler';
-  
+
 const columns = [
     {
         title: 'ITEM(SUPC)',
@@ -73,7 +73,7 @@ export default function ReferenceDataTable({
             page,
             setTotalResultCount,
             setDataStore,
-            setResultLoading, 
+            setResultLoading,
         });
     };
 

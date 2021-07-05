@@ -11,7 +11,7 @@ export const fetchPZRequestDetails = ({
     page,
     setTotalResultCount,
     setDataStore,
-    setResultLoading,    
+    setResultLoading,
 }) => {
     fetch(requestUrl, constructFetchRequest())
     .then(handleResponse)
