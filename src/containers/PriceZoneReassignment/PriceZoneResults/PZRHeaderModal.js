@@ -26,7 +26,7 @@ export const ModalComponent = ({Modal, setSubmitModal}) => (
                 <div className="pz-alert-main">Confirm Price Zone Change</div>
                 <div className="pz-alert-sub">
                     While performing this change, price zone for all the items
-                    associated with item attribute group and all the customers
+                    associated with attribute group and all the customers
                     associated with customer group will be updated.
                 </div>
             </div>
