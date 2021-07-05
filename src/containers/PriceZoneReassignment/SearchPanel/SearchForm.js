@@ -87,13 +87,6 @@ const SearchForm = () => {
         }
     }, [getAttributeGroupsFromSeed]);
 
-    async function formValidator(values, fieldName) {
-        // Some validate logic to get errors
-        const fieldsErrors = { field1: ['23333'], field5: ['6666'] };
-        const errors = fieldsErrors[fieldName];
-        return errors ? Promise.reject(errors) : Promise.resolve();
-      }
-
     return (
         <div>
             <>
