@@ -103,7 +103,7 @@ const SearchForm = () => {
                     >
                         <Form.Item
                             name="opco"
-                            label="OpCo"
+                            label="Site"
                             className="pz-linebreak pz-linebreak-item-group"
                             rules={[{required: true}]}
                         >
