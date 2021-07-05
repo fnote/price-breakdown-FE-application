@@ -82,7 +82,9 @@ const SearchForm = () => {
     });
 
     useEffect(() => {
-        getAttributeGroupsFromSeed();
+        if (attributeGroups === '') {
+            getAttributeGroupsFromSeed();
+        }
     }, [getAttributeGroupsFromSeed]);
 
     return (
