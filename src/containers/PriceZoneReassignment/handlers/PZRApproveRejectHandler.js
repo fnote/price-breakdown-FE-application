@@ -8,6 +8,8 @@ import {
 import {HTTP_METHOD_PATCH, APPROVED} from '../../../constants/Constants';
 import {CIPZErrorMessages, ErrorCodes} from '../../../constants/Errors';
 
+const isEmptyPage = (page = []) => page.length === 0;
+
 export const handleApproveReject = ({
                                         requestUrl,
                                         payload,
@@ -16,6 +18,7 @@ export const handleApproveReject = ({
                                         index,
                                         dataResetIndex,
                                         setDataStore,
+                                        setFetchNewData,
                                         setDataResetIndex,
                                         status,
                                         setApproveRejectProgressing,
@@ -29,6 +32,9 @@ export const handleApproveReject = ({
                 successCallback();
                 const updatedDataStore = removeCompletedRequest(dataStore, currentPage, index);
                 setDataStore(updatedDataStore);
+                if (isEmptyPage(updatedDataStore[currentPage])) {
+                    setFetchNewData(true);
+                }
                 setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
             } else {
                 failureCallback();

@@ -77,6 +77,7 @@ export default function PriceZoneReview() {
     const [resultLoading, setResultLoading] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [approveRejectProgressing, setApproveRejectProgressing] = useState(false);
+    const [fetchNewData, setFetchNewData] = useState(false);
     const userDetailContext = useContext(UserDetailContext);
     const {activeBusinessUnitMap: businessUnitMap} = userDetailContext.userDetailsData.userDetails;
 
@@ -86,7 +87,7 @@ export default function PriceZoneReview() {
             return dataStore[currentPage].map((record) => formatPZRequest(record, {businessUnitMap}));
         }
         return [];
-    }, [dataStore, currentPage]);
+    }, [dataStore, currentPage, businessUnitMap]);
 
     const {Modal, toggle} = useModal();
 
@@ -106,6 +107,7 @@ export default function PriceZoneReview() {
             dataResetIndex,
             status,
             setDataStore,
+            setFetchNewData,
             setDataResetIndex,
             setApproveRejectProgressing,
             successCallback,
@@ -135,9 +137,21 @@ export default function PriceZoneReview() {
         return dataStore;
     };
 
+    const updateDataStore = (page) => {
+        const updatedDataStore = cleanInvalidData();
+        loadTableData(page, updatedDataStore);
+    };
+
     useEffect(() => {
         loadTableData();
     }, []);
+
+    useEffect(() => {
+        if (fetchNewData) {
+            updateDataStore(currentPage);
+            setFetchNewData(false);
+        }
+    }, [fetchNewData, currentPage]);
 
     const ReferenceTable = () => (
         <div>
@@ -177,14 +191,12 @@ export default function PriceZoneReview() {
         <div className='pz-review-base-wrapper'>
             {renderDataTable()}
             <CustomPagination
-
                 total={totalResultCount}
                 current={currentPage}
                 onChange={(current) => {
                     if (!resultLoading) {
                         setCurrentPage(current);
-                        const updatedDataStore = cleanInvalidData();
-                        loadTableData(current, updatedDataStore);
+                        updateDataStore(current);
                     }
                 }}
                 pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
