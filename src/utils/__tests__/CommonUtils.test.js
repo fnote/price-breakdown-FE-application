@@ -1,4 +1,5 @@
-import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName, grantViewPermissionsToScreens} from '../CommonUtils';
+import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName,
+    grantViewPermissionsToScreens, checkOnlineStatus, unsupportedBrowserState} from '../CommonUtils';
 
 const businessUnits = new Map(
     [
@@ -171,4 +172,82 @@ describe('grantViewPermissionsToScreens', () => {
         expect(grantViewPermissionsToScreens('', 'price_validation_screen')).toEqual(false);
         expect(grantViewPermissionsToScreens('', 'price_validation_screen')).toEqual(false);
     });
+});
+
+describe('checkOnlineStatus', () => {
+
+    // helper function to mock the fetch and get response.
+    const mockAndGetResponse = async (status, error) => {
+        const unmockedFetch = global.fetch
+        global.fetch = error==null? () =>  Promise.resolve({status: status}): error;
+        const resp = await checkOnlineStatus();
+        global.fetch = unmockedFetch
+        return resp;
+    }
+
+    test('Should return true if 200 <= status < 300', async () => {
+        const  resp = await mockAndGetResponse(200);
+        expect(resp).toEqual(true);
+    });
+
+    test('Should return false if not 200 <= status < 300', async () => {
+        const  resp = await mockAndGetResponse(404);
+        expect(resp).toEqual(false);
+    });
+
+    test('Should return false upon exception', async () => {
+        const  resp = await mockAndGetResponse(200, ()=> {throw new Error('error occurred while fetching data')});
+        expect(resp).toEqual(false);
+    });
+});
+
+describe('unsupportedBrowserState', () => {
+
+    const storageMap = {};
+    const unmockedGetItem = localStorage.getItem;
+    const unmockedSetItem = localStorage.setItem;
+    localStorage.getItem = (key) => {
+        return storageMap.get(key);
+    };
+
+    localStorage.setItem = (key, value) => {
+        storageMap.set(key, value);
+    };
+
+    const setAllStatesToTrueOneByOne = () => {
+        unsupportedBrowserState.setUnsupportedBrowserScreenContinue();
+        unsupportedBrowserState.setUnsupportedBrowserAlertContinue();
+    }
+
+    const clearAllStatesOneByOne = () => {
+        unsupportedBrowserState.clearUnsupportedBrowserScreenContinue();
+        unsupportedBrowserState.clearUnsupportedBrowserAlertContinue();
+    }
+
+    const verifyState = (state) => {
+        expect(unsupportedBrowserState.isSetUnsupportedBrowserScreenContinue()).toEqual(state);
+        expect(unsupportedBrowserState.isSetUnsupportedBrowserAlertContinue()).toEqual(state);
+    }
+
+    test('set,get and clear UnsupportedBrowserScreenContinue and UnsupportedBrowserAlertContinue', () => {
+        //verify initial state
+        verifyState(false);
+
+        //verify after setting to true
+        setAllStatesToTrueOneByOne();
+        verifyState(true);
+
+        //verify after clearing one by one
+        clearAllStatesOneByOne();
+        verifyState(false);
+
+        //verify after setting and clearing by function
+        setAllStatesToTrueOneByOne();
+        verifyState(true);
+        unsupportedBrowserState.clearUnsupportedBrowserStates();
+        verifyState(false);
+    });
+
+    localStorage.getItem = unmockedGetItem;
+    localStorage.setItem = unmockedSetItem;
 });
