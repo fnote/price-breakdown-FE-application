@@ -8,7 +8,7 @@ import {
     FILE_NAME_DISPLAY_LENGTH,
     ONLINE_STATUS_CHECK_URL,
     ROLE_APP_ADMIN, ROLE_CIPZ_REVIEWER, ROLE_CIPZ_SUBMITTER, ROLE_CIPZ_SUPPORT,
-    ROLE_GENERAL_USER, SCREEN_CIPZ_PZ_UPDATE,
+    ROLE_GENERAL_USER, ROLE_SCREEN_PERMISSIONS, SCREEN_CIPZ_PZ_UPDATE,
     SCREEN_CIPZ_REASSIGNMENT, SCREEN_CIPZ_REVIEW, SCREEN_CIPZ_SEARCH,
     SCREEN_FILE_UPLOAD, SCREEN_HISTORY_INQUIRY,
     SCREEN_PRICE_VALIDATION,
@@ -79,40 +79,7 @@ export const checkOnlineStatus = async () => {
 };
 
 export const grantViewPermissionsToScreens = (role, screen) => {
-    // eslint-disable-next-line no-sequences,default-case
-    let generalUserAvailability = (role === ROLE_APP_ADMIN || role === ROLE_GENERAL_USER);
-    let cipzRoleAvailability = (role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUBMITTER);
-    let generalScreenAvailability = (screen === SCREEN_PRICE_VALIDATION
-        || screen === SCREEN_FILE_UPLOAD || screen === SCREEN_HISTORY_INQUIRY);
-    let cipzSearchAndUpdateScreenAvailability = (screen === SCREEN_CIPZ_PZ_UPDATE || screen === SCREEN_CIPZ_SEARCH)
-    if (generalUserAvailability && generalScreenAvailability) {
-        return true;
-    }
-    if (generalUserAvailability && (screen === SCREEN_CIPZ_REASSIGNMENT)) {
-        return false;
-    }
-    if ((cipzRoleAvailability || role === ROLE_CIPZ_SUPPORT) && (screen === SCREEN_CIPZ_REASSIGNMENT)) {
-        return true;
-    }
-    if (cipzRoleAvailability && generalScreenAvailability) {
-        return false;
-    }
-    if (role === ROLE_CIPZ_SUBMITTER && screen === SCREEN_CIPZ_REVIEW) {
-        return false;
-    }
-    if ((role === ROLE_CIPZ_REVIEWER || role === ROLE_CIPZ_SUPPORT) && screen === SCREEN_CIPZ_REVIEW) {
-        return true;
-    }
-    if (role === '') {
-        return false;
-    }
-    if (cipzRoleAvailability && cipzSearchAndUpdateScreenAvailability) {
-        return true;
-    }
-    if (role === '' && cipzSearchAndUpdateScreenAvailability) {
-        return false;
-    }
-    return role === ROLE_CIPZ_SUPPORT && (screen === SCREEN_CIPZ_REASSIGNMENT || screen === SCREEN_CIPZ_REVIEW);
+    return ROLE_SCREEN_PERMISSIONS[screen][role];
 };
 
 /**

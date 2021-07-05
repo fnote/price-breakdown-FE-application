@@ -206,3 +206,62 @@ export const DEFAULT_REQUEST_HEADER = {
     'Accept': 'application/json, text/plain, */*',
     'Content-Type': 'application/json'
 };
+
+export const ROLE_SCREEN_PERMISSIONS = {
+    file_upload_screen:{
+        appadmin:true,
+        generaluser:true,
+        cipz_submitter:false,
+        cipz_reviewer:false,
+        cipz_support_user:false,
+        '':false
+    },
+    price_validation_screen:{
+        appadmin:true,
+        generaluser:true,
+        cipz_submitter:false,
+        cipz_reviewer:false,
+        cipz_support_user:false,
+        '':false
+    },
+    history_inquiry_screen:{
+        appadmin:true,
+        generaluser:true,
+        cipz_submitter:false,
+        cipz_reviewer:false,
+        cipz_support_user:false,
+        '':false
+    },
+    cipz_reviewer_tab:{
+        appadmin:false,
+        generaluser:false,
+        cipz_submitter:false,
+        cipz_reviewer:true,
+        cipz_support_user:true,
+        '':false
+    },
+    cipz_price_zone_update_tab:{
+        appadmin:false,
+        generaluser:false,
+        cipz_submitter:true,
+        cipz_reviewer:true,
+        cipz_support_user:true,
+        '':false
+    },
+    cipz_reassignment_tab:{
+        appadmin:false,
+        generaluser:false,
+        cipz_submitter:true,
+        cipz_reviewer:true,
+        cipz_support_user:true,
+        '':false
+    },
+    cipz_search:{
+        appadmin:false,
+        generaluser:false,
+        cipz_submitter:true,
+        cipz_reviewer:true,
+        cipz_support_user:true,
+        '':false
+    }
+}
