@@ -1,4 +1,5 @@
-import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName} from '../CommonUtils';
+import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName,
+    grantViewPermissionsToScreens, checkOnlineStatus, unsupportedBrowserState} from '../CommonUtils';
 
 const businessUnits = new Map(
     [
@@ -122,4 +123,131 @@ describe('getDisplayFileName', () => {
     test('Should return a same file name when below length', () => {
         expect(getDisplayFileName('ABC_001_902839_20200202_C.txt')).toEqual('ABC_001_902839_20200202_C.txt');
     });
+});
+
+describe('grantViewPermissionsToScreens', () => {
+    // general users cant use cipz
+    test('general users cant have access to cipz screens', () => {
+        expect(grantViewPermissionsToScreens('appadmin', 'cipz_reviewer_tab')).toEqual(false);
+        expect(grantViewPermissionsToScreens('generaluser', 'cipz_reviewer_tab')).toEqual(false);
+        expect(grantViewPermissionsToScreens('appadmin', 'cipz_reassignment_tab')).toEqual(false);
+        expect(grantViewPermissionsToScreens('generaluser', 'cipz_reassignment_tab')).toEqual(false);
+    });
+
+    // general can use general
+    test('general users cant have access to cipz screens', () => {
+        expect(grantViewPermissionsToScreens('appadmin', 'price_validation_screen')).toEqual(true);
+        expect(grantViewPermissionsToScreens('generaluser', 'price_validation_screen')).toEqual(true);
+        expect(grantViewPermissionsToScreens('appadmin', 'file_upload_screen')).toEqual(true);
+        expect(grantViewPermissionsToScreens('generaluser', 'file_upload_screen')).toEqual(true);
+    });
+
+    // reviewer has access to reviewer tab
+    test('cipz reviewer role have access to cipz review screens', () => {
+        expect(grantViewPermissionsToScreens('cipz_reviewer', 'cipz_reviewer_tab')).toEqual(true);
+    });
+
+    // submitter has no access to reviewer tab
+    test('cipz submitter role cant have access to cipz review screens', () => {
+        expect(grantViewPermissionsToScreens('cipz_submitter', 'cipz_reviewer_tab')).toEqual(false);
+    });
+
+    // cipz can use cipz screens
+    test('cipz  roles can have access to cipz reassignment screens', () => {
+        expect(grantViewPermissionsToScreens('cipz_submitter', 'cipz_reassignment_tab')).toEqual(true);
+        expect(grantViewPermissionsToScreens('cipz_reviewer', 'cipz_reassignment_tab')).toEqual(true);
+        expect(grantViewPermissionsToScreens('cipz_support_user', 'cipz_reassignment_tab')).toEqual(true);
+    });
+
+    // cipz cant use general screens
+    test('cipz roles cant have access to general screens', () => {
+        expect(grantViewPermissionsToScreens('cipz_submitter', 'price_validation_screen')).toEqual(false);
+        expect(grantViewPermissionsToScreens('cipz_reviewer', 'price_validation_screen')).toEqual(false);
+        expect(grantViewPermissionsToScreens('cipz_support_user', 'price_validation_screen')).toEqual(false);
+    });
+
+    // empty roles
+    test('empty roles cant have access to any screen', () => {
+        expect(grantViewPermissionsToScreens('', 'price_validation_screen')).toEqual(false);
+        expect(grantViewPermissionsToScreens('', 'price_validation_screen')).toEqual(false);
+        expect(grantViewPermissionsToScreens('', 'price_validation_screen')).toEqual(false);
+    });
+});
+
+describe('checkOnlineStatus', () => {
+
+    // helper function to mock the fetch and get response.
+    const mockAndGetResponse = async (status, error) => {
+        const unmockedFetch = global.fetch
+        global.fetch = error==null? () =>  Promise.resolve({status: status}): error;
+        const resp = await checkOnlineStatus();
+        global.fetch = unmockedFetch
+        return resp;
+    }
+
+    test('Should return true if 200 <= status < 300', async () => {
+        const  resp = await mockAndGetResponse(200);
+        expect(resp).toEqual(true);
+    });
+
+    test('Should return false if not 200 <= status < 300', async () => {
+        const  resp = await mockAndGetResponse(404);
+        expect(resp).toEqual(false);
+    });
+
+    test('Should return false upon exception', async () => {
+        const  resp = await mockAndGetResponse(200, ()=> {throw new Error('error occurred while fetching data')});
+        expect(resp).toEqual(false);
+    });
+});
+
+describe('unsupportedBrowserState', () => {
+
+    const storageMap = {};
+    const unmockedGetItem = localStorage.getItem;
+    const unmockedSetItem = localStorage.setItem;
+    localStorage.getItem = (key) => {
+        return storageMap.get(key);
+    };
+
+    localStorage.setItem = (key, value) => {
+        storageMap.set(key, value);
+    };
+
+    const setAllStatesToTrueOneByOne = () => {
+        unsupportedBrowserState.setUnsupportedBrowserScreenContinue();
+        unsupportedBrowserState.setUnsupportedBrowserAlertContinue();
+    }
+
+    const clearAllStatesOneByOne = () => {
+        unsupportedBrowserState.clearUnsupportedBrowserScreenContinue();
+        unsupportedBrowserState.clearUnsupportedBrowserAlertContinue();
+    }
+
+    const verifyState = (state) => {
+        expect(unsupportedBrowserState.isSetUnsupportedBrowserScreenContinue()).toEqual(state);
+        expect(unsupportedBrowserState.isSetUnsupportedBrowserAlertContinue()).toEqual(state);
+    }
+
+    test('set,get and clear UnsupportedBrowserScreenContinue and UnsupportedBrowserAlertContinue', () => {
+        //verify initial state
+        verifyState(false);
+
+        //verify after setting to true
+        setAllStatesToTrueOneByOne();
+        verifyState(true);
+
+        //verify after clearing one by one
+        clearAllStatesOneByOne();
+        verifyState(false);
+
+        //verify after setting and clearing by function
+        setAllStatesToTrueOneByOne();
+        verifyState(true);
+        unsupportedBrowserState.clearUnsupportedBrowserStates();
+        verifyState(false);
+    });
+
+    localStorage.getItem = unmockedGetItem;
+    localStorage.setItem = unmockedSetItem;
 });

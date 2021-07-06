@@ -84,7 +84,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                     <div className="pz-success-anim">
                         <ReviewSuccess className="pz-success-anim-review-logo"/>
                     </div>
-                    <div className="pz-success-text">Successfully Approved !</div>
+                    <div className="pz-success-text">Successfully Approved</div>
                 </div>
             </div>
         </Modal>
@@ -105,7 +105,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                     <div className="pz-success-anim">
                         <ReviewReject className="pz-success-anim-review-logo"/>
                     </div>
-                    <div className="pz-success-text">Successfully Rejected !</div>
+                    <div className="pz-success-text">Successfully Rejected</div>
                 </div>
             </div>
         </Modal>
