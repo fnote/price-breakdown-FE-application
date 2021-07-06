@@ -43,6 +43,16 @@ export const formatBusinessUnit = (businessUnitId, businessUnits) => {
     return (businessUnit) ? `${businessUnit.id} - ${businessUnit.name}` : businessUnitId;
 };
 
+export const formatBusinessUnitsIdShortName = (businessUnitId, businessUnitsMap) => {
+    if (businessUnitsMap) {
+        const idWithShortName = businessUnitsMap.get(businessUnitId);
+        if (idWithShortName) {
+            return `${idWithShortName.id} - ${idWithShortName.shortName}`;
+        }
+    }
+    return businessUnitId;
+};
+
 export const formatNumberInput = (value) => {
     const formatterRegex = /^-?\d+(?:\.\d{0,3})?/;
 

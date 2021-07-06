@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import {notification, Select} from 'antd';
 // Utils
-import {formatBusinessUnit} from '../../../utils/CommonUtils';
+import {formatBusinessUnitsIdShortName} from '../../../utils/CommonUtils';
 // Constants
 import {
     AVAILABLE_PRICE_ZONES, CORRELATION_ID_HEADER,
@@ -58,7 +58,9 @@ export const getBusinessUnits = (businessUnitsMap) => {
         businessUnitsMap.forEach(((businessUnit) => {
             businessUnitOptions.push(
                 <Option key={businessUnit.id}
-                        value={`${businessUnit.id}-${businessUnit.shortName}`}>{businessUnit.id} - {businessUnit.shortName}</Option>
+                        value={formatBusinessUnitsIdShortName(businessUnit.id, businessUnitsMap)}>
+                            {formatBusinessUnitsIdShortName(businessUnit.id, businessUnitsMap)}
+                </Option>
             );
         }));
     }
@@ -95,7 +97,7 @@ export const formatPZRequest = ({
     },
     changeSummary: {
         id,
-        businessUnit: formatBusinessUnit(businessUnitNumber, businessUnitMap),
+        businessUnit: formatBusinessUnitsIdShortName(businessUnitNumber, businessUnitMap),
         newPriceZone,
         oldPriceZone: formatPriceZones(oldPriceZone),
         effectiveFromDate: formatDate(effectiveFromDate),
@@ -162,7 +164,7 @@ export const handleResponse = (response) => {
     });
 };
 
-export const formatPZReferenceRecord = (record) => ({...record, effectiveFrom: formatDate(record.effectiveFrom)});
+export const formatPZReferenceRecord = (record) => ({...record, effectiveFrom: formatDate(record.effectiveFromDate)});
 
 export const generatePaginationParams = (page, pageSize) => ({
     offset: calculateOffset(page, pageSize),

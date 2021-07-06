@@ -107,7 +107,6 @@ export default function ReferenceDataTable({
             <>
                 <div className='pop-sum-text'>CUSTOMER</div>
                 <div className='pop-sum-tag-customer'>{customerAccount}</div>
-                <div className='pop-sum-total-empty'>|</div>
             </>
         );
     };

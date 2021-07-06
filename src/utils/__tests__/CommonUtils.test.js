@@ -1,5 +1,5 @@
 import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName,
-    grantViewPermissionsToScreens, checkOnlineStatus, unsupportedBrowserState} from '../CommonUtils';
+    grantViewPermissionsToScreens, checkOnlineStatus, unsupportedBrowserState, formatBusinessUnitsIdShortName} from '../CommonUtils';
 
 const businessUnits = new Map(
     [
@@ -33,6 +33,22 @@ const userDetails = {
         }
       ]
 };
+
+describe('formatBusinessUnitsIdShortName', () => {
+    const businessUnitsMap = new Map([
+        ['011', {id: '011', shortName: 'Temp'}], ['019', {id: '019', shortName: 'Cincinnati'}]
+    ]);
+
+    test('should return formatted business unit name for valid OpCo Id 019', () => {
+        const result = formatBusinessUnitsIdShortName('019', businessUnitsMap);
+        expect(result).toEqual('019 - Cincinnati');
+    });
+
+    test('should return businessunit id when there is no map found', () => {
+        const result = formatBusinessUnitsIdShortName('020', businessUnitsMap);
+        expect(result).toEqual('020');
+    });
+});
 
 describe('createBusinessUnitMap', () => {
     const businessUnitMap = createBusinessUnitMap(userDetails);
