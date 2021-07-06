@@ -160,7 +160,7 @@ export const handleResponse = (response) => {
     });
 };
 
-export const formatPZReferenceRecord = (record) => ({...record, effectiveFrom: formatDate(record.effectiveFrom)});
+export const formatPZReferenceRecord = (record) => ({...record, effectiveFrom: formatDate(record.effectiveFromDate)});
 
 export const generatePaginationParams = (page, pageSize) => ({
     offset: calculateOffset(page, pageSize),
