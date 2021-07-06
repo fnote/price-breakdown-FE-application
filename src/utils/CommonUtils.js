@@ -43,14 +43,12 @@ export const formatBusinessUnit = (businessUnitId, businessUnits) => {
     return (businessUnit) ? `${businessUnit.id} - ${businessUnit.name}` : businessUnitId;
 };
 
-export const returnIdAndShortName = (idWithShortName) =>{
-    return `${idWithShortName.id} - ${idWithShortName.shortName}`;
-};
-
-export const getBusinessUnitsIdShortName = (businessUnitId, businessUnitsMap) => {
+export const formatBusinessUnitsIdShortName = (businessUnitId, businessUnitsMap) => {
     if (businessUnitsMap) {
         const idWithShortName = businessUnitsMap.get(businessUnitId);
-        return returnIdAndShortName(idWithShortName);
+        if (idWithShortName) {
+            return `${idWithShortName.id} - ${idWithShortName.shortName}`;
+        }
     }
     return businessUnitId;
 };

@@ -3,7 +3,7 @@ import React from 'react';
 import moment from 'moment';
 import {notification, Select} from 'antd';
 // Utils
-import {returnIdAndShortName, getBusinessUnitsIdShortName} from '../../../utils/CommonUtils';
+import {formatBusinessUnitsIdShortName} from '../../../utils/CommonUtils';
 // Constants
 import {
     AVAILABLE_PRICE_ZONES, CORRELATION_ID_HEADER,
@@ -58,7 +58,9 @@ export const getBusinessUnits = (businessUnitsMap) => {
         businessUnitsMap.forEach(((businessUnit) => {
             businessUnitOptions.push(
                 <Option key={businessUnit.id}
-                        value={returnIdAndShortName(businessUnit)}>{returnIdAndShortName(businessUnit)}</Option>
+                        value={formatBusinessUnitsIdShortName(businessUnit.id, businessUnitsMap)}>
+                            {formatBusinessUnitsIdShortName(businessUnit.id, businessUnitsMap)}
+                </Option>
             );
         }));
     }
@@ -93,7 +95,7 @@ export const formatPZRequest = ({
     },
     changeSummary: {
         id,
-        businessUnit: getBusinessUnitsIdShortName(businessUnitNumber, businessUnitMap),
+        businessUnit: formatBusinessUnitsIdShortName(businessUnitNumber, businessUnitMap),
         newPriceZone,
         oldPriceZone,
         effectiveFromDate: formatDate(effectiveFromDate),
