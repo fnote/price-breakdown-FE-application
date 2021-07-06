@@ -83,6 +83,8 @@ export const generateReviewer = ({username, firstName, lastName, email}) => ({
     email
 });
 
+export const formatPriceZones = (priceZones = []) => priceZones.join(',');
+
 export const formatPZRequest = ({
                                     createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate,
                                     customerGroup, customerAccount, itemAttributeGroup, itemAttributeGroupId,
@@ -97,7 +99,7 @@ export const formatPZRequest = ({
         id,
         businessUnit: formatBusinessUnitsIdShortName(businessUnitNumber, businessUnitMap),
         newPriceZone,
-        oldPriceZone,
+        oldPriceZone: formatPriceZones(oldPriceZone),
         effectiveFromDate: formatDate(effectiveFromDate),
         customerGroup,
         customerAccount,
