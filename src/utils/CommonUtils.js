@@ -47,7 +47,7 @@ export const formatBusinessUnitsIdShortName = (businessUnitId, businessUnitsMap)
     if (businessUnitsMap) {
         const idWithShortName = businessUnitsMap.get(businessUnitId);
         if (idWithShortName) {
-            return `${idWithShortName.id} - ${idWithShortName.shortName}`;
+            return `${idWithShortName.id}-${idWithShortName.shortName}`;
         }
     }
     return businessUnitId;
