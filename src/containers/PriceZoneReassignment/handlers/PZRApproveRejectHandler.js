@@ -70,7 +70,7 @@ export const handleApproveReject = ({
                 } else {
                     failureCallback();
                     const action = status ? status.toLowerCase() : 'review';
-                    const errorTitle = `Sorry we could not ${action} the request. Please try again later`;                    
+                    const errorTitle = `Sorry we could not ${action} the request. Please try again later`;
                     openNotificationWithIcon('error', CIPZErrorMessages.ALREADY_REVIEWED_ALERT_MESSAGE, errorTitle);
                 }
             }
