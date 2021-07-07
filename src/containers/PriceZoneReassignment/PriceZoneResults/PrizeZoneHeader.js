@@ -128,6 +128,7 @@ export default function PrizeZoneHeader() {
                         </div>
                     </div>
                 </div>
+        
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
@@ -161,6 +162,7 @@ export default function PrizeZoneHeader() {
                         </div>
                     </div>
                 </div>
+             
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">

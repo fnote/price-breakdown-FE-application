@@ -46,7 +46,7 @@ export const SubmitReason = ({Modal, setSubmitModal, priceZoneChangeHandler, sub
                 still: true,
                 okText: 'SUBMIT',
                 cancelText: 'CANCEL',
-                okdisable:false // use this prop to disable ok button
+                okdisable:true // use this prop to disable ok button
             },
 
             <div className="pz-confirm-pop-base">

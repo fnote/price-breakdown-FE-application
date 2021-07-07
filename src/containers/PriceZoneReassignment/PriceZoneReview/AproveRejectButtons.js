@@ -42,6 +42,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             okText='SUBMIT'
             cancelText='CANCEL'
             className='pz-antModal'
+            okButtonProps={{ disabled: true }} // use this prop to disable ok button
             onOk={() => {
                 let reviewNote = '';
                 if (inputElement.current) {
