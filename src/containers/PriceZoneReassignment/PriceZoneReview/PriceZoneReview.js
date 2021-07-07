@@ -191,6 +191,7 @@ export default function PriceZoneReview() {
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
+                //scroll={{ y: 420, x: 500 }}   --- WIP ---
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
         </>

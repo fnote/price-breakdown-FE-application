@@ -16,7 +16,10 @@ export default function ReviewSummary({
                     <div className="pz-review-sum-zone">
                         <div className="pz-zone-wrapper">
                             <div className="pz-zone-from-to-base">
+                            <Tooltip title={oldPriceZone} color="#fff" overlayClassName="pz-tooltip"
+                                 overlayStyle={{color: '#000'}}>
                                 <div className="pz-zone-from">{oldPriceZone}</div>
+                                </Tooltip>
                                 <div className="pz-zone-separator"/>
                                 <div className="pz-zone-to">{newPriceZone}</div>
                             </div>

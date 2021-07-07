@@ -60,6 +60,10 @@
   background: white;
   border: 0.076rem solid rgba(98, 115, 126, 0.25);
 
+  // border: 0.076rem solid transparent;
+  // border-image: linear-gradient(180deg,  rgba(255,255,255,0) 5%, rgba(98, 115, 126, 0.25));
+  // border-image-slice: 1;
+
   .ant-tabs {
     width: 100%;
 
@@ -72,14 +76,20 @@
 
       .ant-tabs-tab {
         background: none;
+        border: none;
       }
       .ant-tabs-tab-active {
         background: #fff !important;
+        border: 1px solid #f0f0f0 !important;
+        border-bottom-color: transparent !important;
+        border-top-right-radius: 1rem;
+        border-top-left-radius: 1rem;
       }
     }
     .ant-tabs-tabpane {
       background: #fff;
-      border-radius: 13px;
+      border-radius: 1rem;
+      border-top-left-radius: 0px;
     }
 
     .pz-header {
@@ -544,7 +554,7 @@
         width: 100%;
       }
       .pz-effective-date {
-        width: 100%;
+        width: 7.8rem;
         color: $textstandard;
         font-weight: 800;
         font-size: 1.5rem;
@@ -948,9 +958,12 @@
 
   .pz-icon-tab {
     font-size: 1.4rem;
+    color: $bluegrey;
   }
   .pz-main-tab-sub {
     margin-left: 0.5rem;
+    font-weight: 600;
+    color: $bluegrey;
   }
 }
 
