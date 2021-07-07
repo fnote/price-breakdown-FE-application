@@ -183,9 +183,9 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
 
     return (
         <div className="pz-aprove-reject-wrapper">
-            {1 === 2 ? (
+            {row.reviewStatus ? (
                 <div className="pz-aprove-done">
-                    <CheckCircleFilled/> Approved
+                    <CheckCircleFilled/> {row.reviewStatus}
                 </div>
             ) : (
                 <>
