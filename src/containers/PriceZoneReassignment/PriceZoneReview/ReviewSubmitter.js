@@ -5,9 +5,12 @@ export default function ReviewSubmitter({submission: {id, givenName, surname, cr
     return (
         <div className="pz-review-wrapper">
             <div className="pz-review-name">
+            <Tooltip title={`${givenName} ${surname}`} color="#fff" overlayClassName="pz-tooltip"
+                         overlayStyle={{color: '#000'}}>
                 <div className="pz-review-name-username">
                     {givenName} {surname}
                 </div>
+                </Tooltip>
                 <div className="pz-review-name-id">
                     ({id})
                 </div>

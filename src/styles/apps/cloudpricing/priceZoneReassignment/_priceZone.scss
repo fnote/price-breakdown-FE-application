@@ -378,6 +378,7 @@
     color: $textstandard;
     font-weight: 400;
     justify-content: center;
+    text-align: center;
   }
   .pz-review-note {
     width: 100%;
@@ -883,6 +884,13 @@
   .ant-pagination-item-active:focus a, .ant-pagination-item-active:hover a {
     color: #fff;
 }
+}
+
+
+// added pagination styles to global level
+
+.ant-pagination-item-active:focus a, .ant-pagination-item-active:hover a {
+  color: #fff;
 }
 
 // =========================
