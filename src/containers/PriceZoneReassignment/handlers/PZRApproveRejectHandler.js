@@ -23,8 +23,7 @@ export const handleApproveReject = ({
                                         status,
                                         setApproveRejectProgressing,
                                         successCallback,
-                                        failureCallback,
-                                        alreadyApprovedRejectedCallback
+                                        failureCallback
                                     }) => {
     fetch(requestUrl, constructFetchRequest(HTTP_METHOD_PATCH, payload))
         .then(handleResponse)
@@ -38,13 +37,14 @@ export const handleApproveReject = ({
                 }
                 setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
             } else {
+                failureCallback();
                 const errorResponseData = resp.data;
                 if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_ALREADY_APPROVED_OR_REJECTED) {
-                    alreadyApprovedRejectedCallback();
+                    // Change this to  popup
+                    openNotificationWithIcon('error', CIPZErrorMessages.ALREADY_REVIEWED_ALERT_MESSAGE, CIPZErrorMessages.ALREADY_REVIEWED_ALERT_TITLE);
                 } else {
-                    failureCallback();
                     const action = status ? status.toLowerCase() : 'review';
-                    const errorTitle = `Sorry we could not ${action} the request. Please try again later`;                    
+                    const errorTitle = `Sorry we could not ${action} the request. Please try again later`;
                     openNotificationWithIcon('error', CIPZErrorMessages.ALREADY_REVIEWED_ALERT_MESSAGE, errorTitle);
                 }
             }

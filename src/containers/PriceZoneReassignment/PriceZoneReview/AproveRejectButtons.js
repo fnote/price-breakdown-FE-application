@@ -9,7 +9,8 @@ import {ReactComponent as Info} from '../../../styles/images/info.svg';
 const REJECT_REASON_MODAL = 'reject-reason-modal';
 const REJECT_SUCCESS_MODAL = 'reject-success-modal';
 const APPROVE_SUCCESS_MODAL = 'approve-success-modal';
-const ALREADY_APPROVED_REJECTED_MODAL = 'already-approved-rejected-modal';
+const ALREADY_APPROVED_MODAL = 'already-approved-modal';
+const ALREADY_REJECTED_MODAL = 'already-rejected-modal';
 const LOADING_MODAL = 'loading-modal';
 const EMPTY_MODAL = '';
 
@@ -25,11 +26,6 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
 
     const openModal = (modalName = EMPTY_MODAL) => {
         setActiveModal(modalName);
-        setIsModalVisible(true);
-    };
-
-    const openAlreadyApprovedRejectedModal = () => {
-        setActiveModal(ALREADY_APPROVED_REJECTED_MODAL);
         setIsModalVisible(true);
     };
 
@@ -53,7 +49,6 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                             {
                                 successCallback: () => openModal(REJECT_SUCCESS_MODAL),
                                 failureCallback: closeModal,
-                                alreadyApprovedRejectedCallback: openAlreadyApprovedRejectedModal
                             }
                         );
                     }
@@ -99,7 +94,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
         </Modal>
     );
 
-    const AlreadyApprovedRejectedModal = () => (
+    const AlreadyApproved = () => (
         <Modal
             visible={isModalVisible}
             centered={true}
@@ -115,7 +110,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                         <Info className="pz-success-anim-review-logo"/>
                     </div>
                     <div className="pz-success-text">
-                        Already approved/rejected by <br/> another manager
+                        Already approved by <br/> another manager
                     </div>
                 </div>
             </div>
@@ -138,6 +133,29 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                         <ReviewReject className="pz-success-anim-review-logo"/>
                     </div>
                     <div className="pz-success-text">Successfully Rejected</div>
+                </div>
+            </div>
+        </Modal>
+    );
+
+    const AlreadyRejected = () => (
+        <Modal
+            visible={isModalVisible}
+            centered={true}
+            okText="OK"
+            cancelButtonProps={{style: {display: 'none'}}}
+            className="pz-antModal"
+            onCancel={closeModal}
+            onOk={closeModal}
+        >
+            <div className="pz-confirm-pop-base-success">
+                <div className="pz-confirm-wrapper-success">
+                    <div className="pz-success-anim">
+                        <Info className="pz-success-anim-review-logo"/>
+                    </div>
+                    <div className="pz-success-text">
+                        Already rejected by <br/> another manager
+                    </div>
                 </div>
             </div>
         </Modal>
@@ -168,8 +186,10 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
         switch (activeModal) {
             case REJECT_REASON_MODAL:
                 return <RejectReasonModal/>;
-            case ALREADY_APPROVED_REJECTED_MODAL:
-                return <AlreadyApprovedRejectedModal/>;
+            case ALREADY_APPROVED_MODAL:
+                return <AlreadyApproved/>;
+            case ALREADY_REJECTED_MODAL:
+                return <AlreadyRejected/>;
             case REJECT_SUCCESS_MODAL:
                 return <RejectSuccess/>;
             case LOADING_MODAL:
@@ -200,7 +220,6 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                                     {
                                         successCallback: () => openModal(APPROVE_SUCCESS_MODAL),
                                         failureCallback: closeModal,
-                                        alreadyApprovedRejectedCallback: openAlreadyApprovedRejectedModal
                                     }
                                 );
                                 openModal(LOADING_MODAL);
