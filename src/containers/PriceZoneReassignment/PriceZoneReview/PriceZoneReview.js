@@ -91,7 +91,7 @@ export default function PriceZoneReview() {
 
     const {Modal, toggle} = useModal();
 
-    const approveRejectPZChangeRequests = ({id, index}, {reviewNote, status}, {successCallback, failureCallback}) => {
+    const approveRejectPZChangeRequests = ({id, index}, {reviewNote, status}, {successCallback, failureCallback, alreadyApprovedRejectedCallback}) => {
         setApproveRejectProgressing(true);
         const payload = constructPatchPayload({id}, {
             reviewNote,
@@ -111,7 +111,8 @@ export default function PriceZoneReview() {
             setDataResetIndex,
             setApproveRejectProgressing,
             successCallback,
-            failureCallback
+            failureCallback,
+            alreadyApprovedRejectedCallback
         });
     };
 
