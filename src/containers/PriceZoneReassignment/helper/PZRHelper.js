@@ -11,7 +11,15 @@ import {
     HEADER_VALUE_APPLICATION_JSON,
     HTTP_METHOD_GET, NOT_APPLICABLE_LABEL
 } from '../../../constants/Constants';
-import {CIPZ_API_DATE_FORMAT, PZ_DISPLAY_DATE_FORMAT} from '../../../constants/PZRConstants';
+import {
+    CIPZ_API_DATE_FORMAT,
+    PZ_DISPLAY_DATE_FORMAT,
+    REVIEW_STATUS_APPROVED,
+    REVIEW_STATUS_REJECTED,
+    REVIEW_STATUS_APPROVED_MSG,
+    REVIEW_STATUS_REJECTED_MSG,
+    REVIEW_STATUS_CHANGED_MSG
+} from '../../../constants/PZRConstants';
 
 const {Option} = Select;
 
@@ -88,7 +96,7 @@ export const formatPriceZones = (priceZones = []) => priceZones.join(',');
 export const formatPZRequest = ({
                                     createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate,
                                     customerGroup, customerAccount, itemAttributeGroup, itemAttributeGroupId,
-                                    summary, id, submissionNote, ...rem
+                                    summary, id, submissionNote, reviewStatus, ...rem
                                 }, {businessUnitMap}) => ({
     submission: {
         createdTime: formatUnixEpoch(createdTime),
@@ -107,6 +115,7 @@ export const formatPZRequest = ({
         itemAttributeGroupId,
         ...summary
     },
+    reviewStatus,
     other: {
         ...rem,
     }
@@ -126,12 +135,11 @@ export const calculateResetIndex = (currentIndex, currentPage) => {
     return currentIndex > currentPage ? currentPage : currentIndex;
 };
 
-export const removeCompletedRequest = (dataStore, currentPage, index) => {
+export const updateCompletedRequest = (dataStore, currentPage, index, statusMsg = null) => {
     const dataSource = dataStore[currentPage];
-    const itemsBeforeIndex = dataSource.slice(0, index);
-    const itemsAfterIndex = dataSource.slice(index + 1, dataSource.length);
-    const updatedPage = [...itemsBeforeIndex, ...itemsAfterIndex];
-    return {...dataStore, [currentPage]: updatedPage};
+    const dataSourceCopy = [...dataSource];
+    dataSourceCopy[index].reviewStatus = statusMsg;
+    return {...dataStore, [currentPage]: dataSourceCopy};
 };
 
 export const constructFetchRequest = (method = HTTP_METHOD_GET, body = null) => {
@@ -172,3 +180,13 @@ export const generatePaginationParams = (page, pageSize) => ({
 });
 
 export const constructRequestUrl = (baseUrl, queryObj) => `${baseUrl}?${constructQueryParams(queryObj)}`;
+
+export const getReviewStatusMsg = (status = null) => {
+    if (status === REVIEW_STATUS_APPROVED) {
+        return REVIEW_STATUS_APPROVED_MSG;
+    }
+    if (status === REVIEW_STATUS_REJECTED) {
+        return REVIEW_STATUS_REJECTED_MSG;
+    }
+    return REVIEW_STATUS_CHANGED_MSG;
+};
