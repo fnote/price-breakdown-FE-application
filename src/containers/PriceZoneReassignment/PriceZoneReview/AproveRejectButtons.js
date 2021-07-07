@@ -39,9 +39,9 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
         <Modal
             visible={isModalVisible}
             centered={true}
-            okText="SUBMIT"
-            cancelText="CANCEL"
-            className="pz-antModal"
+            okText='SUBMIT'
+            cancelText='CANCEL'
+            className='pz-antModal'
             onOk={() => {
                 let reviewNote = '';
                 if (inputElement.current) {
@@ -62,15 +62,15 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             }}
             onCancel={closeModal}
         >
-            <div className="pz-confirm-pop-base">
-                <div className="pz-alert-sr-main">Reject Reason</div>
-                <div className="pz-alert-sr-sub">
+            <div className='pz-confirm-pop-base'>
+                <div className='pz-alert-sr-main'>Reject Reason</div>
+                <div className='pz-alert-sr-sub'>
                     Please provide a reason which would be sent to the submitor as to why
                     this change was rejected.
                 </div>
                 <TextArea
-                    className="pz-submit-text-base"
-                    placeholder="Please insert reject reason here"
+                    className='pz-submit-text-base'
+                    placeholder='Please insert reject reason here'
                     autoSize={{minRows: 5, maxRows: 8}}
                     ref={inputElement}
                 />
@@ -82,18 +82,18 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
         <Modal
             visible={isModalVisible}
             centered={true}
-            okText="OK"
+            okText='OK'
             cancelButtonProps={{style: {display: 'none'}}}
-            className="pz-antModal"
+            className='pz-antModal'
             onCancel={closeModal}
             onOk={closeModal}
         >
-            <div className="pz-confirm-pop-base-success">
-                <div className="pz-confirm-wrapper-success">
-                    <div className="pz-success-anim">
-                        <ReviewSuccess className="pz-success-anim-review-logo"/>
+            <div className='pz-confirm-pop-base-success'>
+                <div className='pz-confirm-wrapper-success'>
+                    <div className='pz-success-anim'>
+                        <ReviewSuccess className='pz-success-anim-review-logo'/>
                     </div>
-                    <div className="pz-success-text">Successfully Approved</div>
+                    <div className='pz-success-text'>Successfully Approved</div>
                 </div>
             </div>
         </Modal>
@@ -103,18 +103,18 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
         <Modal
             visible={isModalVisible}
             centered={true}
-            okText="OK"
+            okText='OK'
             cancelButtonProps={{style: {display: 'none'}}}
-            className="pz-antModal"
+            className='pz-antModal'
             onCancel={closeModal}
             onOk={closeModal}
         >
-            <div className="pz-confirm-pop-base-success">
-                <div className="pz-confirm-wrapper-success">
-                    <div className="pz-success-anim">
-                        <Info className="pz-success-anim-review-logo"/>
+            <div className='pz-confirm-pop-base-success'>
+                <div className='pz-confirm-wrapper-success'>
+                    <div className='pz-success-anim'>
+                        <Info className='pz-success-anim-review-logo'/>
                     </div>
-                    <div className="pz-success-text">
+                    <div className='pz-success-text'>
                         Already approved/rejected by <br/> another manager
                     </div>
                 </div>
@@ -126,18 +126,18 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
         <Modal
             visible={isModalVisible}
             centered={true}
-            okText="OK"
+            okText='OK'
             cancelButtonProps={{style: {display: 'none'}}}
-            className="pz-antModal"
+            className='pz-antModal'
             onCancel={closeModal}
             onOk={closeModal}
         >
-            <div className="pz-confirm-pop-base-success">
-                <div className="pz-confirm-wrapper-success">
-                    <div className="pz-success-anim">
-                        <ReviewReject className="pz-success-anim-review-logo"/>
+            <div className='pz-confirm-pop-base-success'>
+                <div className='pz-confirm-wrapper-success'>
+                    <div className='pz-success-anim'>
+                        <ReviewReject className='pz-success-anim-review-logo'/>
                     </div>
-                    <div className="pz-success-text">Successfully Rejected</div>
+                    <div className='pz-success-text'>Successfully Rejected</div>
                 </div>
             </div>
         </Modal>
@@ -150,15 +150,15 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             maskClosable={false}
             closable={false}
             keyboard={false}
-            okText="OK"
-            cancelText=""
-            className="pz-antModal"
+            okText='OK'
+            cancelText=''
+            className='pz-antModal'
             footer={null}
         >
-            <div className="pz-loading-pop-base">
-                <div className="pz-loading-pop-wrapper">
-                    <Loader className="pz-loading-anim"/>
-                    <span className="pz-loading-text"> Please wait ...</span>
+            <div className='pz-loading-pop-base'>
+                <div className='pz-loading-pop-wrapper'>
+                    <Loader className='pz-loading-anim'/>
+                    <span className='pz-loading-text'> Please wait ...</span>
                 </div>
             </div>
         </Modal>
@@ -182,16 +182,16 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
     };
 
     return (
-        <div className="pz-aprove-reject-wrapper">
+        <div className='pz-aprove-reject-wrapper'>
             {row.reviewStatus ? (
-                <div className="pz-aprove-done">
+                <div className='pz-aprove-done'>
                     <CheckCircleFilled/> {row.reviewStatus}
                 </div>
             ) : (
                 <>
                     <Popconfirm
-                        id="pz-pop-confirm-custom"
-                        title="Are you sure?"
+                        id='pz-pop-confirm-custom'
+                        title='Are you sure?'
                         onConfirm={() => {
                             if (!disable) {
                                 handle(
@@ -206,13 +206,13 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                                 openModal(LOADING_MODAL);
                             }
                         }}
-                        okText="Yes"
-                        cancelText="No"
+                        okText='Yes'
+                        cancelText='No'
                     >
                         <button
-                            type="primary"
-                            htmlType="submit"
-                            className="search-btn outlined-btn"
+                            type='primary'
+                            htmlType='submit'
+                            className='search-btn outlined-btn'
                             onClick={() => {
                             }}
                         >
@@ -220,9 +220,9 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                         </button>
                     </Popconfirm>
                     <button
-                        type="primary"
-                        htmlType="submit"
-                        className="search-btn reject-btn outlined-btn"
+                        type='primary'
+                        htmlType='submit'
+                        className='search-btn reject-btn outlined-btn'
                         onClick={() => {
                             if (!disable) {
                                 openModal(REJECT_REASON_MODAL);
