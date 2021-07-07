@@ -593,15 +593,29 @@
   justify-content: space-evenly;
   padding: 0rem 1rem;
 
+  .pz-aprove-done{
+    background:$syscogreen;
+    width:10rem;
+    text-align: center;
+    padding:0.5rem;
+    font-size:1.1rem;
+    color:#fff;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
   .search-btn {
     width: calc(100% / 2);
     padding: 0.6rem 2rem;
     font-weight: 600;
-    background: rgba(4, 119, 0, 1);
+    background: rgb(70, 155, 67);
     background: linear-gradient(
       180deg,
-      rgb(153, 224, 132) 7%,
-      rgb(21, 160, 16) 100%
+      rgb(56, 182, 17) 7%,
+      $syscogreen 100%
     );
   }
   .reject-btn {
@@ -609,8 +623,8 @@
     background: rgb(247, 54, 54);
     background: linear-gradient(
       180deg,
-      rgba(255, 6, 6, 0.5) 7%,
-      rgb(247, 54, 54) 100%
+      rgba(226, 81, 81, 0.5) 7%,
+      rgb(211, 76, 76) 100%
     );
   }
 }
