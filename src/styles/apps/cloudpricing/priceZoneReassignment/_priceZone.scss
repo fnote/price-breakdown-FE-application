@@ -59,7 +59,7 @@
   border-radius: 0.9rem;
   background: white;
   border: 0.076rem solid rgba(98, 115, 126, 0.25);
-
+  
   .ant-tabs {
     width: 100%;
 
@@ -69,6 +69,13 @@
 
     .ant-tabs-nav {
       margin: 0 !important;
+
+      .ant-tabs-tab{
+        background:none;
+      }
+      .ant-tabs-tab-active{
+        background: #fff !important;
+      }
     }
     .ant-tabs-tabpane {
       background: #fff;
@@ -860,6 +867,22 @@
       }
     }
   }
+}
+
+//reference table pagination styles
+
+.pz-pop-table-pagination{
+  margin-top:1.2rem;
+  width:100%;
+  display: flex;
+  justify-content: flex-end;
+
+  .ant-pagination-item-active{
+    color:#fff;
+  }
+  .ant-pagination-item-active:focus a, .ant-pagination-item-active:hover a {
+    color: #fff;
+}
 }
 
 // =========================
