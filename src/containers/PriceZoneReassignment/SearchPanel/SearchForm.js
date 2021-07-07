@@ -36,9 +36,7 @@ const SearchForm = () => {
     const [attributeGroups, setAttributeGroups] = useState('');
     const [isSearchDisabled, setSearchDisabled] = useState(false);
 
-    const {
-        userDetails: {activeBusinessUnitMap = new Map()},
-    } = userDetailContext.userDetailsData;
+    const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const [form] = Form.useForm();
 
     const handleChangeCustomer = (event) => {
@@ -60,7 +58,7 @@ const SearchForm = () => {
         pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;
-        const opcoId = values.opco.split('-')[0];
+        const opcoId = ((values.opco).split('-'))[0];
         const attributeGroupMap = attributeGroups.attributeGroupMap;
         const searchParams = {
             site: values.opco,
@@ -77,11 +75,11 @@ const SearchForm = () => {
     };
 
     const getAttributeGroupsFromSeed = () => fetchAttributeGroups({
-            pZRContext,
-            userDetailContext,
-            setAttributeGroups,
-            setSearchDisabled,
-        });
+        pZRContext,
+        userDetailContext,
+        setAttributeGroups,
+        setSearchDisabled,
+    });
 
     useEffect(() => {
         if (attributeGroups === '') {
@@ -131,21 +129,17 @@ const SearchForm = () => {
                         <div className="pz-customer-groupbox">
                             <div className="pz-radio">
                                 <Radio.Group value={isCustomerChecked ? 1 : 2}>
-                                    <Radio
-                                        value={1}
-                                        onClick={() => {
-                                            setCustomerChecked(true);
-                                            setCustomerGroupTextBoxValue('');
-                                            form.resetFields(['customerGroup']);
-                                        }}
+                                    <Radio value={1} onClick={() => {
+                                        setCustomerChecked(true);
+                                        setCustomerGroupTextBoxValue('');
+                                        form.resetFields(['customerGroup']);
+                                    }}
                                     />
-                                    <Radio
-                                        value={2}
-                                        onClick={() => {
-                                            setCustomerChecked(false);
-                                            setCustomerTextBoxValue('');
-                                            form.resetFields(['customer']);
-                                        }}
+                                    <Radio value={2} onClick={() => {
+                                        setCustomerChecked(false);
+                                        setCustomerTextBoxValue('');
+                                        form.resetFields(['customer']);
+                                    }}
                                     />
                                 </Radio.Group>
                             </div>
@@ -165,16 +159,11 @@ const SearchForm = () => {
                                     {
                                         max: 14,
                                         message: 'Should be 14 characters max',
-                                    },
-                                ]}
+                                    }]}
                             >
                                 <Form.Item name="customer">
                                     <>
-                                        <Input
-                                            disabled={!isCustomerChecked}
-                                            value={customerTextboxValue}
-                                            onChange={handleChangeCustomer}
-                                        />
+                                        <Input disabled={!isCustomerChecked} value={customerTextboxValue} onChange={handleChangeCustomer}/>
                                     </>
                                 </Form.Item>
                             </Form.Item>
@@ -194,16 +183,11 @@ const SearchForm = () => {
                                     {
                                         max: 15,
                                         message: 'Should be 15 characters max',
-                                    },
-                                ]}
+                                    }]}
                             >
                                 <Form.Item name="customerGroup">
                                     <>
-                                        <Input
-                                            disabled={isCustomerChecked}
-                                            value={customerGroupTextboxValue}
-                                            onChange={handleChangeCustomerGroup}
-                                        />
+                                        <Input disabled={isCustomerChecked} value={customerGroupTextboxValue} onChange={handleChangeCustomerGroup}/>
                                     </>
                                 </Form.Item>
                             </Form.Item>
@@ -217,9 +201,7 @@ const SearchForm = () => {
                             <Select
                                 dropdownMatchSelectWidth={false}
                                 optionFilterProp="children"
-                                filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase())
-                                    >= 0
-                                }
+                                filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                                 showSearch
                             >
                                 {attributeGroups.attributeGroups}
@@ -228,11 +210,7 @@ const SearchForm = () => {
                         <Form.Item className="search-btn-wrapper">
                             <button
                                 type="primary"
-                                className={
-                                    isSearchDisabled
-                                        ? 'search-btn outlined-btn pz-disabled'
-                                        : 'search-btn outlined-btn '
-                                }
+                                className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn'}
                                 disabled={isSearchDisabled}
                             >
                                 Search
