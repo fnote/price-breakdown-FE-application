@@ -11,6 +11,7 @@ import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
 // Contexts
 import {UserDetailContext} from '../../UserDetailContext';
+import {PZRContext} from '../PZRContext';
 // Handlers
 import {fetchPZChangeRequests} from '../handlers/PZRGetSubmittedRequestsHandler';
 import {handleApproveReject} from '../handlers/PZRApproveRejectHandler';
@@ -80,6 +81,7 @@ export default function PriceZoneReview() {
     const [fetchNewData, setFetchNewData] = useState(false);
     const userDetailContext = useContext(UserDetailContext);
     const {activeBusinessUnitMap: businessUnitMap} = userDetailContext.userDetailsData.userDetails;
+    const pZRContext = useContext(PZRContext);
 
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
@@ -88,6 +90,10 @@ export default function PriceZoneReview() {
         }
         return [];
     }, [dataStore, currentPage, businessUnitMap]);
+
+    useEffect(() => {
+        pZRContext.setIsOnReviewPage(true);
+    }, []);
 
     const {Modal, toggle} = useModal();
 

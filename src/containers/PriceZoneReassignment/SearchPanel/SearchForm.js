@@ -88,133 +88,131 @@ const SearchForm = () => {
     }, [getAttributeGroupsFromSeed]);
 
     return (
-        <div>   {/* use "pz-disabled" class to disable the search panel */}
-            <>
-                <div className="panel-header">
-                    <i className="icon fi flaticon-list"/>
-                    Search
-                </div>
-                <div className="search-form">
-                    <Form
-                        name="nest-messages"
-                        form={form}
-                        validateMessages={validateMessages}
-                        onFinish={(value) => onSubmit(value)}
+        <div className={pZRContext.isOnReviewPage ? 'pz-disabled' : ''}>
+            <div className="panel-header">
+                <i className="icon fi flaticon-list"/>
+                Search
+            </div>
+            <div className="search-form">
+                <Form
+                    name="nest-messages"
+                    form={form}
+                    validateMessages={validateMessages}
+                    onFinish={(value) => onSubmit(value)}
+                >
+                    <Form.Item
+                        name="opco"
+                        label="Site"
+                        className="pz-linebreak pz-linebreak-item-group"
+                        rules={[{required: true}]}
                     >
-                        <Form.Item
-                            name="opco"
-                            label="Site"
-                            className="pz-linebreak pz-linebreak-item-group"
-                            rules={[{required: true}]}
+                        <Select
+                            placeholder="Select Site"
+                            dropdownMatchSelectWidth={false}
+                            filterOption={(inputValue, option) => {
+                                if (inputValue && option.children) {
+                                    // unless the backslash is escaped, this will end up with a syntax error
+                                    const pattern = inputValue.replace(/\\/g, '').toLowerCase();
+                                    return inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/) ? false
+                                        : option.children.join('').toLowerCase().match(pattern);
+                                }
+                                return true;
+                            }}
+                            showSearch
                         >
-                            <Select
-                                placeholder="Select Site"
-                                dropdownMatchSelectWidth={false}
-                                filterOption={(inputValue, option) => {
-                                    if (inputValue && option.children) {
-                                        // unless the backslash is escaped, this will end up with a syntax error
-                                        const pattern = inputValue.replace(/\\/g, '').toLowerCase();
-                                        return inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/) ? false
-                                            : option.children.join('').toLowerCase().match(pattern);
-                                    }
-                                    return true;
-                                }}
-                                showSearch
-                            >
-                                {getBusinessUnits(activeBusinessUnitMap)}
-                            </Select>
-                        </Form.Item>
-                        <div className="pz-customer-groupbox">
-                            <div className="pz-radio">
-                                <Radio.Group value={isCustomerChecked ? 1 : 2}>
-                                    <Radio value={1} onClick={() => {
-                                        setCustomerChecked(true);
-                                        setCustomerGroupTextBoxValue('');
-                                        form.resetFields(['customerGroup']);
-                                    }}/>
-                                    <Radio value={2} onClick={() => {
-                                        setCustomerChecked(false);
-                                        setCustomerTextBoxValue('');
-                                        form.resetFields(['customer']);
-                                    }}/>
-                                </Radio.Group>
-                            </div>
-                            <Form.Item
-                                name="customer"
-                                label="Customer"
-                                className="pz-linebreak pz-linebreak-item-group"
-                                rules={[
-                                    {
-                                        pattern: '^[a-zA-Z0-9]+$',
-                                        message: 'Not a valid Customer ID'
-                                    },
-                                    {
-                                        required: isCustomerChecked === true,
-                                        message: 'Customer or Customer Group is required!'
-                                    },
-                                    {
-                                        max: 14,
-                                        message: 'Should be 14 characters max'
-                                    }]}
-                            >
-                                <Form.Item name="customer">
-                                    <>
-                                        <Input disabled={!isCustomerChecked} value={customerTextboxValue} onChange={handleChangeCustomer}/>
-                                    </>
-                                </Form.Item>
-                            </Form.Item>
-                            <Form.Item
-                                name="customerGroup"
-                                label="Customer group"
-                                className="pz-linebreak pz-linebreak-item-group"
-                                rules={[
-                                    {
-                                        pattern: '^[a-zA-Z0-9]+$',
-                                        message: 'Not a valid Customer Group ID'
-                                    },
-                                    {
-                                        required: isCustomerChecked === false,
-                                        message: 'Customer or Customer Group is required!'
-                                    },
-                                    {
-                                        max: 15,
-                                        message: 'Should be 15 characters max'
-                                    }]}
-                            >
-                                <Form.Item name="customerGroup">
-                                    <>
-                                        <Input disabled={isCustomerChecked} value={customerGroupTextboxValue} onChange={handleChangeCustomerGroup}/>
-                                    </>
-                                </Form.Item>
-                            </Form.Item>
+                            {getBusinessUnits(activeBusinessUnitMap)}
+                        </Select>
+                    </Form.Item>
+                    <div className="pz-customer-groupbox">
+                        <div className="pz-radio">
+                            <Radio.Group value={isCustomerChecked ? 1 : 2}>
+                                <Radio value={1} onClick={() => {
+                                    setCustomerChecked(true);
+                                    setCustomerGroupTextBoxValue('');
+                                    form.resetFields(['customerGroup']);
+                                }}/>
+                                <Radio value={2} onClick={() => {
+                                    setCustomerChecked(false);
+                                    setCustomerTextBoxValue('');
+                                    form.resetFields(['customer']);
+                                }}/>
+                            </Radio.Group>
                         </div>
                         <Form.Item
-                            name="attributeGroup"
-                            label="Attribute group"
+                            name="customer"
+                            label="Customer"
                             className="pz-linebreak pz-linebreak-item-group"
-                            rules={[{required: true}]}
+                            rules={[
+                                {
+                                    pattern: '^[a-zA-Z0-9]+$',
+                                    message: 'Not a valid Customer ID'
+                                },
+                                {
+                                    required: isCustomerChecked === true,
+                                    message: 'Customer or Customer Group is required!'
+                                },
+                                {
+                                    max: 14,
+                                    message: 'Should be 14 characters max'
+                                }]}
                         >
-                            <Select
-                                dropdownMatchSelectWidth={false}
-                                optionFilterProp="children"
-                                filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                                showSearch
-                            >
-                                {attributeGroups.attributeGroups}
-                            </Select>
+                            <Form.Item name="customer">
+                                <>
+                                    <Input disabled={!isCustomerChecked} value={customerTextboxValue} onChange={handleChangeCustomer}/>
+                                </>
+                            </Form.Item>
                         </Form.Item>
-                        <Form.Item className="search-btn-wrapper">
-                            <button
-                                type="primary"
-                                className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
-                                disabled={isSearchDisabled}
-                            >
-                                Search
-                            </button>
+                        <Form.Item
+                            name="customerGroup"
+                            label="Customer group"
+                            className="pz-linebreak pz-linebreak-item-group"
+                            rules={[
+                                {
+                                    pattern: '^[a-zA-Z0-9]+$',
+                                    message: 'Not a valid Customer Group ID'
+                                },
+                                {
+                                    required: isCustomerChecked === false,
+                                    message: 'Customer or Customer Group is required!'
+                                },
+                                {
+                                    max: 15,
+                                    message: 'Should be 15 characters max'
+                                }]}
+                        >
+                            <Form.Item name="customerGroup">
+                                <>
+                                    <Input disabled={isCustomerChecked} value={customerGroupTextboxValue} onChange={handleChangeCustomerGroup}/>
+                                </>
+                            </Form.Item>
                         </Form.Item>
-                    </Form>
-                </div>
-            </>
+                    </div>
+                    <Form.Item
+                        name="attributeGroup"
+                        label="Attribute group"
+                        className="pz-linebreak pz-linebreak-item-group"
+                        rules={[{required: true}]}
+                    >
+                        <Select
+                            dropdownMatchSelectWidth={false}
+                            optionFilterProp="children"
+                            filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                            showSearch
+                        >
+                            {attributeGroups.attributeGroups}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item className="search-btn-wrapper">
+                        <button
+                            type="primary"
+                            className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
+                            disabled={isSearchDisabled}
+                        >
+                            Search
+                        </button>
+                    </Form.Item>
+                </Form>
+            </div>
         </div>
     );
 };
