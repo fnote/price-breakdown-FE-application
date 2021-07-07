@@ -60,6 +60,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                     why this change was rejected.
                 </div>
                 <TextArea
+                    id="tject-reason-textarea"
                     className='pz-submit-text-base'
                     placeholder='Please insert reject reason here'
                     autoSize={{minRows: 5, maxRows: 8}}
@@ -82,7 +83,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             <div className="pz-confirm-pop-base-success">
                 <div className="pz-confirm-wrapper-success">
                     <div className="pz-success-anim">
-                        <ReviewSuccess className="pz-success-anim-review-logo"/>
+                        <ReviewSuccess id="success-approve" className="pz-success-anim-review-logo"/>
                     </div>
                     <div className="pz-success-text">Successfully Approved</div>
                 </div>
@@ -103,7 +104,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             <div className="pz-confirm-pop-base-success">
                 <div className="pz-confirm-wrapper-success">
                     <div className="pz-success-anim">
-                        <ReviewReject className="pz-success-anim-review-logo"/>
+                        <ReviewReject id="success-reject" className="pz-success-anim-review-logo"/>
                     </div>
                     <div className="pz-success-text">Successfully Rejected</div>
                 </div>
@@ -169,6 +170,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                 cancelText="No"
             >
                 <button
+                    id="approve-button"
                     type='primary'
                     htmlType='submit'
                     className='search-btn outlined-btn'
@@ -179,6 +181,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                 </button>
             </Popconfirm>
             <button
+                id="reject-button"
                 type='primary'
                 htmlType='submit'
                 className='search-btn reject-btn outlined-btn'
