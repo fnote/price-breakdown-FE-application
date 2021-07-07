@@ -78,7 +78,7 @@ const SearchForm = () => {
         pZRContext,
         userDetailContext,
         setAttributeGroups,
-        setSearchDisabled,
+        setSearchDisabled
     });
 
     useEffect(() => {
@@ -114,9 +114,7 @@ const SearchForm = () => {
                                     if (inputValue && option.children) {
                                         // unless the backslash is escaped, this will end up with a syntax error
                                         const pattern = inputValue.replace(/\\/g, '').toLowerCase();
-                                        return inputValue.length !== pattern.length
-                                        || inputValue.match(/[^A-Za-z0-9 -]/)
-                                            ? false
+                                        return inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/) ? false
                                             : option.children.join('').toLowerCase().match(pattern);
                                     }
                                     return true;
@@ -133,14 +131,12 @@ const SearchForm = () => {
                                         setCustomerChecked(true);
                                         setCustomerGroupTextBoxValue('');
                                         form.resetFields(['customerGroup']);
-                                    }}
-                                    />
+                                    }}/>
                                     <Radio value={2} onClick={() => {
                                         setCustomerChecked(false);
                                         setCustomerTextBoxValue('');
                                         form.resetFields(['customer']);
-                                    }}
-                                    />
+                                    }}/>
                                 </Radio.Group>
                             </div>
                             <Form.Item
@@ -150,15 +146,15 @@ const SearchForm = () => {
                                 rules={[
                                     {
                                         pattern: '^[a-zA-Z0-9]+$',
-                                        message: 'Not a valid Customer ID',
+                                        message: 'Not a valid Customer ID'
                                     },
                                     {
                                         required: isCustomerChecked === true,
-                                        message: 'Customer or Customer Group is required!',
+                                        message: 'Customer or Customer Group is required!'
                                     },
                                     {
                                         max: 14,
-                                        message: 'Should be 14 characters max',
+                                        message: 'Should be 14 characters max'
                                     }]}
                             >
                                 <Form.Item name="customer">
@@ -174,15 +170,15 @@ const SearchForm = () => {
                                 rules={[
                                     {
                                         pattern: '^[a-zA-Z0-9]+$',
-                                        message: 'Not a valid Customer Group ID',
+                                        message: 'Not a valid Customer Group ID'
                                     },
                                     {
                                         required: isCustomerChecked === false,
-                                        message: 'Customer or Customer Group is required!',
+                                        message: 'Customer or Customer Group is required!'
                                     },
                                     {
                                         max: 15,
-                                        message: 'Should be 15 characters max',
+                                        message: 'Should be 15 characters max'
                                     }]}
                             >
                                 <Form.Item name="customerGroup">
@@ -210,7 +206,7 @@ const SearchForm = () => {
                         <Form.Item className="search-btn-wrapper">
                             <button
                                 type="primary"
-                                className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn'}
+                                className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
                                 disabled={isSearchDisabled}
                             >
                                 Search
