@@ -24,8 +24,8 @@ export const ModalComponent = ({Modal, setSubmitModal}) => (
                 <div className="alert">
                     <Warning className="pz-warning-anim-logo"/>
                 </div>
-                <div className="pz-alert-main">Confirm Price Zone Change</div>
-                <div className="pz-alert-sub">
+                <div id="confirm-alert" className="pz-alert-main">Confirm Price Zone Change</div>
+                <div id="confirm-alert-subtext" className="pz-alert-sub">
                     While performing this change, price zone for all the items
                     associated with attribute group and all the customers
                     associated with customer group will be updated.
@@ -50,7 +50,7 @@ export const SubmitReason = ({Modal, setSubmitModal, priceZoneChangeHandler, sub
 
             <div className="pz-confirm-pop-base">
                 <div className="pz-alert-sr-main">Submit Reason</div>
-                <div className="pz-alert-sr-sub">
+                <div id="provide-reason-alert" className="pz-alert-sr-sub">
                     Please provide a reason which would be sent to the reviewer as to
                     why this change was submitted.
                 </div>
@@ -85,9 +85,9 @@ export const SubmitSuccess = ({Modal, resetSearch, referenceId}) => (
                     <div className="pz-success-anim">
                         <Success className="pz-success-anim-logo"/>
                     </div>
-                    <div className="pz-success-text">Submitted Successfully</div>
+                    <div id="success-submission" className="pz-success-text">Submitted Successfully</div>
                     {referenceId
-                        ? <div className="pz-alert-sub">Reference Number - {referenceId}</div> : <div/>}
+                        ? <div id="reference-number" className="pz-alert-sub">Reference Number - {referenceId}</div> : <div/>}
                 </div>
             </div>
         )}
@@ -113,7 +113,7 @@ export const LoadingState = ({Modal, toggle}) => (
             <div className="pz-loading-pop-base">
                 <div className="pz-loading-pop-wrapper">
                     <Loader className="pz-loading-anim"/>
-                    <span className="pz-loading-text"> Please wait ...</span>
+                    <span id="wait-popup" className="pz-loading-text"> Please wait ...</span>
                 </div>
             </div>
         )}
