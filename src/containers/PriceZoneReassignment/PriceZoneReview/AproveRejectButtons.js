@@ -1,5 +1,5 @@
-import React, {useRef, useState} from 'react';
-import {Input, Popconfirm, Modal} from 'antd';
+import React, {useState} from 'react';
+import {Input, Popconfirm, Modal, Button} from 'antd';
 import {CheckCircleFilled} from '@ant-design/icons';
 import {ReactComponent as ReviewSuccess} from '../../../styles/images/pz-review-sucess.svg';
 import {ReactComponent as ReviewReject} from '../../../styles/images/pz-review-reject.svg';
@@ -13,10 +13,42 @@ const ALREADY_APPROVED_REJECTED_MODAL = 'already-approved-rejected-modal';
 const LOADING_MODAL = 'loading-modal';
 const EMPTY_MODAL = '';
 
+const RejectReasonModalContent = ({ onSubmit, onCancel }) => {
+    const [reviewNote, setReviewNote] = useState('');
+
+    return (
+        <div className='pz-confirm-pop-base'>
+        <div className='pz-alert-sr-main'>Reject Reason</div>
+        <div className='pz-alert-sr-sub'>
+            Please provide a reason which would be sent to the submitor as to why
+            this change was rejected.
+        </div>
+        <Input.TextArea
+            className='pz-submit-text-base'
+            placeholder='Please insert reject reason here'
+            autoSize={{minRows: 5, maxRows: 8}}
+            value={reviewNote}
+            onChange={({ target: { value }}) => setReviewNote(value)}
+        />
+        <div className='ant-modal-footer'>
+            <Button onClick={onCancel}>
+                CANCEL
+            </Button>
+            <Button
+                type='primary'
+                disabled={!reviewNote}
+                onClick={() => onSubmit(reviewNote)}
+            >
+                SUBMIT
+            </Button>
+        </div>
+    </div>
+    );
+};
+
 export default function AproveRejectButtons({row, index, handle, disable}) {
     const [activeModal, setActiveModal] = useState(EMPTY_MODAL);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const {TextArea} = Input;
 
     const closeModal = () => {
         setActiveModal(EMPTY_MODAL);
@@ -33,7 +65,18 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
         setIsModalVisible(true);
     };
 
-    const inputElement = useRef(null);
+    const rejectSubmitAction = (reviewNote) => {
+        handle(
+            {id: row.changeSummary.id, index},
+            {reviewNote, status: 'REJECTED'},
+            {
+                successCallback: () => openModal(REJECT_SUCCESS_MODAL),
+                failureCallback: closeModal,
+                alreadyApprovedRejectedCallback: openAlreadyApprovedRejectedModal
+            }
+        );
+        openModal(LOADING_MODAL);
+    };
 
     const RejectReasonModal = () => (
         <Modal
@@ -42,40 +85,9 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             okText='SUBMIT'
             cancelText='CANCEL'
             className='pz-antModal'
-            okButtonProps={{ disabled: true }} // use this prop to disable ok button
-            onOk={() => {
-                let reviewNote = '';
-                if (inputElement.current) {
-                    reviewNote = inputElement.current.state.value;
-                    if (reviewNote) {
-                        handle(
-                            {id: row.changeSummary.id, index},
-                            {reviewNote, status: 'REJECTED'},
-                            {
-                                successCallback: () => openModal(REJECT_SUCCESS_MODAL),
-                                failureCallback: closeModal,
-                                alreadyApprovedRejectedCallback: openAlreadyApprovedRejectedModal
-                            }
-                        );
-                    }
-                }
-                openModal(LOADING_MODAL);
-            }}
-            onCancel={closeModal}
+            footer={null}
         >
-            <div className='pz-confirm-pop-base'>
-                <div className='pz-alert-sr-main'>Reject Reason</div>
-                <div className='pz-alert-sr-sub'>
-                    Please provide a reason which would be sent to the submitor as to why
-                    this change was rejected.
-                </div>
-                <TextArea
-                    className='pz-submit-text-base'
-                    placeholder='Please insert reject reason here'
-                    autoSize={{minRows: 5, maxRows: 8}}
-                    ref={inputElement}
-                />
-            </div>
+            <RejectReasonModalContent onSubmit={rejectSubmitAction} onCancel={closeModal}/>
         </Modal>
     );
 
