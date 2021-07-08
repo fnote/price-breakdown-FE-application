@@ -257,7 +257,7 @@
       display: inline-block;
       padding: 4px;
       border-radius: 3px;
-      width: 7rem;
+      width: 10rem;
       white-space: none;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -721,6 +721,8 @@
   }
 }
 
+
+
 .pz-confirm-pop-base {
   display: flex;
   align-items: center;
@@ -1015,4 +1017,15 @@
     border-left: 1.5px dashed $syscored;
     content: "";
   }
+}
+
+// pz reject modal height 
+
+.pz-reject-modal{
+  height:23rem !important;
+}
+
+.pz-reject-modal-footer{
+  margin-top: 0.5rem;
+  border-top-color: transparent;
 }

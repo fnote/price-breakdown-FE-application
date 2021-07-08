@@ -17,7 +17,7 @@ const RejectReasonModalContent = ({ onSubmit, onCancel }) => {
     const [reviewNote, setReviewNote] = useState('');
 
     return (
-        <div className='pz-confirm-pop-base'>
+        <div className='pz-confirm-pop-base pz-reject-modal'>
         <div className='pz-alert-sr-main'>Reject Reason</div>
         <div className='pz-alert-sr-sub'>
             Please provide a reason which would be sent to the submitor as to why
@@ -30,7 +30,7 @@ const RejectReasonModalContent = ({ onSubmit, onCancel }) => {
             value={reviewNote}
             onChange={({ target: { value }}) => setReviewNote(value)}
         />
-        <div className='ant-modal-footer'>
+        <div className='ant-modal-footer  pz-reject-modal-footer'>
             <Button onClick={onCancel}>
                 CANCEL
             </Button>
@@ -86,6 +86,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             cancelText='CANCEL'
             className='pz-antModal'
             footer={null}
+            closable={true}
         >
             <RejectReasonModalContent onSubmit={rejectSubmitAction} onCancel={closeModal}/>
         </Modal>
