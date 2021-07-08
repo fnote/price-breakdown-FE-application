@@ -31,20 +31,20 @@ function PZRApp() {
             {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_SEARCH) && (<SearchPanel/>)}
             <div className="pz-wrapper  pz-no-bg">
                 <Tabs type="card" defaultActiveKey={REVIEW_TAB}
-                    onChange={(activeTab) => {
-                        if (activeTab === REVIEW_TAB) {
-                            pZRContext.setIsOnReviewPage(true);
-                        } else {
-                            pZRContext.setIsOnReviewPage(false);
-                        }
-                    }}
+                      onChange={(activeTab) => {
+                          if (activeTab === REVIEW_TAB) {
+                              pZRContext.setIsOnReviewPage(true);
+                          } else {
+                              pZRContext.setIsOnReviewPage(false);
+                          }
+                      }}
                 >
                     {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_PZ_UPDATE) && (
                         <TabPane
                             tab={
                                 <div className="pz-maintab-item">
                                     <i className="icon fi flaticon-price-zone pz-icon-tab"/>
-                                    <div className="pz-main-tab-sub"> Update Price Zone</div>
+                                    <div id="priceZone-update-tab" className="pz-main-tab-sub"> Update Price Zone</div>
                                 </div>
                             }
                             key={PZ_UDATE_TAB}
@@ -59,7 +59,7 @@ function PZRApp() {
                                 <div className="pz-maintab-item">
                                     <i className="icon fi flaticon-pz-review pz-icon-tab"/>
 
-                                    <div className="pz-main-tab-sub"> Review Changes</div>
+                                    <div id="review-changes-tab" className="pz-main-tab-sub"> Review Changes</div>
                                 </div>
                             }
                             key={REVIEW_TAB}
@@ -78,7 +78,7 @@ export default function PZRHome() {
         <div className="wrapper cloudpricing-wrapper">
             <AppBar/>
             <PZRContextProvider>
-                <PZRApp />
+                <PZRApp/>
             </PZRContextProvider>
         </div>
     );

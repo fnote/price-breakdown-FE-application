@@ -6,7 +6,7 @@ import {Table, Space, Empty} from 'antd';
 import useModal from '../../../hooks/useModal';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummary from './ReviewSummary';
-import AproveRejectButtons from './AproveRejectButtons';
+import ApproveRejectButtons from './ApproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
 // Contexts
@@ -63,8 +63,8 @@ const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeReques
         width: '20%',
         render: (cell, row, index) => (
             <Space size='middle'>
-                <AproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests}
-                                     disable={approveRejectProgressing}/>
+                <ApproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests}
+                                      disable={approveRejectProgressing}/>
             </Space>
         ),
     },
@@ -99,7 +99,7 @@ export default function PriceZoneReview() {
 
     const approveRejectPZChangeRequests = (
         {id, index}, {reviewNote, status}, {successCallback, failureCallback, alreadyApprovedRejectedCallback}
-        ) => {
+    ) => {
         setApproveRejectProgressing(true);
         const payload = constructPatchPayload({id}, {
             reviewNote,
