@@ -59,7 +59,7 @@ export const getBusinessUnits = (businessUnitsMap) => {
             businessUnitOptions.push(
                 <Option key={businessUnit.id}
                         value={formatBusinessUnitsIdShortName(businessUnit.id, businessUnitsMap)}>
-                            {formatBusinessUnitsIdShortName(businessUnit.id, businessUnitsMap)}
+                            {businessUnit.id} - {businessUnit.shortName}
                 </Option>
             );
         }));
