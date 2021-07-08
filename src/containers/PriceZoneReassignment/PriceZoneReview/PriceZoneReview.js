@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 // Core
-import React, {useState, useEffect, useContext, useMemo} from 'react';
+import React, {useState, useEffect, useContext, useMemo , useRef} from 'react';
 import {Table, Space} from 'antd';
 // Custom components
 import useModal from '../../../hooks/useModal';
@@ -26,6 +26,7 @@ import {
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE
 } from '../../../constants/PZRConstants';
+import Base from 'antd/lib/typography/Base';
 
 const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing}) => ([
     {
@@ -82,6 +83,8 @@ export default function PriceZoneReview() {
     const userDetailContext = useContext(UserDetailContext);
     const {activeBusinessUnitMap: businessUnitMap} = userDetailContext.userDetailsData.userDetails;
     const pZRContext = useContext(PZRContext);
+
+    
 
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
@@ -179,9 +182,33 @@ export default function PriceZoneReview() {
         </div>
     );
 
+
+     // table scroll
+
+     const [tableSize, setTableSize] = useState({
+        width:0,
+        height:0
+    });
+
+    const tableRef = useRef();
+
+    window.onresize=()=>{
+       if(tableRef.current){
+        setTableSize({...tableSize,width:tableRef.current.clientWidth,height:tableRef.current.clientHeight})
+       }
+    }
+
+    useEffect(()=>{
+        if(tableRef.current){
+            setTableSize({...tableSize,width:tableRef.current.clientWidth,height:tableRef.current.clientHeight})
+        }
+    },[tableRef.current])
+
+
     const renderDataTable = () => (
         <>
             <Table
+               
                 columns={generateColumns({
                     setSelectedRecord,
                     toggle,
@@ -191,16 +218,20 @@ export default function PriceZoneReview() {
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
-                //scroll={{ y: 420, x: 500 }}   --- WIP ---
+                scroll={{ y: tableSize.height - 80 }}  // --- WIP ---
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
         </>
     );
 
+
+   
+
     return (
-        <div className='pz-review-base-wrapper'>
+        <div className='pz-review-base-wrapper'  ref={tableRef}>
             {renderDataTable()}
             <CustomPagination
+                className="pz-review-pagination"
                 total={totalResultCount}
                 current={currentPage}
                 onChange={(current) => {

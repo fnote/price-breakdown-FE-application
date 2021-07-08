@@ -59,7 +59,7 @@
   border-radius: 0.9rem;
   background: white;
   border: 0.076rem solid rgba(98, 115, 126, 0.25);
-
+width: calc(100vw - 26rem);
   // border: 0.076rem solid transparent;
   // border-image: linear-gradient(180deg,  rgba(255,255,255,0) 5%, rgba(98, 115, 126, 0.25));
   // border-image-slice: 1;
@@ -330,6 +330,14 @@
 
 .pz-review-base-wrapper {
   width: 100%;
+  min-height:calc(100vh - 20vh);
+
+  .pz-review-pagination{
+    height:4rem;
+    display: flex;
+    align-items: center;
+    margin-top:0.3rem;
+  }
   .ant-table-row-level-0 {
     height: 12rem !important;
     padding-bottom: 0.5rem;
