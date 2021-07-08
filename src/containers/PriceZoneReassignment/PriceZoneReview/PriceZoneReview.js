@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 // Core
 import React, {useState, useEffect, useContext, useMemo} from 'react';
-import {Table, Space} from 'antd';
+import {Table, Space, Empty} from 'antd';
 // Custom components
 import useModal from '../../../hooks/useModal';
 import ReviewSubmitter from './ReviewSubmitter';
@@ -191,6 +191,7 @@ export default function PriceZoneReview() {
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
+                locale={{emptyText: <Empty description='No Changes to Review'/>}}
                 //scroll={{ y: 420, x: 500 }}   --- WIP ---
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
