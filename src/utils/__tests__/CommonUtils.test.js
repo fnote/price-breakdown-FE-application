@@ -41,7 +41,7 @@ describe('formatBusinessUnitsIdShortName', () => {
 
     test('should return formatted business unit name for valid OpCo Id 019', () => {
         const result = formatBusinessUnitsIdShortName('019', businessUnitsMap);
-        expect(result).toEqual('019 - Cincinnati');
+        expect(result).toEqual('019-Cincinnati');
     });
 
     test('should return businessunit id when there is no map found', () => {
