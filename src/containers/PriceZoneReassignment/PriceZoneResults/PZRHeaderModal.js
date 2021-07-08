@@ -113,13 +113,12 @@ export const SubmitSuccess = ({Modal, resetSearch, referenceId}) => (
     </div>
 );
 
-export const LoadingState = ({Modal, toggle}) => (
+export const LoadingState = ({Modal}) => (
     <div>
         {Modal(
             {
                 title: '',
                 centered: 'true',
-                onOK: () => toggle,
                 maskClosable: false, // won't close on mask click
                 closable: false, // won't close from close icon
                 keyboard: false, // won't close from keyboard events (esc)

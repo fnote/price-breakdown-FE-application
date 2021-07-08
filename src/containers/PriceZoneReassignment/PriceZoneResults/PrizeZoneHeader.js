@@ -192,7 +192,7 @@ export default function PrizeZoneHeader() {
                     'submit-reason': <SubmitReason Modal={Modal} setSubmitModal={setSubmitModal}
                                                    priceZoneChangeHandler={priceZoneChangeHandler}/>,
                     'success-modal': <SubmitSuccess Modal={Modal} resetSearch={resetSearch} referenceId={referenceId}/>,
-                    'loading': <LoadingState Modal={Modal} toggle={toggle}/>
+                    'loading': <LoadingState Modal={Modal}/>
                 }[submitModal]
             }
         </div>
