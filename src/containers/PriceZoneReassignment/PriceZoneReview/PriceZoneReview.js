@@ -1,16 +1,17 @@
 /* eslint-disable react/display-name */
 // Core
 import React, {useState, useEffect, useContext, useMemo} from 'react';
-import {Table, Space} from 'antd';
+import {Table, Space, Empty} from 'antd';
 // Custom components
 import useModal from '../../../hooks/useModal';
 import ReviewSubmitter from './ReviewSubmitter';
 import ReviewSummary from './ReviewSummary';
-import AproveRejectButtons from './AproveRejectButtons';
+import ApproveRejectButtons from './ApproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
 // Contexts
 import {UserDetailContext} from '../../UserDetailContext';
+import {PZRContext} from '../PZRContext';
 // Handlers
 import {fetchPZChangeRequests} from '../handlers/PZRGetSubmittedRequestsHandler';
 import {handleApproveReject} from '../handlers/PZRApproveRejectHandler';
@@ -62,8 +63,8 @@ const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeReques
         width: '20%',
         render: (cell, row, index) => (
             <Space size='middle'>
-                <AproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests}
-                                     disable={approveRejectProgressing}/>
+                <ApproveRejectButtons row={row} index={index} handle={approveRejectPZChangeRequests}
+                                      disable={approveRejectProgressing}/>
             </Space>
         ),
     },
@@ -80,6 +81,7 @@ export default function PriceZoneReview() {
     const [fetchNewData, setFetchNewData] = useState(false);
     const userDetailContext = useContext(UserDetailContext);
     const {activeBusinessUnitMap: businessUnitMap} = userDetailContext.userDetailsData.userDetails;
+    const pZRContext = useContext(PZRContext);
 
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
@@ -89,9 +91,15 @@ export default function PriceZoneReview() {
         return [];
     }, [dataStore, currentPage, businessUnitMap]);
 
+    useEffect(() => {
+        pZRContext.setIsOnReviewPage(true);
+    }, []);
+
     const {Modal, toggle} = useModal();
 
-    const approveRejectPZChangeRequests = ({id, index}, {reviewNote, status}, {successCallback, failureCallback}) => {
+    const approveRejectPZChangeRequests = (
+        {id, index}, {reviewNote, status}, {successCallback, failureCallback, alreadyApprovedRejectedCallback}
+    ) => {
         setApproveRejectProgressing(true);
         const payload = constructPatchPayload({id}, {
             reviewNote,
@@ -111,7 +119,8 @@ export default function PriceZoneReview() {
             setDataResetIndex,
             setApproveRejectProgressing,
             successCallback,
-            failureCallback
+            failureCallback,
+            alreadyApprovedRejectedCallback
         });
     };
 
@@ -182,6 +191,8 @@ export default function PriceZoneReview() {
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
+                locale={{emptyText: <Empty description='No Changes to Review'/>}}
+                //scroll={{ y: 420, x: 500 }}   --- WIP ---
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
         </>

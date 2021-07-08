@@ -60,6 +60,10 @@
   background: white;
   border: 0.076rem solid rgba(98, 115, 126, 0.25);
 
+  // border: 0.076rem solid transparent;
+  // border-image: linear-gradient(180deg,  rgba(255,255,255,0) 5%, rgba(98, 115, 126, 0.25));
+  // border-image-slice: 1;
+
   .ant-tabs {
     width: 100%;
 
@@ -69,10 +73,23 @@
 
     .ant-tabs-nav {
       margin: 0 !important;
+
+      .ant-tabs-tab {
+        background: none;
+        border: none;
+      }
+      .ant-tabs-tab-active {
+        background: #fff !important;
+        border: 1px solid #f0f0f0 !important;
+        border-bottom-color: transparent !important;
+        border-top-right-radius: 1rem;
+        border-top-left-radius: 1rem;
+      }
     }
     .ant-tabs-tabpane {
       background: #fff;
-      border-radius: 13px;
+      border-radius: 1rem;
+      border-top-left-radius: 0px;
     }
 
     .pz-header {
@@ -152,7 +169,6 @@
               overflow: hidden;
               text-overflow: ellipsis;
               white-space: nowrap;
-              
             }
             .pz-customer-group-bottom {
               display: flex;
@@ -241,7 +257,7 @@
       display: inline-block;
       padding: 4px;
       border-radius: 3px;
-      width: 7rem;
+      width: 10rem;
       white-space: none;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -371,6 +387,7 @@
     color: $textstandard;
     font-weight: 400;
     justify-content: center;
+    text-align: center;
   }
   .pz-review-note {
     width: 100%;
@@ -537,7 +554,7 @@
         width: 100%;
       }
       .pz-effective-date {
-        width: 100%;
+        width: 7.8rem;
         color: $textstandard;
         font-weight: 800;
         font-size: 1.5rem;
@@ -593,24 +610,34 @@
   justify-content: space-evenly;
   padding: 0rem 1rem;
 
+  .pz-aprove-done {
+    background: $syscogreen;
+    width: 10rem;
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 1.1rem;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+  }
+
   .search-btn {
     width: calc(100% / 2);
     padding: 0.6rem 2rem;
     font-weight: 600;
-    background: rgba(4, 119, 0, 1);
-    background: linear-gradient(
-      180deg,
-      rgb(153, 224, 132) 7%,
-      rgb(21, 160, 16) 100%
-    );
+    background: rgb(70, 155, 67);
+    background: linear-gradient(180deg, rgb(56, 182, 17) 7%, $syscogreen 100%);
   }
   .reject-btn {
     margin-left: 5px;
     background: rgb(247, 54, 54);
     background: linear-gradient(
       180deg,
-      rgba(255, 6, 6, 0.5) 7%,
-      rgb(247, 54, 54) 100%
+      rgba(226, 81, 81, 0.5) 7%,
+      rgb(211, 76, 76) 100%
     );
   }
 }
@@ -693,6 +720,8 @@
     }
   }
 }
+
+
 
 .pz-confirm-pop-base {
   display: flex;
@@ -814,6 +843,13 @@
           font-weight: 500;
         }
 
+        .pop-sum-tag-customer {
+          height: 4.6rem;
+          font-size: 2.1rem;
+          color: $textstandard;
+          font-weight: 700;
+        }
+
         .pop-sum-tag {
           background: #76e0f6;
           text-align: center;
@@ -846,6 +882,30 @@
       }
     }
   }
+}
+
+//reference table pagination styles
+
+.pz-pop-table-pagination {
+  margin-top: 1.2rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  .ant-pagination-item-active {
+    color: #fff;
+  }
+  .ant-pagination-item-active:focus a,
+  .ant-pagination-item-active:hover a {
+    color: #fff;
+  }
+}
+
+// added pagination styles to global level
+
+.ant-pagination-item-active:focus a,
+.ant-pagination-item-active:hover a {
+  color: #fff;
 }
 
 // =========================
@@ -900,9 +960,12 @@
 
   .pz-icon-tab {
     font-size: 1.4rem;
+    color: $bluegrey;
   }
   .pz-main-tab-sub {
     margin-left: 0.5rem;
+    font-weight: 600;
+    color: $bluegrey;
   }
 }
 
@@ -938,22 +1001,31 @@
 
 // pz error block
 
-.pz-error-block{
-  
+.pz-error-block {
   position: relative;
-  font-size:1.5rem;
+  font-size: 1.5rem;
   margin: 1.5rem 0.2rem;
   padding-left: 1rem;
-  color:$syscored;
+  color: $syscored;
 
-  &::before{
-    position:absolute;
-    top:0;
-    left:0;
-    height:100%;
-    width:2rem;
-    border-left:1.5px dashed $syscored;
-    content: '';
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 2rem;
+    border-left: 1.5px dashed $syscored;
+    content: "";
   }
+}
 
+// pz reject modal height 
+
+.pz-reject-modal{
+  height:23rem !important;
+}
+
+.pz-reject-modal-footer{
+  margin-top: 0.5rem;
+  border-top-color: transparent;
 }

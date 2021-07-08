@@ -127,11 +127,12 @@ export default function ReferenceDataTable({
                 columns={columns}
                 pagination={false}
                 dataSource={dataSource}
-                style={{width: '60vw', height: '60vh'}}
+                style={{width: '60vw'}}
                 className='pz-pop-table-ant'
                 loading={resultLoading}
             />
             <CustomPagination
+                className="pz-pop-table-pagination"
                 total={totalResultCount}
                 current={currentPage}
                 onChange={(current) => {

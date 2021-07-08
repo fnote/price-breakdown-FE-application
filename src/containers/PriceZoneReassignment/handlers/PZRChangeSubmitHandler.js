@@ -16,7 +16,7 @@ const handleError = (response) => {
     openNotificationWithIcon('error', errorMessage, CIPZErrorMessages.CIPZ_POST_ERROR_TITLE);
 };
 
-const formRequestBody = ({PZRContextData, userDetailContext, submissionReasonInput, getCustomerGroupOfCustomer, newPriceZone, effectiveDate}) => {
+const formRequestBody = ({PZRContextData, userDetailContext, submissionNote, getCustomerGroupOfCustomer, newPriceZone, effectiveDate}) => {
     const userDetailsObj = userDetailContext.userDetailsData.userDetails;
     return JSON.stringify({
         businessUnitNumber: PZRContextData.searchParams.opcoId,
@@ -26,7 +26,7 @@ const formRequestBody = ({PZRContextData, userDetailContext, submissionReasonInp
         customerAccount: PZRContextData.searchParams.customer ? PZRContextData.searchParams.customer : null,
         newPriceZone,
         effectiveFromDate: effectiveDate,
-        submissionNote: submissionReasonInput?.current?.state?.value || '',
+        submissionNote,
         submitter: {
             id: userDetailsObj.username,
             givenName: userDetailsObj.firstName,

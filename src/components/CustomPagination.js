@@ -8,6 +8,7 @@ const CustomPagination = ({total, onChange, current, pageSize, ...rest}) => (
         total={total}
         current={current}
         pageSize={pageSize}
+        showSizeChanger={false}
     />
 );
 
