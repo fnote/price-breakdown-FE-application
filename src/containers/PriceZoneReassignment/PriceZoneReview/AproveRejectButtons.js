@@ -60,7 +60,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                     why this change was rejected.
                 </div>
                 <TextArea
-                    id="tject-reason-textarea"
+                    id="reject-reason-textarea"
                     className='pz-submit-text-base'
                     placeholder='Please insert reject reason here'
                     autoSize={{minRows: 5, maxRows: 8}}
