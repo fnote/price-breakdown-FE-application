@@ -8,7 +8,7 @@ export default function ReviewSubmitter({submission: {id, givenName, surname, cr
                 <div id="review-user-name" className="pz-review-name-username">
                     {givenName} {surname}
                 </div>
-                <div id="eview-name-id" className="pz-review-name-id">
+                <div id="review-name-id" className="pz-review-name-id">
                     ({id})
                 </div>
             </div>
