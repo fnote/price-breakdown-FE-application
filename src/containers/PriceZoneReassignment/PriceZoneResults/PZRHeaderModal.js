@@ -123,10 +123,7 @@ export const LoadingState = ({Modal, toggle}) => (
                 maskClosable: false, // won't close on mask click
                 closable: false, // won't close from close icon
                 keyboard: false, // won't close from keyboard events (esc)
-                okText: 'OK',
-                cancelText: '',
-                noCancel: true, // no cancel button
-                noOk: true, // no ok button
+                footer: null
             },
 
             <div className="pz-loading-pop-base">
