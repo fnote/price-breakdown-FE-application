@@ -16,9 +16,9 @@ export default function ReviewSummary({
                     <div className="pz-review-sum-zone">
                         <div className="pz-zone-wrapper">
                             <div className="pz-zone-from-to-base">
-                                <div id="old-price" className="pz-zone-from">{oldPriceZone}</div>
+                                <div id="old-price-zone" className="pz-zone-from">{oldPriceZone}</div>
                                 <div className="pz-zone-separator"/>
-                                <div id="new-price" className="pz-zone-to">{newPriceZone}</div>
+                                <div id="new-price-zone" className="pz-zone-to">{newPriceZone}</div>
                             </div>
                         </div>
                     </div>
@@ -26,7 +26,7 @@ export default function ReviewSummary({
                 <div className="pz-review-sum-left-opco">
                     <span className="pz-caps">opco</span>
                     <div className="pz-review-sum-left-opco">
-                        <Tooltip tid="tooltip" itle={businessUnit} color="#fff" overlayClassName="pz-tooltip"
+                        <Tooltip id="tooltip-opco" itle={businessUnit} color="#fff" overlayClassName="pz-tooltip"
                                  overlayStyle={{color: '#000'}}>
                             <div id="business-unit" className="pz-review-opco">{businessUnit}</div>
                         </Tooltip>
