@@ -29,6 +29,7 @@ import {
     prepareVolumePricingHeaderRow,
     prepareVolumePricingInfo,
     prepareVolumePricingTiers,
+    extractHistoryInquiryRequestInfo, extractTransactions,
 } from '../PricingUtils';
 
 describe('formatPrice', () => {
@@ -475,6 +476,21 @@ describe('extractRequestInfo', () => {
         expect(extractRequestInfo(data)).toEqual({
             'priceRequestDate': 'Oct 28, 2020',
             'quantity': 5,
+            'splitStatus': 'Y'
+        });
+    });
+});
+
+describe('extractHistoryInquiryRequestInfo', () => {
+    test('should return the correct value', () => {
+        const data = {
+            fromDate: '20201028',
+            toDate: '20210101',
+            product: {splitFlag: true,}
+        };
+        expect(extractHistoryInquiryRequestInfo(data)).toEqual({
+            'fromDate': 'Oct 28, 2020',
+            'toDate': 'Jan 1, 2021',
             'splitStatus': 'Y'
         });
     });
@@ -1423,5 +1439,47 @@ describe('prepareDefaultPriceRulesSection', () => {
             'calculatedValue': '',
             'description': 'Price Rule: P1P'
         }, {'adjustmentValue': '$5.840', 'calculatedValue': '', 'description': 'P1'}]);
+    });
+});
+
+describe('extractTransactions', () => {
+    test('should return correct dates when transaction history given', () => {
+        const data = {
+            'transactionHistory': [
+                {
+                    'obligationId': '11917294P',
+                    'lineNumber': 3,
+                    'transactionDate': '20200610',
+                    'shippedQuantity': 1,
+                    'perWeightFlag': 'N',
+                    'totalCatchWeight': 0,
+                    'unitPrice': 0.71,
+                    'netPrice': 0.71,
+                    'extendedPrice': 0.71,
+                    'priceSourceType': '',
+                    'createDate': '20200609',
+                    'createTime': '182515'
+                }
+            ]
+        };
+
+        expect(extractTransactions(data)).toEqual([{
+            'transactionHistory': [
+                {
+                    'obligationId': '11917294P',
+                    'lineNumber': 3,
+                    'transactionDate': '20200610',
+                    'shippedQuantity': 1,
+                    'perWeightFlag': 'N',
+                    'totalCatchWeight': 0,
+                    'unitPrice': 0.71,
+                    'netPrice': 0.71,
+                    'extendedPrice': 0.71,
+                    'priceSourceType': '',
+                    'createDate': '20200609',
+                    'createTime': '182515'
+                }
+            ]
+        }]);
     });
 });
