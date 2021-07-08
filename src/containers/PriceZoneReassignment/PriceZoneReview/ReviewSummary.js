@@ -65,7 +65,10 @@ export default function ReviewSummary({
                         <div className="pz-right-bottom-right">
                             <div className="pz-effective-date-text pz-caps">attribute group</div>
                             <div className="pz-attrib-base">
-                                <div className="pz-effective-date pz-attribute-tag">{itemAttributeGroup}</div>
+                                <Tooltip title={itemAttributeGroup} color="#fff" overlayClassName="pz-tooltip"
+                                    overlayStyle={{color: '#000'}}>
+                                    <div className="pz-effective-date pz-attribute-tag">{itemAttributeGroup}</div>
+                                </Tooltip>
                                 <ExclamationCircleOutlined className="pz-attrib-info"/>
                             </div>
                             <div className="pz-attrib-total">{supcCount} items</div>
