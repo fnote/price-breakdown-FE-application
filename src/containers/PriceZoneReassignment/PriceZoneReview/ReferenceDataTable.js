@@ -97,16 +97,16 @@ export default function ReferenceDataTable({
         if (customerGroup) {
             return (
                 <>
-                    <div className='pop-sum-text'>CUSTOMER GROUP</div>
-                    <div className='pop-sum-tag'>{customerGroup}</div>
-                    <div className='pop-sum-total'>{customerCount} Customers</div>
+                    <div id="customer-group-label" className='pop-sum-text'>CUSTOMER GROUP</div>
+                    <div id="customer-group" className='pop-sum-tag'>{customerGroup}</div>
+                    <div id="customer-count" className='pop-sum-total'>{customerCount} Customers</div>
                 </>
             );
         }
         return (
             <>
-                <div className='pop-sum-text'>CUSTOMER</div>
-                <div className='pop-sum-tag-customer'>{customerAccount}</div>
+                <div id="customer-label" className='pop-sum-text'>CUSTOMER</div>
+                <div id="customer-account" className='pop-sum-tag-customer'>{customerAccount}</div>
             </>
         );
     };
@@ -118,9 +118,9 @@ export default function ReferenceDataTable({
                     {renderCustomerInfo()}
                 </div>
                 <div className='pop-sum-Attrib-grp'>
-                    <div className='pop-sum-text'>ATTRIBUTE GROUP</div>
-                    <div className='pop-sum-tag pz-tag-blue'>{itemAttributeGroup}</div>
-                    <div className='pop-sum-total'>{supcCount} Items</div>
+                    <div id="attribute-group-label" className='pop-sum-text'>ATTRIBUTE GROUP</div>
+                    <div id="attribute-group" className='pop-sum-tag pz-tag-blue'>{itemAttributeGroup}</div>
+                    <div id="items" className='pop-sum-total'>{supcCount} Items</div>
                 </div>
             </div>
             <Table

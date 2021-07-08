@@ -13,40 +13,41 @@ const ALREADY_APPROVED_REJECTED_MODAL = 'already-approved-rejected-modal';
 const LOADING_MODAL = 'loading-modal';
 const EMPTY_MODAL = '';
 
-const RejectReasonModalContent = ({ onSubmit, onCancel }) => {
+const RejectReasonModalContent = ({onSubmit, onCancel}) => {
     const [reviewNote, setReviewNote] = useState('');
 
     return (
         <div className='pz-confirm-pop-base pz-reject-modal'>
-        <div className='pz-alert-sr-main'>Reject Reason</div>
-        <div className='pz-alert-sr-sub'>
-            Please provide a reason which would be sent to the submitor as to why
-            this change was rejected.
+            <div id="reject-reason-text" className='pz-alert-sr-main'>Reject Reason</div>
+            <div id="provide-text-label" className='pz-alert-sr-sub'>
+                Please provide a reason which would be sent to the submitor as to why
+                this change was rejected.
+            </div>
+            <Input.TextArea
+                id="reject-reason-textarea"
+                className='pz-submit-text-base'
+                placeholder='Please insert reject reason here'
+                autoSize={{minRows: 5, maxRows: 8}}
+                value={reviewNote}
+                onChange={({target: {value}}) => setReviewNote(value)}
+            />
+            <div className='ant-modal-footer  pz-reject-modal-footer'>
+                <Button onClick={onCancel}>
+                    CANCEL
+                </Button>
+                <Button
+                    type='primary'
+                    disabled={!reviewNote}
+                    onClick={() => onSubmit(reviewNote)}
+                >
+                    SUBMIT
+                </Button>
+            </div>
         </div>
-        <Input.TextArea
-            className='pz-submit-text-base'
-            placeholder='Please insert reject reason here'
-            autoSize={{minRows: 5, maxRows: 8}}
-            value={reviewNote}
-            onChange={({ target: { value }}) => setReviewNote(value)}
-        />
-        <div className='ant-modal-footer  pz-reject-modal-footer'>
-            <Button onClick={onCancel}>
-                CANCEL
-            </Button>
-            <Button
-                type='primary'
-                disabled={!reviewNote}
-                onClick={() => onSubmit(reviewNote)}
-            >
-                SUBMIT
-            </Button>
-        </div>
-    </div>
     );
 };
 
-export default function AproveRejectButtons({row, index, handle, disable}) {
+export default function ApproveRejectButtons({row, index, handle, disable}) {
     const [activeModal, setActiveModal] = useState(EMPTY_MODAL);
     const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -86,8 +87,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             cancelText='CANCEL'
             className='pz-antModal'
             footer={null}
-            closable={true}
-        >
+            onCancel={closeModal}>
             <RejectReasonModalContent onSubmit={rejectSubmitAction} onCancel={closeModal}/>
         </Modal>
     );
@@ -100,14 +100,13 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             cancelButtonProps={{style: {display: 'none'}}}
             className='pz-antModal'
             onCancel={closeModal}
-            onOk={closeModal}
-        >
+            onOk={closeModal}>
             <div className='pz-confirm-pop-base-success'>
                 <div className='pz-confirm-wrapper-success'>
                     <div className='pz-success-anim'>
-                        <ReviewSuccess className='pz-success-anim-review-logo'/>
+                        <ReviewSuccess id="success-approve" className='pz-success-anim-review-logo'/>
                     </div>
-                    <div className='pz-success-text'>Successfully Approved</div>
+                    <div id="success-approved-text" className='pz-success-text'>Successfully Approved</div>
                 </div>
             </div>
         </Modal>
@@ -121,16 +120,13 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             cancelButtonProps={{style: {display: 'none'}}}
             className='pz-antModal'
             onCancel={closeModal}
-            onOk={closeModal}
-        >
+            onOk={closeModal}>
             <div className='pz-confirm-pop-base-success'>
                 <div className='pz-confirm-wrapper-success'>
                     <div className='pz-success-anim'>
                         <Info className='pz-success-anim-review-logo'/>
                     </div>
-                    <div className='pz-success-text'>
-                        Already approved/rejected by <br/> another manager
-                    </div>
+                    <div className='pz-success-text'>Already approved/rejected by <br/> another manager</div>
                 </div>
             </div>
         </Modal>
@@ -149,9 +145,9 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             <div className='pz-confirm-pop-base-success'>
                 <div className='pz-confirm-wrapper-success'>
                     <div className='pz-success-anim'>
-                        <ReviewReject className='pz-success-anim-review-logo'/>
+                        <ReviewReject id="success-reject" className='pz-success-anim-review-logo'/>
                     </div>
-                    <div className='pz-success-text'>Successfully Rejected</div>
+                    <div id="reject-success-text" className='pz-success-text'>Successfully Rejected</div>
                 </div>
             </div>
         </Modal>
@@ -167,12 +163,11 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             okText='OK'
             cancelText=''
             className='pz-antModal'
-            footer={null}
-        >
+            footer={null}>
             <div className='pz-loading-pop-base'>
                 <div className='pz-loading-pop-wrapper'>
                     <Loader className='pz-loading-anim'/>
-                    <span className='pz-loading-text'> Please wait ...</span>
+                    <span id="waiting-label" className='pz-loading-text'> Please wait ...</span>
                 </div>
             </div>
         </Modal>
@@ -224,8 +219,8 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                         cancelText='No'
                     >
                         <button
+                            id="approve-button"
                             type='primary'
-                            htmlType='submit'
                             className='search-btn outlined-btn'
                             onClick={() => {
                             }}
@@ -234,8 +229,8 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                         </button>
                     </Popconfirm>
                     <button
+                        id="reject-button"
                         type='primary'
-                        htmlType='submit'
                         className='search-btn reject-btn outlined-btn'
                         onClick={() => {
                             if (!disable) {

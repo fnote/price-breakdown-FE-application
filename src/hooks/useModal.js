@@ -11,7 +11,7 @@ const useModal = () => {
                 {...rest}
                 visible={on}
                 cancelButtonProps={{style: noCancel && {display: 'none'}}}
-                okButtonProps={{style: noOk && {display: 'none'} , disabled: okdisable} }
+                okButtonProps={{style: noOk && {display: 'none'}, disabled: okdisable} }
 
                 onOk={() => {
                     if (onOK) {

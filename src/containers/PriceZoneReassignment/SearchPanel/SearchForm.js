@@ -113,8 +113,8 @@ const SearchForm = () => {
                                 if (inputValue && option.children) {
                                     // unless the backslash is escaped, this will end up with a syntax error
                                     const pattern = inputValue.replace(/\\/g, '').toLowerCase();
-                                    return inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/) ? false
-                                        : option.children.join('').toLowerCase().match(pattern);
+                                    return (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/) ? false
+                                        : option.children.join('').toLowerCase().match(pattern));
                                 }
                                 return true;
                             }}
@@ -125,13 +125,14 @@ const SearchForm = () => {
                     </Form.Item>
                     <div className="pz-customer-groupbox">
                         <div className="pz-radio">
-                            <Radio.Group value={isCustomerChecked ? 1 : 2}>
-                                <Radio value={1} onClick={() => {
+                            <Radio.Group
+                                value={isCustomerChecked ? 1 : 2}>
+                                <Radio id="customer-radio-button" value={1} onClick={() => {
                                     setCustomerChecked(true);
                                     setCustomerGroupTextBoxValue('');
                                     form.resetFields(['customerGroup']);
                                 }}/>
-                                <Radio value={2} onClick={() => {
+                                <Radio id="customer-group-radio-button" value={2} onClick={() => {
                                     setCustomerChecked(false);
                                     setCustomerTextBoxValue('');
                                     form.resetFields(['customer']);
@@ -157,9 +158,8 @@ const SearchForm = () => {
                                 }]}
                         >
                             <Form.Item name="customer">
-                                <>
-                                    <Input disabled={!isCustomerChecked} value={customerTextboxValue} onChange={handleChangeCustomer}/>
-                                </>
+                                <Input id="customer-text-box" disabled={!isCustomerChecked}
+                                       value={customerTextboxValue} onChange={handleChangeCustomer}/>
                             </Form.Item>
                         </Form.Item>
                         <Form.Item
@@ -181,9 +181,8 @@ const SearchForm = () => {
                                 }]}
                         >
                             <Form.Item name="customerGroup">
-                                <>
-                                    <Input disabled={isCustomerChecked} value={customerGroupTextboxValue} onChange={handleChangeCustomerGroup}/>
-                                </>
+                                <Input id="customer-group-text-box" disabled={isCustomerChecked}
+                                       value={customerGroupTextboxValue} onChange={handleChangeCustomerGroup}/>
                             </Form.Item>
                         </Form.Item>
                     </div>

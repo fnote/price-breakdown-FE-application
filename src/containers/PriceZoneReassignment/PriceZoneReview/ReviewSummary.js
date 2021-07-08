@@ -12,26 +12,26 @@ export default function ReviewSummary({
         <div className="pz-review-wrapper pz-cursor">
             <div className="pz-review-sum-left">
                 <div className="pz-review-sum-left-pz">
-                    <span className="pz-caps">price zone</span>
+                    <span id="price-zone" className="pz-caps">price zone</span>
                     <div className="pz-review-sum-zone">
                         <div className="pz-zone-wrapper">
                             <div className="pz-zone-from-to-base">
-                            <Tooltip title={oldPriceZone} color="#fff" overlayClassName="pz-tooltip"
-                                 overlayStyle={{color: '#000'}}>
-                                <div className="pz-zone-from">{oldPriceZone}</div>
+                                <Tooltip title={oldPriceZone} color="#fff" overlayClassName="pz-tooltip"
+                                         overlayStyle={{color: '#000'}}>
+                                    <div id="old-price-zone" className="pz-zone-from">{oldPriceZone}</div>
                                 </Tooltip>
                                 <div className="pz-zone-separator"/>
-                                <div className="pz-zone-to">{newPriceZone}</div>
+                                <div id="new-price-zone" className="pz-zone-to">{newPriceZone}</div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="pz-review-sum-left-opco">
-                    <span className="pz-caps">opco</span>
+                    <span id="opco" className="pz-caps">opco</span>
                     <div className="pz-review-sum-left-opco">
-                        <Tooltip title={businessUnit} color="#fff" overlayClassName="pz-tooltip"
+                        <Tooltip id="tooltip-opco" itle={businessUnit} color="#fff" overlayClassName="pz-tooltip"
                                  overlayStyle={{color: '#000'}}>
-                            <div className="pz-review-opco">{businessUnit}</div>
+                            <div id="business-unit" className="pz-review-opco">{businessUnit}</div>
                         </Tooltip>
                     </div>
                 </div>
@@ -39,23 +39,25 @@ export default function ReviewSummary({
             <div className="pz-review-sum-right">
                 <div className="pz-review-right-wrapper">
                     <div className="pz-right-top">
-                        <div className="pz-effective-date-text pz-caps">effective date</div>
-                        <div className="pz-effective-date pz-main-text">{effectiveFromDate}</div>
+                        <div id="effective-date" className="pz-effective-date-text pz-caps">effective date</div>
+                        <div id="effective-from-date"
+                             className="pz-effective-date pz-main-text">{effectiveFromDate}</div>
                     </div>
                     <div className="pz-right-bottom">
                         <div className="pz-right-bottom-left">
                             {customerGroup ? (
                                 <>
-                                    <div className="pz-effective-date-text pz-caps">customer group</div>
-                                    <div className="pz-effective-date pz-customer-tag">
+                                    <div id="customer-group" className="pz-effective-date-text pz-caps">customer group
+                                    </div>
+                                    <div id="customer-group" className="pz-effective-date pz-customer-tag">
                                         {customerGroup}
                                     </div>
-                                    <div className="pz-customer-total">{customerCount} customers</div>
+                                    <div id="cutomers" className="pz-customer-total">{customerCount} customers</div>
                                 </>
                             ) : (
                                 <>
-                                    <div className="pz-effective-date-text pz-caps ">customer</div>
-                                    <div className="pz-effective-date">
+                                    <div id="customer" className="pz-effective-date-text pz-caps ">customer</div>
+                                    <div id="customer-account" className="pz-effective-date">
                                         {customerAccount}
                                     </div>
 
@@ -63,12 +65,16 @@ export default function ReviewSummary({
                             )}
                         </div>
                         <div className="pz-right-bottom-right">
-                            <div className="pz-effective-date-text pz-caps">attribute group</div>
+                            <div id="customer-group" className="pz-effective-date-text pz-caps">attribute group</div>
                             <div className="pz-attrib-base">
-                                <div className="pz-effective-date pz-attribute-tag">{itemAttributeGroup}</div>
+                                <Tooltip title={itemAttributeGroup} color="#fff" overlayClassName="pz-tooltip"
+                                         overlayStyle={{color: '#000'}}>
+                                    <div id="item-attribute-group"
+                                         className="pz-effective-date pz-attribute-tag">{itemAttributeGroup}</div>
+                                </Tooltip>
                                 <ExclamationCircleOutlined className="pz-attrib-info"/>
                             </div>
-                            <div className="pz-attrib-total">{supcCount} items</div>
+                            <div id="supc-count" className="pz-attrib-total">{supcCount} items</div>
                         </div>
                     </div>
                 </div>

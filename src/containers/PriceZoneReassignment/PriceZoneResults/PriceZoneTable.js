@@ -73,7 +73,7 @@ export default function PriceZoneTable() {
                    dataSource={searchResults?.data?.item_price_zones || []}
                    loading={PZRContextData.isSearchTableLoading}
                    rowKey={(obj) => obj.supc + obj.customer_account + obj.price_zone + obj.effective_from_date + obj.source}
-                   scroll={{ y: tableSize.height - 120 , x:false}}
+                  
             />
             <CustomPagination
                 onChange={onChange}
