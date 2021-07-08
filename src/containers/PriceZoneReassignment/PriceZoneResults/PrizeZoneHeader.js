@@ -74,7 +74,7 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
-                            <div className="pz-tab-items-top">OPCO</div>
+                            <div id="opco-label" className="pz-tab-items-top">OPCO</div>
                             <Tooltip
                                 id="opco-tooltip"
                                 title={PZRContextData.searchParams.site}
@@ -93,7 +93,7 @@ export default function PrizeZoneHeader() {
                         <div id="customer-group-tab" className="pz-tab-items">
                             {PZRContextData.searchParams.customerGroup ? (
                                 <>
-                                    <div className="pz-tab-items-top">CUSTOMER GROUP</div>
+                                    <div id="customer-group-label" className="pz-tab-items-top">CUSTOMER GROUP</div>
                                     <div className="pz-tab-items-bottom">
                                         <span
                                             id="customer-group" className="pz-cutomer-grp-text">{PZRContextData.searchParams.customerGroup}</span>
@@ -101,7 +101,7 @@ export default function PrizeZoneHeader() {
                                 </>
                             ) : (
                                 <>
-                                    <div className="pz-tab-items-top">CUSTOMER</div>
+                                    <div id="customer-label" className="pz-tab-items-top">CUSTOMER</div>
                                     <div className="pz-tab-items-bottom">
                                         <div
                                             id="customer" className="pz-cutomer-grp-text-no-bg">{PZRContextData.searchParams.customer}
@@ -114,7 +114,7 @@ export default function PrizeZoneHeader() {
                     </div>
                     <div className="pz-tabs-combine-r">
                         <div className="pz-tab-items">
-                            <div className="pz-tab-items-top">ATTRIBUTE GROUP</div>
+                            <div id="attribute-group-label" className="pz-tab-items-top">ATTRIBUTE GROUP</div>
                             <div className="pz-tab-items-bottom">
                                 <Tooltip
                                     id="attribute-group-tooltip"
@@ -133,7 +133,7 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
-                            <div className="pz-tab-items-top">PRICE ZONE</div>
+                            <div id="price-zone-label" className="pz-tab-items-top">PRICE ZONE</div>
                             <div className="pz-tab-items-bottom">
                                 <Select
                                     id="pricezone-dropdown"
