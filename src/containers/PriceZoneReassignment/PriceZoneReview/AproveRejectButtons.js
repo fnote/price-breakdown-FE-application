@@ -54,12 +54,13 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             onCancel={closeModal}
         >
             <div className='pz-confirm-pop-base'>
-                <div className='pz-alert-sr-main'>Reject Reason</div>
-                <div className='pz-alert-sr-sub'>
+                <div id="reject-reason-text" className='pz-alert-sr-main'>Reject Reason</div>
+                <div id="provide-text-label" className='pz-alert-sr-sub'>
                     Please provide a reason which would be sent to the submitor as to
                     why this change was rejected.
                 </div>
                 <TextArea
+                    id="reject-reason-textarea"
                     className='pz-submit-text-base'
                     placeholder='Please insert reject reason here'
                     autoSize={{minRows: 5, maxRows: 8}}
@@ -82,9 +83,9 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             <div className="pz-confirm-pop-base-success">
                 <div className="pz-confirm-wrapper-success">
                     <div className="pz-success-anim">
-                        <ReviewSuccess className="pz-success-anim-review-logo"/>
+                        <ReviewSuccess id="success-approve" className="pz-success-anim-review-logo"/>
                     </div>
-                    <div className="pz-success-text">Successfully Approved</div>
+                    <div id="success-approved-text" className="pz-success-text">Successfully Approved</div>
                 </div>
             </div>
         </Modal>
@@ -103,9 +104,9 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             <div className="pz-confirm-pop-base-success">
                 <div className="pz-confirm-wrapper-success">
                     <div className="pz-success-anim">
-                        <ReviewReject className="pz-success-anim-review-logo"/>
+                        <ReviewReject id="success-reject" className="pz-success-anim-review-logo"/>
                     </div>
-                    <div className="pz-success-text">Successfully Rejected</div>
+                    <div id="reject-sucess-text" className="pz-success-text">Successfully Rejected</div>
                 </div>
             </div>
         </Modal>
@@ -126,7 +127,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             <div className="pz-loading-pop-base">
                 <div className="pz-loading-pop-wrapper">
                     <Loader className="pz-loading-anim"/>
-                    <span className="pz-loading-text"> Please wait ...</span>
+                    <span id="waiting-label" className="pz-loading-text"> Please wait ...</span>
                 </div>
             </div>
         </Modal>
@@ -169,6 +170,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                 cancelText="No"
             >
                 <button
+                    id="approve-button"
                     type='primary'
                     htmlType='submit'
                     className='search-btn outlined-btn'
@@ -179,6 +181,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
                 </button>
             </Popconfirm>
             <button
+                id="reject-button"
                 type='primary'
                 htmlType='submit'
                 className='search-btn reject-btn outlined-btn'

@@ -63,7 +63,7 @@ export default function PrizeZoneHeader() {
         <div className="pz-customer-group-bottom">
             <span className="pz-customer-group-bottom-text">Customer Group</span>
             <span
-                className="pz-customer-group-bottom-tag">{getCustomerGroupOfCustomer()}</span>
+                id="customer-group-of-customer" className="pz-customer-group-bottom-tag">{getCustomerGroupOfCustomer()}</span>
         </div>
     ) : (<div/>));
 
@@ -74,36 +74,37 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
-                            <div className="pz-tab-items-top">OPCO</div>
+                            <div id="opco-label" className="pz-tab-items-top">OPCO</div>
                             <Tooltip
+                                id="opco-tooltip"
                                 title={PZRContextData.searchParams.site}
                                 color="#fff"
                                 overlayClassName="pz-tooltip"
                                 overlayStyle={{color: '#000'}}
                             >
                                 <div
-                                    className="pz-tab-items-bottom pz-opco-text-bold">{PZRContextData.searchParams.site}</div>
+                                    id="site" className="pz-tab-items-bottom pz-opco-text-bold">{PZRContextData.searchParams.site}</div>
                             </Tooltip>
                         </div>
                     </div>
                 </div>
                 <div className="pz-tabs pz-tabs-combine">
                     <div className="pz-tabs-combine-l">
-                        <div className="pz-tab-items">
+                        <div id="customer-group-tab" className="pz-tab-items">
                             {PZRContextData.searchParams.customerGroup ? (
                                 <>
-                                    <div className="pz-tab-items-top">CUSTOMER GROUP</div>
+                                    <div id="customer-group-label" className="pz-tab-items-top">CUSTOMER GROUP</div>
                                     <div className="pz-tab-items-bottom">
                                         <span
-                                            className="pz-cutomer-grp-text">{PZRContextData.searchParams.customerGroup}</span>
+                                            id="customer-group" className="pz-cutomer-grp-text">{PZRContextData.searchParams.customerGroup}</span>
                                     </div>
                                 </>
                             ) : (
                                 <>
-                                    <div className="pz-tab-items-top">CUSTOMER</div>
+                                    <div id="customer-label" className="pz-tab-items-top">CUSTOMER</div>
                                     <div className="pz-tab-items-bottom">
                                         <div
-                                            className="pz-cutomer-grp-text-no-bg">{PZRContextData.searchParams.customer}
+                                            id="customer" className="pz-cutomer-grp-text-no-bg">{PZRContextData.searchParams.customer}
                                         </div>
                                         {renderCustomerGroupComponent()}
                                     </div>
@@ -113,16 +114,17 @@ export default function PrizeZoneHeader() {
                     </div>
                     <div className="pz-tabs-combine-r">
                         <div className="pz-tab-items">
-                            <div className="pz-tab-items-top">ATTRIBUTE GROUP</div>
+                            <div id="attribute-group-label" className="pz-tab-items-top">ATTRIBUTE GROUP</div>
                             <div className="pz-tab-items-bottom">
                                 <Tooltip
+                                    id="attribute-group-tooltip"
                                     title={PZRContextData.searchParams.attributeGroup}
                                     color="#fff"
                                     overlayClassName="pz-tooltip"
                                     overlayStyle={{color: '#000'}}
                                 >
                                     <span
-                                        className="pz-item-grp-text">{PZRContextData.searchParams.attributeGroup}</span>
+                                        id="attributr-group-tab" className="pz-item-grp-text">{PZRContextData.searchParams.attributeGroup}</span>
                                 </Tooltip>
                             </div>
                         </div>
@@ -131,9 +133,10 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
-                            <div className="pz-tab-items-top">PRICE ZONE</div>
+                            <div id="price-zone-label" className="pz-tab-items-top">PRICE ZONE</div>
                             <div className="pz-tab-items-bottom">
                                 <Select
+                                    id="pricezone-dropdown"
                                     placeholder="Select Pricezone"
                                     dropdownMatchSelectWidth={false}
                                     showSearch
@@ -152,6 +155,7 @@ export default function PrizeZoneHeader() {
                             <div className="pz-tab-items-top">EFFECTIVE DATE ( {effectiveDay} )</div>
                             <div className="pz-tab-items-bottom">
                                 <DatePicker
+                                    id="date-picker"
                                     defaultValue={getDefaultEffectiveDate}
                                     disabledDate={disabledDate}
                                     allowClear={false}
@@ -167,6 +171,7 @@ export default function PrizeZoneHeader() {
                             <div className="pz-tab-items-top"/>
                             <div className="pz-tab-items-bottom">
                                 <button
+                                    id="search-button"
                                     type="primary"
                                     className={isSubmitDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
                                     onClick={() => {
