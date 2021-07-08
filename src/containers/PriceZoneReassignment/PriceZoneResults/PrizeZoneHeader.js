@@ -1,5 +1,5 @@
 // Core
-import React, {useContext, useState, useRef} from 'react';
+import React, {useContext, useState} from 'react';
 import {Select, DatePicker, Tooltip} from 'antd';
 import moment from 'moment';
 // Custom Components
@@ -28,15 +28,14 @@ export default function PrizeZoneHeader() {
     const [isSubmitDisabled, setSubmitDisabled] = useState(true);
     const [effectiveDate, setEffectiveDate] = useState(getDefaultEffectiveDate().format(CIPZ_API_DATE_FORMAT));
     const [effectiveDay, setEffectiveDay] = useState(getDefaultEffectiveDate().format('ddd'));
-    const submissionReasonInput = useRef(null);
 
     const getCustomerGroupOfCustomer = () => PZRContextData?.searchResults?.data?.customer_group_id || null;
 
-    const priceZoneChangeHandler = () => {
+    const priceZoneChangeHandler = (submissionNote) => {
         const reqParamsToFormBody = {
             PZRContextData,
             userDetailContext,
-            submissionReasonInput,
+            submissionNote,
             getCustomerGroupOfCustomer,
             newPriceZone,
             effectiveDate
@@ -191,8 +190,7 @@ export default function PrizeZoneHeader() {
                 {
                     'warning-modal': <ModalComponent Modal={Modal} setSubmitModal={setSubmitModal}/>,
                     'submit-reason': <SubmitReason Modal={Modal} setSubmitModal={setSubmitModal}
-                                                   priceZoneChangeHandler={priceZoneChangeHandler}
-                                                   submissionReasonInput={submissionReasonInput}/>,
+                                                   priceZoneChangeHandler={priceZoneChangeHandler}/>,
                     'success-modal': <SubmitSuccess Modal={Modal} resetSearch={resetSearch} referenceId={referenceId}/>,
                     'loading': <LoadingState Modal={Modal} toggle={toggle}/>
                 }[submitModal]
