@@ -86,7 +86,7 @@ export default function AproveRejectButtons({row, index, handle, disable}) {
             cancelText='CANCEL'
             className='pz-antModal'
             footer={null}
-            closable={true}
+            onCancel={closeModal}
         >
             <RejectReasonModalContent onSubmit={rejectSubmitAction} onCancel={closeModal}/>
         </Modal>
