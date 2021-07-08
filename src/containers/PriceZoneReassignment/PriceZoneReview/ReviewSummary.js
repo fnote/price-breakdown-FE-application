@@ -12,7 +12,7 @@ export default function ReviewSummary({
         <div className="pz-review-wrapper pz-cursor">
             <div className="pz-review-sum-left">
                 <div className="pz-review-sum-left-pz">
-                    <span className="pz-caps">price zone</span>
+                    <span id="price-zone" className="pz-caps">price zone</span>
                     <div className="pz-review-sum-zone">
                         <div className="pz-zone-wrapper">
                             <div className="pz-zone-from-to-base">
@@ -24,7 +24,7 @@ export default function ReviewSummary({
                     </div>
                 </div>
                 <div className="pz-review-sum-left-opco">
-                    <span className="pz-caps">opco</span>
+                    <span id="opco" className="pz-caps">opco</span>
                     <div className="pz-review-sum-left-opco">
                         <Tooltip id="tooltip-opco" itle={businessUnit} color="#fff" overlayClassName="pz-tooltip"
                                  overlayStyle={{color: '#000'}}>
@@ -36,14 +36,14 @@ export default function ReviewSummary({
             <div className="pz-review-sum-right">
                 <div className="pz-review-right-wrapper">
                     <div className="pz-right-top">
-                        <div className="pz-effective-date-text pz-caps">effective date</div>
+                        <div id="effective-date" className="pz-effective-date-text pz-caps">effective date</div>
                         <div id="effective-from-date" className="pz-effective-date pz-main-text">{effectiveFromDate}</div>
                     </div>
                     <div className="pz-right-bottom">
                         <div className="pz-right-bottom-left">
                             {customerGroup ? (
                                 <>
-                                    <div className="pz-effective-date-text pz-caps">customer group</div>
+                                    <div id="customer-group" className="pz-effective-date-text pz-caps">customer group</div>
                                     <div id="customer-group" className="pz-effective-date pz-customer-tag">
                                         {customerGroup}
                                     </div>
@@ -51,7 +51,7 @@ export default function ReviewSummary({
                                 </>
                             ) : (
                                 <>
-                                    <div className="pz-effective-date-text pz-caps ">customer</div>
+                                    <div id="customer" className="pz-effective-date-text pz-caps ">customer</div>
                                     <div id="customer-account" className="pz-effective-date">
                                         {customerAccount}
                                     </div>
@@ -60,7 +60,7 @@ export default function ReviewSummary({
                             )}
                         </div>
                         <div className="pz-right-bottom-right">
-                            <div className="pz-effective-date-text pz-caps">attribute group</div>
+                            <div id="customer-group" className="pz-effective-date-text pz-caps">attribute group</div>
                             <div className="pz-attrib-base">
                                 <div id="item-attribute-group" className="pz-effective-date pz-attribute-tag">{itemAttributeGroup}</div>
                                 <ExclamationCircleOutlined id="exclamanation-circle-icon" className="pz-attrib-info"/>
