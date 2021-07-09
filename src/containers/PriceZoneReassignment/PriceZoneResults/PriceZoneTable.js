@@ -9,7 +9,6 @@ import {PZRContext} from '../PZRContext';
 import {DEFAULT_PAGE_SIZE, fetchSearchResults} from '../handlers/PZRSearchHandler';
 // Constants and helper functions
 import {calculateOffset, formatDate} from '../helper/PZRHelper';
-import { useEffect } from 'react';
 
 const columns = [
     {
@@ -48,8 +47,7 @@ const columns = [
 export default function PriceZoneTable() {
     const PZRContextData = useContext(PZRContext);
 
-    const [currentPage, setCurrentPage] = useState(1);
-  
+    const [currentPage, setCurrentPage] = useState(1);  
 
     const onChange = (page) => {
         setCurrentPage(page);
@@ -61,9 +59,7 @@ export default function PriceZoneTable() {
         }, PZRContextData);
     };
 
-    const searchResults = PZRContextData.searchResults;
-
-    
+    const searchResults = PZRContextData.searchResults;    
 
     return (
         <div className="pz-table-wrapper">
