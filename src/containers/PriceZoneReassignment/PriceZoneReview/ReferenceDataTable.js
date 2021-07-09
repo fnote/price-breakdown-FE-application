@@ -131,7 +131,8 @@ export default function ReferenceDataTable({
                 className='pz-pop-table-ant'
                 loading={resultLoading}
             />
-            <CustomPagination
+            {!resultLoading && (
+                <CustomPagination
                 className="pz-pop-table-pagination"
                 total={totalResultCount}
                 current={currentPage}
@@ -143,6 +144,7 @@ export default function ReferenceDataTable({
                 }}
                 pageSize={REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE}
             />
+            )}            
         </>
     );
 
