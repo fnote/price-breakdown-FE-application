@@ -76,7 +76,7 @@ export default function ApplicationBase() {
         component = <AppLoader/>;
     } else {
         const userRole = userDetailContext?.userDetailsData?.userDetails?.role;
-        component = auth.isUserLoginCompleted() ? Application(userRole) : <Login/>;
+        component = !auth.isUserLoginCompleted() ? Application(userRole) : <Login/>;
     }
 
     return (

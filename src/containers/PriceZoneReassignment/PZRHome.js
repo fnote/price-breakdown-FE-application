@@ -28,7 +28,7 @@ function PZRApp() {
 
     return (
         <div className="content">
-            {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_SEARCH) && (<SearchPanel/>)}
+            {(<SearchPanel/>)}
             <div className="pz-wrapper  pz-no-bg">
                 <Tabs type="card" defaultActiveKey={REVIEW_TAB}
                       onChange={(activeTab) => {
@@ -39,7 +39,7 @@ function PZRApp() {
                           }
                       }}
                 >
-                    {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_PZ_UPDATE) && (
+                    {(
                         <TabPane
                             tab={
                                 <div className="pz-maintab-item">
@@ -53,7 +53,7 @@ function PZRApp() {
                             <PzUpdateComponent/>
                         </TabPane>
                     )}
-                    {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_REVIEW) && (
+                    {(
                         <TabPane
                             tab={
                                 <div className="pz-maintab-item">
