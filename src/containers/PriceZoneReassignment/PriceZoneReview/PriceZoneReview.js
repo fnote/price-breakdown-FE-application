@@ -227,18 +227,19 @@ export default function PriceZoneReview() {
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
             {renderDataTable()}
-            {!resultLoading && (<CustomPagination
-                className="pz-review-pagination"
-                total={totalResultCount}
-                current={currentPage}
-                onChange={(current) => {
-                    if (!resultLoading) {
-                        setCurrentPage(current);
-                        updateDataStore(current);
-                    }
-                }}
-                pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
-            />
+            {!resultLoading && (
+                <CustomPagination
+                    className="pz-review-pagination"
+                    total={totalResultCount}
+                    current={currentPage}
+                    onChange={(current) => {
+                        if (!resultLoading) {
+                            setCurrentPage(current);
+                            updateDataStore(current);
+                        }
+                    }}
+                    pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
+                />
             )}            
         </div>
     );

@@ -133,17 +133,17 @@ export default function ReferenceDataTable({
             />
             {!resultLoading && (
                 <CustomPagination
-                className="pz-pop-table-pagination"
-                total={totalResultCount}
-                current={currentPage}
-                onChange={(current) => {
-                    if (!resultLoading) {
-                        setCurrentPage(current);
-                        loadPageData(current);
-                    }
-                }}
-                pageSize={REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE}
-            />
+                    className="pz-pop-table-pagination"
+                    total={totalResultCount}
+                    current={currentPage}
+                    onChange={(current) => {
+                        if (!resultLoading) {
+                            setCurrentPage(current);
+                            loadPageData(current);
+                        }
+                    }}
+                    pageSize={REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE}
+                />
             )}            
         </>
     );
