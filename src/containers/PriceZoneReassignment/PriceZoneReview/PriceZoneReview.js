@@ -83,7 +83,7 @@ export default function PriceZoneReview() {
     const userDetailContext = useContext(UserDetailContext);
     const {activeBusinessUnitMap: businessUnitMap} = userDetailContext.userDetailsData.userDetails;
     const pZRContext = useContext(PZRContext);
-    
+
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
         if (currentPageData) {
@@ -161,7 +161,7 @@ export default function PriceZoneReview() {
             updateDataStore(currentPage);
             setFetchNewData(false);
         }
-    }, [fetchNewData, currentPage]);    
+    }, [fetchNewData, currentPage]);
 
     const ReferenceTable = () => (
         <div>
@@ -180,7 +180,7 @@ export default function PriceZoneReview() {
         </div>
     );
 
-     const [tableSize, setTableSize] = useState({
+    const [tableSize, setTableSize] = useState({
         width: 0,
         height: 0
     });
