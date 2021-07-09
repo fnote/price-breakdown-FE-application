@@ -12,6 +12,7 @@ export const fetchPZRequestDetails = ({
                                           setTotalResultCount,
                                           setDataStore,
                                           setResultLoading,
+                                          setCurrentPage,
                                       }) => {
     fetch(requestUrl, constructFetchRequest())
         .then(handleResponse)
@@ -32,5 +33,6 @@ export const fetchPZRequestDetails = ({
         })
         .finally(() => {
             setResultLoading(false);
+            setCurrentPage(page);
         });
 };

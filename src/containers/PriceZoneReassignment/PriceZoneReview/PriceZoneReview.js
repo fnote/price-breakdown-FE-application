@@ -127,7 +127,9 @@ export default function PriceZoneReview() {
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
-            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore});
+            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage});
+        } else {
+            setCurrentPage(page);
         }
     };
 
@@ -140,7 +142,6 @@ export default function PriceZoneReview() {
                         delete dataStoreCopy[key];
                     }
                 });
-            setDataStore(dataStoreCopy);
             setDataResetIndex(0);
             return dataStoreCopy;
         }
@@ -223,21 +224,17 @@ export default function PriceZoneReview() {
 
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
-            {renderDataTable()}
-            {!resultLoading && (
-                <CustomPagination
-                    className="pz-review-pagination"
-                    total={totalResultCount}
-                    current={currentPage}
-                    onChange={(current) => {
-                        if (!resultLoading) {
-                            setCurrentPage(current);
-                            updateDataStore(current);
-                        }
-                    }}
-                    pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
-                />
-            )}
+            {renderDataTable()}            
+            <CustomPagination
+                className="pz-review-pagination"
+                total={totalResultCount}
+                current={currentPage}
+                onChange={(current) => {
+                    updateDataStore(current);
+                }}
+                pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
+                disabled={resultLoading}
+            />
         </div>
     );
 }

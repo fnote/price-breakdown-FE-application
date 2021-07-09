@@ -79,12 +79,15 @@ export default function ReferenceDataTable({
             setTotalResultCount,
             setDataStore,
             setResultLoading,
+            setCurrentPage
         });
     };
 
     const loadPageData = (page = 1) => {
         if (!dataStore[page]) {
             fetchPZChangeRequests(page);
+        } else {
+            setCurrentPage(page);
         }
     };
 
@@ -131,20 +134,16 @@ export default function ReferenceDataTable({
                 className='pz-pop-table-ant'
                 loading={resultLoading}
             />
-            {!resultLoading && (
-                <CustomPagination
-                    className="pz-pop-table-pagination"
-                    total={totalResultCount}
-                    current={currentPage}
-                    onChange={(current) => {
-                        if (!resultLoading) {
-                            setCurrentPage(current);
-                            loadPageData(current);
-                        }
-                    }}
-                    pageSize={REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE}
-                />
-            )}
+            <CustomPagination
+                className="pz-pop-table-pagination"
+                total={totalResultCount}
+                current={currentPage}
+                onChange={(current) => {
+                    loadPageData(current);
+                }}
+                pageSize={REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE}
+                disabled={resultLoading}
+            />
         </>
     );
 

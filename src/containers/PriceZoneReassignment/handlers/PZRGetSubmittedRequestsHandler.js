@@ -12,7 +12,7 @@ import {
 } from '../../../constants/PZRConstants';
 import {CIPZErrorMessages, ErrorCodes} from '../../../constants/Errors';
 
-export const fetchPZChangeRequests = ({page, store, setResultLoading, setTotalResultCount, setDataStore}) => {
+export const fetchPZChangeRequests = ({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage}) => {
     const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
     const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
         {...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL});
@@ -25,11 +25,13 @@ export const fetchPZChangeRequests = ({page, store, setResultLoading, setTotalRe
                 const updatedDataStore = {...store, [page]: pzUpdateRequests};
                 setTotalResultCount(totalRecords);
                 setDataStore(updatedDataStore);
+                // setCurrentPage(page);
             } else {
                 const errorResponseData = resp.data;
                 if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_PROVIDED_INVALID_OFFSET) {
                     const updatedDataStore = {...store, [page]: []};
                     setDataStore(updatedDataStore);
+                    // setCurrentPage(page);
                 } else {
                     openNotificationWithIcon('error',
                     CIPZErrorMessages.FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
@@ -42,5 +44,6 @@ export const fetchPZChangeRequests = ({page, store, setResultLoading, setTotalRe
         })
         .finally(() => {
             setResultLoading(false);
+            setCurrentPage(page);
         });
 };
