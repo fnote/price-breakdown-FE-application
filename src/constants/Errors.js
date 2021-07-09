@@ -21,6 +21,7 @@ const ErrorCodes = {
 
     // CPIZ errors
     CIPZ_ALREADY_APPROVED_OR_REJECTED: 102066,
+    CIPZ_PROVIDED_INVALID_OFFSET: 102003
 
 };
 

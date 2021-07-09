@@ -20,7 +20,8 @@ import {getBffUrlConfig} from '../../../utils/Configs';
 import {
     formatPZRequest,
     constructPatchPayload,
-    generateReviewer
+    generateReviewer,
+    getEmptyDataTableMessage
 } from '../helper/PZRHelper';
 // constants
 import {
@@ -160,7 +161,7 @@ export default function PriceZoneReview() {
             updateDataStore(currentPage);
             setFetchNewData(false);
         }
-    }, [fetchNewData, currentPage]);
+    }, [fetchNewData, currentPage]);    
 
     const ReferenceTable = () => (
         <div>
@@ -191,7 +192,7 @@ export default function PriceZoneReview() {
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
-                locale={{emptyText: <Empty description='No Changes to Review'/>}}
+                locale={{emptyText: <Empty description={getEmptyDataTableMessage(currentPage)}/>}}
                 //scroll={{ y: 420, x: 500 }}   --- WIP ---
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
