@@ -69,6 +69,7 @@ export default function PriceZoneTable() {
                    dataSource={searchResults?.data?.item_price_zones || []}
                    loading={PZRContextData.isSearchTableLoading}
                    rowKey={(obj) => obj.supc + obj.customer_account + obj.price_zone + obj.effective_from_date + obj.source}
+                  
             />
             <CustomPagination
                 onChange={onChange}

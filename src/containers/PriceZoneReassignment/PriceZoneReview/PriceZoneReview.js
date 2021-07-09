@@ -224,7 +224,7 @@ export default function PriceZoneReview() {
 
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
-            {renderDataTable()}
+            {renderDataTable()}            
             <CustomPagination
                 className="pz-review-pagination"
                 total={totalResultCount}
