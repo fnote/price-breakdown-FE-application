@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 // Core
-import React, {useState, useEffect, useContext, useMemo , useRef} from 'react';
+import React, {useState, useEffect, useContext, useMemo, useRef} from 'react';
 import {Table, Space, Empty} from 'antd';
 // Custom components
 import useModal from '../../../hooks/useModal';
@@ -26,7 +26,6 @@ import {
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE
 } from '../../../constants/PZRConstants';
-import Base from 'antd/lib/typography/Base';
 
 const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing}) => ([
     {
@@ -83,9 +82,7 @@ export default function PriceZoneReview() {
     const userDetailContext = useContext(UserDetailContext);
     const {activeBusinessUnitMap: businessUnitMap} = userDetailContext.userDetailsData.userDetails;
     const pZRContext = useContext(PZRContext);
-
     
-
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
         if (currentPageData) {
@@ -182,37 +179,32 @@ export default function PriceZoneReview() {
         </div>
     );
 
-
-     // table scroll
-
      const [tableSize, setTableSize] = useState({
-        width:0,
-        height:0
+        width: 0,
+        height: 0
     });
 
     const tableRef = useRef();
 
-    const calcSize = ()=>{
-        if(tableRef.current){
-            setTableSize({...tableSize,width:tableRef.current.clientWidth,height:tableRef.current.clientHeight})
-           }
-    }
-
-    window.onresize=()=>{
-        calcSize()
-    }
-
-    useEffect(()=>{
-        if(tableRef.current){
-            setTableSize({...tableSize,width:tableRef.current.clientWidth,height:tableRef.current.clientHeight})
+    const calcSize = () => {
+        if (tableRef.current) {
+            setTableSize({...tableSize, width: tableRef.current.clientWidth, height: tableRef.current.clientHeight});
         }
-    },[tableRef.current])
+    };
 
+    window.onresize = () => {
+        calcSize();
+    };
+
+    useEffect(() => {
+        if (tableRef.current) {
+            setTableSize({...tableSize, width: tableRef.current.clientWidth, height: tableRef.current.clientHeight});
+        }
+    }, [tableRef.current]);
 
     const renderDataTable = () => (
         <>
             <Table
-               
                 columns={generateColumns({
                     setSelectedRecord,
                     toggle,
@@ -222,22 +214,19 @@ export default function PriceZoneReview() {
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
-                scroll={{ y: tableSize.height - 80 }}  // --- WIP ---
+                scroll={{ y: tableSize.height - 80 }} // --- WIP ---
                 locale={{emptyText: <Empty description='No Changes to Review'/>}}
                 onChange={calcSize}
                 
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
         </>
-    );
-
-
-   
+    );  
 
     return (
-        <div className='pz-review-base-wrapper'  ref={tableRef}>
+        <div className='pz-review-base-wrapper' ref={tableRef}>
             {renderDataTable()}
-            <CustomPagination
+            {!resultLoading && (<CustomPagination
                 className="pz-review-pagination"
                 total={totalResultCount}
                 current={currentPage}
@@ -249,6 +238,7 @@ export default function PriceZoneReview() {
                 }}
                 pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
             />
+            )}            
         </div>
     );
 }
