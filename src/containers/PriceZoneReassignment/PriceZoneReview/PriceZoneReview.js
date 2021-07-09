@@ -222,7 +222,7 @@ export default function PriceZoneReview() {
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
         </>
-    );  
+    );
 
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>

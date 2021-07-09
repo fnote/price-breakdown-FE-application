@@ -47,7 +47,7 @@ const columns = [
 export default function PriceZoneTable() {
     const PZRContextData = useContext(PZRContext);
 
-    const [currentPage, setCurrentPage] = useState(1);  
+    const [currentPage, setCurrentPage] = useState(1);
 
     const onChange = (page) => {
         setCurrentPage(page);
@@ -59,7 +59,7 @@ export default function PriceZoneTable() {
         }, PZRContextData);
     };
 
-    const searchResults = PZRContextData.searchResults;    
+    const searchResults = PZRContextData.searchResults;
 
     return (
         <div className="pz-table-wrapper">
