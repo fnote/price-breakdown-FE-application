@@ -144,7 +144,7 @@ export default function ReferenceDataTable({
                     }}
                     pageSize={REVIEW_REFERENCE_RESULT_TABLE_PAGE_SIZE}
                 />
-            )}            
+            )}
         </>
     );
 

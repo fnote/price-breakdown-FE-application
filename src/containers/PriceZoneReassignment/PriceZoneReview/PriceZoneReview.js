@@ -198,9 +198,7 @@ export default function PriceZoneReview() {
     };
 
     useEffect(() => {
-        if (tableRef.current) {
-            setTableSize({...tableSize, width: tableRef.current.clientWidth, height: tableRef.current.clientHeight});
-        }
+        calcSize();
     }, [tableRef.current]);
 
     const renderDataTable = () => (
@@ -218,7 +216,6 @@ export default function PriceZoneReview() {
                 scroll={{ y: tableSize.height - 80 }} // --- WIP ---
                 locale={{emptyText: <Empty description={getEmptyDataTableMessage(currentPage)}/>}}
                 onChange={calcSize}
-                
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
         </>
@@ -240,7 +237,7 @@ export default function PriceZoneReview() {
                     }}
                     pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
                 />
-            )}            
+            )}
         </div>
     );
 }
