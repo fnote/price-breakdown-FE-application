@@ -200,7 +200,7 @@ export default function PrizeZoneHeader() {
                 {
                     'warning-modal': <ModalComponent Modal={Modal} setSubmitModal={setSubmitModal}/>,
                     'submit-reason': <SubmitReason Modal={Modal} setSubmitModal={setSubmitModal}
-                                                   priceZoneChangeHandler={priceZoneChangeHandler}/>,
+                                                   priceZoneChangeHandler={priceZoneChangeHandler} toggle={toggle}/>,
                     'success-modal': <SubmitSuccess Modal={Modal} resetSearch={resetSearch} referenceId={referenceId}/>,
                     'loading': <LoadingState Modal={Modal}/>
                 }[submitModal]

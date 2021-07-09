@@ -67,7 +67,7 @@ export const ModalComponent = ({Modal, setSubmitModal}) => (
     </div>
 );
 
-export const SubmitReason = ({Modal, setSubmitModal, priceZoneChangeHandler}) => (
+export const SubmitReason = ({Modal, setSubmitModal, toggle, priceZoneChangeHandler}) => (
     <div>
         {Modal(
             {
@@ -79,7 +79,12 @@ export const SubmitReason = ({Modal, setSubmitModal, priceZoneChangeHandler}) =>
                 cancelText: 'CANCEL',
                 footer: null
             },
-            <SubmitReasonModalContent onSubmit={priceZoneChangeHandler} onCancel={() => setSubmitModal(false)}/>
+            <SubmitReasonModalContent onSubmit={priceZoneChangeHandler}
+                onCancel={() => {
+                    setSubmitModal(false);
+                    toggle();
+                }}
+            />
         )}
     </div>
 );
