@@ -26,25 +26,33 @@ export const fetchPZChangeRequests = ({page, store, setResultLoading, setTotalRe
                 setTotalResultCount(totalRecords);
                 setDataStore(updatedDataStore);
                 setError(false);
+                setCurrentPage(page);
+                setResultLoading(false);
             } else {
                 const errorResponseData = resp.data;
-                if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_PROVIDED_INVALID_OFFSET) {
-                    const updatedDataStore = {...store, [page]: []};
-                    setDataStore(updatedDataStore);
-                    setError(false);
+                if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_PROVIDED_INVALID_OFFSET && page !== 1) {
+                    fetchPZChangeRequests({
+                        page: 1,
+                        store: {},
+                        setResultLoading,
+                        setTotalResultCount,
+                        setDataStore,
+                        setCurrentPage,
+                        setError
+                    });
                 } else {
                     setError(true);
                     openNotificationWithIcon('error',
                     CIPZErrorMessages.FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
+                    setCurrentPage(page);
+                    setResultLoading(false);
                 }
             }
         })
         .catch(() => {
-            setError(true);
             openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
-        })
-        .finally(() => {
-            setResultLoading(false);
+            setError(true);
             setCurrentPage(page);
+            setResultLoading(false);
         });
 };

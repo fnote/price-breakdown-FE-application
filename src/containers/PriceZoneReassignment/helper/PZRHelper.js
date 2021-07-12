@@ -191,14 +191,9 @@ export const getReviewStatusMsg = (status = null) => {
     return REVIEW_STATUS_CHANGED_MSG;
 };
 
-const isOnFirstPage = (page) => page === 1;
-
-export const getEmptyDataTableMessage = (page, error = false) => {
+export const getEmptyDataTableMessage = (error = false) => {
     if (error) {
-        return 'Failed to Load Data';
+        return 'Sorry we could not retrieve the information';
     }
-    if (isOnFirstPage(page)) {
-        return 'No Changes to Review';
-    }
-    return 'No Changes to Review in the Current Page';
+    return 'No Changes to Review';
 };

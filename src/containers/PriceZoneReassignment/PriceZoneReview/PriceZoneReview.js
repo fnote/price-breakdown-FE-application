@@ -216,7 +216,7 @@ export default function PriceZoneReview() {
                 pagination={false}
                 loading={resultLoading}
                 scroll={{ y: tableSize.height - 80 }} // --- WIP ---
-                locale={{emptyText: <Empty description={getEmptyDataTableMessage(currentPage, error)}/>}}
+                locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
                 onChange={calcSize}
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
