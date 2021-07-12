@@ -67,6 +67,35 @@ export default function PrizeZoneHeader() {
         </div>
     ) : (<div/>));
 
+
+// Auto sizing and truncate functions
+
+    const  truncate = (str, n)=>{
+        if(str){
+        return (str.length > n) ? `${str.substr(0, n-1)} ...` : str;
+        }else{
+            return ''
+        }
+      };
+
+
+      const autoSize = (textLength) => {
+         if(textLength){
+            let length = textLength.length ;
+            let fontsize = 1;
+         if(length >= 3 && length <=10 ){
+             console.log('length is > 4 < 10')
+             fontsize = 1.5
+         }else if(length >= 10){
+          console.log('length is > 10 < 60')
+          fontsize = 0.9
+         }
+          return `${fontsize}rem`
+         }
+      }
+
+// -------
+
     return (
         <div className="pz-header">
             <div className="pz-header-title"/>
@@ -84,7 +113,7 @@ export default function PrizeZoneHeader() {
                             >
                                 <div
                                     id="site"
-                                    className="pz-tab-items-bottom pz-opco-text-bold">{PZRContextData.searchParams.site}</div>
+                                    className="pz-tab-items-bottom pz-opco-text-bold">{truncate(PZRContextData.searchParams.site ,24)}</div>
                             </Tooltip>
                         </div>
                     </div>
@@ -128,7 +157,13 @@ export default function PrizeZoneHeader() {
                                 >
                                     <span
                                         id="attributr-group-tab"
-                                        className="pz-item-grp-text">{PZRContextData.searchParams.attributeGroup}</span>
+                                        className="pz-item-grp-text" style={{fontSize:autoSize(PZRContextData.searchParams.attributeGroup)}}>
+                                          
+
+                                           {truncate(PZRContextData.searchParams.attributeGroup,60)}
+                                          
+                                           
+                                            </span>
                                 </Tooltip>
                             </div>
                         </div>
