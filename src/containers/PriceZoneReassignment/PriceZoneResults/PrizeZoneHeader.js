@@ -68,7 +68,7 @@ export default function PrizeZoneHeader() {
     ) : (<div/>));
 
 
-// Auto sizing and truncate functions
+// Auto sizing and truncating
 
     const  truncate = (str, n)=>{
         if(str){
@@ -100,10 +100,12 @@ export default function PrizeZoneHeader() {
         <div className="pz-header">
             <div className="pz-header-title"/>
             <div className="pz-tab-section">
-                <div className="pz-tabs">
+              
+                <div className="pz-tabs pz-tabs-combine">
+                <div className="pz-tabs-combine-l">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
-                            <div id="opco-label" className="pz-tab-items-top">OPCO</div>
+                            <div id="opco-label" className="pz-tab-items-top pz-text-left">OPCO</div>
                             <Tooltip
                                 id="opco-tooltip"
                                 title={PZRContextData.searchParams.site}
@@ -113,12 +115,13 @@ export default function PrizeZoneHeader() {
                             >
                                 <div
                                     id="site"
-                                    className="pz-tab-items-bottom pz-opco-text-bold">{truncate(PZRContextData.searchParams.site ,24)}</div>
+                                    className="pz-tab-items-bottom pz-opco-text-bold pz-text-left">
+                                        {truncate(PZRContextData.searchParams.site ,24)}
+                                        </div>
                             </Tooltip>
                         </div>
                     </div>
                 </div>
-                <div className="pz-tabs pz-tabs-combine">
                     <div className="pz-tabs-combine-l">
                         <div id="customer-group-tab" className="pz-tab-items">
                             {PZRContextData.searchParams.customerGroup ? (
@@ -127,7 +130,10 @@ export default function PrizeZoneHeader() {
                                     <div className="pz-tab-items-bottom">
                                         <span
                                             id="customer-group"
-                                            className="pz-cutomer-grp-text">{PZRContextData.searchParams.customerGroup}</span>
+                                            className="pz-cutomer-grp-text">
+                                                {PZRContextData.searchParams.customerGroup}
+                                               
+                                                </span>
                                     </div>
                                 </>
                             ) : (
@@ -136,7 +142,9 @@ export default function PrizeZoneHeader() {
                                     <div className="pz-tab-items-bottom">
                                         <div
                                             id="customer"
-                                            className="pz-cutomer-grp-text-no-bg">{PZRContextData.searchParams.customer}
+                                            className="pz-cutomer-grp-text-no-bg">
+                                                {PZRContextData.searchParams.customer}
+                                          
                                         </div>
                                         {renderCustomerGroupComponent()}
                                     </div>
@@ -171,6 +179,13 @@ export default function PrizeZoneHeader() {
                 </div>
 
                 <div className="pz-tabs">
+                <Tooltip
+                                    id="attribute-group-tooltip"
+                                    title={'Change PriceZone details '}
+                                    color="#fff"
+                                    overlayClassName="pz-tooltip"
+                                    overlayStyle={{color: '#000'}}
+                                >
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
                             <div id="price-zone-label" className="pz-tab-items-top">PRICE ZONE</div>
@@ -187,9 +202,16 @@ export default function PrizeZoneHeader() {
                                 </Select>
                             </div>
                         </div>
-                    </div>
+                    </div></Tooltip>
                 </div>
                 <div className="pz-tabs pz-separator">
+                <Tooltip
+                                    id="attribute-group-tooltip"
+                                    title={'Change effective date'}
+                                    color="#fff"
+                                    overlayClassName="pz-tooltip"
+                                    overlayStyle={{color: '#000'}}
+                                >
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
                             <div className="pz-tab-items-top">EFFECTIVE DATE ( {effectiveDay} )</div>
@@ -204,6 +226,7 @@ export default function PrizeZoneHeader() {
                             </div>
                         </div>
                     </div>
+                    </Tooltip>
                 </div>
 
                 <div className="pz-tabs">
