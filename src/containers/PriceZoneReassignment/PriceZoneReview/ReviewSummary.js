@@ -27,7 +27,7 @@ export default function ReviewSummary({
                     </div>
                 </div>
                 <div className="pz-review-sum-left-opco">
-                    <span id="opco" className="pz-caps">opco</span>
+                    <span id="opco" className="pz-caps">site</span>
                     <div className="pz-review-sum-left-opco">
                         <Tooltip id="tooltip-opco" itle={businessUnit} color="#fff" overlayClassName="pz-tooltip"
                                  overlayStyle={{color: '#000'}}>

@@ -74,7 +74,7 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">
-                            <div id="opco-label" className="pz-tab-items-top">OPCO</div>
+                            <div id="opco-label" className="pz-tab-items-top">Site</div>
                             <Tooltip
                                 id="opco-tooltip"
                                 title={PZRContextData.searchParams.site}

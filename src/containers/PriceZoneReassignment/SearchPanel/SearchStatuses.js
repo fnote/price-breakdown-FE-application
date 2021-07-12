@@ -70,7 +70,7 @@ const emptyResponse = (correlationId) => (
                 </div>
                 <div className="pz-search-suggestion-list">
                     <ul>
-                        <li>Make sure correct OpCo is selected.</li>
+                        <li>Make sure correct Site is selected.</li>
                         <li>Make sure entered Customer or Customer Group are valid.</li>
                     </ul>
                 </div>
