@@ -77,6 +77,7 @@ export default function PriceZoneReview() {
     const [dataStore, setDataStore] = useState({});
     const [totalResultCount, setTotalResultCount] = useState(REVIEW_RESULT_TABLE_PAGE_SIZE);
     const [resultLoading, setResultLoading] = useState(false);
+    const [error, setError] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [approveRejectProgressing, setApproveRejectProgressing] = useState(false);
     const [fetchNewData, setFetchNewData] = useState(false);
@@ -127,7 +128,7 @@ export default function PriceZoneReview() {
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
-            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage});
+            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError});
         } else {
             setCurrentPage(page);
         }
@@ -215,7 +216,7 @@ export default function PriceZoneReview() {
                 pagination={false}
                 loading={resultLoading}
                 scroll={{ y: tableSize.height - 80 }} // --- WIP ---
-                locale={{emptyText: <Empty description={getEmptyDataTableMessage(currentPage)}/>}}
+                locale={{emptyText: <Empty description={getEmptyDataTableMessage(currentPage, error)}/>}}
                 onChange={calcSize}
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}

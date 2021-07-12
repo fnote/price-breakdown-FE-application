@@ -193,7 +193,10 @@ export const getReviewStatusMsg = (status = null) => {
 
 const isOnFirstPage = (page) => page === 1;
 
-export const getEmptyDataTableMessage = (page) => {
+export const getEmptyDataTableMessage = (page, error = false) => {
+    if (error) {
+        return 'Failed to Load Data';
+    }
     if (isOnFirstPage(page)) {
         return 'No Changes to Review';
     }
