@@ -653,7 +653,10 @@ width: calc(100vw - 26rem);
 .pz-customer-tag {
   background: #76e0f6;
   text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   border-radius: 5px;
+  overflow: hidden;
 }
 .pz-attribute-tag {
   background: #f6e176;

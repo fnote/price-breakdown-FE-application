@@ -47,20 +47,22 @@ export default function ReviewSummary({
                         <div className="pz-right-bottom-left">
                             {customerGroup ? (
                                 <>
-                                    <div id="customer-group" className="pz-effective-date-text pz-caps">customer group
-                                    </div>
-                                    <div id="customer-group" className="pz-effective-date pz-customer-tag">
-                                        {customerGroup}
-                                    </div>
+                                    <div id="customer-group" className="pz-effective-date-text pz-caps">customer group</div>
+                                    <Tooltip title={customerGroup} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
+                                        <div id="customer-group" className="pz-effective-date pz-customer-tag">
+                                            {customerGroup}
+                                        </div>
+                                    </Tooltip>                                    
                                     <div id="cutomers" className="pz-customer-total">{customerCount} customers</div>
                                 </>
                             ) : (
                                 <>
                                     <div id="customer" className="pz-effective-date-text pz-caps ">customer</div>
-                                    <div id="customer-account" className="pz-effective-date">
-                                        {customerAccount}
-                                    </div>
-
+                                    <Tooltip title={customerAccount} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
+                                        <div id="customer-account" className="pz-effective-date">
+                                            {customerAccount}
+                                        </div>
+                                    </Tooltip>                                        
                                 </>
                             )}
                         </div>
