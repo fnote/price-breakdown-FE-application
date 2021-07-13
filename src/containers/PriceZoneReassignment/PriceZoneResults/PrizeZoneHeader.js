@@ -32,7 +32,8 @@ export default function PrizeZoneHeader() {
     const [effectiveDate, setEffectiveDate] = useState(getDefaultEffectiveDate().format(CIPZ_API_DATE_FORMAT));
     const [effectiveDay, setEffectiveDay] = useState(getDefaultEffectiveDate().format('ddd'));
 
-    const getCustomerGroupOfCustomer = () => PZRContextData?.searchResults?.data?.customer_group_id || null;
+    const getCustomerGroupOfCustomer = () => (PZRContextData.searchParams.customerGroup
+        ? PZRContextData.searchParams.customerGroup : PZRContextData?.searchResults?.data?.customer_group_id || null);
 
     const priceZoneChangeHandler = (submissionNote) => {
         const reqParamsToFormBody = {
