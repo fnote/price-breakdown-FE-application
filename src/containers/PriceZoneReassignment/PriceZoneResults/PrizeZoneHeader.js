@@ -14,6 +14,9 @@ import {submitPriceZoneChangeRequest} from '../handlers/PZRChangeSubmitHandler';
 import {getPriceZoneOptions, disabledDate, truncate, autoSize} from '../helper/PZRHelper';
 import {CIPZ_API_DATE_FORMAT} from '../../../constants/PZRConstants';
 
+const EFFECTIVE_DATE_TOOLTIP_VALUE = 'Start date of when this change will be effective';
+const NEW_PRICE_ZONE_TOOLTIP_VALUE = 'New price zone of this item attribute group and customer/customer group';
+
 export default function PrizeZoneHeader() {
     // Constants
     const {Modal, toggle} = useModal();
@@ -146,7 +149,7 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs">
                     <Tooltip
                         id="attribute-group-tooltip"
-                        title={'Change PriceZone details '}
+                        title={NEW_PRICE_ZONE_TOOLTIP_VALUE}
                         color="#fff"
                         overlayClassName="pz-tooltip"
                         overlayStyle={{color: '#000'}}
@@ -173,7 +176,7 @@ export default function PrizeZoneHeader() {
                 <div className="pz-tabs pz-separator">
                     <Tooltip
                         id="attribute-group-tooltip"
-                        title={'Change effective date'}
+                        title={EFFECTIVE_DATE_TOOLTIP_VALUE}
                         color="#fff"
                         overlayClassName="pz-tooltip"
                         overlayStyle={{color: '#000'}}

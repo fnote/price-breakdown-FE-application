@@ -2,6 +2,8 @@ import React from 'react';
 import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {Tooltip} from 'antd';
 
+const CURRENT_PRICE_ZONE_TOOLTIP = 'Current price zone of this item attribute group and customer/customer group';
+
 export default function ReviewSummary({
                                           changeSummary: {
                                               businessUnit, newPriceZone, oldPriceZone, effectiveFromDate, customerGroup,
@@ -16,7 +18,7 @@ export default function ReviewSummary({
                     <div className="pz-review-sum-zone">
                         <div className="pz-zone-wrapper">
                             <div className="pz-zone-from-to-base">
-                                <Tooltip title={oldPriceZone} color="#fff" overlayClassName="pz-tooltip"
+                                <Tooltip title={CURRENT_PRICE_ZONE_TOOLTIP} color="#fff" overlayClassName="pz-tooltip"
                                          overlayStyle={{color: '#000'}}>
                                     <div id="old-price-zone" className="pz-zone-from">{oldPriceZone}</div>
                                 </Tooltip>
