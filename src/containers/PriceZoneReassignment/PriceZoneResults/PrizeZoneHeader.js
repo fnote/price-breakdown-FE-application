@@ -102,8 +102,7 @@ export default function PrizeZoneHeader() {
                                         <span
                                             id="customer-group"
                                             className="pz-cutomer-grp-text">
-                                                {PZRContextData.searchParams.customerGroup}
-                                               
+                                                {PZRContextData.searchParams.customerGroup}                                               
                                                 </span>
                                     </div>
                                 </>
@@ -114,8 +113,7 @@ export default function PrizeZoneHeader() {
                                         <div
                                             id="customer"
                                             className="pz-cutomer-grp-text-no-bg">
-                                                {PZRContextData.searchParams.customer}
-                                          
+                                                {PZRContextData.searchParams.customer}                                          
                                         </div>
                                         {renderCustomerGroupComponent()}
                                     </div>
@@ -146,56 +144,56 @@ export default function PrizeZoneHeader() {
                 </div>
 
                 <div className="pz-tabs">
-                <Tooltip
-                                    id="attribute-group-tooltip"
-                                    title={'Change PriceZone details '}
-                                    color="#fff"
-                                    overlayClassName="pz-tooltip"
-                                    overlayStyle={{color: '#000'}}
-                                >
-                    <div className="pz-tab-items">
-                        <div className="pz-text-wrapper">
-                            <div id="price-zone-label" className="pz-tab-items-top">PRICE ZONE</div>
-                            <div className="pz-tab-items-bottom">
-                                <Select
-                                    id="pricezone-dropdown"
-                                    placeholder="Select Pricezone"
-                                    dropdownMatchSelectWidth={false}
-                                    showSearch
-                                    onChange={onPriceZoneChange}
-                                    className="pz-select"
-                                >
-                                    {getPriceZoneOptions()}
-                                </Select>
+                    <Tooltip
+                        id="attribute-group-tooltip"
+                        title={'Change PriceZone details '}
+                        color="#fff"
+                        overlayClassName="pz-tooltip"
+                        overlayStyle={{color: '#000'}}
+                    >
+                        <div className="pz-tab-items">
+                            <div className="pz-text-wrapper">
+                                <div id="price-zone-label" className="pz-tab-items-top">PRICE ZONE</div>
+                                <div className="pz-tab-items-bottom">
+                                    <Select
+                                        id="pricezone-dropdown"
+                                        placeholder="Select Pricezone"
+                                        dropdownMatchSelectWidth={false}
+                                        showSearch
+                                        onChange={onPriceZoneChange}
+                                        className="pz-select"
+                                    >
+                                        {getPriceZoneOptions()}
+                                    </Select>
+                                </div>
                             </div>
                         </div>
-                    </div></Tooltip>
-                </div>
-                <div className="pz-tabs pz-separator">
-                <Tooltip
-                                    id="attribute-group-tooltip"
-                                    title={'Change effective date'}
-                                    color="#fff"
-                                    overlayClassName="pz-tooltip"
-                                    overlayStyle={{color: '#000'}}
-                                >
-                    <div className="pz-tab-items">
-                        <div className="pz-text-wrapper">
-                            <div className="pz-tab-items-top">EFFECTIVE DATE ( {effectiveDay} )</div>
-                            <div className="pz-tab-items-bottom">
-                                <DatePicker
-                                    id="date-picker"
-                                    defaultValue={getDefaultEffectiveDate}
-                                    disabledDate={disabledDate}
-                                    allowClear={false}
-                                    onChange={onDateChange}
-                                />
-                            </div>
-                        </div>
-                    </div>
                     </Tooltip>
                 </div>
-
+                <div className="pz-tabs pz-separator">
+                    <Tooltip
+                        id="attribute-group-tooltip"
+                        title={'Change effective date'}
+                        color="#fff"
+                        overlayClassName="pz-tooltip"
+                        overlayStyle={{color: '#000'}}
+                    >
+                        <div className="pz-tab-items">
+                            <div className="pz-text-wrapper">
+                                <div className="pz-tab-items-top">EFFECTIVE DATE ( {effectiveDay} )</div>
+                                <div className="pz-tab-items-bottom">
+                                    <DatePicker
+                                        id="date-picker"
+                                        defaultValue={getDefaultEffectiveDate}
+                                        disabledDate={disabledDate}
+                                        allowClear={false}
+                                        onChange={onDateChange}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </Tooltip>
+                </div>
                 <div className="pz-tabs">
                     <div className="pz-tab-items">
                         <div className="pz-text-wrapper">

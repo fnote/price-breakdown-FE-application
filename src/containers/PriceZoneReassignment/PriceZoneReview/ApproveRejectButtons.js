@@ -195,10 +195,6 @@ export default function ApproveRejectButtons({row, index, handle, disable}) {
         <div className='pz-aprove-reject-wrapper'>
             {row.reviewStatus ? (
                 <div className={`pz-aprove-status ${getStyleClassByApprovalStatus(row.reviewStatus)}`}>
-                    {/* classnames for text colors
-                    pz-aproved
-                    pz-rejected
-                    pz-already */}
                     {row.reviewStatus}
                 </div>
                 
