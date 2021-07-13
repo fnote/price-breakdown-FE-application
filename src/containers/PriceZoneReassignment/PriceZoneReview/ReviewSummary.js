@@ -8,6 +8,37 @@ export default function ReviewSummary({
                                               customerAccount, itemAttributeGroup, customerCount, supcCount
                                           }
                                       }) {
+
+
+
+    // Auto sizing and truncating
+
+    const  truncate = (str, n)=>{
+        if(str){
+        return (str.length > n) ? `${str.substr(0, n-1)} ...` : str;
+        }else{
+            return ''
+        }
+      };
+
+
+      const autoSize = (textLength) => {
+         if(textLength){
+            let length = textLength.length ;
+            let fontsize = 1;
+         if(length >= 3 && length <=10 ){
+             console.log('length is > 4 < 10')
+             fontsize = 1.5
+         }else if(length >= 10){
+          console.log('length is > 10 < 60')
+          fontsize = 0.9
+         }
+          return `${fontsize}rem`
+         }
+      }
+
+// -------
+
     return (
         <div className="pz-review-wrapper pz-review-middle pz-cursor">
             <div className="pz-review-sum-left">
@@ -70,7 +101,10 @@ export default function ReviewSummary({
                                 <Tooltip title={itemAttributeGroup} color="#fff" overlayClassName="pz-tooltip"
                                          overlayStyle={{color: '#000'}}>
                                     <div id="item-attribute-group"
-                                         className="pz-effective-date pz-attribute-tag">{itemAttributeGroup}</div>
+                                         className="pz-effective-date pz-attribute-tag" style={{fontSize:autoSize(itemAttributeGroup)}}>
+                                          
+                                             {truncate(itemAttributeGroup,30)}
+                                             </div>
                                 </Tooltip>
                                 <ExclamationCircleOutlined className="pz-attrib-info"/>
                             </div>
