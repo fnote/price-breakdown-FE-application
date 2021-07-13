@@ -1,7 +1,8 @@
 /* eslint-disable react/display-name */
 // Core
 import React, {useState, useEffect, useContext, useMemo, useRef} from 'react';
-import {Table, Space, Empty} from 'antd';
+import {Table, Space, Empty, Button} from 'antd';
+import { ReloadOutlined } from '@ant-design/icons';
 // Custom components
 import useModal from '../../../hooks/useModal';
 import ReviewSubmitter from './ReviewSubmitter';
@@ -214,7 +215,7 @@ export default function PriceZoneReview() {
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
-                scroll={{ y: tableSize.height - 80 }} // --- WIP ---
+                scroll={{ y: tableSize.height - 80 }}  
                 locale={{emptyText: <Empty description='No Changes to Review'/>}}
                 onChange={calcSize}
                 
@@ -225,6 +226,7 @@ export default function PriceZoneReview() {
 
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
+             <Button id="pz-review-refresh" shape="round" icon={<ReloadOutlined />} size="small">Refresh</Button>
             {renderDataTable()}
             {!resultLoading && (<CustomPagination
                 className="pz-review-pagination"
