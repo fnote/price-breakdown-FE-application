@@ -14,6 +14,7 @@ export default function PzUpdateComponent() {
     return (
         <div>
             <PriceZoneHeader/>
+          
             <PriceZoneTable/>
         </div>
     );

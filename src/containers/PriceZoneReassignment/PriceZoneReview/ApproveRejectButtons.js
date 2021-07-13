@@ -190,12 +190,18 @@ export default function ApproveRejectButtons({row, index, handle, disable}) {
         }
     };
 
+  
     return (
         <div className='pz-aprove-reject-wrapper'>
             {row.reviewStatus ? (
-                <div className='pz-aprove-done'>
-                    <CheckCircleFilled/> {row.reviewStatus}
+                <div className='pz-aprove-status pz-aproved'>
+                    {/* classnames for text colors
+                    pz-aproved
+                    pz-rejected
+                    pz-already */}
+                    {row.reviewStatus}
                 </div>
+                
             ) : (
                 <>
                     <Popconfirm

@@ -67,7 +67,9 @@ export default function PriceZoneTable() {
 
     return (
         <div className="pz-table-wrapper">
-
+                <div className="pz-table-header">
+                    Existing Customer Item Price Zone
+                </div>
             <Table pagination={false}
                    columns={columns}
                    dataSource={searchResults?.data?.item_price_zones || []}
