@@ -439,11 +439,8 @@
 }
 
 .pz-review-middle {
-  margin-left: 2rem;
+  margin-left: 1.1rem;
 
-  // @media only screen and (min-width: 1900px) {
-  //   margin-left: 4.7rem;
-  // }
 }
 .pz-cursor {
   cursor: pointer;
@@ -454,7 +451,7 @@
 // ==============================
 
 .pz-review-sum-left {
-  width: 60%;
+  width: 33%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -539,7 +536,7 @@
       font-weight: 600;
       color: #62737e;
       font-weight: 600;
-      width: 18rem;
+      //width: 18rem;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: pre;
@@ -699,15 +696,19 @@
   overflow: hidden;
 }
 .pz-attribute-tag {
+  
   background: #f6e176;
   text-align: center;
   border-radius: 5px;
-  width: 7rem !important;
+  width: auto !important;
   white-space: none;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   padding: 0 0.5rem;
   overflow: hidden;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  min-height: 2.5rem;
+  max-width: 12rem;
 }
 
 // ========================
@@ -1083,4 +1084,21 @@
 
 .pz-text-left {
   text-align: left !important;
+}
+#pz-review-refresh{
+  position: absolute;
+  right: 4rem;
+  top: 0.8rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0.16rem solid;
+  font-weight: 600;
+  color:$bluegrey;
+  .anticon-reload{
+    margin-top: 0.1rem !important;
+  }
+  
 }

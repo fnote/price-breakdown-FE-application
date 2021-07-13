@@ -1,6 +1,7 @@
 import React from 'react';
 import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {Tooltip} from 'antd';
+import {truncate, autoSize} from '../helper/PZRHelper';
 
 const CURRENT_PRICE_ZONE_TOOLTIP = 'Current price zone of this item attribute group and customer/customer group';
 
@@ -74,7 +75,10 @@ export default function ReviewSummary({
                                 <Tooltip title={itemAttributeGroup} color="#fff" overlayClassName="pz-tooltip"
                                          overlayStyle={{color: '#000'}}>
                                     <div id="item-attribute-group"
-                                         className="pz-effective-date pz-attribute-tag">{itemAttributeGroup}</div>
+                                         className="pz-effective-date pz-attribute-tag" style={{fontSize: autoSize(itemAttributeGroup)}}>
+                                          
+                                             {truncate(itemAttributeGroup, 30)}
+                                             </div>
                                 </Tooltip>
                                 <ExclamationCircleOutlined className="pz-attrib-info"/>
                             </div>
