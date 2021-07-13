@@ -217,3 +217,13 @@ export const autoSize = (textLength) => {
         return `${fontsize}rem`;
     }
 };
+
+export const getStyleClassByApprovalStatus = (status) => {
+    if (status === REVIEW_STATUS_APPROVED) {
+        return 'pz-aproved';
+    }
+    if (status === REVIEW_STATUS_REJECTED) {
+        return 'pz-rejected';
+    }
+    return 'pz-already';
+};

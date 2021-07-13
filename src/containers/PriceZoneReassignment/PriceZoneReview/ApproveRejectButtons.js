@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {Input, Popconfirm, Modal, Button} from 'antd';
-import {CheckCircleFilled} from '@ant-design/icons';
 import {ReactComponent as ReviewSuccess} from '../../../styles/images/pz-review-sucess.svg';
 import {ReactComponent as ReviewReject} from '../../../styles/images/pz-review-reject.svg';
 import {ReactComponent as Loader} from '../../../styles/images/priceZone_loader.svg';
 import {ReactComponent as Info} from '../../../styles/images/info.svg';
+
+import { getStyleClassByApprovalStatus } from '../helper/PZRHelper';
 
 const REJECT_REASON_MODAL = 'reject-reason-modal';
 const REJECT_SUCCESS_MODAL = 'reject-success-modal';
@@ -189,12 +190,11 @@ export default function ApproveRejectButtons({row, index, handle, disable}) {
                 return null;
         }
     };
-
   
     return (
         <div className='pz-aprove-reject-wrapper'>
             {row.reviewStatus ? (
-                <div className='pz-aprove-status pz-aproved'>
+                <div className={`pz-aprove-status ${getStyleClassByApprovalStatus(row.reviewStatus)}`}>
                     {/* classnames for text colors
                     pz-aproved
                     pz-rejected
