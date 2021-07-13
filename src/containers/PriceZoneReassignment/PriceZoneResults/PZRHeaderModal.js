@@ -110,9 +110,7 @@ export const SubmitSuccess = ({Modal, resetSearch, referenceId}) => (
                         <Success className="pz-success-anim-logo"/>
                     </div>
                     <div id="success-submission" className="pz-success-text">Submitted Successfully</div>
-                    {referenceId
-                        ? <div id="reference-number" className="pz-alert-sub">Reference Number - {referenceId}</div> :
-                        <div/>}
+                    {referenceId ? <div id="reference-number" className="pz-alert-sub">Reference Number - {referenceId}</div> : <div/>}
                 </div>
             </div>
         )}
