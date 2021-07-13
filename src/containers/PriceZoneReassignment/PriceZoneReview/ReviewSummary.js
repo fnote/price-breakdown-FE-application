@@ -9,7 +9,7 @@ export default function ReviewSummary({
                                           }
                                       }) {
     return (
-        <div className="pz-review-wrapper pz-cursor">
+        <div className="pz-review-wrapper pz-review-middle pz-cursor">
             <div className="pz-review-sum-left">
                 <div className="pz-review-sum-left-pz">
                     <span id="price-zone" className="pz-caps">price zone</span>
@@ -27,7 +27,7 @@ export default function ReviewSummary({
                     </div>
                 </div>
                 <div className="pz-review-sum-left-opco">
-                    <span id="opco" className="pz-caps">opco</span>
+                    <span id="opco" className="pz-caps">site</span>
                     <div className="pz-review-sum-left-opco">
                         <Tooltip id="tooltip-opco" itle={businessUnit} color="#fff" overlayClassName="pz-tooltip"
                                  overlayStyle={{color: '#000'}}>
@@ -47,20 +47,22 @@ export default function ReviewSummary({
                         <div className="pz-right-bottom-left">
                             {customerGroup ? (
                                 <>
-                                    <div id="customer-group" className="pz-effective-date-text pz-caps">customer group
-                                    </div>
-                                    <div id="customer-group" className="pz-effective-date pz-customer-tag">
-                                        {customerGroup}
-                                    </div>
+                                    <div id="customer-group" className="pz-effective-date-text pz-caps">customer group</div>
+                                    <Tooltip title={customerGroup} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
+                                        <div id="customer-group" className="pz-effective-date pz-customer-tag">
+                                            {customerGroup}
+                                        </div>
+                                    </Tooltip>
                                     <div id="cutomers" className="pz-customer-total">{customerCount} customers</div>
                                 </>
                             ) : (
                                 <>
                                     <div id="customer" className="pz-effective-date-text pz-caps ">customer</div>
-                                    <div id="customer-account" className="pz-effective-date">
-                                        {customerAccount}
-                                    </div>
-
+                                    <Tooltip title={customerAccount} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
+                                        <div id="customer-account" className="pz-effective-date">
+                                            {customerAccount}
+                                        </div>
+                                    </Tooltip>
                                 </>
                             )}
                         </div>

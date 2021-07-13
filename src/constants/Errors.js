@@ -21,6 +21,7 @@ const ErrorCodes = {
 
     // CPIZ errors
     CIPZ_ALREADY_APPROVED_OR_REJECTED: 102066,
+    CIPZ_PROVIDED_INVALID_OFFSET: 102003
 
 };
 
@@ -97,7 +98,7 @@ export const CIPZErrorsMap = {
     '102051': 'Cannot get submitter details, Please try re-login',
     '102052': 'Submission note must be provided',
     '102070': 'Provided effective from date is invalid',
-    '102080': 'Your search did not find any match in SEED, Make sure correct OpCo, Customer/Customer Group is provided',
+    '102080': 'Your search did not find any match in SEED, Make sure correct Site, Customer/Customer Group is provided',
     '102081': 'An error occurred from SEED while processing your request. Please try again later',
     '101000': 'Could not update the requested price zone due to connection issue.',
 };

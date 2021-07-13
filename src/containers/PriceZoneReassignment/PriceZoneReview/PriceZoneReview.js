@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
 // Core
-import React, {useState, useEffect, useContext, useMemo} from 'react';
+import React, {useState, useEffect, useContext, useMemo, useRef} from 'react';
 import {Table, Space, Empty} from 'antd';
 // Custom components
 import useModal from '../../../hooks/useModal';
@@ -20,7 +20,8 @@ import {getBffUrlConfig} from '../../../utils/Configs';
 import {
     formatPZRequest,
     constructPatchPayload,
-    generateReviewer
+    generateReviewer,
+    getEmptyDataTableMessage
 } from '../helper/PZRHelper';
 // constants
 import {
@@ -76,6 +77,7 @@ export default function PriceZoneReview() {
     const [dataStore, setDataStore] = useState({});
     const [totalResultCount, setTotalResultCount] = useState(REVIEW_RESULT_TABLE_PAGE_SIZE);
     const [resultLoading, setResultLoading] = useState(false);
+    const [error, setError] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
     const [approveRejectProgressing, setApproveRejectProgressing] = useState(false);
     const [fetchNewData, setFetchNewData] = useState(false);
@@ -126,7 +128,9 @@ export default function PriceZoneReview() {
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
-            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore});
+            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError});
+        } else {
+            setCurrentPage(page);
         }
     };
 
@@ -139,7 +143,6 @@ export default function PriceZoneReview() {
                         delete dataStoreCopy[key];
                     }
                 });
-            setDataStore(dataStoreCopy);
             setDataResetIndex(0);
             return dataStoreCopy;
         }
@@ -179,6 +182,27 @@ export default function PriceZoneReview() {
         </div>
     );
 
+    const [tableSize, setTableSize] = useState({
+        width: 0,
+        height: 0
+    });
+
+    const tableRef = useRef();
+
+    const calcSize = () => {
+        if (tableRef.current) {
+            setTableSize({...tableSize, width: tableRef.current.clientWidth, height: tableRef.current.clientHeight});
+        }
+    };
+
+    window.onresize = () => {
+        calcSize();
+    };
+
+    useEffect(() => {
+        calcSize();
+    }, [tableRef.current]);
+
     const renderDataTable = () => (
         <>
             <Table
@@ -191,26 +215,26 @@ export default function PriceZoneReview() {
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
-                locale={{emptyText: <Empty description='No Changes to Review'/>}}
-                //scroll={{ y: 420, x: 500 }}   --- WIP ---
+                scroll={{ y: tableSize.height - 80 }} // --- WIP ---
+                locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
+                onChange={calcSize}
             />
             {selectedRecord && <ReferenceTable record={selectedRecord}/>}
         </>
     );
 
     return (
-        <div className='pz-review-base-wrapper'>
+        <div className='pz-review-base-wrapper' ref={tableRef}>
             {renderDataTable()}
             <CustomPagination
+                className="pz-review-pagination"
                 total={totalResultCount}
                 current={currentPage}
                 onChange={(current) => {
-                    if (!resultLoading) {
-                        setCurrentPage(current);
-                        updateDataStore(current);
-                    }
+                    updateDataStore(current);
                 }}
                 pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
+                disabled={resultLoading}
             />
         </div>
     );

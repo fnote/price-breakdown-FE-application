@@ -190,3 +190,40 @@ export const getReviewStatusMsg = (status = null) => {
     }
     return REVIEW_STATUS_CHANGED_MSG;
 };
+
+export const getEmptyDataTableMessage = (error = false) => {
+    if (error) {
+        return 'Sorry we could not retrieve the information';
+    }
+    return 'No Changes to Review';
+};
+
+export const truncate = (str, n) => {
+    if (str) {
+        return (str.length > n) ? `${str.substr(0, n - 1)} ...` : str;
+    }
+    return '';
+};
+
+export const autoSize = (textLength) => {
+    let fontsize = 1;
+    if (textLength) {
+        const length = textLength.length;
+        if (length >= 3 && length <= 10) {
+            fontsize = 1.5;
+        } else if (length >= 10) {
+            fontsize = 0.9;
+        }
+    }
+    return `${fontsize}rem`;
+};
+
+export const getStyleClassByApprovalStatus = (status) => {
+    if (status === REVIEW_STATUS_APPROVED) {
+        return 'pz-aproved';
+    }
+    if (status === REVIEW_STATUS_REJECTED) {
+        return 'pz-rejected';
+    }
+    return 'pz-already';
+};

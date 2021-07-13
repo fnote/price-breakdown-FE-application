@@ -12,6 +12,7 @@ export const fetchPZRequestDetails = ({
                                           setTotalResultCount,
                                           setDataStore,
                                           setResultLoading,
+                                          setCurrentPage,
                                       }) => {
     fetch(requestUrl, constructFetchRequest())
         .then(handleResponse)
@@ -25,12 +26,12 @@ export const fetchPZRequestDetails = ({
                 openNotificationWithIcon('error',
                     CIPZErrorMessages.FETCH_CIPZ_REFERENCE_TABLE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
             }
-            setResultLoading(false);
         })
         .catch(() => {
             openNotificationWithIcon('error', CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE, CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED,);
         })
         .finally(() => {
             setResultLoading(false);
+            setCurrentPage(page);
         });
 };

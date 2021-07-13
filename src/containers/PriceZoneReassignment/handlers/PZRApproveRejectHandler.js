@@ -17,7 +17,7 @@ const updateState = ({dataStore, currentPage, index, status, dataResetIndex, set
     const updatedDataStore = updateCompletedRequest(dataStore, currentPage, index, status);
     setDataStore(updatedDataStore);
     if (isEmptyPage(updatedDataStore[currentPage])) {
-        setFetchNewData(true);
+        setTimeout(() => setFetchNewData(true), 0);
     }
     setDataResetIndex(calculateResetIndex(dataResetIndex, currentPage));
 };
