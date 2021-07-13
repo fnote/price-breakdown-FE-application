@@ -190,14 +190,13 @@ export default function ApproveRejectButtons({row, index, handle, disable}) {
                 return null;
         }
     };
-  
+
     return (
         <div className='pz-aprove-reject-wrapper'>
             {row.reviewStatus ? (
                 <div className={`pz-aprove-status ${getStyleClassByApprovalStatus(row.reviewStatus)}`}>
                     {row.reviewStatus}
                 </div>
-                
             ) : (
                 <>
                     <Popconfirm

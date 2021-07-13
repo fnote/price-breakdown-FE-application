@@ -52,7 +52,7 @@ export default function ReviewSummary({
                                         <div id="customer-group" className="pz-effective-date pz-customer-tag">
                                             {customerGroup}
                                         </div>
-                                    </Tooltip>                                    
+                                    </Tooltip>
                                     <div id="cutomers" className="pz-customer-total">{customerCount} customers</div>
                                 </>
                             ) : (
@@ -62,7 +62,7 @@ export default function ReviewSummary({
                                         <div id="customer-account" className="pz-effective-date">
                                             {customerAccount}
                                         </div>
-                                    </Tooltip>                                        
+                                    </Tooltip>
                                 </>
                             )}
                         </div>
