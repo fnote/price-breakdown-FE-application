@@ -226,7 +226,13 @@ export default function PriceZoneReview() {
 
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
-             <Button id="pz-review-refresh" shape="round" icon={<ReloadOutlined />} size="small">Refresh</Button>
+            <Button id="pz-review-refresh" shape="round" icon={<ReloadOutlined />} size="small" disabled={resultLoading}
+                onClick={() => fetchPZChangeRequests({
+                    page: 1, store: {}, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError
+                })}
+            >
+                Refresh
+            </Button>
             {renderDataTable()}
             <CustomPagination
                 className="pz-review-pagination"
