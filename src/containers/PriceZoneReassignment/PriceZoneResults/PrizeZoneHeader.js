@@ -11,7 +11,7 @@ import {PZRContext} from '../PZRContext';
 // Request handlers
 import {submitPriceZoneChangeRequest} from '../handlers/PZRChangeSubmitHandler';
 // Helper functions and constants
-import {getPriceZoneOptions, disabledDate} from '../helper/PZRHelper';
+import {getPriceZoneOptions, disabledDate, truncate, autoSize} from '../helper/PZRHelper';
 import {CIPZ_API_DATE_FORMAT} from '../../../constants/PZRConstants';
 
 export default function PrizeZoneHeader() {
@@ -67,35 +67,6 @@ export default function PrizeZoneHeader() {
         </div>
     ) : (<div/>));
 
-
-// Auto sizing and truncating
-
-    const  truncate = (str, n)=>{
-        if(str){
-        return (str.length > n) ? `${str.substr(0, n-1)} ...` : str;
-        }else{
-            return ''
-        }
-      };
-
-
-      const autoSize = (textLength) => {
-         if(textLength){
-            let length = textLength.length ;
-            let fontsize = 1;
-         if(length >= 3 && length <=10 ){
-             console.log('length is > 4 < 10')
-             fontsize = 1.5
-         }else if(length >= 10){
-          console.log('length is > 10 < 60')
-          fontsize = 0.9
-         }
-          return `${fontsize}rem`
-         }
-      }
-
-// -------
-
     return (
         <div className="pz-header">
             <div className="pz-header-title"/>
@@ -116,7 +87,7 @@ export default function PrizeZoneHeader() {
                                 <div
                                     id="site"
                                     className="pz-tab-items-bottom pz-opco-text-bold pz-text-left">
-                                        {truncate(PZRContextData.searchParams.site ,24)}
+                                        {truncate(PZRContextData.searchParams.site, 24)}
                                         </div>
                             </Tooltip>
                         </div>
@@ -163,15 +134,11 @@ export default function PrizeZoneHeader() {
                                     overlayClassName="pz-tooltip"
                                     overlayStyle={{color: '#000'}}
                                 >
-                                    <span
-                                        id="attributr-group-tab"
-                                        className="pz-item-grp-text" style={{fontSize:autoSize(PZRContextData.searchParams.attributeGroup)}}>
-                                          
-
-                                           {truncate(PZRContextData.searchParams.attributeGroup,60)}
-                                          
-                                           
-                                            </span>
+                                    <span id="attributr-group-tab"
+                                        className="pz-item-grp-text"
+                                        style={{fontSize: autoSize(PZRContextData.searchParams.attributeGroup)}}>
+                                            {truncate(PZRContextData.searchParams.attributeGroup, 60)}
+                                    </span>
                                 </Tooltip>
                             </div>
                         </div>
