@@ -9,7 +9,7 @@ export default function ReviewSummary({
                                           }
                                       }) {
     return (
-        <div className="pz-review-wrapper pz-cursor">
+        <div className="pz-review-wrapper pz-review-middle pz-cursor">
             <div className="pz-review-sum-left">
                 <div className="pz-review-sum-left-pz">
                     <span id="price-zone" className="pz-caps">price zone</span>

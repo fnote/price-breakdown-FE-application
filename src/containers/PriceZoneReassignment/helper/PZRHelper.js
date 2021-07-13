@@ -197,3 +197,23 @@ export const getEmptyDataTableMessage = (error = false) => {
     }
     return 'No Changes to Review';
 };
+
+export const truncate = (str, n) => {
+    if (str) {
+        return (str.length > n) ? `${str.substr(0, n - 1)} ...` : str;
+    }
+    return '';
+};
+
+export const autoSize = (textLength) => {
+    if (textLength) {
+        const length = textLength.length;
+        let fontsize = 1;
+        if (length >= 3 && length <= 10) {
+            fontsize = 1.5;
+        } else if (length >= 10) {        
+            fontsize = 0.9;
+        }
+        return `${fontsize}rem`;
+    }
+};
