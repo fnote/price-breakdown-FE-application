@@ -216,7 +216,8 @@ export default function PriceZoneReview() {
                 dataSource={dataSource}
                 pagination={false}
                 loading={resultLoading}
-                scroll={{ y: tableSize.height - 80 }}
+                scroll={{ y: 1000 }}
+                // scroll={{ y: tableSize.height - 80 }}
                 locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
                 onChange={calcSize}
             />
