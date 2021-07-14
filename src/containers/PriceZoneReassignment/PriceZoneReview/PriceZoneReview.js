@@ -98,10 +98,6 @@ export default function PriceZoneReview() {
         pZRContext.setIsOnReviewPage(true);
     }, []);
 
-    useEffect(() => {
-        console.log('ohhh shitt');
-    }, [pZRContext.isOnReviewPage]);
-
     const {Modal, toggle} = useModal();
 
     const approveRejectPZChangeRequests = (
