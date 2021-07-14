@@ -53,7 +53,7 @@ export default function ReviewSummary({
                                     <div id="customer-group" className="pz-effective-date-text pz-caps">customer group</div>
                                     <Tooltip title={customerGroup} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
                                         <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize(customerGroup)}}>
-                                            {truncate(customerGroup, 32)}
+                                            {truncate(customerGroup, 15)}
                                         </div>
                                     </Tooltip>
                                     <div id="cutomers" className="pz-customer-total">{customerCount} customers</div>
@@ -63,7 +63,7 @@ export default function ReviewSummary({
                                     <div id="customer" className="pz-effective-date-text pz-caps ">customer</div>
                                     <Tooltip title={customerAccount} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
                                         <div id="customer-account" className="pz-effective-date" style={{fontSize: autoSize(customerAccount)}}>
-                                            {truncate(customerAccount, 32)}
+                                            {truncate(customerAccount, 15)}
                                         </div>
                                     </Tooltip>
                                 </>
@@ -76,7 +76,7 @@ export default function ReviewSummary({
                                          overlayStyle={{color: '#000'}}>
                                     <div id="item-attribute-group"
                                         className="pz-effective-date pz-attribute-tag" style={{fontSize: autoSize(itemAttributeGroup)}}>
-                                        {truncate(itemAttributeGroup, 32)}
+                                        {truncate(itemAttributeGroup, 30)}
                                     </div>
                                 </Tooltip>
                                 <ExclamationCircleOutlined className="pz-attrib-info"/>
