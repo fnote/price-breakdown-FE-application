@@ -133,7 +133,7 @@ export const NoEligiblePriceZones = ({Modal, setSubmitModal, priceZone}) => (
                         <Info className="pz-success-anim-logo"/>
                     </div>
                     <div id="success-submission" className="pz-success-text">
-                        Selected item attribute group is not eligible for the price zone - ${priceZone}
+                        Selected item attribute group is not eligible for the price zone - {priceZone}
                     </div>
                 </div>
             </div>
