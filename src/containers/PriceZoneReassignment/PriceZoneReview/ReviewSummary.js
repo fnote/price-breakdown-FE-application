@@ -62,8 +62,8 @@ export default function ReviewSummary({
                                 <>
                                     <div id="customer" className="pz-effective-date-text pz-caps ">customer</div>
                                     <Tooltip title={customerAccount} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
-                                        <div id="customer-account" className="pz-effective-date">
-                                            {customerAccount}
+                                        <div id="customer-account" className="pz-effective-date" style={{fontSize: autoSize(customerAccount)}}>
+                                            {truncate(customerAccount, 32)}
                                         </div>
                                     </Tooltip>
                                 </>
@@ -76,8 +76,8 @@ export default function ReviewSummary({
                                          overlayStyle={{color: '#000'}}>
                                     <div id="item-attribute-group"
                                         className="pz-effective-date pz-attribute-tag" style={{fontSize: autoSize(itemAttributeGroup)}}>
-                                            {truncate(itemAttributeGroup, 25)}
-                                            </div>
+                                        {truncate(itemAttributeGroup, 32)}
+                                    </div>
                                 </Tooltip>
                                 <ExclamationCircleOutlined className="pz-attrib-info"/>
                             </div>
