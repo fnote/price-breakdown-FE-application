@@ -2,7 +2,7 @@
 // Core
 import React, {useState, useEffect, useContext, useMemo, useRef} from 'react';
 import {Table, Space, Empty, Button} from 'antd';
-import { ReloadOutlined } from '@ant-design/icons';
+import {ReloadOutlined} from '@ant-design/icons';
 // Custom components
 import useModal from '../../../hooks/useModal';
 import ReviewSubmitter from './ReviewSubmitter';
