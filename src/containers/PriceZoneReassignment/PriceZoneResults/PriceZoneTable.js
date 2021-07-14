@@ -1,8 +1,8 @@
 // Core
 import React, {useContext, useState} from 'react';
-import {Table} from 'antd';
 // Custom components
 import CustomPagination from '../../../components/CustomPagination';
+import ScrollTable from '../../../components/ScrollTable';
 // Context
 import {PZRContext} from '../PZRContext';
 // Request Handlers
@@ -66,7 +66,7 @@ export default function PriceZoneTable() {
                 <div className="pz-table-header">
                     Existing Customer Item Price Zone
                 </div>
-            <Table pagination={false}
+            <ScrollTable pagination={false}
                    columns={columns}
                    dataSource={searchResults?.data?.item_price_zones || []}
                    loading={PZRContextData.isSearchTableLoading}

@@ -209,9 +209,9 @@ export const autoSize = (textLength) => {
     let fontsize = 1;
     if (textLength) {
         const length = textLength.length;
-        if (length >= 3 && length <= 10) {
+        if (length >= 3 && length <= 11) {
             fontsize = 1.5;
-        } else if (length >= 10) {
+        } else if (length > 11) {
             fontsize = 0.9;
         }
     }

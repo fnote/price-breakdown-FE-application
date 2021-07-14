@@ -10,6 +10,7 @@ import ReviewSummary from './ReviewSummary';
 import ApproveRejectButtons from './ApproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
+import ScrollTable from '../../../components/ScrollTable';
 // Contexts
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -208,7 +209,7 @@ export default function PriceZoneReview() {
         if (pZRContext.isOnReviewPage) {
             return (
                 <>
-                    <Table
+                    <ScrollTable
                         columns={generateColumns({
                             setSelectedRecord,
                             toggle,

@@ -250,7 +250,8 @@
           .pz-tabs-combine-r {
             display: flex;
             align-items: center;
-            justify-content: center;            
+            justify-content: center;
+            //width: 100%;
 
             .pz-tab-items-top,
             .pz-tab-items-bottom {
@@ -271,13 +272,24 @@
     }
     .pz-item-grp-text,
     .pz-cutomer-grp-text {
-      display: inline-block;
+      // display: inline-block;
       padding: 4px;
       border-radius: 3px;
       width: 12.2rem;
+      min-height: 3rem;
       text-overflow: ellipsis;
       overflow: hidden;
       overflow-wrap: break-word;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        height: 3rem;
+      }
     }
   }
 
@@ -365,7 +377,7 @@
     margin-top: 0.3rem;
   }
   .ant-table-row-level-0 {
-    height: 12rem !important;
+    height: 13rem !important;
     padding-bottom: 0.5rem;
   }
 
@@ -402,10 +414,10 @@
       font-size: 1.5rem;
       font-weight: 600;
       color: $textstandard;
-      width: 10rem;
+      width: 12rem;
       text-overflow: ellipsis;
       overflow: hidden;
-      white-space: pre;
+      max-height: 4.615rem;
     }
 
     .pz-review-name-id {
@@ -440,7 +452,6 @@
 
 .pz-review-middle {
   margin-left: 1.1rem;
-
 }
 .pz-cursor {
   cursor: pointer;
@@ -648,7 +659,7 @@
   justify-content: space-evenly;
   padding: 0rem 1rem;
 
-  .pz-aprove-status{
+  .pz-aprove-status {
     text-align: center;
     padding: 0.5rem;
     font-size: 1.2rem;
@@ -657,15 +668,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width:100%;
+    width: 100%;
   }
-  .pz-aproved{
+  .pz-aproved {
     color: $syscogreen;
   }
-  .pz-rejected{
+  .pz-rejected {
     color: #e66767;
   }
-  .pz-already{
+  .pz-already {
     color: $syscoblue;
   }
 
@@ -690,25 +701,25 @@
 .pz-customer-tag {
   background: #76e0f6;
   text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   border-radius: 5px;
-  overflow: hidden;
+  min-height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.5rem;
+  line-height: 1.4;
 }
 .pz-attribute-tag {
-  
   background: #f6e176;
   text-align: center;
   border-radius: 5px;
   width: auto !important;
-  white-space: none;
-  padding: 0 0.5rem;
+  padding: 0.5rem 0.5rem;
   overflow: hidden;
-  min-height: 2rem;
-  display: flex;
   align-items: center;
   min-height: 2.5rem;
   max-width: 12rem;
+  line-height: 1.4;
 }
 
 // ========================
@@ -1085,7 +1096,7 @@
 .pz-text-left {
   text-align: left !important;
 }
-#pz-review-refresh{
+#pz-review-refresh {
   position: absolute;
   right: 4rem;
   top: 0.8rem;
@@ -1096,9 +1107,8 @@
   background: none;
   border: 0.16rem solid;
   font-weight: 600;
-  color:$bluegrey;
-  .anticon-reload{
+  color: $bluegrey;
+  .anticon-reload {
     margin-top: 0.1rem !important;
   }
-  
 }
