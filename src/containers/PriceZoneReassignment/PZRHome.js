@@ -64,7 +64,6 @@ function PZRApp() {
                             }
                             key={REVIEW_TAB}
                         >
-                           
                             <PriceZoneReview/>
                         </TabPane>
                     )}
