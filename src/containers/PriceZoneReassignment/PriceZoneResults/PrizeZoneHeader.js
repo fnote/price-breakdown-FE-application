@@ -4,7 +4,7 @@ import {Select, DatePicker, Tooltip} from 'antd';
 import moment from 'moment';
 // Custom Components
 import useModal from '../../../hooks/useModal';
-import {ModalComponent, SubmitReason, SubmitSuccess, LoadingState} from './PZRHeaderModal';
+import {ModalComponent, SubmitReason, SubmitSuccess, LoadingState, NoEligiblePriceZones} from './PZRHeaderModal';
 // Context
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -229,7 +229,8 @@ export default function PrizeZoneHeader() {
                     'submit-reason': <SubmitReason Modal={Modal} setSubmitModal={setSubmitModal}
                                                    priceZoneChangeHandler={priceZoneChangeHandler} toggle={toggle}/>,
                     'success-modal': <SubmitSuccess Modal={Modal} resetSearch={resetSearch} referenceId={referenceId}/>,
-                    'loading': <LoadingState Modal={Modal}/>
+                    'loading': <LoadingState Modal={Modal}/>,
+                    'no-eligible-price-zones': <NoEligiblePriceZones Modal={Modal} setSubmitModal={setSubmitModal} priceZone={newPriceZone}/>
                 }[submitModal]
             }
         </div>

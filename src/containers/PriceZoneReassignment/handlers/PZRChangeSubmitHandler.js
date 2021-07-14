@@ -3,7 +3,7 @@ import {submitReasonModal} from '../PriceZoneResults/PZRHeaderModal';
 // Helper functions and constants
 import {openNotificationWithIcon, handleResponse} from '../helper/PZRHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
-import {CIPZErrorMessages, CIPZErrorsMap} from '../../../constants/Errors';
+import {CIPZErrorMessages, CIPZErrorsMap, ErrorCodes} from '../../../constants/Errors';
 import {DEFAULT_REQUEST_HEADER} from '../../../constants/Constants';
 
 const handleError = (response) => {
@@ -51,8 +51,13 @@ export const submitPriceZoneChangeRequest = ({setSubmitModal, setReferenceId, re
                 setReferenceId(requestId);
                 setSubmitModal('success-modal');
             } else {
-                handleError(resp);
-                setSubmitModal(false);
+                const errorResponseData = resp.data;
+                if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_VALID_PRICE_ZONE_DATA_UNAVAILABLE) {
+                    setSubmitModal('no-eligible-price-zones');
+                } else {
+                    handleError(resp);
+                    setSubmitModal(false);
+                }
             }
             return null;
         })
