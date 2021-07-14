@@ -10,7 +10,6 @@ import ReviewSummary from './ReviewSummary';
 import ApproveRejectButtons from './ApproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
-import ScrollTable from '../../../components/ScrollTable';
 // Contexts
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -23,7 +22,8 @@ import {
     formatPZRequest,
     constructPatchPayload,
     generateReviewer,
-    getEmptyDataTableMessage
+    getEmptyDataTableMessage,
+    getTableScroll
 } from '../helper/PZRHelper';
 // constants
 import {
@@ -72,6 +72,20 @@ const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeReques
         ),
     },
 ]);
+
+const ScrollTable = (props) => {
+    const [scrollY, setScrollY] = useState();
+    const countRef = useRef(null);
+    useEffect(() => {
+      const scrolly = getTableScroll({ ref: countRef });
+      setScrollY(scrolly);
+    }, [props]);
+    return (
+      <div ref={countRef}>
+        <Table {...props} scroll={{ x: false, y: scrollY }} />
+      </div>
+    );
+};
 
 export default function PriceZoneReview() {
     const [currentPage, setCurrentPage] = useState(1);
