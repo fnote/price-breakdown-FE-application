@@ -98,6 +98,10 @@ export default function PriceZoneReview() {
         pZRContext.setIsOnReviewPage(true);
     }, []);
 
+    useEffect(() => {
+        console.log('ohhh shitt');
+    }, [pZRContext.isOnReviewPage]);
+
     const {Modal, toggle} = useModal();
 
     const approveRejectPZChangeRequests = (
@@ -204,26 +208,30 @@ export default function PriceZoneReview() {
         calcSize();
     }, [tableRef.current]);
 
-    const renderDataTable = () => (
-        <>
-            <Table
-                columns={generateColumns({
-                    setSelectedRecord,
-                    toggle,
-                    approveRejectPZChangeRequests,
-                    approveRejectProgressing
-                })}
-                dataSource={dataSource}
-                pagination={false}
-                loading={resultLoading}
-                scroll={{ y: 1000 }}
-                // scroll={{ y: tableSize.height - 80 }}
-                locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
-                onChange={calcSize}
-            />
-            {selectedRecord && <ReferenceTable record={selectedRecord}/>}
-        </>
-    );
+    const renderDataTable = () => {
+        if (pZRContext.isOnReviewPage) {
+            return (
+                <>
+                    <Table
+                        columns={generateColumns({
+                            setSelectedRecord,
+                            toggle,
+                            approveRejectPZChangeRequests,
+                            approveRejectProgressing
+                        })}
+                        dataSource={dataSource}
+                        pagination={false}
+                        loading={resultLoading}
+                        scroll={{ y: tableSize.height - 80 }}
+                        locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
+                        onChange={calcSize}
+                    />
+                    {selectedRecord && <ReferenceTable record={selectedRecord}/>}
+                </>
+            );
+        }
+        return null;
+    };
 
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
