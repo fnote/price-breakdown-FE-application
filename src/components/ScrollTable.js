@@ -49,7 +49,7 @@ export default function ScrollTable(props) {
     }, [props]);
     return (
       <div ref={countRef}>
-        <Table {...props} scroll={{ x: props.scroll?.x, y: scrollY }} />
+        <Table {...props} scroll={{ x: false, y: scrollY }} />
       </div>
     );
   }
