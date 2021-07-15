@@ -14,33 +14,38 @@ const columns = [
     {
         title: 'ITEM(SUPC)',
         dataIndex: 'supc',
+        width: '10%'
     },
     {
         title: 'ITEM DESCRIPTION',
         dataIndex: 'product_name',
-
+        width: '25%'
     },
     {
         title: 'CUSTOMER',
         dataIndex: 'customer_account',
-
+        width: '10%'
     },
     {
         title: 'CUSTOMER NAME',
         dataIndex: 'customer_name',
+        width: '20%'
     },
     {
         title: 'SOURCE ID',
         dataIndex: 'source',
+        width: '10%'
     },
     {
         title: 'PRICE ZONE',
         dataIndex: 'price_zone',
+        width: '10%'
     },
     {
         title: 'EFFECTIVE DATE',
         dataIndex: 'effective_from_date',
-        render: formatDate
+        render: formatDate,
+        width: '15%'
     },
 ];
 
