@@ -14,8 +14,8 @@ import {submitPriceZoneChangeRequest} from '../handlers/PZRChangeSubmitHandler';
 import {getPriceZoneOptions, disabledDate, truncate, autoSize} from '../helper/PZRHelper';
 import {CIPZ_API_DATE_FORMAT} from '../../../constants/PZRConstants';
 
-const EFFECTIVE_DATE_TOOLTIP_VALUE = 'Start date of when this change will be effective';
-const NEW_PRICE_ZONE_TOOLTIP_VALUE = 'New price zone of this item attribute group and customer/customer group';
+const EFFECTIVE_DATE_TOOLTIP_VALUE = 'New Effective Date for the Price Zone reassignment';
+const NEW_PRICE_ZONE_TOOLTIP_VALUE = 'New Price Zone for customer/customer group & item attribute group combination';
 
 export default function PrizeZoneHeader() {
     // Constants
@@ -75,28 +75,28 @@ export default function PrizeZoneHeader() {
         <div className="pz-header">
             <div className="pz-header-title"/>
             <div className="pz-tab-section">
-              
+
                 <div className="pz-tabs pz-tabs-combine">
-                <div className="pz-tabs-combine-l">
-                    <div className="pz-tab-items">
-                        <div className="pz-text-wrapper">
-                            <div id="opco-label" className="pz-tab-items-top pz-text-left">Site</div>
-                            <Tooltip
-                                id="opco-tooltip"
-                                title={PZRContextData.searchParams.site}
-                                color="#fff"
-                                overlayClassName="pz-tooltip"
-                                overlayStyle={{color: '#000'}}
-                            >
-                                <div
-                                    id="site"
-                                    className="pz-tab-items-bottom pz-opco-text-bold pz-text-left">
+                    <div className="pz-tabs-combine-l">
+                        <div className="pz-tab-items">
+                            <div className="pz-text-wrapper">
+                                <div id="opco-label" className="pz-tab-items-top pz-text-left">SITE</div>
+                                <Tooltip
+                                    id="opco-tooltip"
+                                    title={PZRContextData.searchParams.site}
+                                    color="#fff"
+                                    overlayClassName="pz-tooltip"
+                                    overlayStyle={{color: '#000'}}
+                                >
+                                    <div
+                                        id="site"
+                                        className="pz-tab-items-bottom pz-opco-text-bold pz-text-left">
                                         {truncate(PZRContextData.searchParams.site, 24)}
-                                        </div>
-                            </Tooltip>
+                                    </div>
+                                </Tooltip>
+                            </div>
                         </div>
                     </div>
-                </div>
                     <div className="pz-tabs-combine-l">
                         <div id="customer-group-tab" className="pz-tab-items">
                             {PZRContextData.searchParams.customerGroup ? (
@@ -117,7 +117,7 @@ export default function PrizeZoneHeader() {
                                         <div
                                             id="customer"
                                             className="pz-cutomer-grp-text-no-bg">
-                                                {PZRContextData.searchParams.customer}                                          
+                                            {PZRContextData.searchParams.customer}
                                         </div>
                                         {renderCustomerGroupComponent()}
                                     </div>
@@ -137,8 +137,8 @@ export default function PrizeZoneHeader() {
                                     overlayStyle={{color: '#000'}}
                                 >
                                     <span id="attributr-group-tab"
-                                        className="pz-item-grp-text"
-                                        style={{fontSize: autoSize(PZRContextData.searchParams.attributeGroup)}}>
+                                          className="pz-item-grp-text"
+                                          style={{fontSize: autoSize(PZRContextData.searchParams.attributeGroup)}}>
                                             {truncate(PZRContextData.searchParams.attributeGroup, 60)}
                                     </span>
                                 </Tooltip>
@@ -230,7 +230,8 @@ export default function PrizeZoneHeader() {
                                                    priceZoneChangeHandler={priceZoneChangeHandler} toggle={toggle}/>,
                     'success-modal': <SubmitSuccess Modal={Modal} resetSearch={resetSearch} referenceId={referenceId}/>,
                     'loading': <LoadingState Modal={Modal}/>,
-                    'no-eligible-price-zones': <NoEligiblePriceZones Modal={Modal} setSubmitModal={setSubmitModal} priceZone={newPriceZone}/>
+                    'no-eligible-price-zones': <NoEligiblePriceZones Modal={Modal} setSubmitModal={setSubmitModal}
+                                                                     priceZone={newPriceZone}/>
                 }[submitModal]
             }
         </div>
