@@ -67,7 +67,7 @@ export const getBusinessUnits = (businessUnitsMap) => {
             businessUnitOptions.push(
                 <Option key={businessUnit.id}
                         value={formatBusinessUnitsIdShortName(businessUnit.id, businessUnitsMap)}>
-                            {businessUnit.id} - {businessUnit.shortName}
+                    {businessUnit.id} - {businessUnit.shortName}
                 </Option>
             );
         }));
@@ -196,7 +196,7 @@ export const getEmptyDataTableMessage = (error = false) => (error ? 'Sorry we co
 /**
  * Truncates a given input string based on the maximum allowed length param provided
  * If the length of the string > maximum allowed length, truncate and attach '...' to the end of the string
- * 
+ *
  * @param {*} str input string
  * @param {*} n max allowed length
  * @returns string
@@ -231,35 +231,35 @@ export const getStyleClassByApprovalStatus = (status) => {
     return 'pz-already';
 };
 
-export const getTableScroll = ({ extraHeight = 74, id, ref } = {}) => {
+export const getTableScroll = ({extraHeight = 74, id, ref} = {}) => {
     let tHeader = null;
     if (ref && ref.current) {
-      tHeader = ref.current.getElementsByClassName('ant-table-thead')[0];
+        tHeader = ref.current.getElementsByClassName('ant-table-thead')[0];
     } else if (id) {
-      tHeader = document.getElementById(id)
-        ? document.getElementById(id).getElementsByClassName('ant-table-thead')[0]
-        : null;
+        tHeader = document.getElementById(id)
+            ? document.getElementById(id).getElementsByClassName('ant-table-thead')[0]
+            : null;
     } else {
-      tHeader = document.getElementsByClassName('ant-table-thead')[0];
+        tHeader = document.getElementsByClassName('ant-table-thead')[0];
     }
-  
+
     let tHeaderBottom = 0;
     if (tHeader) {
-      tHeaderBottom = tHeader.getBoundingClientRect().bottom;
+        tHeaderBottom = tHeader.getBoundingClientRect().bottom;
     }
     const height = `calc(100vh - ${tHeaderBottom + extraHeight}px)`;
     if (ref && ref.current) {
-      const placeholder = ref.current.getElementsByClassName(
-        'ant-table-placeholder'
-      )[0];
-      if (placeholder) {
-        placeholder.style.height = height;
-        if (placeholder.tagName === 'DIV') {
-          placeholder.style.display = 'flex';
-          placeholder.style.alignItems = 'center';
-          placeholder.style.justifyContent = 'center';
+        const placeholder = ref.current.getElementsByClassName(
+            'ant-table-placeholder'
+        )[0];
+        if (placeholder) {
+            placeholder.style.height = height;
+            if (placeholder.tagName === 'DIV') {
+                placeholder.style.display = 'flex';
+                placeholder.style.alignItems = 'center';
+                placeholder.style.justifyContent = 'center';
+            }
         }
-      }
     }
     return height;
 };

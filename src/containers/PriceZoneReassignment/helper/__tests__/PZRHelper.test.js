@@ -5,8 +5,7 @@ import {
     getReviewStatusMsg,
     getEmptyDataTableMessage,
     generateReviewer,
-    extractOpCoId,
-    formatPZReferenceRecord
+    extractOpCoId
 } from '../PZRHelper';
 
 import {
@@ -23,8 +22,8 @@ describe('constructRequestUrl', () => {
     });
 
     test('should construct request url correcty when non-empty query params are provided', () => {
-        expect(constructRequestUrl('http://localhost:3000', { a: 'name', b: 10 }))
-        .toEqual('http://localhost:3000?a=name&b=10');
+        expect(constructRequestUrl('http://localhost:3000', {a: 'name', b: 10}))
+            .toEqual('http://localhost:3000?a=name&b=10');
     });
 });
 
@@ -79,11 +78,9 @@ describe('getEmptyDataTableMessage', () => {
 
 describe('generateReviewer', () => {
     test('should generate reviewer content correctly', () => {
-        const r = generateReviewer({
+        expect(generateReviewer({
             username: 'tjay5771', firstName: 'Tharuka', lastName: 'Jayalath', email: 'Tharuka.Jayalath@syscolabs.com'
-        });
-        console.log(r);
-        expect(r).toEqual({
+        })).toEqual({
             id: 'tjay5771',
             givenName: 'Tharuka',
             surname: 'Jayalath',
