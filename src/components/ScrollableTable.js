@@ -1,16 +1,18 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {Table} from 'antd';
 
+const antTableThead = 'ant-table-thead';
+
 const getTableScroll = ({extraHeight = 74, id, ref} = {}) => {
     let tableHeader = null;
     if (ref && ref.current) {
-        tableHeader = ref.current.getElementsByClassName('ant-table-thead')[0];
+        tableHeader = ref.current.getElementsByClassName(antTableThead)[0];
     } else if (id) {
         tableHeader = document.getElementById(id)
-            ? document.getElementById(id).getElementsByClassName('ant-table-thead')[0]
+            ? document.getElementById(id).getElementsByClassName(antTableThead)[0]
             : null;
     } else {
-        tableHeader = document.getElementsByClassName('ant-table-thead')[0];
+        tableHeader = document.getElementsByClassName(antTableThead)[0];
     }
 
     let tableHeaderBtm = 0;
