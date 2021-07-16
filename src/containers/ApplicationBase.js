@@ -28,7 +28,7 @@ const Application = (user) =>(
                 <FileUpload/>
             </Route>
             <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
-                {isInvalidValue(user)? <div></div>:(grantViewPermissionsToScreens(user,SCREEN_PRICE_VALIDATION)? <PriceValidation/> :  <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>)}
+                {grantViewPermissionsToScreens(user,SCREEN_PRICE_VALIDATION)? <PriceValidation/> :  <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
             </Route>
             <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
                 <PZRHome/>
@@ -67,6 +67,8 @@ export default function ApplicationBase() {
     });
 
     let component;
+    const userRole = userDetailContext?.userDetailsData?.userDetails?.role;
+    const cipzUserRole = userDetailContext?.userDetailsData?.userDetails?.cipzRole;
 
     if (!browserDetector.isSupported() && !unsupportedBrowserState.isSetUnsupportedBrowserScreenContinue()) {
         component = <UnsupportedBrowserScreen
@@ -76,8 +78,8 @@ export default function ApplicationBase() {
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        const userRole = userDetailContext?.userDetailsData?.userDetails?.role;
-        component = auth.isUserLoginCompleted() ? Application(userRole) : <Login/>;
+        // const userRole = userDetailContext?.userDetailsData?.userDetails?.role;
+        component = auth.isUserLoginCompleted() && (userRole||cipzUserRole) ? Application(userRole) : <Login/>;
     }
 
     return (
