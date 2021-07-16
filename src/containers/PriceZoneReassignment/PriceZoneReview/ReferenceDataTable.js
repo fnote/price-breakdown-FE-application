@@ -1,5 +1,5 @@
 // Core
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect, useMemo, useRef} from 'react';
 import {Table} from 'antd';
 // Custom components
 import CustomPagination from '../../../components/CustomPagination';
@@ -9,7 +9,8 @@ import {fetchPZRequestDetails} from '../handlers/PZRGetRequestDetailsHandler';
 import {
     generatePaginationParams,
     constructRequestUrl,
-    formatPZReferenceRecord
+    formatPZReferenceRecord,
+    getTableScroll
 } from '../helper/PZRHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
 // Constants
@@ -21,32 +22,53 @@ const columns = [
     {
         title: 'ITEM(SUPC)',
         dataIndex: 'supc',
+        width: '12%',
     },
     {
         title: 'ITEM DESCRIPTION',
         dataIndex: 'productName',
+        width: '20%',
     },
     {
         title: 'CUSTOMER',
         dataIndex: 'customerAccount',
+        width: '12%',
     },
     {
         title: 'CUSTOMER NAME',
         dataIndex: 'customerName',
+        width: '18%',
     },
     {
         title: 'SOURCE ID',
         dataIndex: 'source',
+        width: '12%',
     },
     {
         title: 'PRICE ZONE',
         dataIndex: 'currentPriceZone',
+        width: '12%',
     },
     {
         title: 'EFFECTIVE DATE',
         dataIndex: 'effectiveFrom',
+        width: '14%',
     },
 ];
+
+const ScrollTable = (props) => {
+    const [scrollY, setScrollY] = useState();
+    const countRef = useRef(null);
+    useEffect(() => {
+      const scrolly = getTableScroll({ ref: countRef });
+      setScrollY(scrolly);
+    }, [props]);
+    return (
+      <div ref={countRef} className='pz-table-base-wrapper'>
+        <Table {...props} scroll={{ x: 'min-content', y: scrollY }} />
+      </div>
+    );
+};
 
 export default function ReferenceDataTable({
                                                record: {id, customerAccount, customerGroup, itemAttributeGroup, customerCount, supcCount},
@@ -126,7 +148,7 @@ export default function ReferenceDataTable({
                     <div id="items" className='pop-sum-total'>{supcCount} Items</div>
                 </div>
             </div>
-            <Table
+            <ScrollTable
                 columns={columns}
                 pagination={false}
                 dataSource={dataSource}

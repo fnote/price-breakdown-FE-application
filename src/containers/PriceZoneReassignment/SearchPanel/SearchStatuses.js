@@ -126,9 +126,10 @@ const SearchStatuses = () => {
 
             // Everything else will be shown in error page (All HTTP 400 errors from SEED/BFF)
             const renderMessage = PZRSEEDErrorsMap[errorCode] ? PZRSEEDErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_SEED_SEARCH_ERROR;
+            PZRContextData.setSearchResults(null);
             return renderError({errorCode, message: renderMessage, correlationId});
         }
-
+        PZRContextData.setSearchResults(null);
         return renderError({errorCode: ErrorCodes.UNEXPECTED_ERROR, message: CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED});
     }
 
