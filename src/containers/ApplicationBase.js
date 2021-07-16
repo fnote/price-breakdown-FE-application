@@ -16,7 +16,7 @@ import {
     NAVIGATION_PATH_PRICEZONE_REASSIGNMENT, SCREEN_PRICE_VALIDATION
 } from '../constants/Constants';
 
-import {grantViewPermissionsToScreens, isInvalidValue, unsupportedBrowserState} from '../utils/CommonUtils';
+import {grantViewPermissionsToScreens, unsupportedBrowserState} from '../utils/CommonUtils';
 import UnsupportedBrowserScreen from '../components/UnsupportedBrowser/UnsupportedBrowserScreen';
 import BrowserDetector from '../utils/BrowserDetector';
 import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
@@ -78,7 +78,6 @@ export default function ApplicationBase() {
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        // const userRole = userDetailContext?.userDetailsData?.userDetails?.role;
         component = auth.isUserLoginCompleted() && (userRole||cipzUserRole) ? Application(userRole) : <Login/>;
     }
 
