@@ -1,5 +1,14 @@
-import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName,
-    grantViewPermissionsToScreens, checkOnlineStatus, unsupportedBrowserState, formatBusinessUnitsIdShortName} from '../CommonUtils';
+import {
+    createBusinessUnitMap,
+    formatBusinessUnit,
+    formatNumberInput,
+    getDisplayFileName,
+    grantViewPermissionsToScreens,
+    checkOnlineStatus,
+    unsupportedBrowserState,
+    formatBusinessUnitsIdShortName,
+    isInvalidValue
+} from '../CommonUtils';
 
 const businessUnits = new Map(
     [
@@ -187,6 +196,14 @@ describe('grantViewPermissionsToScreens', () => {
         expect(grantViewPermissionsToScreens('', 'price_validation_screen')).toEqual(false);
         expect(grantViewPermissionsToScreens('', 'price_validation_screen')).toEqual(false);
         expect(grantViewPermissionsToScreens('', 'price_validation_screen')).toEqual(false);
+    });
+});
+
+describe('isInvalidValue', () => {
+    test('user cannot be undefined or null', () => {
+        expect(isInvalidValue(undefined)).toEqual(true);
+        expect(isInvalidValue(null)).toEqual(true);
+        expect(isInvalidValue('appadmin')).toEqual(false);
     });
 });
 

@@ -86,6 +86,10 @@ export const checkOnlineStatus = async () => {
 
 export const grantViewPermissionsToScreens = (role, screen) => ROLE_SCREEN_PERMISSIONS?.[screen]?.[role];
 
+export const isInvalidValue = (value) =>{
+    return (value===undefined||value === null);
+}
+
 /**
  * Class to manipulate Unsupported browser alert states.
  */
