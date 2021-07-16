@@ -203,7 +203,7 @@ export const getEmptyDataTableMessage = (error = false) => (error ? 'Sorry we co
  */
 export const truncate = (str, n) => {
     if (str) {
-        return (str.length > n) ? `${str.substr(0, n - 1)} ...` : str;
+        return (str.length > n) ? `${str.substr(0, n - 3)}...` : str;
     }
     return '';
 };

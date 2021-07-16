@@ -2,22 +2,22 @@ import React, {useState, useEffect, useRef} from 'react';
 import {Table} from 'antd';
 
 const getTableScroll = ({extraHeight = 74, id, ref} = {}) => {
-    let tHeader = null;
+    let tableHeader = null;
     if (ref && ref.current) {
-        tHeader = ref.current.getElementsByClassName('ant-table-thead')[0];
+        tableHeader = ref.current.getElementsByClassName('ant-table-thead')[0];
     } else if (id) {
-        tHeader = document.getElementById(id)
+        tableHeader = document.getElementById(id)
             ? document.getElementById(id).getElementsByClassName('ant-table-thead')[0]
             : null;
     } else {
-        tHeader = document.getElementsByClassName('ant-table-thead')[0];
+        tableHeader = document.getElementsByClassName('ant-table-thead')[0];
     }
 
-    let tHeaderBottom = 0;
-    if (tHeader) {
-        tHeaderBottom = tHeader.getBoundingClientRect().bottom;
+    let tableHeaderBtm = 0;
+    if (tableHeader) {
+        tableHeaderBtm = tableHeader.getBoundingClientRect().bottom;
     }
-    const height = `calc(100vh - ${tHeaderBottom + extraHeight}px)`;
+    const height = `calc(100vh - ${tableHeaderBtm + extraHeight}px)`;
     if (ref && ref.current) {
         const placeholder = ref.current.getElementsByClassName(
             'ant-table-placeholder'
@@ -34,16 +34,15 @@ const getTableScroll = ({extraHeight = 74, id, ref} = {}) => {
     return height;
 };
 
-export default function ScrollTable(props) {
+export default function ScrollableTable(props) {
     const [scrollY, setScrollY] = useState();
     const countRef = useRef(null);
     useEffect(() => {
-      const scrolly = getTableScroll({ ref: countRef });
-      setScrollY(scrolly);
+        setScrollY(getTableScroll({ref: countRef}));
     }, [props]);
     return (
-      <div ref={countRef} className='pz-table-base-wrapper'>
-        <Table {...props} scroll={{ x: 'min-content', y: scrollY }} />
-      </div>
+        <div ref={countRef} className='pz-table-base-wrapper'>
+            <Table {...props} scroll={{x: 'min-content', y: scrollY}}/>
+        </div>
     );
 }
