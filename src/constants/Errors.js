@@ -65,7 +65,7 @@ export const CIPZErrorMessages = {
     FETCH_ITEM_ATTRIBUTE_ERROR_TITLE: 'Sorry we could not retrieve the attribute group information. Please refresh again.',
     FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE: 'Could not retrieve the attribute group information due to connection issue.',
     FETCH_SEARCH_RESULTS_TITLE: 'Sorry we could not retrieve the information. Please try again later.',
-    FETCH_SEARCH_RESULTS_MESSAGE: 'Could not retrieve the information due to connection issue.',
+    FETCH_SEARCH_RESULTS_ERROR_MESSAGE: 'Could not retrieve the information due to connection issue.',
     UNKNOWN_ERROR_OCCURRED: 'Something went wrong. Please try again later.',
     GENERIC_SEED_SEARCH_ERROR: 'Error occurred while fetching the search results from SEED.',
     GENERIC_CIPZ_POST_ERROR_MESSAGE: 'Error occurred while processing price zone change request. Make sure all values are correct.',
