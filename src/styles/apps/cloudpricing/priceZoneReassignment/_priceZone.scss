@@ -26,9 +26,10 @@
   }
 
   .pz-linebreak {
+    margin-bottom: 1rem;
     .ant-form-item-label {
       white-space: pre-wrap !important;
-      height: 3rem;
+      // height: 3rem;
       margin-left: 6px;
     }
   }
@@ -39,10 +40,33 @@
 
 .pz-linebreak-item-group {
   display: flex;
+  flex-direction: row;
   align-items: center;
+  margin-bottom: 2rem;
   .ant-form-item-label > label {
     height: auto !important;
     white-space: pre-wrap;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .ant-form-item-control{
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 10rem;
+    .ant-form-item{
+      margin: 0;
+      width: 100%;
+    }
+  }
+  .ant-form-item-control-input{
+    width: 100%;
+    .ant-form-item-control-input-content{
+      width: 10rem;
+    }
   }
 }
 
@@ -216,8 +240,7 @@
           padding: 1rem 2rem;
           justify-content: space-around;
           width: calc(100% / 2);
-          box-shadow: 0px 0px 8px 1.5px rgba(204, 204, 204, 0.5),
-            0px 10px 1px #fff;
+          box-shadow: 0px 0px 8px 1.5px rgba(204, 204, 204, 0.5), 0px 10px 1px #fff;
           border-top-left-radius: 20px;
           border-top-right-radius: 20px;
           background: #fff;
@@ -236,7 +259,7 @@
           &::before {
             content: "";
             position: absolute;
-            bottom: 0;
+            bottom: -9px;
             left: 0;
             width: 90%;
             height: 1px;
@@ -250,7 +273,8 @@
           .pz-tabs-combine-r {
             display: flex;
             align-items: center;
-            justify-content: center;            
+            justify-content: center;
+            //width: 100%;
 
             .pz-tab-items-top,
             .pz-tab-items-bottom {
@@ -271,13 +295,23 @@
     }
     .pz-item-grp-text,
     .pz-cutomer-grp-text {
-      display: inline-block;
       padding: 4px;
       border-radius: 3px;
       width: 12.2rem;
+      min-height: 3rem;
       text-overflow: ellipsis;
       overflow: hidden;
-      overflow-wrap: break-word;
+      overflow-wrap: anywhere;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        height: 3rem;
+      }
     }
   }
 
@@ -365,7 +399,7 @@
     margin-top: 0.3rem;
   }
   .ant-table-row-level-0 {
-    height: 12rem !important;
+    height: 13rem !important;
     padding-bottom: 0.5rem;
   }
 
@@ -402,10 +436,10 @@
       font-size: 1.5rem;
       font-weight: 600;
       color: $textstandard;
-      width: 10rem;
+      width: 12rem;
       text-overflow: ellipsis;
       overflow: hidden;
-      white-space: pre;
+      max-height: 4.615rem;
     }
 
     .pz-review-name-id {
@@ -439,11 +473,7 @@
 }
 
 .pz-review-middle {
-  margin-left: 2rem;
-
-  // @media only screen and (min-width: 1900px) {
-  //   margin-left: 4.7rem;
-  // }
+  margin-left: 1.1rem;
 }
 .pz-cursor {
   cursor: pointer;
@@ -454,7 +484,7 @@
 // ==============================
 
 .pz-review-sum-left {
-  width: 60%;
+  min-width: 33%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -539,7 +569,7 @@
       font-weight: 600;
       color: #62737e;
       font-weight: 600;
-      width: 18rem;
+      //width: 18rem;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: pre;
@@ -573,17 +603,38 @@
     .pz-right-top,
     .pz-right-bottom {
       display: flex;
-      flex-direction: column;
       justify-content: flex-start;
     }
     .pz-right-top {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
       .pz-effective-date-text {
         width: 100%;
       }
       .pz-effective-date {
         width: 100%;
-
         font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .pz-reference-id {
+        height: 100%;
+
+        .pz-ref-number-title {
+          font-size: 0.9rem;
+          display: flex;
+          justify-content: flex-end;
+        }
+        .pz-ref-number {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          color: $bluegrey;
+        }
       }
     }
 
@@ -595,7 +646,7 @@
         width: 100%;
       }
       .pz-effective-date {
-        width: 7.8rem;
+        min-width: 7.8rem;
         color: $textstandard;
         font-weight: 800;
         font-size: 1.5rem;
@@ -651,7 +702,7 @@
   justify-content: space-evenly;
   padding: 0rem 1rem;
 
-  .pz-aprove-status{
+  .pz-aprove-status {
     text-align: center;
     padding: 0.5rem;
     font-size: 1.2rem;
@@ -660,15 +711,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width:100%;
+    width: 100%;
   }
-  .pz-aproved{
+  .pz-aproved {
     color: $syscogreen;
   }
-  .pz-rejected{
+  .pz-rejected {
     color: #e66767;
   }
-  .pz-already{
+  .pz-already {
     color: $syscoblue;
   }
 
@@ -682,32 +733,33 @@
   .reject-btn {
     margin-left: 5px;
     background: rgb(247, 54, 54);
-    background: linear-gradient(
-      180deg,
-      rgba(226, 81, 81, 0.5) 7%,
-      rgb(211, 76, 76) 100%
-    );
+    background: linear-gradient(180deg, rgba(226, 81, 81, 0.5) 7%, rgb(211, 76, 76) 100%);
   }
 }
 
 .pz-customer-tag {
   background: #76e0f6;
   text-align: center;
-  text-overflow: ellipsis;
-  white-space: nowrap;
   border-radius: 5px;
-  overflow: hidden;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.5rem;
+  line-height: 1.4;
 }
 .pz-attribute-tag {
   background: #f6e176;
   text-align: center;
   border-radius: 5px;
-  width: 7rem !important;
-  white-space: none;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 0 0.5rem;
+  width: auto !important;
+  padding: 0.5rem 0.5rem;
   overflow: hidden;
+  align-items: center;
+  display: flex;
+  min-height: 3rem;
+  max-width: 12rem;
+  line-height: 1.4;
 }
 
 // ========================
@@ -1083,4 +1135,43 @@
 
 .pz-text-left {
   text-align: left !important;
+}
+#pz-review-refresh {
+  position: absolute;
+  right: 4rem;
+  top: 0.8rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0.16rem solid;
+  font-weight: 600;
+  color: $bluegrey;
+  .anticon-reload {
+    margin-top: 0.1rem !important;
+  }
+}
+// table base wrapper
+
+.pz-table-base-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+// ant button disable state styles
+
+.pz-reject-modal-footer {
+  .ant-btn-primary[disabled],
+  .ant-btn-primary[disabled]:hover,
+  .ant-btn-primary[disabled]:focus,
+  .ant-btn-primary[disabled]:active {
+    color: #fff !important;
+  }
+}
+
+.pz-search-form{
+  @media only screen and (max-width:1400px){
+    margin:1rem 0 !important;
+  }
 }

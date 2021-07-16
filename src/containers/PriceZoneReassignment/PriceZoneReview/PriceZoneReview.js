@@ -1,7 +1,8 @@
 /* eslint-disable react/display-name */
 // Core
 import React, {useState, useEffect, useContext, useMemo, useRef} from 'react';
-import {Table, Space, Empty} from 'antd';
+import {Space, Empty, Button} from 'antd';
+import {ReloadOutlined} from '@ant-design/icons';
 // Custom components
 import useModal from '../../../hooks/useModal';
 import ReviewSubmitter from './ReviewSubmitter';
@@ -9,6 +10,7 @@ import ReviewSummary from './ReviewSummary';
 import ApproveRejectButtons from './ApproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
+import ScrollableTable from '../../../components/ScrollableTable';
 // Contexts
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -203,28 +205,40 @@ export default function PriceZoneReview() {
         calcSize();
     }, [tableRef.current]);
 
-    const renderDataTable = () => (
-        <>
-            <Table
-                columns={generateColumns({
-                    setSelectedRecord,
-                    toggle,
-                    approveRejectPZChangeRequests,
-                    approveRejectProgressing
-                })}
-                dataSource={dataSource}
-                pagination={false}
-                loading={resultLoading}
-                scroll={{ y: tableSize.height - 80 }} // --- WIP ---
-                locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
-                onChange={calcSize}
-            />
-            {selectedRecord && <ReferenceTable record={selectedRecord}/>}
-        </>
-    );
+    const renderDataTable = () => {
+        if (pZRContext.isOnReviewPage) {
+            return (
+                <>
+                    <ScrollableTable
+                        columns={generateColumns({
+                            setSelectedRecord,
+                            toggle,
+                            approveRejectPZChangeRequests,
+                            approveRejectProgressing
+                        })}
+                        dataSource={dataSource}
+                        pagination={false}
+                        loading={resultLoading}
+                        scroll={{ y: tableSize.height - 80 }}
+                        locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
+                        onChange={calcSize}
+                    />
+                    {selectedRecord && <ReferenceTable record={selectedRecord}/>}
+                </>
+            );
+        }
+        return null;
+    };
 
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
+            <Button id="pz-review-refresh" shape="round" icon={<ReloadOutlined />} size="small" disabled={resultLoading}
+                onClick={() => fetchPZChangeRequests({
+                    page: 1, store: {}, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError
+                })}
+            >
+                Refresh
+            </Button>
             {renderDataTable()}
             <CustomPagination
                 className="pz-review-pagination"

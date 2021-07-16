@@ -3,6 +3,7 @@ import {Input, Button} from 'antd';
 import {ReactComponent as Warning} from '../../../styles/images/warning.svg';
 import {ReactComponent as Success} from '../../../styles/images/success.svg';
 import {ReactComponent as Loader} from '../../../styles/images/priceZone_loader.svg';
+import {ReactComponent as Info} from '../../../styles/images/info.svg';
 
 export const submitReasonModal = 'submit-reason';
 
@@ -111,6 +112,29 @@ export const SubmitSuccess = ({Modal, resetSearch, referenceId}) => (
                     </div>
                     <div id="success-submission" className="pz-success-text">Submitted Successfully</div>
                     {referenceId ? <div id="reference-number" className="pz-alert-sub">Reference Number - {referenceId}</div> : <div/>}
+                </div>
+            </div>
+        )}
+    </div>
+);
+
+export const NoEligiblePriceZones = ({Modal, setSubmitModal, priceZone}) => (
+    <div>
+        {Modal(
+            {
+                centered: 'true',
+                okText: 'OK',
+                onOK: () => setSubmitModal(false),
+                noCancel: true,
+            },
+            <div className="pz-confirm-pop-base-success">
+                <div className="pz-confirm-wrapper-success">
+                    <div className="pz-success-anim">
+                        <Info className="pz-success-anim-logo"/>
+                    </div>
+                    <div id="success-submission" className="pz-success-text">
+                        Selected item attribute group is not eligible for the Price Zone {priceZone}
+                    </div>
                 </div>
             </div>
         )}

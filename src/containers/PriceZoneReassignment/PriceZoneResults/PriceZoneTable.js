@@ -1,8 +1,8 @@
 // Core
 import React, {useContext, useState} from 'react';
-import {Table} from 'antd';
 // Custom components
 import CustomPagination from '../../../components/CustomPagination';
+import ScrollableTable from '../../../components/ScrollableTable';
 // Context
 import {PZRContext} from '../PZRContext';
 // Request Handlers
@@ -10,37 +10,50 @@ import {DEFAULT_PAGE_SIZE, fetchSearchResults} from '../handlers/PZRSearchHandle
 // Constants and helper functions
 import {calculateOffset, formatDate} from '../helper/PZRHelper';
 
+const textWrap = 'word-break';
 const columns = [
     {
         title: 'ITEM(SUPC)',
         dataIndex: 'supc',
+        textWrap,
+        width: '10%'
     },
     {
         title: 'ITEM DESCRIPTION',
         dataIndex: 'product_name',
-
+        textWrap,
+        width: '25%'
     },
     {
         title: 'CUSTOMER',
         dataIndex: 'customer_account',
-
+        textWrap,
+        width: '10%'
     },
     {
         title: 'CUSTOMER NAME',
         dataIndex: 'customer_name',
+        textWrap,
+        width: '20%'
     },
     {
         title: 'SOURCE ID',
         dataIndex: 'source',
+        textWrap,
+        width: '10%'
     },
     {
         title: 'PRICE ZONE',
         dataIndex: 'price_zone',
+        textWrap,
+        width: '10%'
     },
     {
         title: 'EFFECTIVE DATE',
         dataIndex: 'effective_from_date',
-        render: formatDate
+        render: formatDate,
+        textWrap,
+        width: '15%'
     },
 ];
 
@@ -61,16 +74,16 @@ export default function PriceZoneTable() {
 
     const searchResults = PZRContextData.searchResults;
 
-    return (
+    const renderPageContent = () => (
         <div className="pz-table-wrapper">
-                <div className="pz-table-header">
-                    Existing Customer Item Price Zone
-                </div>
-            <Table pagination={false}
-                   columns={columns}
-                   dataSource={searchResults?.data?.item_price_zones || []}
-                   loading={PZRContextData.isSearchTableLoading}
-                   rowKey={(obj) => obj.supc + obj.customer_account + obj.price_zone + obj.effective_from_date + obj.source}
+            <div className="pz-table-header">
+                Existing Customer Item Price Zone
+            </div>
+            <ScrollableTable pagination={false}
+                             columns={columns}
+                             dataSource={searchResults?.data?.item_price_zones || []}
+                             loading={PZRContextData.isSearchTableLoading}
+                             rowKey={(obj) => obj.supc + obj.customer_account + obj.price_zone + obj.effective_from_date + obj.source}
             />
             <CustomPagination
                 onChange={onChange}
@@ -81,4 +94,9 @@ export default function PriceZoneTable() {
             />
         </div>
     );
+
+    if (!PZRContextData.isOnReviewPage) {
+        return renderPageContent();
+    }
+    return <></>;
 }

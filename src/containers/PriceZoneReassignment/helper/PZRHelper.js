@@ -67,7 +67,7 @@ export const getBusinessUnits = (businessUnitsMap) => {
             businessUnitOptions.push(
                 <Option key={businessUnit.id}
                         value={formatBusinessUnitsIdShortName(businessUnit.id, businessUnitsMap)}>
-                            {businessUnit.id} - {businessUnit.shortName}
+                    {businessUnit.id} - {businessUnit.shortName}
                 </Option>
             );
         }));
@@ -196,14 +196,14 @@ export const getEmptyDataTableMessage = (error = false) => (error ? 'Sorry we co
 /**
  * Truncates a given input string based on the maximum allowed length param provided
  * If the length of the string > maximum allowed length, truncate and attach '...' to the end of the string
- * 
+ *
  * @param {*} str input string
  * @param {*} n max allowed length
  * @returns string
  */
 export const truncate = (str, n) => {
     if (str) {
-        return (str.length > n) ? `${str.substr(0, n - 1)} ...` : str;
+        return (str.length > n) ? `${str.substr(0, n - 3)}...` : str;
     }
     return '';
 };
@@ -212,7 +212,7 @@ export const autoSize = (textLength) => {
     let fontsize = 1;
     if (textLength) {
         const length = textLength.length;
-        if (length >= 3 && length <= 10) {
+        if (length >= 3 && length < 10) {
             fontsize = 1.5;
         } else if (length >= 10) {
             fontsize = 0.9;

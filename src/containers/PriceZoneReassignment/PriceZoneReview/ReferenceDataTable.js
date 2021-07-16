@@ -1,15 +1,15 @@
 // Core
 import React, {useState, useEffect, useMemo} from 'react';
-import {Table} from 'antd';
 // Custom components
 import CustomPagination from '../../../components/CustomPagination';
+import ScrollableTable from '../../../components/ScrollableTable';
 // Handlers
 import {fetchPZRequestDetails} from '../handlers/PZRGetRequestDetailsHandler';
 // Utils, Configs
 import {
     generatePaginationParams,
     constructRequestUrl,
-    formatPZReferenceRecord
+    formatPZReferenceRecord,
 } from '../helper/PZRHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
 // Constants
@@ -21,30 +21,37 @@ const columns = [
     {
         title: 'ITEM(SUPC)',
         dataIndex: 'supc',
+        width: '12%',
     },
     {
         title: 'ITEM DESCRIPTION',
         dataIndex: 'productName',
+        width: '20%',
     },
     {
         title: 'CUSTOMER',
         dataIndex: 'customerAccount',
+        width: '12%',
     },
     {
         title: 'CUSTOMER NAME',
         dataIndex: 'customerName',
+        width: '18%',
     },
     {
         title: 'SOURCE ID',
         dataIndex: 'source',
+        width: '12%',
     },
     {
         title: 'PRICE ZONE',
         dataIndex: 'currentPriceZone',
+        width: '12%',
     },
     {
         title: 'EFFECTIVE DATE',
         dataIndex: 'effectiveFrom',
+        width: '14%',
     },
 ];
 
@@ -126,7 +133,7 @@ export default function ReferenceDataTable({
                     <div id="items" className='pop-sum-total'>{supcCount} Items</div>
                 </div>
             </div>
-            <Table
+            <ScrollableTable
                 columns={columns}
                 pagination={false}
                 dataSource={dataSource}

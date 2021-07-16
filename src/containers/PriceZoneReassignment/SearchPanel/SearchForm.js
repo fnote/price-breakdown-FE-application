@@ -36,7 +36,7 @@ const SearchForm = () => {
     const [attributeGroups, setAttributeGroups] = useState('');
     const [isSearchDisabled, setSearchDisabled] = useState(false);
 
-    // const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
+    const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const [form] = Form.useForm();
 
     const handleChangeCustomer = (event) => {
@@ -93,7 +93,7 @@ const SearchForm = () => {
                 <i className="icon fi flaticon-list"/>
                 Search
             </div>
-            <div className="search-form">
+            <div className="search-form pz-search-form">
                 <Form
                     name="nest-messages"
                     form={form}
