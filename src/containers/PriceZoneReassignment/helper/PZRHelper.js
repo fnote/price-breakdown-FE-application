@@ -231,4 +231,4 @@ export const getStyleClassByApprovalStatus = (status) => {
     return 'pz-already';
 };
 
-export const extractOpId = (opco) => (opco.split('-'))[0];
+export const extractOpCoId = (opco) => (opco.split('-'))[0];
