@@ -93,7 +93,7 @@ const SearchForm = () => {
                 <i className="icon fi flaticon-list"/>
                 Search
             </div>
-            <div className="search-form">
+            <div className="search-form pz-search-form">
                 <Form
                     name="nest-messages"
                     form={form}

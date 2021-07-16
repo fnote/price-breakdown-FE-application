@@ -756,6 +756,7 @@
   padding: 0.5rem 0.5rem;
   overflow: hidden;
   align-items: center;
+  display: flex;
   min-height: 3rem;
   max-width: 12rem;
   line-height: 1.4;
@@ -1166,5 +1167,11 @@
   .ant-btn-primary[disabled]:focus,
   .ant-btn-primary[disabled]:active {
     color: #fff !important;
+  }
+}
+
+.pz-search-form{
+  @media only screen and (max-width:1400px){
+    margin:1rem 0 !important;
   }
 }
