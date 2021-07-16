@@ -1,14 +1,14 @@
 // Core
-import React, {useContext, useState, useRef, useEffect} from 'react';
-import {Table} from 'antd';
+import React, {useContext, useState} from 'react';
 // Custom components
 import CustomPagination from '../../../components/CustomPagination';
+import ScrollableTable from '../../../components/ScrollableTable';
 // Context
 import {PZRContext} from '../PZRContext';
 // Request Handlers
 import {DEFAULT_PAGE_SIZE, fetchSearchResults} from '../handlers/PZRSearchHandler';
 // Constants and helper functions
-import {calculateOffset, formatDate, getTableScroll} from '../helper/PZRHelper';
+import {calculateOffset, formatDate} from '../helper/PZRHelper';
 
 const columns = [
     {
@@ -56,20 +56,6 @@ const columns = [
     },
 ];
 
-const ScrollTable = (props) => {
-    const [scrollY, setScrollY] = useState();
-    const countRef = useRef(null);
-    useEffect(() => {
-      const scrolly = getTableScroll({ ref: countRef });
-      setScrollY(scrolly);
-    }, [props]);
-    return (
-      <div ref={countRef} className='pz-table-base-wrapper'>
-        <Table {...props} scroll={{ x: 'min-content', y: scrollY }} />
-      </div>
-    );
-};
-
 export default function PriceZoneTable() {
     const PZRContextData = useContext(PZRContext);
 
@@ -92,7 +78,7 @@ export default function PriceZoneTable() {
                 <div className="pz-table-header">
                     Existing Customer Item Price Zone
                 </div>
-            <ScrollTable pagination={false}
+            <ScrollableTable pagination={false}
                    columns={columns}
                    dataSource={searchResults?.data?.item_price_zones || []}
                    loading={PZRContextData.isSearchTableLoading}

@@ -1,8 +1,8 @@
 // Core
-import React, {useState, useEffect, useMemo, useRef} from 'react';
-import {Table} from 'antd';
+import React, {useState, useEffect, useMemo} from 'react';
 // Custom components
 import CustomPagination from '../../../components/CustomPagination';
+import ScrollableTable from '../../../components/ScrollableTable';
 // Handlers
 import {fetchPZRequestDetails} from '../handlers/PZRGetRequestDetailsHandler';
 // Utils, Configs
@@ -10,7 +10,6 @@ import {
     generatePaginationParams,
     constructRequestUrl,
     formatPZReferenceRecord,
-    getTableScroll
 } from '../helper/PZRHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
 // Constants
@@ -55,20 +54,6 @@ const columns = [
         width: '14%',
     },
 ];
-
-const ScrollTable = (props) => {
-    const [scrollY, setScrollY] = useState();
-    const countRef = useRef(null);
-    useEffect(() => {
-      const scrolly = getTableScroll({ ref: countRef });
-      setScrollY(scrolly);
-    }, [props]);
-    return (
-      <div ref={countRef} className='pz-table-base-wrapper'>
-        <Table {...props} scroll={{ x: 'min-content', y: scrollY }} />
-      </div>
-    );
-};
 
 export default function ReferenceDataTable({
                                                record: {id, customerAccount, customerGroup, itemAttributeGroup, customerCount, supcCount},
@@ -148,7 +133,7 @@ export default function ReferenceDataTable({
                     <div id="items" className='pop-sum-total'>{supcCount} Items</div>
                 </div>
             </div>
-            <ScrollTable
+            <ScrollableTable
                 columns={columns}
                 pagination={false}
                 dataSource={dataSource}

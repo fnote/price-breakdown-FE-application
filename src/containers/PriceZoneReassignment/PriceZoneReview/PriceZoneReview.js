@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 // Core
 import React, {useState, useEffect, useContext, useMemo, useRef} from 'react';
-import {Table, Space, Empty, Button} from 'antd';
+import {Space, Empty, Button} from 'antd';
 import {ReloadOutlined} from '@ant-design/icons';
 // Custom components
 import useModal from '../../../hooks/useModal';
@@ -10,6 +10,7 @@ import ReviewSummary from './ReviewSummary';
 import ApproveRejectButtons from './ApproveRejectButtons';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
+import ScrollableTable from '../../../components/ScrollableTable';
 // Contexts
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -22,8 +23,7 @@ import {
     formatPZRequest,
     constructPatchPayload,
     generateReviewer,
-    getEmptyDataTableMessage,
-    getTableScroll
+    getEmptyDataTableMessage
 } from '../helper/PZRHelper';
 // constants
 import {
@@ -72,20 +72,6 @@ const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeReques
         ),
     },
 ]);
-
-const ScrollTable = (props) => {
-    const [scrollY, setScrollY] = useState();
-    const countRef = useRef(null);
-    useEffect(() => {
-      const scrolly = getTableScroll({ ref: countRef });
-      setScrollY(scrolly);
-    }, [props]);
-    return (
-      <div ref={countRef}>
-        <Table {...props} scroll={{ x: false, y: scrollY }} />
-      </div>
-    );
-};
 
 export default function PriceZoneReview() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -223,7 +209,7 @@ export default function PriceZoneReview() {
         if (pZRContext.isOnReviewPage) {
             return (
                 <>
-                    <ScrollTable
+                    <ScrollableTable
                         columns={generateColumns({
                             setSelectedRecord,
                             toggle,
