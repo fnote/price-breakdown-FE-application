@@ -109,7 +109,7 @@ const SearchStatuses = () => {
 
         const {errorCode, correlationId, httpStatus} = PZRContextData.searchError;
         if (httpStatus === HTTP_INTERNAL_SERVER_ERROR) { // Show Error notification on internal server error without resetting the page
-            openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_MESSAGE, CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED);
+            openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_ERROR_MESSAGE, CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED);
             PZRContextData.setErrorData(null);
             return null;
         }
@@ -119,7 +119,7 @@ const SearchStatuses = () => {
             }
 
             if (errorCode === ErrorCodes.SEED_UNKNOWN_ERROR) { // Notification for SEED server errors
-                openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_MESSAGE, CIPZErrorMessages.FETCH_SEARCH_RESULTS_TITLE);
+                openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_ERROR_MESSAGE, CIPZErrorMessages.FETCH_SEARCH_RESULTS_TITLE);
                 PZRContextData.setErrorData(null);
                 return null;
             }

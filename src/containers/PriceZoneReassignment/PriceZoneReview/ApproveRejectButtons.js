@@ -21,7 +21,7 @@ const RejectReasonModalContent = ({onSubmit, onCancel}) => {
         <div className='pz-confirm-pop-base pz-reject-modal'>
             <div id="reject-reason-text" className='pz-alert-sr-main'>Reject Reason</div>
             <div id="provide-text-label" className='pz-alert-sr-sub'>
-                Please provide a reason which would be sent to the submitor as to why
+                Please provide a reason which would be sent to the submitter as to why
                 this change was rejected.
             </div>
             <Input.TextArea

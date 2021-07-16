@@ -191,13 +191,16 @@ export const getReviewStatusMsg = (status = null) => {
     return REVIEW_STATUS_CHANGED_MSG;
 };
 
-export const getEmptyDataTableMessage = (error = false) => {
-    if (error) {
-        return 'Sorry we could not retrieve the information';
-    }
-    return 'No Changes to Review';
-};
+export const getEmptyDataTableMessage = (error = false) => (error ? 'Sorry we could not retrieve the information' : 'No Changes to Review');
 
+/**
+ * Truncates a given input string based on the maximum allowed length param provided
+ * If the length of the string > maximum allowed length, truncate and attach '...' to the end of the string
+ * 
+ * @param {*} str input string
+ * @param {*} n max allowed length
+ * @returns string
+ */
 export const truncate = (str, n) => {
     if (str) {
         return (str.length > n) ? `${str.substr(0, n - 1)} ...` : str;
@@ -260,3 +263,4 @@ export const getTableScroll = ({ extraHeight = 74, id, ref } = {}) => {
     }
     return height;
 };
+export const extractOpCoId = (opco) => (opco.split('-'))[0];
