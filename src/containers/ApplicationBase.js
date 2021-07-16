@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import {notification} from 'antd';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
@@ -22,19 +22,20 @@ import BrowserDetector from '../utils/BrowserDetector';
 import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
 import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/UnsupportedBrowserTopAlert';
 
-const Application = (user) => (
-    <Switch>
-        <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
-            <FileUpload/>
-        </Route>
-        <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
-            {grantViewPermissionsToScreens(user, SCREEN_PRICE_VALIDATION) ? <PriceValidation/> : <PZRHome/>}
-        </Route>
-        <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
-            <PZRHome/>
-        </Route>
-    </Switch>
+const Application = (user) =>(
+        <Switch>
+            <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
+                <FileUpload/>
+            </Route>
+            <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
+                {user===undefined ? <div></div>:(grantViewPermissionsToScreens(user,SCREEN_PRICE_VALIDATION)? <PriceValidation/> :  <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>)}
+            </Route>
+            <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
+                <PZRHome/>
+            </Route>
+        </Switch>
 );
+
 
 export default function ApplicationBase() {
     const userDetailContext = useContext(UserDetailContext);
