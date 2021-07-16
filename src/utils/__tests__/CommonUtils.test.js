@@ -1,5 +1,13 @@
-import {createBusinessUnitMap, formatBusinessUnit, formatNumberInput, getDisplayFileName,
-    grantViewPermissionsToScreens, checkOnlineStatus, unsupportedBrowserState, formatBusinessUnitsIdShortName} from '../CommonUtils';
+import {
+    createBusinessUnitMap,
+    formatBusinessUnit,
+    formatNumberInput,
+    getDisplayFileName,
+    grantViewPermissionsToScreens,
+    checkOnlineStatus,
+    unsupportedBrowserState,
+    formatBusinessUnitsIdShortName
+} from '../CommonUtils';
 
 const businessUnits = new Map(
     [
