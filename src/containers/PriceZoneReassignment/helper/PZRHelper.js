@@ -230,3 +230,5 @@ export const getStyleClassByApprovalStatus = (status) => {
     }
     return 'pz-already';
 };
+
+export const extractOpId = (opco) => (opco.split('-'))[0];

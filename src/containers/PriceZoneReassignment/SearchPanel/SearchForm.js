@@ -8,7 +8,7 @@ import {PZRContext} from '../PZRContext';
 import {fetchSearchResults} from '../handlers/PZRSearchHandler';
 import {fetchAttributeGroups} from '../handlers/PZRAttributeGroupHandler';
 // Constants, Configs and Helper functions
-import {getBusinessUnits} from '../helper/PZRHelper';
+import {getBusinessUnits, extractOpId} from '../helper/PZRHelper';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -58,7 +58,7 @@ const SearchForm = () => {
         pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;
-        const opcoId = ((values.opco).split('-'))[0];
+        const opcoId = extractOpId(values.opco);
         const attributeGroupMap = attributeGroups.attributeGroupMap;
         const searchParams = {
             site: values.opco,
