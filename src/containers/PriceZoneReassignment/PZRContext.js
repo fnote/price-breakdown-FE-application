@@ -8,7 +8,10 @@ export const PZRContext = React.createContext({
     setSearchResults: () => {
     },
     isOnReviewPage: false,
-    setIsOnReviewPage: () => {}
+    setIsOnReviewPage: () => {
+    },
+    resetSearchResults: () => {
+    }
 });
 
 const initialSearchParamsState = {
@@ -35,6 +38,11 @@ const PZRContextProvider = (props) => {
         setSearchLoading(false);
         setSearchError(null);
         setSearchResults(data);
+    };
+
+    const resetSearchResults = () => {
+        setSearchLoading(false);
+        setSearchResults(null);
     };
 
     const errorUpdateHandler = (data) => {
@@ -71,7 +79,8 @@ const PZRContextProvider = (props) => {
             isResponseEmpty,
             setIsResponseEmpty,
             isOnReviewPage,
-            setIsOnReviewPage
+            setIsOnReviewPage,
+            resetSearchResults
         }}>
             {props.children}
         </PZRContext.Provider>
