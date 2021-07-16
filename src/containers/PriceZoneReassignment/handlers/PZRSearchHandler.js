@@ -2,7 +2,7 @@ import {handleResponse} from '../helper/PZRHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {CORRELATION_ID_HEADER, DEFAULT_REQUEST_HEADER} from '../../../constants/Constants';
 
-export const DEFAULT_PAGE_SIZE = 10;
+export const DEFAULT_PAGE_SIZE = 50;
 export const DEFAULT_OFFSET = 0;
 
 const formRequestBody = (requestData) => JSON.stringify({

@@ -14,37 +14,44 @@ const columns = [
     {
         title: 'ITEM(SUPC)',
         dataIndex: 'supc',
+        textWrap: 'word-break',
         width: '10%'
     },
     {
         title: 'ITEM DESCRIPTION',
         dataIndex: 'product_name',
+        textWrap: 'word-break',
         width: '25%'
     },
     {
         title: 'CUSTOMER',
         dataIndex: 'customer_account',
+        textWrap: 'word-break',
         width: '10%'
     },
     {
         title: 'CUSTOMER NAME',
         dataIndex: 'customer_name',
+        textWrap: 'word-break',
         width: '20%'
     },
     {
         title: 'SOURCE ID',
         dataIndex: 'source',
+        textWrap: 'word-break',
         width: '10%'
     },
     {
         title: 'PRICE ZONE',
         dataIndex: 'price_zone',
+        textWrap: 'word-break',
         width: '10%'
     },
     {
         title: 'EFFECTIVE DATE',
         dataIndex: 'effective_from_date',
         render: formatDate,
+        textWrap: 'word-break',
         width: '15%'
     },
 ];
@@ -57,8 +64,8 @@ const ScrollTable = (props) => {
       setScrollY(scrolly);
     }, [props]);
     return (
-      <div ref={countRef}>
-        <Table {...props} scroll={{ x: false, y: scrollY }} />
+      <div ref={countRef} className='pz-table-base-wrapper'>
+        <Table {...props} scroll={{ x: 'min-content', y: scrollY }} />
       </div>
     );
 };

@@ -36,7 +36,7 @@ const SearchForm = () => {
     const [attributeGroups, setAttributeGroups] = useState('');
     const [isSearchDisabled, setSearchDisabled] = useState(false);
 
-    // const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
+    const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const [form] = Form.useForm();
 
     const handleChangeCustomer = (event) => {

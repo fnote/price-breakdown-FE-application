@@ -8,7 +8,7 @@ const CURRENT_PRICE_ZONE_TOOLTIP = 'Current price zone of this item attribute gr
 export default function ReviewSummary({
                                           changeSummary: {
                                               businessUnit, newPriceZone, oldPriceZone, effectiveFromDate, customerGroup,
-                                              customerAccount, itemAttributeGroup, customerCount, supcCount
+                                              customerAccount, itemAttributeGroup, customerCount, supcCount, id
                                           }
                                       }) {
     return (
@@ -42,9 +42,17 @@ export default function ReviewSummary({
             <div className="pz-review-sum-right">
                 <div className="pz-review-right-wrapper">
                     <div className="pz-right-top">
-                        <div id="effective-date" className="pz-effective-date-text pz-caps">effective date</div>
-                        <div id="effective-from-date"
-                             className="pz-effective-date pz-main-text">{effectiveFromDate}</div>
+                        <div className="pz-effective-wrapper">
+                            <div id="effective-date" className="pz-effective-date-text pz-caps">effective date</div>
+                            <div id="effective-from-date"
+                                className="pz-effective-date pz-main-text">{effectiveFromDate}</div>
+                        </div>
+                        <div className="pz-reference-id">
+                            <div className="pz-ref-number-title">REFERENCE NUMBER</div>
+                            <div className="pz-ref-number">
+                                {id}
+                            </div>
+                        </div>
                     </div>
                     <div className="pz-right-bottom">
                         <div className="pz-right-bottom-left">
