@@ -46,7 +46,9 @@ const PZRContextProvider = (props) => {
     };
 
     const errorUpdateHandler = (data) => {
-        setSearchLoading(false);
+        if (data !== null) {
+            setSearchLoading(false);
+        }
         setSearchError(data);
     };
 
