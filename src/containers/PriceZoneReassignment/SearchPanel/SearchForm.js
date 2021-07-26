@@ -75,7 +75,6 @@ const SearchForm = () => {
     };
 
     const getAttributeGroupsFromSeed = () => fetchAttributeGroups({
-
         userDetailContext,
         setAttributeGroups,
         setSearchDisabled
