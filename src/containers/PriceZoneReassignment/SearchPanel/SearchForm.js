@@ -75,7 +75,7 @@ const SearchForm = () => {
     };
 
     const getAttributeGroupsFromSeed = () => fetchAttributeGroups({
-        pZRContext,
+
         userDetailContext,
         setAttributeGroups,
         setSearchDisabled
