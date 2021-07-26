@@ -19,7 +19,7 @@ const NEW_PRICE_ZONE_TOOLTIP_VALUE = 'New Price Zone for customer/customer group
 
 export default function PrizeZoneHeader() {
     // Constants
-    const {Modal, toggle} = useModal();
+    const {Modal, toggle, setOn} = useModal();
     const getDefaultEffectiveDate = () => moment().startOf('isoWeek').add(1, 'week'); // Returning next monday as the default
     // Context access
     const PZRContextData = useContext(PZRContext);
@@ -210,6 +210,8 @@ export default function PrizeZoneHeader() {
                                     onClick={() => {
                                         setSubmitModal('warning-modal');
                                         toggle();
+                                        setOn(true);
+
                                     }}
                                     disabled={isSubmitDisabled}
                                 >

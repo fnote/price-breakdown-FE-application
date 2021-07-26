@@ -41,6 +41,7 @@ const useModal = () => {
         on,
         toggle,
         Modal,
+        setOn
     };
 };
 
