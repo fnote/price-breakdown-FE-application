@@ -210,7 +210,6 @@ export default function PrizeZoneHeader() {
                                     onClick={() => {
                                         setSubmitModal('warning-modal');
                                         toggle();
-
                                     }}
                                     disabled={isSubmitDisabled}
                                 >
