@@ -19,7 +19,7 @@ const handleGetAttributeGroupResponse = (response) => {
     });
 };
 
-export const fetchAttributeGroups = ({pZRContext, userDetailContext, setAttributeGroups, setSearchDisabled}) => {
+export const fetchAttributeGroups = ({userDetailContext, setAttributeGroups, setSearchDisabled}) => {
     fetch(getBffUrlConfig().priceZoneReassignmentGetItemAttributeUrl, {
         method: 'GET',
         headers: DEFAULT_REQUEST_HEADER,
@@ -29,7 +29,6 @@ export const fetchAttributeGroups = ({pZRContext, userDetailContext, setAttribut
         .then((resp) => {
             if (resp.success) {
                 setAttributeGroups(getAttributeGroups(resp.data.attribute_groups));
-                pZRContext.setErrorData(null);
                 setSearchDisabled(false);
             } else {
                 setSearchDisabled(true);

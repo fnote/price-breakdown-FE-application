@@ -34,7 +34,7 @@ const SearchForm = () => {
     const [customerTextboxValue, setCustomerTextBoxValue] = useState(customerTextboxValueInitState);
     const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState(customerGroupTextboxValueInitState);
     const [attributeGroups, setAttributeGroups] = useState('');
-    const [isSearchDisabled, setSearchDisabled] = useState(false);
+    const [isSearchDisabled, setSearchDisabled] = useState(true);
 
     const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const [form] = Form.useForm();
@@ -75,7 +75,6 @@ const SearchForm = () => {
     };
 
     const getAttributeGroupsFromSeed = () => fetchAttributeGroups({
-        pZRContext,
         userDetailContext,
         setAttributeGroups,
         setSearchDisabled
