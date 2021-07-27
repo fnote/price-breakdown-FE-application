@@ -5,7 +5,7 @@ import {ErrorCodes, ErrorMessages, ErrorsMap} from '../../../constants/Errors';
 import RequestId from '../../../components/RequestId';
 
 const renderWelcomeMessage = () => (
-    <div className="search-statuses history-noborder">
+    <div className="search-statuses">
       <div className="section-wrapper">
         <div className="welcome-message message-block">
           <div className="title">
@@ -22,7 +22,7 @@ const renderWelcomeMessage = () => (
 );
 
 const renderLoader = () => (
-    <div className="search-statuses history-noborder">
+    <div className="search-statuses ">
       <div className="section-wrapper">
         <div className="loading message-block">
           <div className="title">
@@ -35,7 +35,7 @@ const renderLoader = () => (
 );
 
 const renderError = ({ errorCode, message, correlationId }) => (
-    <div className="search-statuses history-noborder">
+    <div className="search-statuses ">
       <div className="section-wrapper">
         <div className="error message-block">
           <div className="title">
