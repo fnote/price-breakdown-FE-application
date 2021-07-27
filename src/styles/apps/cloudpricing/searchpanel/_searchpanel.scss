@@ -159,6 +159,10 @@
       .ant-form-item-control-input-content {
         max-width: none;
       }
+
+      .history-search-button{
+        width: calc(100% + 4rem);
+      }
     }
     .search-btn {
       width: calc(100% + 2rem);
@@ -243,6 +247,15 @@
     background: $textalternative;
     align-content: flex-end;
     margin-right: 0rem;
+  }
+  .history-reset-base{
+    @include flexbox( 1 1 auto, row, flex-end, center);
+  }
+  .history-refresh-button{
+    margin-right:0 !important
+  }
+  .history-refresh-icon{
+    padding-right: 5px;
   }
   .search-refresh-btn {
     background: $textalternative;

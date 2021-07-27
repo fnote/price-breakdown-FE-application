@@ -144,12 +144,14 @@ const SearchForm = () => {
           initialValues={initialValues}
             onReset={onReset}
         >
-            <Form.Item className="search-refresh-btn-wrapper">
+            <Form.Item  name="reset" className="history-reset-base" label="&nbsp;">
+                <div className="history-reset-base">
                 <button
                     type="reset"
-                    className="search-refresh-btn refresh-outlined-btn" >
-                    <i className="icon fi flaticon-refresh"/> CLEAR
+                    className="search-refresh-btn refresh-outlined-btn history-refresh-button" >
+                    <i className="icon fi flaticon-refresh history-refresh-icon"/> CLEAR
                 </button>
+                </div>
             </Form.Item>
           <Form.Item
               name="site"
@@ -241,7 +243,7 @@ const SearchForm = () => {
             <button
                 type="primary"
                 htmlType="submit"
-                className="search-btn outlined-btn"
+                className="search-btn outlined-btn history-search-button"
             >
               Search
             </button>
