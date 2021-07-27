@@ -1,38 +1,41 @@
 import React, {useContext, useEffect} from 'react';
-import {Route, Switch} from 'react-router-dom';
+import {Redirect, Route, Switch} from 'react-router-dom';
 import {notification} from 'antd';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
-import HistoryInquiry from './HistoryInquiry/HistoryInquiry';
-import PriceZoneRe from './PriceZoneReassignment/PriceZoneRe'
+import PZRHome from './PriceZoneReassignment/PZRHome';
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
 import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
-import {NAVIGATION_PATH_FILE_UPLOAD, NAVIGATION_PATH_PRICE_VALIDATION , NAVIGATION_PATH_HISTORY_INQUIRY , NAVIGATION_PATH_PRICEZONE_REASSIGNMENT} from '../constants/Constants';
+import {
+    NAVIGATION_PATH_FILE_UPLOAD,
+    NAVIGATION_PATH_PRICE_VALIDATION,
+    SUPPORTED_WEB_BROWSERS,
+    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT, SCREEN_PRICE_VALIDATION
+} from '../constants/Constants';
 
-import UnsupportedBrowser from "../components/UnsupportedBrowser";
-import BrowserDetector from "../utils/BrowserDetector";
-import {SUPPORTED_WEB_BROWSERS} from '../constants/Constants'
-import ToperrorBar from "../components/ToperrorBar"
+import {grantViewPermissionsToScreens, unsupportedBrowserState} from '../utils/CommonUtils';
+import UnsupportedBrowserScreen from '../components/UnsupportedBrowser/UnsupportedBrowserScreen';
+import BrowserDetector from '../utils/BrowserDetector';
+import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
+import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/UnsupportedBrowserTopAlert';
 
-const Application = () => (
-    <Switch>
-        <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
-            <FileUpload/>
-        </Route>
-        <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
-            <PriceValidation/>
-        </Route>
-        <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
-            <HistoryInquiry/>
-        </Route>
-        <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
-            <PriceZoneRe/>
-        </Route>
-    </Switch>
+const Application = (user) =>(
+        <Switch>
+            <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
+                <FileUpload/>
+            </Route>
+            <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
+                {grantViewPermissionsToScreens(user,SCREEN_PRICE_VALIDATION)? <PriceValidation/> :  <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
+            </Route>
+            <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
+                <PZRHome/>
+            </Route>
+        </Switch>
 );
+
 
 export default function ApplicationBase() {
     const userDetailContext = useContext(UserDetailContext);
@@ -64,24 +67,24 @@ export default function ApplicationBase() {
     });
 
     let component;
+    const userRole = userDetailContext?.userDetailsData?.userDetails?.role;
+    const cipzUserRole = userDetailContext?.userDetailsData?.userDetails?.cipzRole;
 
-    
-    
-    if(!browserDetector.isSupported()){
-        component =  <UnsupportedBrowser
+    if (!browserDetector.isSupported() && !unsupportedBrowserState.isSetUnsupportedBrowserScreenContinue()) {
+        component = <UnsupportedBrowserScreen
             browserName={browserDetector.getBrowserName()}
             browserVersion={browserDetector.getBrowserVersion()}
             fullBrowserVersion={browserDetector.getFullBrowserVersion()}/>;
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = !auth.isUserLoginCompleted() ? Application() : <Login/>;
+        component = auth.isUserLoginCompleted() && (userRole||cipzUserRole) ? Application(userRole) : <Login/>;
     }
 
     return (
-
         <React.Fragment>
-            {/* <ToperrorBar msg="Your browser isn't supported"  buttonText="Learn More" close/> */}
+            <NetworkConnectivityAlert/>
+            <UnsupportedBrowserTopAlert/>
             {component}
         </React.Fragment>
     );

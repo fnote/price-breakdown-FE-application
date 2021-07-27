@@ -1,5 +1,6 @@
+export const CLOUD_PCI_FRONTEND_VERSION = '1.6.0';
 // help page url
-export const HELP_PAGE_URL = 'https://syscobt.atlassian.net/wiki/spaces/PRCP/pages/2298184412/Getting+started+with+the+Cloud+Price+Calculation+Inquiry+PCI';
+export const HELP_PAGE_URL = 'https://maincourse.cloud.sysco.com/TVRLearningPortal/Content/ProfitMgmt/8Container/CloudPCI_contain.htm';
 
 export const LABEL_CUSTOMER_NET_PRICE = 'CUSTOMER NET PRICE';
 
@@ -87,7 +88,6 @@ export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
 
 export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
 export const NAVIGATION_PATH_FILE_UPLOAD = '/file-upload';
-export const NAVIGATION_PATH_HISTORY_INQUIRY = '/history-inquiry';
 export const NAVIGATION_PATH_PRICEZONE_REASSIGNMENT = '/pricezone-reassignment';
 
 export const FILE_UPLOADING_DONE = 'done';
@@ -118,17 +118,21 @@ export const INVALID_FILE_NAME = {
 
 // A browser is considered supported if it is mentioned in the list and equal or newer than the mentioned versions.
 export const SUPPORTED_WEB_BROWSERS = {
-        Chrome: 86,
-        Edge: 87,
-        Firefox: 84,
-        Safari: 12
-}
+        Chrome: 89,
+        Edge: 90,
+        // Firefox: 84, // Not approved to be used at Sysco
+        // Safari: 14  // Deprecated for now
+};
 
 export const UNSUPPORTED_WEB_BROWSER = {
-    headerMessage: `your browser isn't supported`,
-    // infoMessage: 'Please use one of the following browsers to get the best experience using Cloud PCI'
+    headerMessageLine1: 'We\'re sorry , but',
+    headerMessageLine2: 'Your browser isn\'t supported',
     infoMessage: 'Please use one of these options to improve your experience'
-}
+};
+
+export const UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE = 'unsupported_browser_screen_continue';
+export const UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE = 'unsupported_browser_alert_continue';
+export const UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR = '/';
 
 // job status
 export const JOB_INPROGRESS_STATUS = 'INPROGRESS';
@@ -173,6 +177,97 @@ export const JOB_LIST_REFRESH_INTERVAL = 40000;
 export const TIMEZONE_ABBREVIATION_REGEX = /[A-Z](?!.*[(])/;
 export const TIMEZONE_REGEX = /\(([^)]+)\)/;
 
-//file type
+// file type
 export const MINOR_ERROR_FILE = 'minor error file';
 export const COMPLETED_FILE = 'completed file';
+
+// Network online status detection
+export const ONLINE_STATUS_CHECK_INTERVAL = 10000;
+export const ONLINE_STATUS_CHECK_URL = '/favicon.ico?d=';
+export const ONLINE_STATUS_OFFLINE_MSG = 'Please check the internet connection!';
+
+// user roles
+export const ROLE_APP_ADMIN = 'appadmin';
+export const ROLE_GENERAL_USER = 'generaluser';
+export const ROLE_CIPZ_REVIEWER = 'cipz_reviewer';
+export const ROLE_CIPZ_SUBMITTER = 'cipz_submitter';
+export const ROLE_CIPZ_SUPPORT = 'cipz_support_user';
+
+// screens
+export const SCREEN_FILE_UPLOAD = 'file_upload_screen';
+export const SCREEN_PRICE_VALIDATION = 'price_validation_screen';
+export const SCREEN_HISTORY_INQUIRY = 'history_inquiry_screen';
+export const SCREEN_CIPZ_REVIEW = 'cipz_reviewer_tab';
+export const SCREEN_CIPZ_PZ_UPDATE = 'cipz_price_zone_update_tab';
+export const SCREEN_CIPZ_REASSIGNMENT = 'cipz_reassignment_tab';
+export const SCREEN_CIPZ_SEARCH = 'cipz_search';
+
+export const DEFAULT_REQUEST_HEADER = {
+    'Accept': 'application/json, text/plain, */*',
+    'Content-Type': 'application/json'
+};
+
+export const HTTP_METHOD_GET = 'GET';
+export const HTTP_METHOD_PATCH = 'PATCH';
+export const HEADER_NAME_CONTENT_TYPE = 'Content-Type';
+export const HEADER_VALUE_APPLICATION_JSON = 'application/json';
+export const APPROVED = 'APPROVED';
+
+export const ROLE_SCREEN_PERMISSIONS = {
+    [SCREEN_FILE_UPLOAD]: {
+        [ROLE_APP_ADMIN]: true,
+        [ROLE_GENERAL_USER]: true,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: false,
+        [ROLE_CIPZ_SUPPORT]: false,
+        '': false
+    },
+    [SCREEN_PRICE_VALIDATION]: {
+        [ROLE_APP_ADMIN]: true,
+        [ROLE_GENERAL_USER]: true,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: false,
+        [ROLE_CIPZ_SUPPORT]: false,
+        '': false
+    },
+    [SCREEN_HISTORY_INQUIRY]: {
+        [ROLE_APP_ADMIN]: true,
+        [ROLE_GENERAL_USER]: true,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: false,
+        [ROLE_CIPZ_SUPPORT]: false,
+        '': false
+    },
+    [SCREEN_CIPZ_REVIEW]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: false,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
+    },
+    [SCREEN_CIPZ_PZ_UPDATE]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
+    },
+    [SCREEN_CIPZ_REASSIGNMENT]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
+    },
+    [SCREEN_CIPZ_SEARCH]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
+    }
+};
