@@ -10,7 +10,7 @@ export default function HistoryInquiry() {
     return (
         <div className="wrapper cloudpricing-wrapper">
             <AppBar/>
-            <div className="content">
+            <div className="content history-content">
                 <HistoryInquiryContextProvider>
                     <SearchPanel/>
                     <SearchStatuses/>
