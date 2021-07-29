@@ -248,15 +248,7 @@
     align-content: flex-end;
     margin-right: 0rem;
   }
-  .history-reset-base{
-    @include flexbox( 1 1 auto, row, flex-end, center);
-  }
-  .history-refresh-button{
-    margin-right:0 !important
-  }
-  .history-refresh-icon{
-    padding-right: 5px;
-  }
+ 
   .search-refresh-btn {
     background: $textalternative;
     border: lightgray;
