@@ -399,7 +399,7 @@
     margin-top: 0.3rem;
   }
   .ant-table-row-level-0 {
-    height: 13rem !important;
+    height: 15rem !important;
     padding-bottom: 0.5rem;
   }
 
@@ -755,11 +755,13 @@
   width: auto !important;
   padding: 0.5rem 0.5rem;
   overflow: hidden;
-  align-items: center;
-  display: flex;
+  // align-items: center;
+  // display: flex;
   min-height: 3rem;
   max-width: 12rem;
   line-height: 1.4;
+  font-size:0.9rem !important;
+  padding-top: 0.8rem;
 }
 
 // ========================
