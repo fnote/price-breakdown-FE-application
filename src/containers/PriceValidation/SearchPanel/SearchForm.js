@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
 import {
-  Form, Input, Checkbox, Select, InputNumber, DatePicker
+  Form, Input, Checkbox, Select, DatePicker
 } from 'antd';
 import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
@@ -195,7 +195,7 @@ const SearchForm = () => {
                       },
                   })
               ]}>
-            <InputNumber
+            <Input
                 min={1}
                 formatter={(value) => (value && !isNaN(value) ? Math.round(value) : value)}
             />
@@ -222,7 +222,7 @@ const SearchForm = () => {
                     })
                 ]}
             >
-                <InputNumber
+                <Input
                     formatter={formatNumberInput}
                 />
             </Form.Item>
