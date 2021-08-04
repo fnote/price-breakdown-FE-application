@@ -83,7 +83,7 @@ export default function ReviewSummary({
                                 <Tooltip title={itemAttributeGroup} color="#fff" overlayClassName="pz-tooltip"
                                          overlayStyle={{color: '#000'}}>
                                     <div id="item-attribute-group"
-                                        className="pz-effective-date pz-attribute-tag" style={{fontSize: autoSize(itemAttributeGroup)}}>
+                                        className="pz-effective-date pz-attribute-tag">
                                         {truncate(itemAttributeGroup, 60)}
                                     </div>
                                 </Tooltip>
