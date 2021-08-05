@@ -1,4 +1,5 @@
 // Custom components
+import {useContext} from 'react';
 import {submitReasonModal} from '../PriceZoneResults/PZRHeaderModal';
 // Helper functions and constants
 import {openNotificationWithIcon, handleResponse} from '../helper/PZRHelper';
@@ -52,7 +53,9 @@ export const submitPriceZoneChangeRequest = ({setSubmitModal, setReferenceId, re
                 setSubmitModal('success-modal');
             } else {
                 const errorResponseData = resp.data;
-                if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_VALID_PRICE_ZONE_DATA_UNAVAILABLE) {
+                if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_PRICE_ZONE_ALREADY_ASSIGNED) {
+                    setSubmitModal('nothing-to-change');
+                } else if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_VALID_PRICE_ZONE_DATA_UNAVAILABLE) {
                     setSubmitModal('no-eligible-price-zones');
                 } else {
                     handleError(resp);

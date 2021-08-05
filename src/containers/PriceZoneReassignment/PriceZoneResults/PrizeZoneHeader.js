@@ -4,7 +4,7 @@ import {Select, DatePicker, Tooltip} from 'antd';
 import moment from 'moment';
 // Custom Components
 import useModal from '../../../hooks/useModal';
-import {ModalComponent, SubmitReason, SubmitSuccess, LoadingState, NoEligiblePriceZones} from './PZRHeaderModal';
+import {ModalComponent, SubmitReason, SubmitSuccess, LoadingState, ErrorInfoModal} from './PZRHeaderModal';
 // Context
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -230,8 +230,10 @@ export default function PrizeZoneHeader() {
                                                    priceZoneChangeHandler={priceZoneChangeHandler} toggle={toggle}/>,
                     'success-modal': <SubmitSuccess Modal={Modal} resetSearch={resetSearch} referenceId={referenceId}/>,
                     'loading': <LoadingState Modal={Modal}/>,
-                    'no-eligible-price-zones': <NoEligiblePriceZones Modal={Modal} setSubmitModal={setSubmitModal}
-                                                                     priceZone={newPriceZone}/>
+                    'no-eligible-price-zones': <ErrorInfoModal Modal={Modal} setSubmitModal={setSubmitModal} 
+                    message= {`Selected item attribute group is not eligible for the Price Zone ${newPriceZone}`}/>,
+                    'nothing-to-change': <ErrorInfoModal Modal={Modal} setSubmitModal={setSubmitModal}
+                    message= {`Nothing to change. All the items in the selected attribute group are already assigned to price zone ${newPriceZone}`}/>,
                 }[submitModal]
             }
         </div>
