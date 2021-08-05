@@ -35,8 +35,11 @@ const formRequestBody = (requestData) => {
     };
 
     if (requestData.handPrice) {
-        product.orderPrice = requestData.handPrice;
+      const orderPriceNumericalValue = Number(requestData.handPrice);
+      if (orderPriceNumericalValue > 0) {
+        product.orderPrice = `${orderPriceNumericalValue}`;
         product.orderPriceType = ORDER_PRICE_TYPE_HAND;
+      }
     }
 
     return JSON.stringify({
@@ -184,6 +187,7 @@ const SearchForm = () => {
           <Form.Item
               name="quantity"
               label="Quantity"
+              normalize= {(value) => (value && !isNaN(value) ? Math.round(value) : value)}
               min="1"
               rules={[
                   () => ({
@@ -197,13 +201,13 @@ const SearchForm = () => {
               ]}>
             <Input
                 min={1}
-                formatter={(value) => (value && !isNaN(value) ? Math.round(value) : value)}
             />
           </Form.Item>
 
             <Form.Item
                 name="handPrice"
                 label="Hand Price"
+                normalize= {(value) => formatNumberInput(value)}
                 rules={[
                     () => ({
                         validator(rule, value) {
@@ -216,15 +220,12 @@ const SearchForm = () => {
                                 }
                                 return Promise.reject(new Error('Hand price must be a valid non-negative number'));
                             }
-
                             return Promise.resolve();
                         },
                     })
                 ]}
             >
-                <Input
-                    formatter={formatNumberInput}
-                />
+                <Input/>
             </Form.Item>
 
           <Form.Item name="split" label="Split" valuePropName="checked">
