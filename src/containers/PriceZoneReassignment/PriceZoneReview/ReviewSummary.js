@@ -8,7 +8,7 @@ const CURRENT_PRICE_ZONE_TOOLTIP = 'Current price zone of this item attribute gr
 export default function ReviewSummary({
                                           changeSummary: {
                                               businessUnit, newPriceZone, oldPriceZone, effectiveFromDate, customerGroup,
-                                              customerAccount, itemAttributeGroup, customerCount, supcCount, id
+                                              customerAccount, businessCenterItemAttributeGroup, customerCount, supcCount, id
                                           }
                                       }) {
     return (
@@ -80,11 +80,11 @@ export default function ReviewSummary({
                         <div className="pz-right-bottom-right">
                             <div id="customer-group" className="pz-effective-date-text pz-caps">attribute group</div>
                             <div className="pz-attrib-base">
-                                <Tooltip title={itemAttributeGroup} color="#fff" overlayClassName="pz-tooltip"
+                                <Tooltip title={businessCenterItemAttributeGroup} color="#fff" overlayClassName="pz-tooltip"
                                          overlayStyle={{color: '#000'}}>
                                     <div id="item-attribute-group"
                                         className="pz-effective-date pz-attribute-tag">
-                                        {truncate(itemAttributeGroup, 60)}
+                                        {truncate(businessCenterItemAttributeGroup, 60)}
                                     </div>
                                 </Tooltip>
                                 <ExclamationCircleOutlined className="pz-attrib-info"/>

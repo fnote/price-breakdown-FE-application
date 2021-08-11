@@ -20,7 +20,7 @@ const formRequestBody = ({PZRContextData, userDetailContext, submissionNote, get
     const userDetailsObj = userDetailContext.userDetailsData.userDetails;
     return JSON.stringify({
         businessUnitNumber: PZRContextData.searchParams.opcoId,
-        itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
+        businessCenterItemAttributeGroup: PZRContextData.searchParams.attributeGroup,
         itemAttributeGroupId: PZRContextData.searchParams.attributeGroupId,
         customerGroup: getCustomerGroupOfCustomer(),
         customerAccount: PZRContextData.searchParams.customer ? PZRContextData.searchParams.customer : null,
