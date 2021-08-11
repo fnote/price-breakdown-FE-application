@@ -66,7 +66,7 @@ const SearchForm = () => {
             attributeGroupId: values.attributeGroup,
             customer,
             customerGroup,
-            attributeGroup: attributeGroupMap.get(Number(values.attributeGroup)),
+            attributeGroup: attributeGroupMap.get(values.attributeGroup),
         };
         pZRContext.setSearchLoading(true);
         pZRContext.setSearchParams(searchParams);
