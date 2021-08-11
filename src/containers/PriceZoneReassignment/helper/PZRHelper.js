@@ -95,7 +95,7 @@ export const formatPriceZones = (priceZones = []) => priceZones.join(',');
 
 export const formatPZRequest = ({
                                     createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate,
-                                    customerGroup, customerAccount, businessCenterItemAttributeGroup, itemAttributeGroupId,
+                                    customerGroup, customerAccount, businessCenterItemAttributeGroup, businessCenterItemAttributeGroupId,
                                     summary, id, submissionNote, reviewStatus, ...rem
                                 }, {businessUnitMap}) => ({
     submission: {
@@ -112,7 +112,7 @@ export const formatPZRequest = ({
         customerGroup,
         customerAccount,
         businessCenterItemAttributeGroup,
-        itemAttributeGroupId,
+        businessCenterItemAttributeGroupId,
         ...summary
     },
     reviewStatus,
