@@ -22,8 +22,8 @@ const renderWelcomeMessage = () => (
                     <i className="icon fi flaticon-price-zone"/> Welcome to the Price Zone Reassignment Tool
                 </div>
                 <div className="subitle-title">
-                    <i className="icon fi flaticon-arrow"/> To start select an item group and enter
-                    customer/customer group
+                    <i className="icon fi flaticon-arrow"/> To start select a site, customer/customer group and
+                     business center – item group – attribute group
                 </div>
             </div>
         </div>
