@@ -101,7 +101,7 @@ export default function PrizeZoneHeader() {
                         <div id="customer-group-tab" className="pz-tab-items">
                             {PZRContextData.searchParams.customerGroup ? (
                                 <>
-                                    <div id="customer-group-label" className="pz-tab-items-top">CUSTOMER GROUP</div>
+                                    <div id="customer-group-label" className="pz-tab-items-top pz-text-left">CUSTOMER GROUP</div>
                                     <div className="pz-tab-items-bottom">
                                         <span
                                             id="customer-group"
@@ -127,7 +127,7 @@ export default function PrizeZoneHeader() {
                     </div>
                     <div className="pz-tabs-combine-r">
                         <div className="pz-tab-items">
-                            <div id="attribute-group-label" className="pz-tab-items-top">ATTRIBUTE GROUP</div>
+                            <div id="attribute-group-label" className="pz-tab-items-top pz-text-left">ATTRIBUTE GROUP</div>
                             <div className="pz-tab-items-bottom">
                                 <Tooltip
                                     id="attribute-group-tooltip"
