@@ -22,20 +22,19 @@ import BrowserDetector from '../utils/BrowserDetector';
 import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
 import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/UnsupportedBrowserTopAlert';
 
-const Application = (user) =>(
+const Application = (user) => (
         <Switch>
             <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
                 <FileUpload/>
             </Route>
             <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
-                {grantViewPermissionsToScreens(user,SCREEN_PRICE_VALIDATION)? <PriceValidation/> :  <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
+                {grantViewPermissionsToScreens(user, SCREEN_PRICE_VALIDATION) ? <PriceValidation/> : <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
             </Route>
             <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
                 <PZRHome/>
             </Route>
         </Switch>
 );
-
 
 export default function ApplicationBase() {
     const userDetailContext = useContext(UserDetailContext);
@@ -78,7 +77,7 @@ export default function ApplicationBase() {
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = auth.isUserLoginCompleted() && (userRole||cipzUserRole) ? Application(userRole) : <Login/>;
+        component = auth.isUserLoginCompleted() && (userRole || cipzUserRole) ? Application(userRole) : <Login/>;
     }
 
     return (
