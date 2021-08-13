@@ -10,7 +10,9 @@ import {
     generatePaginationParams,
     constructRequestUrl,
     formatPZReferenceRecord,
+    truncate,autoSize
 } from '../helper/PZRHelper';
+
 import {getBffUrlConfig} from '../../../utils/Configs';
 // Constants
 import {
@@ -108,7 +110,7 @@ export default function ReferenceDataTable({
             return (
                 <>
                     <div id="customer-group-label" className='pop-sum-text'>CUSTOMER GROUP</div>
-                    <div id="customer-group" className='pop-sum-tag'>{customerGroup}</div>
+                    <div id="customer-group" className='pop-sum-tag pz-ref-tag-left'>{customerGroup}</div>
                     <div id="customer-count" className='pop-sum-total'>{customerCount} Customers</div>
                 </>
             );
@@ -129,7 +131,7 @@ export default function ReferenceDataTable({
                 </div>
                 <div className='pop-sum-Attrib-grp'>
                     <div id="attribute-group-label" className='pop-sum-text'>ATTRIBUTE GROUP</div>
-                    <div id="attribute-group" className='pop-sum-tag pz-tag-blue'>{businessCenterItemAttributeGroup}</div>
+                    <div id="attribute-group" className='pop-sum-tag pz-tag-blue pz-ref-tag-right'  style={{fontSize: autoSize(businessCenterItemAttributeGroup)}}>{businessCenterItemAttributeGroup}</div>
                     <div id="items" className='pop-sum-total'>{supcCount} Items</div>
                 </div>
             </div>

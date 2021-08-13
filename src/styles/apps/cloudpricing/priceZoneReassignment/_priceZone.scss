@@ -968,11 +968,24 @@
           margin-top: 0.5rem;
           color: $textstandard;
         }
+
+        .pz-ref-tag-left{
+          max-width:48rem;
+          padding:0.25rem 0;
+        }
       }
       .pop-sum-Attrib-grp {
         margin-left: 10px;
         .pz-tag-blue {
           background: #f6e176;
+        }
+        .pz-ref-tag-right{
+          max-width:48rem;
+          padding:0.25rem 0.5rem;
+          min-height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
         }
       }
     }
