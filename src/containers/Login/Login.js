@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import logo from '../../styles/images/logo.svg';
+import logo from '../../styles/images/splash.svg';
 import {auth} from '../../utils/security/Auth';
 import {AUTH_FAILURE_TYPE_UNAUTHENTICATED} from '../../constants/Constants';
 import {UserDetailContext} from '../UserDetailContext';
