@@ -28,7 +28,8 @@ const Application = (user) => (
                 <FileUpload/>
             </Route>
             <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
-                {grantViewPermissionsToScreens(user, SCREEN_PRICE_VALIDATION) ? <PriceValidation/> : <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
+                {grantViewPermissionsToScreens(user, SCREEN_PRICE_VALIDATION) ? <PriceValidation/>
+                    : <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
             </Route>
             <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
                 <PZRHome/>
