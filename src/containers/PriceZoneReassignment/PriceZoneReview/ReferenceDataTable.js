@@ -144,7 +144,7 @@ export default function ReferenceDataTable({
                 loading={resultLoading}
             />
             <CustomPagination
-                className="pz-pop-table-pagination"
+                className="pz-pop-table-pagination pz-pag-fix"
                 total={totalResultCount}
                 current={currentPage}
                 onChange={(current) => {

@@ -1190,3 +1190,11 @@
     margin:1rem 0 !important;
   }
 }
+
+// Fix for ref table ant pagination ellipsis issue
+
+.pz-pag-fix{
+  .ant-pagination-item-ellipsis{
+display: flex !important;
+  }
+}
