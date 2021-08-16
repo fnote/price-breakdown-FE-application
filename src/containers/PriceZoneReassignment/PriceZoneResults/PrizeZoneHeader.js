@@ -139,7 +139,7 @@ export default function PrizeZoneHeader() {
                                     <span id="attributr-group-tab"
                                           className="pz-item-grp-text"
                                           style={{fontSize: autoSize(PZRContextData.searchParams.attributeGroup)}}>
-                                            {truncate(PZRContextData.searchParams.attributeGroup, 60)}
+                                            {truncate(PZRContextData.searchParams.attributeGroup, 87)}
                                     </span>
                                 </Tooltip>
                             </div>
@@ -206,7 +206,7 @@ export default function PrizeZoneHeader() {
                                 <button
                                     id="search-button"
                                     type="primary"
-                                    className={isSubmitDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
+                                    className={isSubmitDisabled ? ' pz-search-btn outlined-btn pz-disabled' : 'pz-search-btn outlined-btn '}
                                     onClick={() => {
                                         setSubmitModal('warning-modal');
                                         toggle();
