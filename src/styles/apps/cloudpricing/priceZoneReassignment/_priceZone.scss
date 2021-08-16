@@ -235,10 +235,8 @@
           }
         }
         .pz-tabs-combine {
-          // display: flex;
-          // align-items: baseline;
+          align-items: baseline;
           padding: 1rem 2rem;
-          // justify-content: space-around;
           display: grid;
           grid-template-columns: 1fr 1fr 2fr;
           width: calc(100% / 1.6);
@@ -726,12 +724,12 @@
     color: $syscoblue;
   }
 
-  .search-btn {
+  .pz-search-btn {
     width: calc(100% / 2);
     padding: 0.6rem 2rem;
     font-weight: 600;
-    background: rgb(70, 155, 67);
-    background: linear-gradient(180deg, rgb(56, 182, 17) 7%, $syscogreen 100%);
+    background: rgb(70, 155, 67) !important;
+    background: linear-gradient(180deg, rgb(56, 182, 17) 7%, $syscogreen 100%) !important;
   }
   .reject-btn {
     margin-left: 5px;
