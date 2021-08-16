@@ -139,7 +139,7 @@ export default function PrizeZoneHeader() {
                                     <span id="attributr-group-tab"
                                           className="pz-item-grp-text"
                                           style={{fontSize: autoSize(PZRContextData.searchParams.attributeGroup)}}>
-                                            {truncate(PZRContextData.searchParams.attributeGroup, 60)}
+                                            {truncate(PZRContextData.searchParams.attributeGroup, 99)}
                                     </span>
                                 </Tooltip>
                             </div>

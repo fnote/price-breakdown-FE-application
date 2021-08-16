@@ -235,11 +235,13 @@
           }
         }
         .pz-tabs-combine {
-          display: flex;
-          align-items: baseline;
+          // display: flex;
+          // align-items: baseline;
           padding: 1rem 2rem;
-          justify-content: space-around;
-          width: calc(100% / 2);
+          // justify-content: space-around;
+          display: grid;
+          grid-template-columns: 1fr 1fr 2fr;
+          width: calc(100% / 1.6);
           box-shadow: 0px 0px 8px 1.5px rgba(204, 204, 204, 0.5), 0px 10px 1px #fff;
           border-top-left-radius: 20px;
           border-top-right-radius: 20px;
@@ -292,6 +294,7 @@
     .pz-item-grp-text {
       background: #f6e176;
       color: $textstandard;
+      width:auto !important;
     }
     .pz-item-grp-text,
     .pz-cutomer-grp-text {
