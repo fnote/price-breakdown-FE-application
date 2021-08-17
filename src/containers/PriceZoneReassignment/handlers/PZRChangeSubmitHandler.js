@@ -1,5 +1,4 @@
 // Custom components
-import {useContext} from 'react';
 import {submitReasonModal} from '../PriceZoneResults/PZRHeaderModal';
 // Helper functions and constants
 import {openNotificationWithIcon, handleResponse} from '../helper/PZRHelper';
