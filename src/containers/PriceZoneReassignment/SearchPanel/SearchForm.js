@@ -100,7 +100,7 @@ const SearchForm = () => {
                     onFinish={(value) => onSubmit(value)}
                 >
                     <Form.Item
-                        name="opco"
+                        name="site"
                         label="Site"
                         className="pz-linebreak pz-linebreak-item-group"
                         rules={[{required: true}]}
@@ -157,7 +157,7 @@ const SearchForm = () => {
                                 }]}
                         >
                             <Form.Item name="customer">
-                                <Input id="customer-text-box" disabled={!isCustomerChecked}
+                                <Input disabled={!isCustomerChecked}
                                        value={customerTextboxValue} onChange={handleChangeCustomer}/>
                             </Form.Item>
                         </Form.Item>
