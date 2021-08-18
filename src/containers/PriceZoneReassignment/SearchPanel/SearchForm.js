@@ -58,15 +58,15 @@ const SearchForm = () => {
         pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;
-        const opcoId = extractOpCoId(values.opco);
+        const opcoId = extractOpCoId(values.site);
         const attributeGroupMap = attributeGroups.attributeGroupMap;
         const searchParams = {
-            site: values.opco,
+            site: values.site,
             opcoId,
             attributeGroupId: values.attributeGroup,
             customer,
             customerGroup,
-            attributeGroup: attributeGroupMap.get(Number(values.attributeGroup)),
+            attributeGroup: attributeGroupMap.get(values.attributeGroup),
         };
         pZRContext.setSearchLoading(true);
         pZRContext.setSearchParams(searchParams);
@@ -100,7 +100,7 @@ const SearchForm = () => {
                     onFinish={(value) => onSubmit(value)}
                 >
                     <Form.Item
-                        name="opco"
+                        name="site"
                         label="Site"
                         className="pz-linebreak pz-linebreak-item-group"
                         rules={[{required: true}]}
@@ -157,7 +157,7 @@ const SearchForm = () => {
                                 }]}
                         >
                             <Form.Item name="customer">
-                                <Input id="customer-text-box" disabled={!isCustomerChecked}
+                                <Input disabled={!isCustomerChecked}
                                        value={customerTextboxValue} onChange={handleChangeCustomer}/>
                             </Form.Item>
                         </Form.Item>

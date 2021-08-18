@@ -95,7 +95,7 @@ export const formatPriceZones = (priceZones = []) => priceZones.join(',');
 
 export const formatPZRequest = ({
                                     createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate,
-                                    customerGroup, customerAccount, itemAttributeGroup, itemAttributeGroupId,
+                                    customerGroup, customerAccount, businessCenterItemAttributeGroup, businessCenterItemAttributeGroupId,
                                     summary, id, submissionNote, reviewStatus, ...rem
                                 }, {businessUnitMap}) => ({
     submission: {
@@ -111,8 +111,8 @@ export const formatPZRequest = ({
         effectiveFromDate: formatDate(effectiveFromDate),
         customerGroup,
         customerAccount,
-        itemAttributeGroup,
-        itemAttributeGroupId,
+        businessCenterItemAttributeGroup,
+        businessCenterItemAttributeGroupId,
         ...summary
     },
     reviewStatus,
@@ -220,8 +220,6 @@ export const autoSize = (textLength) => {
     }
     return `${fontsize}rem`;
 };
-
-
 
 export const getStyleClassByApprovalStatus = (status) => {
     if (status === REVIEW_STATUS_APPROVED) {

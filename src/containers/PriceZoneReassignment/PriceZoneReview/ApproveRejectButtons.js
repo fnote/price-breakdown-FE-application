@@ -222,7 +222,7 @@ export default function ApproveRejectButtons({row, index, handle, disable}) {
                         <button
                             id="approve-button"
                             type='primary'
-                            className='search-btn outlined-btn'
+                            className='pz-search-btn outlined-btn'
                             onClick={() => {
                             }}
                         >

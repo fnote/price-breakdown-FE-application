@@ -20,8 +20,8 @@ const formRequestBody = ({PZRContextData, userDetailContext, submissionNote, get
     const userDetailsObj = userDetailContext.userDetailsData.userDetails;
     return JSON.stringify({
         businessUnitNumber: PZRContextData.searchParams.opcoId,
-        itemAttributeGroup: PZRContextData.searchParams.attributeGroup,
-        itemAttributeGroupId: PZRContextData.searchParams.attributeGroupId,
+        businessCenterItemAttributeGroup: PZRContextData.searchParams.attributeGroup,
+        businessCenterItemAttributeGroupId: PZRContextData.searchParams.attributeGroupId,
         customerGroup: getCustomerGroupOfCustomer(),
         customerAccount: PZRContextData.searchParams.customer ? PZRContextData.searchParams.customer : null,
         newPriceZone,
@@ -52,7 +52,9 @@ export const submitPriceZoneChangeRequest = ({setSubmitModal, setReferenceId, re
                 setSubmitModal('success-modal');
             } else {
                 const errorResponseData = resp.data;
-                if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_VALID_PRICE_ZONE_DATA_UNAVAILABLE) {
+                if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_PRICE_ZONE_ALREADY_ASSIGNED) {
+                    setSubmitModal('nothing-to-change');
+                } else if (errorResponseData && errorResponseData.errorCode === ErrorCodes.CIPZ_VALID_PRICE_ZONE_DATA_UNAVAILABLE) {
                     setSubmitModal('no-eligible-price-zones');
                 } else {
                     handleError(resp);

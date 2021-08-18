@@ -4,7 +4,7 @@ import {Select, DatePicker, Tooltip} from 'antd';
 import moment from 'moment';
 // Custom Components
 import useModal from '../../../hooks/useModal';
-import {ModalComponent, SubmitReason, SubmitSuccess, LoadingState, NoEligiblePriceZones} from './PZRHeaderModal';
+import {ModalComponent, SubmitReason, SubmitSuccess, LoadingState, ErrorInfoModal} from './PZRHeaderModal';
 // Context
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -14,8 +14,8 @@ import {submitPriceZoneChangeRequest} from '../handlers/PZRChangeSubmitHandler';
 import {getPriceZoneOptions, disabledDate, truncate, autoSize} from '../helper/PZRHelper';
 import {CIPZ_API_DATE_FORMAT} from '../../../constants/PZRConstants';
 
-const EFFECTIVE_DATE_TOOLTIP_VALUE = 'New Effective Date for the Price Zone reassignment';
-const NEW_PRICE_ZONE_TOOLTIP_VALUE = 'New Price Zone for customer/customer group & item attribute group combination';
+const EFFECTIVE_DATE_TOOLTIP_VALUE = 'New effective date for the Price Zone reassignment';
+const NEW_PRICE_ZONE_TOOLTIP_VALUE = 'New Price Zone for customer/customer group & business center - item group - attribute group combination';
 
 export default function PrizeZoneHeader() {
     // Constants
@@ -101,7 +101,7 @@ export default function PrizeZoneHeader() {
                         <div id="customer-group-tab" className="pz-tab-items">
                             {PZRContextData.searchParams.customerGroup ? (
                                 <>
-                                    <div id="customer-group-label" className="pz-tab-items-top">CUSTOMER GROUP</div>
+                                    <div id="customer-group-label" className="pz-tab-items-top pz-text-left">CUSTOMER GROUP</div>
                                     <div className="pz-tab-items-bottom">
                                         <span
                                             id="customer-group"
@@ -127,7 +127,7 @@ export default function PrizeZoneHeader() {
                     </div>
                     <div className="pz-tabs-combine-r">
                         <div className="pz-tab-items">
-                            <div id="attribute-group-label" className="pz-tab-items-top">ATTRIBUTE GROUP</div>
+                            <div id="attribute-group-label" className="pz-tab-items-top pz-text-left">ATTRIBUTE GROUP</div>
                             <div className="pz-tab-items-bottom">
                                 <Tooltip
                                     id="attribute-group-tooltip"
@@ -139,7 +139,7 @@ export default function PrizeZoneHeader() {
                                     <span id="attributr-group-tab"
                                           className="pz-item-grp-text"
                                           style={{fontSize: autoSize(PZRContextData.searchParams.attributeGroup)}}>
-                                            {truncate(PZRContextData.searchParams.attributeGroup, 60)}
+                                            {truncate(PZRContextData.searchParams.attributeGroup, 87)}
                                     </span>
                                 </Tooltip>
                             </div>
@@ -206,7 +206,7 @@ export default function PrizeZoneHeader() {
                                 <button
                                     id="search-button"
                                     type="primary"
-                                    className={isSubmitDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
+                                    className={isSubmitDisabled ? ' pz-search-btn outlined-btn pz-disabled' : 'pz-search-btn outlined-btn '}
                                     onClick={() => {
                                         setSubmitModal('warning-modal');
                                         toggle();
@@ -230,8 +230,10 @@ export default function PrizeZoneHeader() {
                                                    priceZoneChangeHandler={priceZoneChangeHandler} toggle={toggle}/>,
                     'success-modal': <SubmitSuccess Modal={Modal} resetSearch={resetSearch} referenceId={referenceId}/>,
                     'loading': <LoadingState Modal={Modal}/>,
-                    'no-eligible-price-zones': <NoEligiblePriceZones Modal={Modal} setSubmitModal={setSubmitModal}
-                                                                     priceZone={newPriceZone}/>
+                    'no-eligible-price-zones': <ErrorInfoModal Modal={Modal} setSubmitModal={setSubmitModal} 
+                    message= {`Selected item attribute group is not eligible for the Price Zone ${newPriceZone}`}/>,
+                    'nothing-to-change': <ErrorInfoModal Modal={Modal} setSubmitModal={setSubmitModal}
+                    message= {`Nothing to change. All the items in the selected attribute group are already assigned to price zone ${newPriceZone}`}/>,
                 }[submitModal]
             }
         </div>

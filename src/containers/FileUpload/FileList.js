@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Input, notification, Popconfirm, Table} from 'antd';
+import {Button, Input, notification, Popconfirm, Table} from 'antd-initial';
 import {SyncOutlined} from '@ant-design/icons';
 // eslint-disable-next-line import/no-named-default
 import {default as _} from 'lodash';
