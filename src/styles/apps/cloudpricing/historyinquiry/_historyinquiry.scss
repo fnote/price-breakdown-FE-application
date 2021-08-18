@@ -31,8 +31,7 @@
 .history-reset-base{
   @include flexbox( 1 1 auto, row, flex-end, center);
   position: absolute;
-    top: 0.45rem;
-    right: 0.5rem;
+    top: 0.5rem;
 }
 .history-refresh-button{
   margin-right:0 !important
@@ -85,19 +84,22 @@
       }
 
       .history-item-title {
-        font-size: 0.9rem;
+        font-weight: 300;
+        font-size: 1.1rem;
+        text-transform: uppercase;
       }
 
       .history-item-number {
-        font-size: 2rem;
+        font-size: 1.5rem;
         font-weight: 800;
       }
       .history-item-number-row2 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        text-transform: uppercase;
         font-weight: 800;
       }
       .history-item-name {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         font-weight: 400;
       }
 
@@ -109,17 +111,18 @@
         .history-row-item {
           height: 100%;
           .history-row-title {
-            font-size: 0.9rem;
+            font-weight: 300;
+            font-size: 1.1rem;
             text-transform: uppercase;
           }
           .history-row-value-num {
-            font-size: 2rem;
+            font-size: 1.5rem;
             margin-top: 0.6rem;
             font-weight: 800;
             text-transform: uppercase;
           }
           .history-row-value {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-top: 0.6rem;
             font-weight: 600;
             text-transform: uppercase;
@@ -141,10 +144,12 @@
         text-transform: uppercase;
         .history-row-item {
           .history-row-title {
-            font-size: 0.9rem;
+            font-weight: 300;
+            font-size: 1.1rem;
+            text-transform: uppercase;
           }
           .history-row-value {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-top: 0.6rem;
             font-weight: 600;
           }
@@ -162,6 +167,9 @@
       .history-date-title {
         top: 3rem;
         width: 100%;
+        font-weight: 300;
+        font-size: 1.1rem;
+        text-transform: uppercase;
       }
 
       .history-date-wrapper {

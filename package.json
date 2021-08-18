@@ -24,7 +24,7 @@
     "lodash": "4.17.20"
   },
   "scripts": {
-    "start": "REACT_APP_ENV=local react-scripts start",
+    "start": "set REACT_APP_ENV=exe&&react-scripts start",
     "build": "react-scripts build",
     "zip": "npm-build-zip --destination=./build",
     "build:dev": "REACT_APP_ENV=dev npm run build",
