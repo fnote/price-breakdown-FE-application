@@ -14,8 +14,8 @@ import {submitPriceZoneChangeRequest} from '../handlers/PZRChangeSubmitHandler';
 import {getPriceZoneOptions, disabledDate, truncate, autoSize} from '../helper/PZRHelper';
 import {CIPZ_API_DATE_FORMAT} from '../../../constants/PZRConstants';
 
-const EFFECTIVE_DATE_TOOLTIP_VALUE = 'New Effective Date for the Price Zone reassignment';
-const NEW_PRICE_ZONE_TOOLTIP_VALUE = 'New Price Zone for customer/customer group & item attribute group combination';
+const EFFECTIVE_DATE_TOOLTIP_VALUE = 'New effective date for the Price Zone reassignment';
+const NEW_PRICE_ZONE_TOOLTIP_VALUE = 'New Price Zone for customer/customer group & business center - item group - attribute group combination';
 
 export default function PrizeZoneHeader() {
     // Constants

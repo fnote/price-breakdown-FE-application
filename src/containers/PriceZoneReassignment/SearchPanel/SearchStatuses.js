@@ -89,7 +89,7 @@ const renderContinueSearch = () => (
                 </div>
                 <div className="subitle-title">
                     <i className="icon fi flaticon-arrow"/> Your price zone change request is sent for the review.
-                    Select an attribute group and enter
+                    Select a business center - item group - attribute group and enter
                     customer/customer group for more changes.
                 </div>
             </div>
