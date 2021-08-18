@@ -61,7 +61,7 @@ const SearchForm = () => {
         const opcoId = extractOpCoId(values.site);
         const attributeGroupMap = attributeGroups.attributeGroupMap;
         const searchParams = {
-            site: values.opco,
+            site: values.site,
             opcoId,
             attributeGroupId: values.attributeGroup,
             customer,
