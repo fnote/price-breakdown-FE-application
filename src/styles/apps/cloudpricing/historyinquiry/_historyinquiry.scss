@@ -30,6 +30,9 @@
 
 .history-reset-base{
   @include flexbox( 1 1 auto, row, flex-end, center);
+  position: absolute;
+    top: 0.45rem;
+    right: 0.5rem;
 }
 .history-refresh-button{
   margin-right:0 !important
