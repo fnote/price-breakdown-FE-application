@@ -58,7 +58,7 @@ const SearchForm = () => {
         pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;
-        const opcoId = extractOpCoId(values.opco);
+        const opcoId = extractOpCoId(values.site);
         const attributeGroupMap = attributeGroups.attributeGroupMap;
         const searchParams = {
             site: values.opco,
