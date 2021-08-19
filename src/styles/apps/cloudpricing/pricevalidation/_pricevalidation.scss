@@ -4,6 +4,21 @@
   position: relative;
 }
 
+// price validation search reset button styles 
+
+.pv-reset-base{
+  @include flexbox( 1 1 auto, row, flex-end, center);
+  position: absolute;
+  top: 0.5rem;
+}
+.pv-refresh-button{
+  margin-right:0 !important
+}
+.pv-refresh-icon{
+  padding-right: 5px;
+}
+
+
 .pricing-results {
   @include flexbox(1 1 auto, row, flex-start, flex-start);
   margin: 0 2rem;
