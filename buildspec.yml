@@ -21,8 +21,10 @@ phases:
       - sonar-scanner --version
   pre_build:
     commands:
-    # Scan and push to sonarqube
-    #- sonar-scanner -Dsonar.host.url=https://cloudpricing-sonar-dev.prcp-np.us-east-1.aws.sysco.net/ -Dsonar.verbose=true -Dsonar.projectName=Cloud-PCI-Frontend
+      # Unit test run
+      - npm test
+      # Scan and push to sonarqube
+      - sonar-scanner -Dsonar.host.url=https://cqc.cloud.sysco.net -Dsonar.verbose=true
 
   build:
     commands:
