@@ -185,6 +185,9 @@
       .download-file {
         color: $syscogreen;
       }
+      .delete-confirm {
+        z-index: 1060;
+      }
       .cancel-process {
         color: $syscored;
       }
