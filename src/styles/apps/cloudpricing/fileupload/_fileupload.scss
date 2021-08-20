@@ -365,3 +365,10 @@
     }
   }
 }
+
+
+// popconfirm pointer event issue fix
+
+.ant-popconfirm{
+  pointer-events: auto !important;
+}
