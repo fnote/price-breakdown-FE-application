@@ -283,7 +283,7 @@ class FileList extends React.Component {
                         </div>
                     )}
                     {jobDetail.status !== JOB_INPROGRESS_STATUS && !jobDetail.isProcessing ? (
-                        <div className="delete-confirm">
+                        <>
                             <Popconfirm
                                 title={DELETE_TITLE}
                                 okText={DELETE_CONFIRM}
@@ -304,7 +304,7 @@ class FileList extends React.Component {
                             >
                                 <i className="icon fi flaticon-cloud-computing"/>
                             </Button>
-                        </div>
+                        </>
 
                     ) : (
                         <>
