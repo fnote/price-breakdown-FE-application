@@ -5,10 +5,7 @@ import {
     getReviewStatusMsg,
     getEmptyDataTableMessage,
     generateReviewer,
-    extractOpCoId,
-    truncate,
-    formatPZReferenceRecord,
-    calculateResetIndex
+    extractOpCoId
 } from '../PZRHelper';
 
 import {
@@ -95,51 +92,5 @@ describe('generateReviewer', () => {
 describe('extractOpCoId', () => {
     test('should return the OpCo id', () => {
         expect(extractOpCoId('019-Cincinnati')).toEqual('019');
-    });
-});
-
-describe('truncate', () => {
-    test('should return the input string when input string length is less than the max allowed length', () => {
-        expect(truncate('ice-cream-sandwich', 20)).toEqual('ice-cream-sandwich');
-    });
-
-    test('should return the input string when input string length is equal to the max allowed length', () => {
-        expect(truncate('ice-cream-sandwich', 18)).toEqual('ice-cream-sandwich');
-    });
-
-    test('should append ... when input string length is greater than the max allowed length', () => {
-        expect(truncate('ice-cream-sandwich', 17)).toEqual('ice-cream-sand...');
-        expect(truncate('ice-cream-sandwich', 16)).toEqual('ice-cream-san...');
-        expect(truncate('ice-cream-sandwich', 15)).toEqual('ice-cream-sa...');
-    });
-});
-
-describe('formatPZReferenceRecord', () => {
-    test('should format reference record correctly', () => {
-        expect(formatPZReferenceRecord({
-            paramName: 'paramValue',
-            effectiveFromDate: '20210110'
-        })).toEqual({
-            paramName: 'paramValue',
-            effectiveFromDate: '20210110',
-            effectiveFrom: '10 Jan 2021'
-        });
-    });
-});
-
-describe('calculateResetIndex', () => {
-    test('should return current page if the current index is 0', () => {
-        expect(calculateResetIndex(0, 10)).toEqual(10);
-        expect(calculateResetIndex(0, 20)).toEqual(20);
-    });
-
-    test('should return current page if current index is non-zero & current index > current page', () => {
-        expect(calculateResetIndex(5, 3)).toEqual(3);
-        expect(calculateResetIndex(10, 7)).toEqual(7);
-    });
-
-    test('should return current index if current index is non-zero & current index < current page', () => {
-        expect(calculateResetIndex(3, 5)).toEqual(3);
-        expect(calculateResetIndex(7, 10)).toEqual(7);
     });
 });

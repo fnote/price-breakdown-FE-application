@@ -11,6 +11,7 @@
     "axios": "0.21.1",
     "classnames": "2.2.6",
     "jest-qcenter-integrator": "1.0.0",
+    "lodash": "4.17.20",
     "moment": "2.29.1",
     "node-sass": "4.14.1",
     "prop-types": "latest",
@@ -20,8 +21,7 @@
     "react-dropzone": "4.2.12",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.1",
-    "xlsx": "0.16.2",
-    "lodash": "4.17.20"
+    "xlsx": "0.16.2"
   },
   "scripts": {
     "start": "REACT_APP_ENV=local react-scripts start",
