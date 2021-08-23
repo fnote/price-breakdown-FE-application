@@ -70,6 +70,10 @@
       border-bottom: none;
     }
 
+    &:nth-child(3){
+     width: 29%;
+    }
+
     .history-column-wrapper {
       display: flex;
       align-items: center;
@@ -158,11 +162,12 @@
     }
     .history-column-wrapper-date {
       display: flex;
-      align-items: center;
+      align-items: flex-start !important;
       justify-content: center;
       flex-direction: column;
-      width: 100%;
-      margin: 0.5rem 3rem;
+      width: 50%;
+      margin: 0.5rem 2rem;
+     
 
       .history-date-title {
         top: 3rem;
@@ -292,7 +297,6 @@
   }
 
   .ant-pagination li {
-    border-radius: 50%;
     min-width: 2rem;
     padding: 0;
     display: flex;
