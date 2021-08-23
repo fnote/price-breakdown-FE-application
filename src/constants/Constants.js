@@ -1,4 +1,4 @@
-export const CLOUD_PCI_FRONTEND_VERSION = '1.7.0';
+export const CLOUD_PCI_FRONTEND_VERSION = '1.8.0';
 // help page url
 export const HELP_PAGE_URL = 'https://maincourse.cloud.sysco.com/TVRLearningPortal/Content/ProfitMgmt/8Container/CloudPCI_contain.htm';
 
