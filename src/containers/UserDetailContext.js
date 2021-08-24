@@ -2,14 +2,15 @@
  * Holds user context data.
  *
  * @author: adis0892 on 10/16/20
-  * */
+ * */
 
 import React, {useState} from 'react';
-import { createBusinessUnitMap } from '../utils/CommonUtils';
+import {createBusinessUnitMap} from '../utils/CommonUtils';
 
 export const UserDetailContext = React.createContext({
     userDetailsData: {},
-    setUserDetails: () => {}
+    setUserDetails: () => {
+    }
 
 });
 
@@ -25,8 +26,14 @@ const UserDetailContextProvider = (props) => {
     const fetchUserDetailsHandler = (newStateData) => {
         const newUserDetails = newStateData.userDetails;
         if (newUserDetails && newUserDetails.authorizedPricingTransformationEnabledBunitList) {
-            const modifiedUserDetails = { ...newUserDetails, businessUnitMap: createBusinessUnitMap(newUserDetails)};
-            const modifiedState = { ...newStateData, userDetails: modifiedUserDetails };
+            const modifiedUserDetails = {
+                ...newUserDetails,
+                businessUnitMap: createBusinessUnitMap(newUserDetails),
+                activeBusinessUnitMap: createBusinessUnitMap({
+                    authorizedPricingTransformationEnabledBunitList: newUserDetails.allActiveOpcos
+                })
+            };
+            const modifiedState = {...newStateData, userDetails: modifiedUserDetails};
             setUserDetails(modifiedState);
         } else {
             setUserDetails(newStateData);

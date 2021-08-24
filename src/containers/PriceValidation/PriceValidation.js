@@ -11,7 +11,7 @@ function PriceValidation() {
       <AppBar />
       <div className="content">
           <PriceValidationContextProvider>
-            <SearchPanel />
+              <SearchPanel />
             <SearchStatuses />
               <div className="pricing-type-label"><strong>PERISCOPE</strong> PRICING</div>
               <PricingResults />

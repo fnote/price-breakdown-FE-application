@@ -1,0 +1,1211 @@
+// Search panel styles
+
+.pz-customer-groupbox {
+  border: 1px dashed #62737e;
+  border-radius: 10px;
+  padding: 20px 10px 10px 10px;
+  margin: 0px 0px 1rem -18px;
+  position: relative;
+  background: #fff;
+  display: block;
+  z-index: 2;
+  box-shadow: -10px 0px 1px 4px #fff;
+
+  .pz-radio {
+    .ant-radio-group {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: space-evenly;
+      height: 100%;
+      top: 0;
+      left: -10px;
+    }
+  }
+
+  .pz-linebreak {
+    margin-bottom: 1rem;
+    .ant-form-item-label {
+      white-space: pre-wrap !important;
+      // height: 3rem;
+      margin-left: 6px;
+    }
+  }
+  .ant-form-item-control {
+    // margin-left: 10px;
+  }
+}
+
+.pz-linebreak-item-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 2rem;
+  .ant-form-item-label > label {
+    height: auto !important;
+    white-space: pre-wrap;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .ant-form-item-control{
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 10rem;
+    .ant-form-item{
+      margin: 0;
+      width: 100%;
+    }
+  }
+  .ant-form-item-control-input{
+    width: 100%;
+    .ant-form-item-control-input-content{
+      width: 10rem;
+    }
+  }
+}
+
+// pricezone container styles
+
+.pz-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  margin: 0 2rem;
+  border-radius: 0.9rem;
+  background: white;
+  border: 0.076rem solid rgba(98, 115, 126, 0.25);
+  width: calc(100vw - 26rem);
+  // border: 0.076rem solid transparent;
+  // border-image: linear-gradient(180deg,  rgba(255,255,255,0) 5%, rgba(98, 115, 126, 0.25));
+  // border-image-slice: 1;
+
+  .ant-tabs {
+    width: 100%;
+
+    .ant-tabs-nav-wrap {
+      border-top-left-radius: 13px;
+    }
+
+    .ant-tabs-nav {
+      margin: 0 !important;
+
+      .ant-tabs-tab {
+        background: none;
+        border: none;
+      }
+      .ant-tabs-tab-active {
+        background: #fff !important;
+        border: 1px solid #f0f0f0 !important;
+        border-bottom-color: transparent !important;
+        border-top-right-radius: 1rem;
+        border-top-left-radius: 1rem;
+      }
+    }
+    .ant-tabs-tabpane {
+      background: #fff;
+      border-radius: 1rem;
+      border-top-left-radius: 0px;
+    }
+
+    .pz-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+      width: 100%;
+      position: relative;
+      padding-top: 5px;
+      background: #fff;
+      .pz-header-title {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 20px 0px 20px 25px;
+      }
+      .pz-tab-section {
+        width: 100%;
+        display: flex;
+        .pz-tabs {
+          width: calc(100% / 6);
+          padding: 10px;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+        }
+        .pz-separator {
+          &::before {
+            position: absolute;
+            left: 0;
+            top: 1rem;
+            content: "";
+            width: 2px;
+            height: 70%;
+            border-left: 1px dashed #62737e;
+          }
+        }
+        .pz-tab-items {
+          display: flex;
+          // width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          .pz-tab-items-top,
+          .pz-tab-items-bottom {
+            width: 100%;
+            padding-bottom: 5px;
+            text-align: left;
+          }
+          .pz-tab-items-top {
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: $textstandard;
+          }
+          .pz-tab-items-bottom {
+            width: 100%;
+            padding-bottom: 5px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-top: 1rem;
+
+            .pz-select {
+              min-width: 10rem;
+            }
+
+            .pz-cutomer-grp-text-no-bg {
+              font-size: 1.5rem;
+              color: $textstandard;
+              font-weight: 800;
+              width: 18rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+
+              @media only screen and (max-width: 1700px) {
+                width: 14rem;
+              }
+            }
+            .pz-customer-group-bottom {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              .pz-customer-group-bottom-text {
+                font-size: 0.9rem;
+                font-style: italic;
+                font-weight: 400;
+                padding-right: 0.5rem;
+                color: $textstandard;
+              }
+              .pz-customer-group-bottom-tag {
+                background: #76e0f6;
+                font-size: 1.2rem;
+                padding: 0.2rem;
+                border-radius: 0.2rem;
+                color: $textstandard;
+              }
+            }
+          }
+          .pz-text-wrapper {
+            text-align: left;
+
+            .pz-opco-text-bold {
+              font-size: 1.5rem;
+              color: #62737e;
+              font-weight: 800;
+              width: 11rem;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              // white-space: nowrap;
+              overflow-wrap: break-word;
+            }
+          }
+        }
+        .pz-tabs-combine {
+          align-items: baseline;
+          padding: 1rem 2rem;
+          display: grid;
+          grid-template-columns: 1fr 1fr 2fr;
+          width: calc(100% / 1.6);
+          box-shadow: 0px 0px 8px 1.5px rgba(204, 204, 204, 0.5), 0px 10px 1px #fff;
+          border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
+          background: #fff;
+          z-index: 999;
+          position: relative;
+          &::after {
+            position: absolute;
+            content: "";
+            background: #fff;
+            width: 100%;
+            height: 20px;
+            bottom: -10px;
+            left: 0;
+            z-index: 99;
+          }
+          &::before {
+            content: "";
+            position: absolute;
+            bottom: -9px;
+            left: 0;
+            width: 90%;
+            height: 1px;
+            transform: translateX(-50%);
+            left: 50%;
+            border-bottom: 1px dashed rgba(0, 0, 0, 0.068);
+            z-index: 100;
+          }
+
+          .pz-tabs-combine-l,
+          .pz-tabs-combine-r {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            //width: 100%;
+
+            .pz-tab-items-top,
+            .pz-tab-items-bottom {
+              text-align: center;
+              margin-top: 5px;
+            }
+          }
+        }
+      }
+    }
+    .pz-cutomer-grp-text {
+      background: #76e0f6;
+      color: $textstandard;
+      width: 12.2rem;
+    }
+    .pz-item-grp-text {
+      background: #f6e176;
+      color: $textstandard;
+      width:auto;
+    }
+    .pz-item-grp-text,
+    .pz-cutomer-grp-text {
+      padding: 4px;
+      border-radius: 3px;
+      min-height: 3rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &::after {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        height: 3rem;
+      }
+    }
+  }
+
+  // pricezone Table
+
+  .pz-table-wrapper {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    box-sizing: border-box;
+    border-radius: 0.9rem;
+    border-top-left-radius: 0 !important;
+    width: 100%;
+    background: #fff;
+    padding: 10px 5px;
+    box-shadow: 0px -2px 5px rgba(204, 204, 204, 0.5);
+    margin-top: 0.6rem;
+
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      border-bottom: 0.076rem solid #f0f0f0;
+      border-right: 0.076rem dashed rgba(0, 0, 0, 0.1) !important;
+      padding-left: 2.307rem !important;
+      &:nth-last-child(1) {
+        border-right: none !important;
+      }
+    }
+
+    .ant-table-thead {
+      height: 4rem !important;
+      padding-bottom: 11rem !important;
+    }
+
+    .ant-table-cell {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: $textstandard;
+    }
+
+    .pz-table-header {
+      color: $bluegrey;
+      font-weight: 800;
+      font-size: 1.3rem;
+      width: 100%;
+      padding: 1.7rem 2.4rem;
+      margin-top: -1rem;
+    }
+  }
+
+  .pz-review-reminder {
+    font-weight: 400 !important;
+    font-size: 1rem !important;
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.4rem;
+    font-style: italic;
+  }
+}
+
+// override content styles background
+
+.pz-no-bg {
+  background: none !important;
+}
+
+// ==============================
+// Submitter styles
+// ==============================
+
+// override antd table rows
+
+.pz-review-base-wrapper {
+  width: 100%;
+  min-height: calc(100vh - 20vh);
+
+  .pz-review-pagination {
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    margin-top: 0.3rem;
+  }
+  .ant-table-row-level-0 {
+    height: 17rem !important;
+    padding-bottom: 0.5rem;
+  }
+
+  .ant-table-thead > tr > th,
+  .ant-table-tbody > tr > td {
+    border-bottom: 0.076rem solid #f0f0f0;
+    border-right: 0.076rem dashed rgba(0, 0, 0, 0.1) !important;
+    padding-left: 2.307rem !important;
+    &:nth-last-child(1) {
+      border-right: none !important;
+    }
+  }
+}
+
+.pz-review-wrapper {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0px 1.6rem;
+
+  .pz-review-name {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    .pz-review-name-username {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $textstandard;
+      width: 12rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      max-height: 4.615rem;
+    }
+
+    .pz-review-name-id {
+      color: $textstandard;
+      font-size: 1.1rem;
+    }
+  }
+  .pz-review-date {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    color: $textstandard;
+    font-weight: 400;
+    justify-content: center;
+    text-align: center;
+  }
+  .pz-review-note {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .pz-review-note-icon {
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: $textstandard;
+    }
+  }
+}
+
+.pz-review-middle {
+  margin-left: 1.1rem;
+}
+.pz-cursor {
+  cursor: pointer;
+}
+
+// ==============================
+// Summery of changes styles
+// ==============================
+
+.pz-review-sum-left {
+  min-width: 33%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 0;
+
+  .pz-review-sum-left-pz,
+  .pz-review-sum-left-opco {
+    width: 100%;
+    height: 100%;
+  }
+  .pz-review-sum-left-pz {
+    display: flex;
+    flex-direction: column;
+    align-items: space-evenly;
+    justify-content: flex-start;
+
+    span {
+      width: 100%;
+      height: auto;
+    }
+    .pz-review-sum-zone {
+      position: relative;
+      height: 100%;
+
+      .pz-zone-wrapper {
+        height: 100%;
+        display: flex;
+        align-items: center;
+
+        font-size: 1.5rem;
+
+        .pz-zone-from-to-base {
+          display: flex;
+          position: relative;
+
+          .pz-zone-from,
+          .pz-zone-to {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            z-index: 2;
+          }
+          .pz-zone-from {
+            padding-right: 1rem;
+            color: $bluegrey;
+            font-size: 2rem;
+            font-weight: 800;
+          }
+          .pz-zone-to {
+            padding-left: 1rem;
+            font-size: 2rem;
+            font-weight: 800;
+            color: $syscogreen;
+          }
+          .pz-zone-separator {
+            width: 2.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            &::after {
+              position: absolute;
+              content: "";
+              width: 100%;
+              height: 0.5rem;
+              border-bottom: 1px dashed $textstandard;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .pz-review-sum-left-opco {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .pz-review-opco {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #62737e;
+      font-weight: 600;
+      //width: 18rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: pre;
+    }
+  }
+}
+.pz-review-sum-right {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 1rem 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    height: 70%;
+    width: 3px;
+    border-left: 1px dashed rgb(68, 68, 68);
+  }
+
+  .pz-review-right-wrapper {
+    width: 100%;
+    height: 100%;
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    padding: 0 2rem;
+
+    .pz-right-top,
+    .pz-right-bottom {
+      display: flex;
+      justify-content: flex-start;
+    }
+    .pz-right-top {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      .pz-effective-date-text {
+        width: 100%;
+      }
+      .pz-effective-date {
+        width: 100%;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .pz-reference-id {
+        height: 100%;
+
+        .pz-ref-number-title {
+          font-size: 0.9rem;
+          display: flex;
+          justify-content: flex-end;
+        }
+        .pz-ref-number {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          color: $bluegrey;
+        }
+      }
+    }
+
+    .pz-right-bottom {
+      display: flex;
+      flex-direction: row;
+
+      .pz-effective-date-text {
+        width: 100%;
+      }
+      .pz-effective-date {
+        min-width: 7.8rem;
+        color: $textstandard;
+        font-weight: 800;
+        font-size: 1.5rem;
+      }
+      .pz-right-bottom-right {
+        margin-left: 3rem;
+
+        .pz-attrib-base {
+          display: flex;
+          align-items: center;
+
+          .pz-attrib-info {
+            margin-left: 1.5rem;
+          }
+        }
+      }
+
+      .pz-right-bottom-left,
+      .pz-right-bottom-right {
+        .pz-customer-total,
+        .pz-attrib-total {
+          margin-top: 0.4rem;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+}
+
+// All Caps
+
+.pz-caps {
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  padding-bottom: 0.3rem;
+}
+
+// Highlighted large text
+
+.pz-main-text {
+  font-size: 2rem !important;
+  font-weight: 800;
+  color: $bluegrey;
+}
+
+// APROVE REJECT BUTTONS
+
+.pz-aprove-reject-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 0rem 1rem;
+
+  .pz-aprove-status {
+    text-align: center;
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 800;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .pz-aproved {
+    color: $syscogreen;
+  }
+  .pz-rejected {
+    color: #e66767;
+  }
+  .pz-already {
+    color: $syscoblue;
+  }
+
+  .pz-search-btn {
+    width: calc(100% / 2);
+    padding: 0.6rem 2rem;
+    font-weight: 600;
+    background: rgb(70, 155, 67) !important;
+    background: linear-gradient(180deg, rgb(56, 182, 17) 7%, $syscogreen 100%) !important;
+  }
+  .reject-btn {
+    margin-left: 5px;
+    background: rgb(247, 54, 54);
+    background: linear-gradient(180deg, rgba(226, 81, 81, 0.5) 7%, rgb(211, 76, 76) 100%);
+  }
+}
+
+.pz-customer-tag {
+  background: #76e0f6;
+  text-align: center;
+  border-radius: 5px;
+  min-height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.5rem;
+  line-height: 1.4;
+}
+.pz-attribute-tag {
+  background: #f6e176;
+  text-align: center;
+  border-radius: 5px;
+  width: auto !important;
+  padding: 0.5rem 0.5rem;
+  overflow: hidden;
+  // align-items: center;
+  // display: flex;
+  min-height: 3rem;
+  max-width: 12rem;
+  line-height: 1.4;
+  font-size:0.9rem !important;
+  padding-top: 0.8rem;
+}
+
+// ========================
+// PRICE ZONE POPUPS STYLES
+// ========================
+
+.pz-antModal {
+  .ant-modal-content {
+    border-radius: 10px !important;
+  }
+  .ant-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+    padding: 1.5rem;
+
+    .ant-btn {
+      border: none;
+      border-radius: 0.2rem;
+    }
+    .ant-btn-primary {
+      background: $syscogreen;
+      min-width: 6rem;
+    }
+  }
+}
+
+// ===================
+//   SUCCESS MESSAGE
+// ===================
+
+.pz-confirm-pop-base-success {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 20rem;
+
+  .pz-confirm-wrapper-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .pz-success-anim {
+      .pz-success-anim-logo {
+        width: 6rem;
+        height: 6rem;
+      }
+      .pz-success-anim-review-logo {
+        width: 10rem;
+        height: 10rem;
+      }
+    }
+    .pz-success-text {
+      margin-top: 1.5rem;
+      font-size: 2rem;
+      font-weight: 600;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+.pz-confirm-pop-base {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 20rem;
+
+  .pz-confirm-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .pz-sucess-anim {
+    }
+    .pz-success-text {
+      font-size: 2rem;
+      margin-top: 1.5rem;
+    }
+  }
+
+  // =======================
+  //  Popup ReferenceTable
+  // =======================
+
+  .alert {
+    .pz-warning-anim-logo {
+      width: 8rem;
+      height: 8rem;
+    }
+  }
+  .pz-alert-main,
+  .pz-alert-sr-main {
+    font-size: 2rem;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+  }
+  .pz-alert-sub,
+  .pz-alert-sr-sub {
+    font-size: 1.05rem;
+    font-weight: 400;
+    text-align: center;
+    padding: 0px 2rem;
+    margin-top: 1rem;
+    color: lighten(#000, 30%);
+    width: 100%;
+  }
+  .pz-alert-sr-main,
+  .pz-alert-sr-sub {
+    text-align: left;
+    padding: 10px 0;
+    margin: 0;
+  }
+
+  .pz-submit-text-base {
+    margin-top: 10px;
+  }
+}
+
+// ===================
+//   Loading state
+// ===================
+
+.pz-loading-pop-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 25rem;
+
+  .pz-loading-pop-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .pz-loading-anim {
+      width: 8rem;
+      height: 8rem;
+    }
+    .pz-loading-text {
+      margin-top: 3rem;
+      font-size: 1.2rem;
+    }
+  }
+}
+
+.pz-confirm-pop-base-table {
+  .pz-pop-table {
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      border-bottom: 0.076rem solid #f0f0f0;
+      border-right: 0.076rem dashed rgba(0, 0, 0, 0.1) !important;
+      padding-left: 2.307rem !important;
+      &:nth-last-child(1) {
+        border-right: none !important;
+      }
+    }
+
+    .pop-table-summary {
+      width: 100%;
+      height: 5rem;
+      display: flex;
+      align-items: center;
+
+      .pop-sum-customer-grp,
+      .pop-sum-Attrib-grp {
+        height: auto;
+        padding: 1rem 1rem;
+        display: flex;
+        flex-direction: column;
+
+        .pop-sum-text {
+          font-size: 1rem;
+          margin-top: 1rem;
+          color: $textstandard;
+          font-weight: 500;
+        }
+
+        .pop-sum-tag-customer {
+          height: 4.6rem;
+          font-size: 2.1rem;
+          color: $textstandard;
+          font-weight: 700;
+        }
+
+        .pop-sum-tag {
+          background: #76e0f6;
+          text-align: center;
+          font-size: 1.6rem;
+          border-radius: 4px;
+          margin-top: 0.3rem;
+          color: $textstandard;
+          font-weight: 700;
+          padding: 0 0.5rem;
+        }
+        .pop-sum-total {
+          font-size: 0.9rem;
+          margin-top: 0.5rem;
+          color: $textstandard;
+        }
+
+        .pz-ref-tag-left{
+          max-width:48rem;
+          padding:0.25rem 0;
+        }
+      }
+      .pop-sum-Attrib-grp {
+        margin-left: 10px;
+        .pz-tag-blue {
+          background: #f6e176;
+        }
+        .pz-ref-tag-right {
+          max-width:48rem;
+          padding:0.25rem 0.5rem;
+          min-height: 3rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+
+    .pz-pop-table-ant {
+      margin-top: 3rem;
+      width: auto !important;
+      .ant-table-cell {
+        font-size: 1rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+//reference table pagination styles
+.pz-pop-table-pagination {
+  margin-top: 1.2rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  .ant-pagination-item-active {
+    color: #fff;
+  }
+  .ant-pagination-item-active:focus a,
+  .ant-pagination-item-active:hover a {
+    color: #fff;
+  }
+}
+
+// added pagination styles to global level
+.ant-pagination-item-active:focus a,
+.ant-pagination-item-active:hover a {
+  color: #fff;
+}
+
+// =========================
+// TOOLTIP
+// =========================
+
+.pz-tooltip {
+  .ant-tooltip-inner {
+    color: #000;
+  }
+}
+
+// ===============================
+//         Other styles
+// ===============================
+
+.pz-disabled {
+  pointer-events: none !important;
+  filter: grayscale(0.7);
+}
+
+// pagination align right
+.pz-table-wrapper,
+.pz-review-base-wrapper {
+  .ant-pagination {
+    justify-content: flex-end;
+    width: 100%;
+    padding: 5px;
+    padding: 0.5rem 1rem !important;
+  }
+}
+
+// pop over styles
+#pz-pop-confirm-custom {
+  width: 18rem;
+}
+
+// empty message border
+.cipz-empty-search {
+  border: none !important;
+}
+
+// main tab view styles
+.pz-maintab-item {
+  display: flex;
+  align-items: center;
+  width: 12rem;
+  justify-content: space-evenly;
+
+  .pz-icon-tab {
+    font-size: 1.4rem;
+    color: $bluegrey;
+  }
+  .pz-main-tab-sub {
+    margin-left: 0.5rem;
+    font-weight: 600;
+    color: $bluegrey;
+    font-size: 1.2rem;
+  }
+}
+
+// search status suggestions
+.pz-search-suggestion-list {
+  margin: 1.5rem 0.2rem;
+
+  ul {
+    padding-left: 0.8rem;
+    position: relative;
+    &::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 5px;
+      height: 100%;
+      content: "";
+      border-left: 1.5px dashed $syscoblue;
+    }
+    li {
+      color: $textstandard !important;
+    }
+  }
+}
+
+.pz-request-id {
+  color: #c02019;
+  .pz-req-id-icon {
+    margin: 0 0 0 1rem;
+  }
+}
+
+// pz error block
+.pz-error-block {
+  position: relative;
+  font-size: 1.5rem;
+  margin: 1.5rem 0.2rem;
+  padding-left: 1rem;
+  color: $syscored;
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 2rem;
+    border-left: 1.5px dashed $syscored;
+    content: "";
+  }
+}
+
+// pz reject modal height
+.pz-reject-modal {
+  height: 23rem !important;
+}
+
+.pz-reject-modal-footer {
+  margin-top: 0.5rem;
+  border-top-color: transparent;
+}
+
+.pz-text-left {
+  text-align: left !important;
+}
+#pz-review-refresh {
+  position: absolute;
+  right: 4rem;
+  top: 0.8rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 0.16rem solid;
+  font-weight: 600;
+  color: $bluegrey;
+  .anticon-reload {
+    margin-top: 0.1rem !important;
+  }
+}
+// table base wrapper
+.pz-table-base-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+// ant button disable state styles
+.pz-reject-modal-footer {
+  .ant-btn-primary[disabled],
+  .ant-btn-primary[disabled]:hover,
+  .ant-btn-primary[disabled]:focus,
+  .ant-btn-primary[disabled]:active {
+    color: #fff !important;
+  }
+}
+
+.pz-search-form{
+  @media only screen and (max-width:1400px) {
+    margin:1rem 0 !important;
+  }
+}
+
+// attribute styles for 1400px below screen sizes
+.pz-item-grp-text{
+  @media only screen and (max-width:1400px) {
+    width:22.7rem !important;
+  }
+}
+
+
+// submit button styles for 1400px below screen sizes
+.pz-search-btn{
+  @media only screen and (max-width:1400px) {
+    border-radius: 40px;
+  }
+}
+
+.pz-aprove-reject-wrapper {
+  @media only screen and (max-width:1400px) {
+    padding: 0px;
+  }
+}
+
+// Fix for ref table ant pagination ellipsis issue
+.pz-pag-fix{
+  .ant-pagination-item-ellipsis {
+    display: flex !important;
+  }
+}
