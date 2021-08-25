@@ -231,9 +231,9 @@ export default function PrizeZoneHeader() {
                     'success-modal': <SubmitSuccess Modal={Modal} resetSearch={resetSearch} referenceId={referenceId}/>,
                     'loading': <LoadingState Modal={Modal}/>,
                     'no-eligible-price-zones': <ErrorInfoModal Modal={Modal} setSubmitModal={setSubmitModal} 
-                    message= {`Selected item attribute group is not eligible for the Price Zone ${newPriceZone}`}/>,
+                    message= {`Selected business center - item group - attribute group is not eligible for the Price Zone ${newPriceZone}`}/>,
                     'nothing-to-change': <ErrorInfoModal Modal={Modal} setSubmitModal={setSubmitModal}
-                    message= {`Nothing to change. All the items in the selected attribute group are already assigned to price zone ${newPriceZone}`}/>,
+                    message= {`Nothing to change. All the items in the selected business center - item group - attribute group are already assigned to price zone ${newPriceZone}`}/>,
                 }[submitModal]
             }
         </div>
