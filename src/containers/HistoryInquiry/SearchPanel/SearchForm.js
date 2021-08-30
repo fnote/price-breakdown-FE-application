@@ -232,7 +232,7 @@ const SearchForm = () => {
                   required: false,
                 },
               ]}>
-              <RangePicker
+              <RangePicker className="history-custom-range" dropdownClassName="history-custom-range-drop"
                  disabledDate={disabledDate}
               allowclear/>
           </Form.Item>
