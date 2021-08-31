@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import moment from 'moment';
 import {
-  Form, Input, Checkbox, Select, InputNumber, DatePicker
+  Form, Input, Checkbox, Select, DatePicker
 } from 'antd';
 import { PriceValidationContext } from '../PriceValidationContext';
 import { UserDetailContext } from '../../UserDetailContext';
@@ -36,8 +36,11 @@ const formRequestBody = (requestData) => {
     };
 
     if (requestData.handPrice) {
-        product.orderPrice = requestData.handPrice;
+      const orderPriceNumericalValue = Number(requestData.handPrice);
+      if (orderPriceNumericalValue > 0) {
+        product.orderPrice = `${orderPriceNumericalValue}`;
         product.orderPriceType = ORDER_PRICE_TYPE_HAND;
+      }
     }
 
     return JSON.stringify({
@@ -225,6 +228,7 @@ const SearchForm = () => {
           <Form.Item
               name="quantity"
               label="Quantity"
+              normalize= {(value) => (value && !isNaN(value) ? Math.round(value) : value)}
               min="1"
               rules={[
                   () => ({
@@ -236,15 +240,15 @@ const SearchForm = () => {
                       },
                   })
               ]}>
-            <InputNumber
+            <Input
                 min={1}
-                formatter={(value) => (value && !isNaN(value) ? Math.round(value) : value)}
             />
           </Form.Item>
 
             <Form.Item
                 name="handPrice"
                 label="Hand Price"
+                normalize= {(value) => formatNumberInput(value)}
                 rules={[
                     () => ({
                         validator(rule, value) {
@@ -257,15 +261,12 @@ const SearchForm = () => {
                                 }
                                 return Promise.reject(new Error('Hand price must be a valid non-negative number'));
                             }
-
                             return Promise.resolve();
                         },
                     })
                 ]}
             >
-                <InputNumber
-                    formatter={formatNumberInput}
-                />
+                <Input/>
             </Form.Item>
 
           <Form.Item name="split" label="Split" valuePropName="checked">
