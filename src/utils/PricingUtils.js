@@ -203,7 +203,6 @@ export const extractHistoryInquiryRequestInfo = ({fromDate, toDate, product: {sp
 });
 
 export const extractTransactions = (transactionHistory) => {
-    console.log("here");
     transactionHistory.forEach((transaction) => {
         transaction.transactionDate = generateReadableDate(transaction.transactionDate);
         const perWeightFlag = transaction.perWeightFlag === SPLIT_STATUS_YES;
@@ -214,6 +213,7 @@ export const extractTransactions = (transactionHistory) => {
         transaction.createTime = generateTimeObject(transaction.createTime);
         transaction.createDateTime = `${transaction.createDate} / ${transaction.createTime}`;
     })
+    return transactionHistory;
 };
 
 /**

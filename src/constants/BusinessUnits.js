@@ -64,18 +64,18 @@ const businessUnits = new Map(
         ['134', {id: '134', name: 'Sysco IFG - Florida', shortName: 'IFG - Florida'}],
         ['137', {id: '137', name: 'Sysco Columbia', shortName: 'Columbia'}],
         ['163', {id: '163', name: 'Sysco Raleigh', shortName: 'Raleigh'}],
-        ['164', {id: '164', name: 'Sysco Gulf Coast', shortName: 'Gulf Coast'}],
-        ['194', {id: '194', name: 'Sysco Central Illinois', shortName: 'Central Illinois'}],
-        ['195', {id: '195', name: 'Sysco North Dakota', shortName: 'North Dakota'}],
-        ['288', {id: '288', name: 'Sysco Knoxville', shortName: 'Knoxville'}],
-        ['293', {id: '293', name: 'Sysco East Texas', shortName: 'East Texas'}],
-        ['306', {id: '306', name: 'Sysco Long Island', shortName: 'Long Island'}],
-        ['320', {id: '320', name: 'Sysco Riverside', shortName: 'Riverside'}],
-        ['332', {id: '332', name: 'Sysco Western Minnesota', shortName: 'Western Minnesota'}],
-        ['335', {id: '335', name: 'Sysco Bahamas', shortName: 'Bahamas'}],
-        ['344', {id: '344', name: 'Sysco IFG - Jacksonville', shortName: 'IFG - Jacksonville'}],
-        ['429', {id: '429', name: 'Sysco Doerle', shortName: 'Doerle'}],
-        ['450', {id: '450', name: 'Sysco Alaska', shortName: 'Alaska'}]
+            ['164', {id: '164', name: 'Sysco Gulf Coast', shortName: 'Gulf Coast'}],
+            ['194', {id: '194', name: 'Sysco Central Illinois', shortName: 'Central Illinois'}],
+            ['195', {id: '195', name: 'Sysco North Dakota', shortName: 'North Dakota'}],
+            ['288', {id: '288', name: 'Sysco Knoxville', shortName: 'Knoxville'}],
+            ['293', {id: '293', name: 'Sysco East Texas', shortName: 'East Texas'}],
+            ['306', {id: '306', name: 'Sysco Long Island', shortName: 'Long Island'}],
+            ['320', {id: '320', name: 'Sysco Riverside', shortName: 'Riverside'}],
+            ['332', {id: '332', name: 'Sysco Western Minnesota', shortName: 'Western Minnesota'}],
+            ['335', {id: '335', name: 'Sysco Bahamas', shortName: 'Bahamas'}],
+            ['344', {id: '344', name: 'Sysco IFG - Jacksonville', shortName: 'IFG - Jacksonville'}],
+            ['429', {id: '429', name: 'Sysco Acadiana', shortName: 'Acadiana'}],
+            ['450', {id: '450', name: 'Sysco Alaska', shortName: 'Alaska'}]
     ]
 );
 
