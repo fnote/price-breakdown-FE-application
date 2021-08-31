@@ -4,10 +4,10 @@ import SearchForm from './SearchForm';
 
 const SearchPanel = () => {
 
-    const [openPanel, setopenPanel] = React.useState(false);
-  const mobilePanelToggle = () => {
-    setopenPanel(!openPanel);
-  };
+  const [openPanel, setopenPanel] = React.useState(false);
+    const mobilePanelToggle = () => {
+        setopenPanel(!openPanel);
+    };
   return (
     <div
       className={openPanel ? 'searchpanel show' : 'searchpanel'}
