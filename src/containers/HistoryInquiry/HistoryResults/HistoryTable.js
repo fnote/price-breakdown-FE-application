@@ -5,27 +5,32 @@ import {extractTransactions} from "../../../utils/PricingUtils";
 
 const columns = [
   {
-    title: "OBLIGATION NUM",
+    title: "OBLIGATION #",
     dataIndex: "obligationId",
+    width:150,
   },
   {
-    title: "LINE NUM",
+    title: "LINE #",
     dataIndex: "lineNumber",
+    width:80,
 
   },
   {
-    title: "TRANSACTION DATE",
+    title: "TRANS.DATE",
     dataIndex: "transactionDate",
     defaultSortOrder: "descend",
+    width:150,
     sorter: (a, b) => a.transactionDate - b.transactionDate,
   },
   {
     title: "SHIPPED QTY",
     dataIndex: "shippedQuantity",
+    width:130,
   },
   {
     title: "TOTAL CATCH WEIGHT",
     dataIndex: "totalCatchWeight",
+    width:200,
   },
   {
     title: "UNIT PRICE",
@@ -39,10 +44,12 @@ const columns = [
   {
     title: "EXTENDED PRICE",
     dataIndex: "extendedPrice",
+    width:150,
   },
   {
     title: "PRICE SOURCE",
     dataIndex: "priceSourceType",
+    width:150,
   },
   {
     title: "CREATE DATE / TIME",
