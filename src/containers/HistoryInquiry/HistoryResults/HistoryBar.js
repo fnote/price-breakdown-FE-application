@@ -1,10 +1,10 @@
-import React from "react";
-import { NOT_PROVIDED_LABEL } from '../../../constants/Constants';
-import {formatBusinessUnit} from "../../../utils/CommonUtils";
-import { Tooltip } from 'antd';
+import React from 'react';
+import {Tooltip} from 'antd';
+import {NOT_PROVIDED_LABEL} from '../../../constants/Constants';
+import {formatBusinessUnit} from '../../../utils/CommonUtils';
 
 export default function HistoryBar(props) {
-    const {historyInquiryData: {historyRequest, item, site} , userData: { businessUnitMap }} = props;
+    const {historyInquiryData: {historyRequest, item, site}, userData: {businessUnitMap}} = props;
     const businessUnit = formatBusinessUnit(site.businessUnitNumber, businessUnitMap);
     return (
         <div className="history-bar-wrapper">

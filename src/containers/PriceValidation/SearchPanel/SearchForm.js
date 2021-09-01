@@ -1,19 +1,17 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import moment from 'moment';
-import {
-  Form, Input, Checkbox, Select, DatePicker
-} from 'antd';
-import { PriceValidationContext } from '../PriceValidationContext';
-import { UserDetailContext } from '../../UserDetailContext';
-import { RequestContext } from "../../RequestContext";
-import { setInitialValues, getBusinessUnits } from '../PricingHelper';
+import {Checkbox, DatePicker, Form, Input, Select} from 'antd';
+import {PriceValidationContext} from '../PriceValidationContext';
+import {UserDetailContext} from '../../UserDetailContext';
+import {RequestContext} from '../../RequestContext';
+import {getBusinessUnits, setInitialValues} from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
-import { formatNumberInput } from '../../../utils/CommonUtils';
+import {formatNumberInput} from '../../../utils/CommonUtils';
 import {
     CORRELATION_ID_HEADER,
+    MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT,
     NOT_APPLICABLE_LABEL,
     ORDER_PRICE_TYPE_HAND,
-    MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT,
     PRICE_VALIDATION_REQUEST
 } from '../../../constants/Constants';
 
@@ -27,7 +25,6 @@ const validateMessages = {
     range: '${label} must be between ${min} and ${max}',
   },
 };
-
 
 const formRequestBody = (requestData) => {
     const product = {
@@ -52,8 +49,6 @@ const formRequestBody = (requestData) => {
     });
 };
 
-
-
 const SearchForm = () => {
     const [form] = Form.useForm();
     const priceValidationContext = useContext(PriceValidationContext);
@@ -75,7 +70,7 @@ const SearchForm = () => {
   const priceRequestHandler = (requestData) => {
       const requestBody = formRequestBody(requestData);
       const requestType = PRICE_VALIDATION_REQUEST;
-      const requestContextData = { requestData, requestType }
+      const requestContextData = {requestData, requestType};
       requestContext.setRequestData(requestContextData);
       fetch(getBffUrlConfig().priceDataEndpoint, {
           method: 'POST',
@@ -109,14 +104,14 @@ const SearchForm = () => {
 
     const onReset = () => {
         form.setFieldsValue({
-            site: "",
-            customer: "",
-            supc: "",
+            site: '',
+            customer: '',
+            supc: '',
             quantity: 1,
             date: moment(),
             split: false,
-            handPrice: "",
-        })
+            handPrice: '',
+        });
     };
 
   return (
@@ -142,27 +137,27 @@ const SearchForm = () => {
                 </button>
             </Form.Item> */}
 
-              <Form.Item  name="reset" className="pv-reset-base" label="&nbsp;">
+            <Form.Item name="reset" className="pv-reset-base" label="&nbsp;">
                 <div className="pv-reset-base">
-                <button
-                    type="reset"
-                    className="search-refresh-btn refresh-outlined-btn pv-refresh-button" >
-                    <i className="icon fi flaticon-refresh pv-refresh-icon"/> CLEAR
-                </button>
+                    <button
+                        type="reset"
+                        className="search-refresh-btn refresh-outlined-btn pv-refresh-button">
+                        <i className="icon fi flaticon-refresh pv-refresh-icon"/> CLEAR
+                    </button>
                 </div>
             </Form.Item>
-          <Form.Item
-              name="site"
-              label="Site"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}>
-            <Select
-              placeholder="Select Site"
-              dropdownMatchSelectWidth={false}
-              filterOption={(inputValue, option) => {
+            <Form.Item
+                name="site"
+                label="Site"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}>
+                <Select
+                    placeholder="Select Site"
+                    dropdownMatchSelectWidth={false}
+                    filterOption={(inputValue, option) => {
                 if (inputValue && option.children) {
                   // unless the backslash is escaped, this will end up with a syntax error
                   const pattern = inputValue.replace(/\\/g, '').toLowerCase();

@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {SyncOutlined} from '@ant-design/icons';
-import {HistoryInquiryContext} from "../HistoryInquiryContext";
+import {HistoryInquiryContext} from '../HistoryInquiryContext';
 import {ErrorCodes, ErrorMessages, ErrorsMap} from '../../../constants/Errors';
 import RequestId from '../../../components/RequestId';
 

@@ -1,15 +1,15 @@
 import React, {useContext} from 'react';
 import RequestId from '../../../components/RequestId';
-import {HistoryInquiryContext} from "../HistoryInquiryContext";
-import HistoryTable from "./HistoryTable";
-import HistoryBar from "./HistoryBar";
-import {UserDetailContext} from "../../UserDetailContext";
+import {HistoryInquiryContext} from '../HistoryInquiryContext';
+import HistoryTable from './HistoryTable';
+import HistoryBar from './HistoryBar';
+import {UserDetailContext} from '../../UserDetailContext';
 
 function HistoryInquiryResults() {
     const historyInquiryContext = useContext(HistoryInquiryContext);
     const historyInquiryData = historyInquiryContext.historyInquiryData;
     const userDetailContext = useContext(UserDetailContext);
-    const { userDetails } = userDetailContext.userDetailsData;
+    const {userDetails} = userDetailContext.userDetailsData;
     const response = historyInquiryContext.response;
 
     if (response) {

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {extractHistoryInquiryRequestInfo, extractItemInfo, extractSiteInfo,} from '../../utils/PricingUtils';
+import {extractHistoryInquiryRequestInfo, extractItemInfo, extractSiteInfo} from '../../utils/PricingUtils';
 
 export const HistoryInquiryContext = React.createContext({
     historyInquiryData: {},

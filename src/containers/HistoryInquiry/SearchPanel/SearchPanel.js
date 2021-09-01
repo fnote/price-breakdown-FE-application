@@ -3,7 +3,6 @@ import {CaretRightOutlined} from '@ant-design/icons';
 import SearchForm from './SearchForm';
 
 const SearchPanel = () => {
-
   const [openPanel, setopenPanel] = React.useState(false);
     const mobilePanelToggle = () => {
         setopenPanel(!openPanel);
