@@ -10,11 +10,13 @@
   @include flexbox( 1 1 auto, row, flex-end, center);
   position: absolute;
   top: 0.5rem;
+  
 }
 
 
 .pv-refresh-button{
-  margin-right:0 !important
+  margin-right:0 !important;
+  color: #1c4f72 !important;
 }
 .pv-refresh-icon{
   padding-right: 5px;
