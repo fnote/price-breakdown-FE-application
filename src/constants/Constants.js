@@ -90,6 +90,7 @@ export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
 export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
 export const NAVIGATION_PATH_FILE_UPLOAD = '/file-upload';
 export const NAVIGATION_PATH_PRICEZONE_REASSIGNMENT = '/pricezone-reassignment';
+export const NAVIGATION_PATH_HISTORY_INQUIRY = '/history-inquiry';
 
 export const PRICE_VALIDATION_REQUEST = "price_validation";
 export const HISTORY_INQUIRY_REQUEST = "history_inquiry";
