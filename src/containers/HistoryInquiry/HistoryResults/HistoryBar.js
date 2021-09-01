@@ -61,7 +61,7 @@ export default function HistoryBar(props) {
             <div className="history-item history-item-number-row2">{businessUnit}</div>
           </Tooltip>
           <div className="history-item history-row-2">
-              <div className="history-row-item">
+              <div className="history-row-item history-row2-customer">
                   <div className="history-row-title">customer</div>
                   <div className="history-row-value-num">{site.customerAccount}</div>
                   <Tooltip title={site.customerName} color="blue">
@@ -87,7 +87,7 @@ export default function HistoryBar(props) {
                       </div>
                   </div>
                   <div className="history-row-item">
-                      <div className="history-row-title">Split Flag</div>
+                      <div className="history-row-title">Split</div>
                       <div className="history-row-value-num">{historyRequest.splitStatus}</div>
                   </div>
               </div>
