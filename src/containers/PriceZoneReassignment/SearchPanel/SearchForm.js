@@ -1,6 +1,6 @@
 // Core
-import React, {useContext, useState, useEffect} from 'react';
-import {Form, Input, Select, Radio} from 'antd';
+import React, {useContext, useEffect, useState} from 'react';
+import {Form, Input, Radio, Select} from 'antd';
 // Contexts
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -8,7 +8,7 @@ import {PZRContext} from '../PZRContext';
 import {fetchSearchResults} from '../handlers/PZRSearchHandler';
 import {fetchAttributeGroups} from '../handlers/PZRAttributeGroupHandler';
 // Constants, Configs and Helper functions
-import {getBusinessUnits, extractOpCoId} from '../helper/PZRHelper';
+import {extractOpCoId, getBusinessUnits} from '../helper/PZRHelper';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -80,6 +80,15 @@ const SearchForm = () => {
         setSearchDisabled
     });
 
+    const onReset = () => {
+        form.setFieldsValue({
+            site: '',
+            customer: '',
+            customerGroup: '',
+            attributeGroup: ''
+        });
+    };
+
     useEffect(() => {
         if (attributeGroups === '') {
             getAttributeGroupsFromSeed();
@@ -98,7 +107,17 @@ const SearchForm = () => {
                     form={form}
                     validateMessages={validateMessages}
                     onFinish={(value) => onSubmit(value)}
+                    onReset={onReset}
                 >
+                    <Form.Item name="reset" className="pv-reset-base" label="&nbsp;">
+                        <div className="pv-reset-base">
+                            <button
+                                type="reset"
+                                className="search-refresh-btn refresh-outlined-btn pv-refresh-button">
+                                <i className="icon fi flaticon-refresh pv-refresh-icon"/> CLEAR
+                            </button>
+                        </div>
+                    </Form.Item>
                     <Form.Item
                         name="site"
                         label="Site"
@@ -158,7 +177,8 @@ const SearchForm = () => {
                         >
                             <Form.Item name="customer">
                                 <Input disabled={!isCustomerChecked}
-                                       value={customerTextboxValue} onChange={handleChangeCustomer}/>
+                                       value={customerTextboxValue} onChange={handleChangeCustomer}
+                                       allowClear/>
                             </Form.Item>
                         </Form.Item>
                         <Form.Item
@@ -180,7 +200,7 @@ const SearchForm = () => {
                                 }]}
                         >
                             <Form.Item name="customerGroup">
-                                <Input id="customer-group-text-box" disabled={isCustomerChecked}
+                                <Input allowClear id="customer-group-text-box" disabled={isCustomerChecked}
                                        value={customerGroupTextboxValue} onChange={handleChangeCustomerGroup}/>
                             </Form.Item>
                         </Form.Item>
