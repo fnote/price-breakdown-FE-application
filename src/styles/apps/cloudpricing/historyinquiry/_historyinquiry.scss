@@ -99,6 +99,7 @@
       .history-item-number {
         font-size: 1.5rem;
         font-weight: 800;
+        margin-top: 7px;
       }
       .history-item-number-row2 {
         font-size: 1.6rem;
@@ -210,7 +211,7 @@
         &:after {
           position: absolute;
           content: "TO";
-          color:$syscogreen;
+          color:#4b8ba8;
           font-weight:800;
           font-size:1.5rem;
           left: -2.8rem;
