@@ -51,20 +51,20 @@
     justify-content: flex-start;
     align-items: center;
   }
-  .ant-form-item-control{
+  .ant-form-item-control {
     display: flex;
     flex: 0 0 auto;
     justify-content: flex-start;
     align-items: center;
     max-width: 10rem;
-    .ant-form-item{
+    .ant-form-item {
       margin: 0;
       width: 100%;
     }
   }
-  .ant-form-item-control-input{
+  .ant-form-item-control-input {
     width: 100%;
-    .ant-form-item-control-input-content{
+    .ant-form-item-control-input-content {
       width: 10rem;
     }
   }
@@ -240,7 +240,8 @@
           display: grid;
           grid-template-columns: 1fr 1fr 2fr;
           width: calc(100% / 1.6);
-          box-shadow: 0px 0px 8px 1.5px rgba(204, 204, 204, 0.5), 0px 10px 1px #fff;
+          box-shadow: 0px 0px 8px 1.5px rgba(204, 204, 204, 0.5),
+            0px 10px 1px #fff;
           border-top-left-radius: 20px;
           border-top-right-radius: 20px;
           background: #fff;
@@ -293,7 +294,7 @@
     .pz-item-grp-text {
       background: #f6e176;
       color: $textstandard;
-      width:auto;
+      width: auto;
     }
     .pz-item-grp-text,
     .pz-cutomer-grp-text {
@@ -729,12 +730,20 @@
     padding: 0.6rem 2rem;
     font-weight: 600;
     background: rgb(70, 155, 67) !important;
-    background: linear-gradient(180deg, rgb(56, 182, 17) 7%, $syscogreen 100%) !important;
+    background: linear-gradient(
+      180deg,
+      rgb(56, 182, 17) 7%,
+      $syscogreen 100%
+    ) !important;
   }
   .reject-btn {
     margin-left: 5px;
     background: rgb(247, 54, 54);
-    background: linear-gradient(180deg, rgba(226, 81, 81, 0.5) 7%, rgb(211, 76, 76) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(226, 81, 81, 0.5) 7%,
+      rgb(211, 76, 76) 100%
+    );
   }
 }
 
@@ -761,7 +770,7 @@
   min-height: 3rem;
   max-width: 12rem;
   line-height: 1.4;
-  font-size:0.9rem !important;
+  font-size: 0.9rem !important;
   padding-top: 0.8rem;
 }
 
@@ -970,9 +979,9 @@
           color: $textstandard;
         }
 
-        .pz-ref-tag-left{
-          max-width:48rem;
-          padding:0.25rem 0;
+        .pz-ref-tag-left {
+          max-width: 48rem;
+          padding: 0.25rem 0;
         }
       }
       .pop-sum-Attrib-grp {
@@ -981,8 +990,8 @@
           background: #f6e176;
         }
         .pz-ref-tag-right {
-          max-width:48rem;
-          padding:0.25rem 0.5rem;
+          max-width: 48rem;
+          padding: 0.25rem 0.5rem;
           min-height: 3rem;
           display: flex;
           align-items: center;
@@ -1041,6 +1050,12 @@
 .pz-disabled {
   pointer-events: none !important;
   filter: grayscale(0.7);
+
+  .pv-reset-base {
+    @include flexbox(1 1 auto, row, flex-end, center);
+    position: absolute;
+    top: -1px;
+  }
 }
 
 // pagination align right
@@ -1176,35 +1191,34 @@
   }
 }
 
-.pz-search-form{
-  @media only screen and (max-width:1400px) {
-    margin:1rem 0 !important;
+.pz-search-form {
+  @media only screen and (max-width: 1400px) {
+    margin: 1rem 0 !important;
   }
 }
 
 // attribute styles for 1400px below screen sizes
-.pz-item-grp-text{
-  @media only screen and (max-width:1400px) {
-    width:22.7rem !important;
+.pz-item-grp-text {
+  @media only screen and (max-width: 1400px) {
+    width: 22.7rem !important;
   }
 }
 
-
 // submit button styles for 1400px below screen sizes
-.pz-search-btn{
-  @media only screen and (max-width:1400px) {
+.pz-search-btn {
+  @media only screen and (max-width: 1400px) {
     border-radius: 40px;
   }
 }
 
 .pz-aprove-reject-wrapper {
-  @media only screen and (max-width:1400px) {
+  @media only screen and (max-width: 1400px) {
     padding: 0px;
   }
 }
 
 // Fix for ref table ant pagination ellipsis issue
-.pz-pag-fix{
+.pz-pag-fix {
   .ant-pagination-item-ellipsis {
     display: flex !important;
   }
