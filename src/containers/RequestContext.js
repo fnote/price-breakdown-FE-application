@@ -1,13 +1,7 @@
 import React, {useState} from 'react';
-import {
-    extractBaseRequest,
-    extractHistoryInquiryRequest,
-    extractPriceValidationRequest
-} from '../utils/RequestUtils';
+import {extractBaseRequest, extractHistoryInquiryRequest, extractPriceValidationRequest} from '../utils/RequestUtils';
 
-import {
-    PRICE_VALIDATION_REQUEST,
-} from '../constants/Constants';
+import {PRICE_VALIDATION_REQUEST} from '../constants/Constants';
 
 export const RequestContext = React.createContext({
     requestData: {},
@@ -23,21 +17,16 @@ const initialState = {
     historyInquiryRequest: null,
 };
 
-const mapPriceValidationRequest = (data) => {
-    console.log(extractBaseRequest(data));
-    return {
-        request: data,
-        baseRequest: extractBaseRequest(data),
-        priceValidationRequest: extractPriceValidationRequest(data),
-    };
-};
+const mapPriceValidationRequest = (data) => ({
+    request: data,
+    baseRequest: extractBaseRequest(data),
+    priceValidationRequest: extractPriceValidationRequest(data),
+});
 
-const mapHistoryInquiryRequest = (data) => {
-    return {
-        baseRequest: extractBaseRequest(data),
-        historyInquiryRequest: extractHistoryInquiryRequest(data)
-    };
-};
+const mapHistoryInquiryRequest = (data) => ({
+    baseRequest: extractBaseRequest(data),
+    historyInquiryRequest: extractHistoryInquiryRequest(data)
+});
 
 const RequestContextProvider = (props) => {
     const [requestDataState, setRequestData] = useState(initialState);
@@ -45,8 +34,7 @@ const RequestContextProvider = (props) => {
     const [isHistoryInquiryRequest, setIsHistoryInquiryRequest] = useState(false);
 
     const RequestDataUpdateHandler = (data) => {
-        console.log(`Success pricing data response received: ${JSON.stringify(data)}`);
-        if(data.requestType === PRICE_VALIDATION_REQUEST) {
+        if (data.requestType === PRICE_VALIDATION_REQUEST) {
             const processedPriceValidationRequest = mapPriceValidationRequest(data);
             setRequestData(processedPriceValidationRequest);
             setIsPriceValidationRequest(true);

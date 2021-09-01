@@ -31,11 +31,9 @@ const rangeConfig = {
     ],
 };
 function disabledDate(current) {
-    // Can not select future dates
     return current && current > moment().add(1, 'days').endOf('day');
 }
 const formRequestBody = (requestData) => {
-  console.log(requestData);
   const product = {
     supc: requestData.supc,
     splitFlag: requestData.split,
@@ -44,8 +42,8 @@ const formRequestBody = (requestData) => {
   return JSON.stringify({
       businessUnitNumber: requestData.site,
       customerAccount: requestData.customer,
-      fromDate: requestData.rangeDate === '' ? '' : requestData.rangeDate[0].format('YYYYMMDD'),
-      toDate: requestData.rangeDate === '' ? '' : requestData.rangeDate[1].format('YYYYMMDD'),
+      fromDate: requestData.rangeDate[0] === undefined ? '' : requestData.rangeDate[0].format('YYYYMMDD'),
+      toDate: requestData.rangeDate[1] === undefined ? '' : requestData.rangeDate[1].format('YYYYMMDD'),
       requestedQuantity: requestData.quantity,
       product,
   });

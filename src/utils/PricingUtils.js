@@ -4,6 +4,7 @@
  * Created: 9/30/20. Wed 2020 18:45
  */
 
+import moment from 'moment';
 import {
     AGREEMENT_CODE_B,
     AGREEMENT_CODE_L,
@@ -48,7 +49,6 @@ import {
     VOLUME_TIER_RANGE_END_ABOVE,
     VOLUME_TIER_RANGE_END_EMPTY,
 } from '../constants/Constants';
-import moment from "moment";
 
 const getFractionDigits = ({perWeightFlag, useFixedFractionDigits, digits}) => {
     if (useFixedFractionDigits) {
@@ -197,8 +197,8 @@ export const extractRequestInfo = ({priceRequestDate, product: {splitFlag, quant
 });
 
 export const extractHistoryInquiryRequestInfo = ({fromDate, toDate, product: {splitFlag}}) => ({
-    fromDate: fromDate === "" ? "" : generateReadableDate(fromDate),
-    toDate: toDate === "" ? "" : generateReadableDate(toDate),
+    fromDate: fromDate === '' ? '' : generateReadableDate(fromDate),
+    toDate: toDate === '' ? '' : generateReadableDate(toDate),
     splitStatus: getSplitStatusBySplitFlag(splitFlag)
 });
 
@@ -206,13 +206,13 @@ export const extractTransactions = (transactionHistory) => {
     transactionHistory.forEach((transaction) => {
         transaction.transactionDate = generateReadableDate(transaction.transactionDate);
         const perWeightFlag = transaction.perWeightFlag === SPLIT_STATUS_YES;
-        transaction.unitPrice = formatPrice(transaction.unitPrice, { perWeightFlag });
-        transaction.netPrice = formatPrice(transaction.netPrice, { perWeightFlag });
-        transaction.extendedPrice = formatPrice(transaction.extendedPrice, { perWeightFlag });
+        transaction.unitPrice = formatPrice(transaction.unitPrice, {perWeightFlag});
+        transaction.netPrice = formatPrice(transaction.netPrice, {perWeightFlag});
+        transaction.extendedPrice = formatPrice(transaction.extendedPrice, {perWeightFlag});
         transaction.createDate = generateReadableDate(transaction.createDate);
         transaction.createTime = generateTimeObject(transaction.createTime);
         transaction.createDateTime = `${transaction.createDate} / ${transaction.createTime}`;
-    })
+    });
     return transactionHistory;
 };
 

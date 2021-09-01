@@ -18,8 +18,6 @@ export const getBffUrlConfig = () => {
         CONFIG.bffBaseUrl = 'http://localhost:4000/local/v1/pci-bff/';
     }
 
-    CONFIG.bffBaseUrl = 'https://cloud-pci-bff-exe.prcp-np.us-east-1.aws.sysco.net/v1/pci-bff/';
-    
     // Auth apis
     CONFIG.loginRedirectionUrl = `${CONFIG.bffBaseUrl}auth/login`;
     CONFIG.logOutRedirectionUrl = `${CONFIG.bffBaseUrl}auth/logout`;

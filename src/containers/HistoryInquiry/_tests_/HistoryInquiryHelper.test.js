@@ -1,6 +1,6 @@
-import {configure,} from 'enzyme';
+import {configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import {setHistoryInquiryInitialValues} from "../HistoryInquiryHelper";
+import {setHistoryInquiryInitialValues} from '../HistoryInquiryHelper';
 
 configure({adapter: new Adapter()});
 
@@ -23,14 +23,14 @@ describe('setInitialValues', () => {
             }
         };
         expect(setHistoryInquiryInitialValues(requestContext)).toEqual({
-            "customer": "0243",
-            "site": "019",
-            "split": false,
-            "supc": "4343",
-            "rangeDate": {
-                "endDate": "2021-01-01", "startDate": "2020-10-01"
+            'customer': '0243',
+            'site': '019',
+            'split': false,
+            'supc': '4343',
+            'rangeDate': {
+                'endDate': '2021-01-01', 'startDate': '2020-10-01'
             },
-        })
+        });
     });
 
     test('should return history inquiry input when price validation request is given', () => {
@@ -47,12 +47,12 @@ describe('setInitialValues', () => {
             }
         };
         expect(setHistoryInquiryInitialValues(requestContext)).toEqual({
-            "customer": "0243",
-            "site": "019",
-            "split": false,
-            "supc": "4343",
-            "rangeDate": "",
-        })
+            'customer': '0243',
+            'site': '019',
+            'split': false,
+            'supc': '4343',
+            'rangeDate': '',
+        });
     });
 
     test('should return default when no request is given', () => {
@@ -69,11 +69,11 @@ describe('setInitialValues', () => {
             }
         };
         expect(setHistoryInquiryInitialValues(requestContext)).toEqual({
-            "customer": "",
-            "site": "",
-            "split": false,
-            "supc": "",
-            "rangeDate": "",
-        })
+            'customer': '',
+            'site': '',
+            'split': false,
+            'supc': '',
+            'rangeDate': '',
+        });
     });
 });

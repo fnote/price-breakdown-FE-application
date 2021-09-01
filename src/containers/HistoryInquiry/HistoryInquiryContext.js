@@ -34,7 +34,6 @@ const HistoryInquiryContextProvider = (props) => {
     const [response, setResponse] = useState(null);
 
     const HistoryInquiryDataUpdateHandler = (data) => {
-        console.log(`Success pricing data response received: ${JSON.stringify(data)}`);
         const processedState = mapSuccessResponse(data);
         setIsLoading(false);
         setError(null);

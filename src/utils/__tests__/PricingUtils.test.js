@@ -489,7 +489,7 @@ describe('extractHistoryInquiryRequestInfo', () => {
         const data = {
             fromDate: '20201028',
             toDate: '20210101',
-            product: {splitFlag: true,}
+            product: {splitFlag: true}
         };
         expect(extractHistoryInquiryRequestInfo(data)).toEqual({
             'fromDate': 'Oct 28, 2020',
@@ -1464,21 +1464,21 @@ describe('extractTransactions', () => {
             }
         ];
         const formattedTransactionHistory = [{
-            "createDate": "Jan 1, 2020",
-            "createDateTime": "Jan 1, 2020 / 06:25:15 PM",
-            "createTime": "06:25:15 PM",
-            "extendedPrice": "$0.71",
-            "lineNumber": 3,
-            "netPrice": "$0.71",
-            "obligationId": "11917294P",
-            "perWeightFlag": "N",
-            "priceSourceType": "",
-            "shippedQuantity": 1,
-            "totalCatchWeight": 0,
-            "transactionDate": "Jan 1, 2020",
-            "unitPrice": "$0.71"
-        }]
-        expect(extractTransactions(transactionHistory)).toEqual(formattedTransactionHistory)
+            'createDate': 'Jan 1, 2020',
+            'createDateTime': 'Jan 1, 2020 / 06:25:15 PM',
+            'createTime': '06:25:15 PM',
+            'extendedPrice': '$0.71',
+            'lineNumber': 3,
+            'netPrice': '$0.71',
+            'obligationId': '11917294P',
+            'perWeightFlag': 'N',
+            'priceSourceType': '',
+            'shippedQuantity': 1,
+            'totalCatchWeight': 0,
+            'transactionDate': 'Jan 1, 2020',
+            'unitPrice': '$0.71'
+        }];
+        expect(extractTransactions(transactionHistory)).toEqual(formattedTransactionHistory);
     });
     test('should return prices with 3 decimal points when cwt is true transaction history given', () => {
         const transactionHistory = [
@@ -1498,21 +1498,21 @@ describe('extractTransactions', () => {
             }
         ];
         const formattedTransactionHistory = [{
-            "createDate": "Jan 1, 2020",
-            "createDateTime": "Jan 1, 2020 / 06:25:15 PM",
-            "createTime": "06:25:15 PM",
-            "extendedPrice": "$0.710",
-            "lineNumber": 3,
-            "netPrice": "$0.710",
-            "obligationId": "11917294P",
-            "perWeightFlag": "Y",
-            "priceSourceType": "",
-            "shippedQuantity": 1,
-            "totalCatchWeight": 0,
-            "transactionDate": "Jan 1, 2020",
-            "unitPrice": "$0.710"
-        }]
-        expect(extractTransactions(transactionHistory)).toEqual(formattedTransactionHistory)
+            'createDate': 'Jan 1, 2020',
+            'createDateTime': 'Jan 1, 2020 / 06:25:15 PM',
+            'createTime': '06:25:15 PM',
+            'extendedPrice': '$0.710',
+            'lineNumber': 3,
+            'netPrice': '$0.710',
+            'obligationId': '11917294P',
+            'perWeightFlag': 'Y',
+            'priceSourceType': '',
+            'shippedQuantity': 1,
+            'totalCatchWeight': 0,
+            'transactionDate': 'Jan 1, 2020',
+            'unitPrice': '$0.710'
+        }];
+        expect(extractTransactions(transactionHistory)).toEqual(formattedTransactionHistory);
     });
 });
 describe('extractTransactions', () => {
@@ -1520,5 +1520,4 @@ describe('extractTransactions', () => {
         expect(generateTimeObject('010101')).toEqual('01:01:01 AM');
         expect(generateTimeObject('130101')).toEqual('01:01:01 PM');
     });
-
 });
