@@ -123,6 +123,7 @@
         
           height: 100%;
           .history-row-title {
+            margin-top: -4px;
             font-weight: 300;
             font-size: 1.1rem;
             text-transform: uppercase;
@@ -178,7 +179,7 @@
      
 
       .history-date-title {
-        // top: 3rem;
+        margin-top: -9px;
         height:2.5rem;
         width: 100%;
         font-weight: 300;
@@ -219,9 +220,9 @@
         }
         .history-date-from-to {
           font-size: 1.6rem;
-          // font-size: 2.307rem;
+          color: #62737e;
           font-weight: 800;
-        color:$price-group-color-3;
+        // color:$price-group-color-3;
         }
       }
     }

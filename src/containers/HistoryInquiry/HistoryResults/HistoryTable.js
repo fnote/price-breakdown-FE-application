@@ -8,40 +8,54 @@ const columns = [
     dataIndex: 'obligationId',
   },
   {
-    title: 'LINE NUM',
-    dataIndex: 'lineNumber',
+   
+    title: "LINE #",
+    dataIndex: "lineNumber",
+    width:80,
+    className:'history-right-text'
 
   },
   {
-    title: 'TRANSACTION DATE',
-    dataIndex: 'transactionDate',
-    defaultSortOrder: 'descend',
+    title: "TRANS.DATE",
+    dataIndex: "transactionDate",
+    defaultSortOrder: "descend",
+    width:150,
     sorter: (a, b) => a.transactionDate - b.transactionDate,
   },
   {
-    title: 'SHIPPED QTY',
-    dataIndex: 'shippedQuantity',
+    title: "SHIPPED QTY",
+    dataIndex: "shippedQuantity",
+    width:130,
+    className:'history-right-text'
   },
   {
     title: 'TOTAL CATCH WEIGHT',
     dataIndex: 'totalCatchWeight',
+    width:200,
+    className:'history-right-text'
   },
   {
     title: 'UNIT PRICE',
     dataIndex: 'unitPrice',
+    width:150,
+    className:'history-right-text'
   },
   {
     title: 'NET PRICE',
     dataIndex: 'netPrice',
-    style: {color: 'red !important'}
+    className:'history-right-text'
+  
   },
   {
     title: 'EXTENDED PRICE',
     dataIndex: 'extendedPrice',
+    width:150,
+    className:'history-right-text'
   },
   {
     title: 'PRICE SOURCE',
     dataIndex: 'priceSourceType',
+    width:150,
   },
   {
     title: 'CREATE DATE / TIME',
