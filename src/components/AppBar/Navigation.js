@@ -6,6 +6,7 @@ import {
     NAVIGATION_PATH_PRICEZONE_REASSIGNMENT,
     SCREEN_PRICE_VALIDATION,
     SCREEN_FILE_UPLOAD,
+    NAVIGATION_PATH_HISTORY_INQUIRY,
     SCREEN_CIPZ_REASSIGNMENT
 } from '../../constants/Constants';
 import {UserDetailContext} from '../../containers/UserDetailContext';
@@ -27,6 +28,11 @@ function Navigation() {
                         <i className="icon fi flaticon-accounting"/>Pricing <span
                         className="bold">Validation Tool</span>
                     </li>)}
+            </Link>
+            <Link to={NAVIGATION_PATH_HISTORY_INQUIRY}>
+                <li className={getClassName(match, NAVIGATION_PATH_HISTORY_INQUIRY)}>
+                    <i className="icon fi flaticon-pricing-journey"/>Pricing <span className="bold">History Inquiry</span>
+                </li>
             </Link>
             <Link to={NAVIGATION_PATH_FILE_UPLOAD}>
                 {grantViewPermissionsToScreens(userRole, SCREEN_FILE_UPLOAD) && (

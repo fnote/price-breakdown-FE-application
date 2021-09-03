@@ -1,18 +1,18 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import moment from 'moment';
-import {
-  Form, Input, Checkbox, Select, DatePicker
-} from 'antd';
-import { PriceValidationContext } from '../PriceValidationContext';
-import { UserDetailContext } from '../../UserDetailContext';
-import { getBusinessUnits } from '../PricingHelper';
+import {Checkbox, DatePicker, Form, Input, Select} from 'antd';
+import {PriceValidationContext} from '../PriceValidationContext';
+import {UserDetailContext} from '../../UserDetailContext';
+import {RequestContext} from '../../RequestContext';
+import {getBusinessUnits, setInitialValues} from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
-import { formatNumberInput } from '../../../utils/CommonUtils';
+import {formatNumberInput} from '../../../utils/CommonUtils';
 import {
-  CORRELATION_ID_HEADER,
-  NOT_APPLICABLE_LABEL,
-  ORDER_PRICE_TYPE_HAND,
-  MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT
+    CORRELATION_ID_HEADER,
+    MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT,
+    NOT_APPLICABLE_LABEL,
+    ORDER_PRICE_TYPE_HAND,
+    PRICE_VALIDATION_REQUEST
 } from '../../../constants/Constants';
 
 /* eslint-disable no-template-curly-in-string */
@@ -25,8 +25,6 @@ const validateMessages = {
     range: '${label} must be between ${min} and ${max}',
   },
 };
-
-const initialValues = {quantity: 1, date: moment(), split: false};
 
 const formRequestBody = (requestData) => {
     const product = {
@@ -52,10 +50,13 @@ const formRequestBody = (requestData) => {
 };
 
 const SearchForm = () => {
+    const [form] = Form.useForm();
     const priceValidationContext = useContext(PriceValidationContext);
     const userDetailContext = useContext(UserDetailContext);
+    const requestContext = useContext(RequestContext);
     const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
-
+    const bUnitMap = getBusinessUnits(businessUnitMap);
+    const initialValues = setInitialValues(requestContext);
   const handleResponse = (response) => {
     const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
     return response.json().then((json) => {
@@ -67,9 +68,13 @@ const SearchForm = () => {
   };
 
   const priceRequestHandler = (requestData) => {
+      const requestBody = formRequestBody(requestData);
+      const requestType = PRICE_VALIDATION_REQUEST;
+      const requestContextData = {requestData, requestType};
+      requestContext.setRequestData(requestContextData);
       fetch(getBffUrlConfig().priceDataEndpoint, {
           method: 'POST',
-          body: formRequestBody(requestData),
+          body: requestBody,
           headers: {
               'Accept': 'application/json, text/plain, */*',
               'Content-Type': 'application/json'
@@ -97,6 +102,18 @@ const SearchForm = () => {
     return priceRequestHandler(values);
   };
 
+    const onReset = () => {
+        form.setFieldsValue({
+            site: '',
+            customer: '',
+            supc: '',
+            quantity: 1,
+            date: moment(),
+            split: false,
+            handPrice: '',
+        });
+    };
+
   return (
     <>
       <div className="panel-header">
@@ -105,23 +122,42 @@ const SearchForm = () => {
       </div>
       <div className="search-form">
         <Form
+            form={form}
             name="nest-messages"
             onFinish={onSubmit}
             validateMessages={validateMessages}
             initialValues={initialValues}
+            onReset={onReset}
         >
-          <Form.Item
-              name="site"
-              label="Site"
-              rules={[
-                {
-                  required: true,
-                },
-              ]}>
-            <Select
-              placeholder="Select Site"
-              dropdownMatchSelectWidth={false}
-              filterOption={(inputValue, option) => {
+            {/* <Form.Item className="search-refresh-btn-wrapper">
+                <button
+                    type="reset"
+                    className="search-refresh-btn refresh-outlined-btn" >
+                    <i className="icon fi flaticon-refresh"/> clear
+                </button>
+            </Form.Item> */}
+
+            <Form.Item name="reset" className="pv-reset-base" label="&nbsp;">
+                <div className="pv-reset-base">
+                    <button
+                        type="reset"
+                        className="search-refresh-btn refresh-outlined-btn pv-refresh-button">
+                        <i className="icon fi flaticon-refresh pv-refresh-icon"/> CLEAR
+                    </button>
+                </div>
+            </Form.Item>
+            <Form.Item
+                name="site"
+                label="Site"
+                rules={[
+                    {
+                        required: true,
+                    },
+                ]}>
+                <Select
+                    placeholder="Select Site"
+                    dropdownMatchSelectWidth={false}
+                    filterOption={(inputValue, option) => {
                 if (inputValue && option.children) {
                   // unless the backslash is escaped, this will end up with a syntax error
                   const pattern = inputValue.replace(/\\/g, '').toLowerCase();
@@ -134,7 +170,7 @@ const SearchForm = () => {
               }}
               showSearch
             >
-              {getBusinessUnits(businessUnitMap)}
+              {bUnitMap}
             </Select>
           </Form.Item>
           <Form.Item
@@ -153,7 +189,7 @@ const SearchForm = () => {
                       message: 'Should be 14 characters max'
                   }
               ]}>
-            <Input/>
+            <Input allowClear/>
           </Form.Item>
           <Form.Item
               name="supc"
@@ -172,7 +208,7 @@ const SearchForm = () => {
                   }
               ]}
           >
-            <Input/>
+            <Input allowClear/>
           </Form.Item>
           <Form.Item
               name="date"
