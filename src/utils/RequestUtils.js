@@ -1,4 +1,3 @@
-
 export const extractBaseRequest = ({requestData: { site, customer, supc, split}}) => ({
     site, customer, supc, split
 });

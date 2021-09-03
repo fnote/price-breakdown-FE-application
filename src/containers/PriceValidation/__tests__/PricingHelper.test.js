@@ -1,13 +1,11 @@
 import {configure, mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import moment from 'moment';
 import {getBusinessUnits, setInitialValues} from '../PricingHelper';
-import moment from "moment";
 
 configure({adapter: new Adapter()});
 
-jest.mock('moment', () => {
-    return () => jest.requireActual('moment')('2020-01-01T00:00:00.000Z');
-});
+jest.mock('moment', () => () => jest.requireActual('moment')('2020-01-01T00:00:00.000Z'));
 
 describe.only('formatBusinessUnit', () => {
     test('should return formatted business unit name for valid OpCo Id', () => {
@@ -51,8 +49,7 @@ describe.only('setInitialValues', () => {
             date: '2020-01-01',
             handPrice: 1,
             split: false,
-        })
-
+        });
     });
 
     test('should return correct dates when transaction history given', () => {
@@ -75,8 +72,7 @@ describe.only('setInitialValues', () => {
             quantity: 1,
             date: moment(),
             split: false,
-        })
-
+        });
     });
     test('should return correct dates when transaction history given', () => {
         const requestContext = {
@@ -92,13 +88,12 @@ describe.only('setInitialValues', () => {
             }
         };
         expect(setInitialValues(requestContext)).toEqual({
-            site: "",
-            customer: "",
-            supc: "",
+            site: '',
+            customer: '',
+            supc: '',
             quantity: 1,
             date: moment(),
             split: false
-        })
+        });
     });
 });
-

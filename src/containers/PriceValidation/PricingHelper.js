@@ -1,15 +1,16 @@
 import React from 'react';
-import { Select } from 'antd';
-import moment from "moment";
+import {Select} from 'antd';
+import moment from 'moment';
 
-const { Option } = Select;
+const {Option} = Select;
 
 export const getBusinessUnits = (businessUnitsMap) => {
     const businessUnitOptions = [];
     if (businessUnitsMap) {
         businessUnitsMap.forEach(((businessUnit) => {
             businessUnitOptions.push(
-                <Option key={businessUnit.id} value={businessUnit.id}>{businessUnit.id} - {businessUnit.shortName}</Option>
+                <Option key={businessUnit.id}
+                        value={businessUnit.id}>{businessUnit.id} - {businessUnit.shortName}</Option>
             );
         }));
     }
@@ -18,36 +19,38 @@ export const getBusinessUnits = (businessUnitsMap) => {
 };
 
 export const setInitialValues = (requestContext) => {
-
     if (requestContext.isPriceValidationRequest) {
-        const {baseRequest: {site, customer, supc, split}, priceValidationRequest: {quantity, date, handPrice}} = requestContext.requestData;
+        const {
+            baseRequest: {site, customer, supc, split},
+            priceValidationRequest: {quantity, date, handPrice}
+        } = requestContext.requestData;
         return {
-            site: site,
-            supc: supc,
-            customer: customer,
-            quantity: quantity,
-            date: date,
-            handPrice: handPrice,
-            split: split
-        }
-    } else if (requestContext.isHistoryInquiryRequest) {
+            site,
+            supc,
+            customer,
+            quantity,
+            date,
+            handPrice,
+            split
+        };
+    }
+    if (requestContext.isHistoryInquiryRequest) {
         const {baseRequest: {site, customer, supc, split}} = requestContext.requestData;
         return {
-            site: site,
-            customer: customer,
-            supc: supc,
-            split: split,
+            site,
+            customer,
+            supc,
+            split,
             quantity: 1,
             date: moment()
-        }
-    } else {
-        return {
-            site: "",
-            customer: "",
-            supc: "",
-            quantity: 1,
-            date: moment(),
-            split: false
-        }
+        };
     }
-}
+    return {
+        site: '',
+        customer: '',
+        supc: '',
+        quantity: 1,
+        date: moment(),
+        split: false
+    };
+};
