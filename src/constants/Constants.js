@@ -75,6 +75,7 @@ export const UNEXPECTED_ERROR_CODE = 500;
 export const PRICE_FRACTION_DIGITS_THREE = 3;
 export const PRICE_FRACTION_DIGITS_TWO = 2;
 export const PERCENTAGE_FRACTION_DIGITS = 2;
+export const WEIGHT_FRACTION_DIGITS_THREE = 3;
 
 export const AVAILABLE_PRICE_ZONES = [1, 2, 3, 4, 5];
 export const NOT_APPLICABLE_LABEL = 'N/A';

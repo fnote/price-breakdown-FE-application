@@ -48,6 +48,7 @@ import {
     VOLUME_TIER_RANGE_CONNECTOR_TO,
     VOLUME_TIER_RANGE_END_ABOVE,
     VOLUME_TIER_RANGE_END_EMPTY,
+    WEIGHT_FRACTION_DIGITS_THREE,
 } from '../constants/Constants';
 
 const getFractionDigits = ({perWeightFlag, useFixedFractionDigits, digits}) => {
@@ -67,12 +68,13 @@ export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigi
         digits
     }))}`);
 
+export const formatWeight = (weight) => `${weight.toFixed(WEIGHT_FRACTION_DIGITS_THREE)}`;
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency without currency symbol
  * */
 export const formatPriceWithoutCurrency = (
-    value, { perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO }
-) => `${value.toFixed(getFractionDigits({ perWeightFlag, useFixedFractionDigits, digits }))}`;
+    value, {perWeightFlag = false, useFixedFractionDigits = false, digits = PRICE_FRACTION_DIGITS_TWO}
+) => `${value.toFixed(getFractionDigits({perWeightFlag, useFixedFractionDigits, digits}))}`;
 
 export const convertFactorToPercentage = (factor) => `${(factor * 100).toFixed(PERCENTAGE_FRACTION_DIGITS)}%`;
 
@@ -209,6 +211,7 @@ export const extractTransactions = (transactionHistory) => {
         transaction.unitPrice = formatPrice(transaction.unitPrice, {perWeightFlag});
         transaction.netPrice = formatPrice(transaction.netPrice, {perWeightFlag});
         transaction.extendedPrice = formatPrice(transaction.extendedPrice, {perWeightFlag});
+        transaction.totalCatchWeight = formatWeight(transaction.totalCatchWeight);
         transaction.createDate = generateReadableDate(transaction.createDate);
         transaction.createTime = generateTimeObject(transaction.createTime);
         transaction.createDateTime = `${transaction.createDate} / ${transaction.createTime}`;
