@@ -1474,7 +1474,7 @@ describe('extractTransactions', () => {
             'perWeightFlag': 'N',
             'priceSourceType': '',
             'shippedQuantity': 1,
-            'totalCatchWeight': 0,
+            'totalCatchWeight': '0.000',
             'transactionDate': 'Jan 1, 2020',
             'unitPrice': '$0.71'
         }];
@@ -1488,7 +1488,7 @@ describe('extractTransactions', () => {
                 'transactionDate': '20200101',
                 'shippedQuantity': 1,
                 'perWeightFlag': 'Y',
-                'totalCatchWeight': 0,
+                'totalCatchWeight': 0.000,
                 'unitPrice': 0.71,
                 'netPrice': 0.71,
                 'extendedPrice': 0.71,
@@ -1508,7 +1508,7 @@ describe('extractTransactions', () => {
             'perWeightFlag': 'Y',
             'priceSourceType': '',
             'shippedQuantity': 1,
-            'totalCatchWeight': 0,
+            'totalCatchWeight': '0.000',
             'transactionDate': 'Jan 1, 2020',
             'unitPrice': '$0.710'
         }];
