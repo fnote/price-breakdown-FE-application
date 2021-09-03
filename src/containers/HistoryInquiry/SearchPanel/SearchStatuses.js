@@ -62,7 +62,7 @@ const SearchStatuses = () => {
   if (historyInquiryContext.error) {
     const {errorCode, correlationId} = historyInquiryContext.error;
     if (errorCode) {
-      const message = ErrorsMap.get(errorCode);
+      const message = errorCode === 197 ? ErrorMessages.UNEXPECTED_TRANSACTION_HISTORY_ERROR : ErrorsMap.get(errorCode);
       if (message) {
         return renderError({errorCode, message, correlationId});
       }

@@ -68,7 +68,7 @@ export const formatPrice = (value, { perWeightFlag = false, useFixedFractionDigi
         digits
     }))}`);
 
-export const formatWeight = (weight) => `${weight.toFixed(WEIGHT_FRACTION_DIGITS_THREE)}`;
+export const formatWeight = (weight) => `${(Number(weight)).toFixed(WEIGHT_FRACTION_DIGITS_THREE)}`;
 /**
  * Formats a given number into a String with decimal representation. To be used for displaying currency without currency symbol
  * */
