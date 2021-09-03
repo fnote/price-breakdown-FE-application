@@ -89,6 +89,7 @@ export default function HistoryTable({historyInquiryData: {product: {transaction
           </div>
         </div>
         <Table
+          className="history-table-option-disable"
             pagination={{pageSize: 8}}
             rowKey={transactionHistory.obligationId + transactionHistory.lineNumber}
             columns={columns} dataSource={transactionHistory} onChange={onChange}/>

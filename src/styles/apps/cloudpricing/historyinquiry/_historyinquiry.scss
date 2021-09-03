@@ -251,6 +251,10 @@
   width: 100%;
   overflow-y: auto;
 
+  .ant-pagination-options{
+    display: none !important;
+  }
+
   .history-table-header{
     height:3rem;
     width:100%;
