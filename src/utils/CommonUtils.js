@@ -7,6 +7,7 @@
 import {
     FILE_NAME_DISPLAY_LENGTH,
     ONLINE_STATUS_CHECK_URL,
+    ROLE_SCREEN_PERMISSIONS,
     UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE,
     UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE
 } from '../constants/Constants';
@@ -42,6 +43,16 @@ export const formatBusinessUnit = (businessUnitId, businessUnits) => {
     return (businessUnit) ? `${businessUnit.id} - ${businessUnit.name}` : businessUnitId;
 };
 
+export const formatBusinessUnitsIdShortName = (businessUnitId, businessUnitsMap) => {
+    if (businessUnitsMap) {
+        const idWithShortName = businessUnitsMap.get(businessUnitId);
+        if (idWithShortName) {
+            return `${idWithShortName.id}-${idWithShortName.shortName}`;
+        }
+    }
+    return businessUnitId;
+};
+
 export const formatNumberInput = (value) => {
     const formatterRegex = /^-?\d+(?:\.\d{0,3})?/;
 
@@ -73,30 +84,31 @@ export const checkOnlineStatus = async () => {
     }
 };
 
+export const grantViewPermissionsToScreens = (role, screen) => ROLE_SCREEN_PERMISSIONS?.[screen]?.[role];
+
 /**
  * Class to manipulate Unsupported browser alert states.
  */
 class UnsupportedBrowserState {
-
     setUnsupportedBrowserScreenContinue = () => {
         localStorage.setItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE, 'true');
-    }
+    };
 
-    isSetUnsupportedBrowserScreenContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE) !== null
+    isSetUnsupportedBrowserScreenContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE) !== null;
 
     clearUnsupportedBrowserScreenContinue = () => {
         localStorage.removeItem(UNSUPPORTED_WEB_BROWSER_SCREEN_CONTINUE_LOCAL_STORAGE);
-    }
+    };
 
     setUnsupportedBrowserAlertContinue = () => {
         localStorage.setItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE, 'true');
-    }
+    };
 
-    isSetUnsupportedBrowserAlertContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE) !== null
+    isSetUnsupportedBrowserAlertContinue = () => localStorage.getItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE) !== null;
 
     clearUnsupportedBrowserAlertContinue = () => {
         localStorage.removeItem(UNSUPPORTED_WEB_BROWSER_ALERT_CONTINUE_LOCAL_STORAGE);
-    }
+    };
 
     /**
      * clear all the states
