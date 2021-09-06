@@ -1,4 +1,10 @@
 version: 0.2
+
+env:
+  parameter-store:
+    SONAR_HOST: "/CP/COMMON/SONAR/HOST"
+    SONAR_TOKEN: "/CP/COMMON/SONAR/TOKEN"
+
 phases:
   install:
     runtime-versions:
@@ -24,7 +30,7 @@ phases:
       # Unit test run
       - npm test
       # Scan and push to sonarqube
-      - sonar-scanner -Dsonar.host.url=https://cqc.cloud.sysco.net -Dsonar.verbose=true
+      - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=$SONAR_HOST -Dsonar.verbose=true
 
   build:
     commands:
