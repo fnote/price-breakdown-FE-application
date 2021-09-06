@@ -10,6 +10,7 @@ import {createBusinessUnitMap} from '../utils/CommonUtils';
 export const UserDetailContext = React.createContext({
     userDetailsData: {},
     setUserDetails: () => {
+        // This is intentional
     }
 
 });

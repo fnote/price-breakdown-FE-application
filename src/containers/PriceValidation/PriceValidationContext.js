@@ -9,6 +9,7 @@ import {
 export const PriceValidationContext = React.createContext({
     priceData: {},
     setPriceData: () => {
+        // This is intentional
     }
 });
 
