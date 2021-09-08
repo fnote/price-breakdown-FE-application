@@ -42,8 +42,8 @@ const formRequestBody = (requestData) => {
   return JSON.stringify({
       businessUnitNumber: requestData.site,
       customerAccount: requestData.customer,
-      fromDate: requestData.rangeDate[0] === undefined ? '' : requestData.rangeDate[0].format('YYYYMMDD'),
-      toDate: requestData.rangeDate[1] === undefined ? '' : requestData.rangeDate[1].format('YYYYMMDD'),
+      fromDate: !(Array.isArray(requestData.rangeDate) && requestData.rangeDate.length) ? '' : requestData.rangeDate[0].format('YYYYMMDD'),
+      toDate: !(Array.isArray(requestData.rangeDate) && requestData.rangeDate.length) ? '' : requestData.rangeDate[1].format('YYYYMMDD'),
       requestedQuantity: requestData.quantity,
       product,
   });

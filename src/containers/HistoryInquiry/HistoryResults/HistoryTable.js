@@ -72,10 +72,6 @@ const columns = [
 ];
 
 export default function HistoryTable({historyInquiryData: {product: {transactionHistory}}}) {
-  function onChange(pagination, filters, sorter, extra) {
-    console.log('params', pagination, filters, sorter, extra);
-  }
-
   extractTransactions(transactionHistory);
 
   return (
@@ -84,15 +80,15 @@ export default function HistoryTable({historyInquiryData: {product: {transaction
           <div className="history-table-header-wrapper">
             <i className="icon fi flaticon-pricing-journey history-title-icon"></i>
             <div className="history-table-title">
-              Recent Transactions
+              Transaction History
             </div>
           </div>
         </div>
         <Table
-          className="history-table-option-disable"
+            className="history-table-option-disable"
             pagination={{pageSize: 8}}
             rowKey={transactionHistory.obligationId + transactionHistory.lineNumber}
-            columns={columns} dataSource={transactionHistory} onChange={onChange}/>
+            columns={columns} dataSource={transactionHistory}/>
       </div>
   );
 }

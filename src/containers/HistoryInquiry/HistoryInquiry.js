@@ -13,9 +13,6 @@ export default function HistoryInquiry() {
                 <HistoryInquiryContextProvider>
                     <SearchPanel/>
                     <SearchStatuses/>
-                    {/* <HistoryBar/> */}
-                    {/* <HistoryTable/> */}
-                    <div className="pricing-type-label"><strong>PERISCOPE</strong> PRICING</div>
                     <HistoryInquiryResults/>
                 </HistoryInquiryContextProvider>
             </div>

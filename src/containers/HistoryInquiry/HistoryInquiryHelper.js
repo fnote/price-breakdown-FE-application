@@ -5,7 +5,6 @@ export const setHistoryInquiryInitialValues = (requestContext) => {
             site,
             supc,
             customer,
-            rangeDate: '',
             split
         };
     }
@@ -25,7 +24,6 @@ export const setHistoryInquiryInitialValues = (requestContext) => {
     return {
         site: '',
         customer: '',
-        rangeDate: '',
         supc: '',
         split: false
     };
