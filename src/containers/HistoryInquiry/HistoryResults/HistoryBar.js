@@ -17,9 +17,7 @@ export default function HistoryBar(props) {
                     <div className="history-item history-item-number">{item.id}</div>
                     <Tooltip title={item.name} color="blue">
                         <div className="history-item history-item-name">
-                            <div className="value full-width-ellipsis">
-                                {item.name}
-                            </div>
+                            {item.name}
                         </div>
                     </Tooltip>
           <div className="history-item history-row-3">
@@ -68,9 +66,7 @@ export default function HistoryBar(props) {
                   <div className="history-row-value-num">{site.customerAccount}</div>
                   <Tooltip title={site.customerName} color="blue">
                       <div className="history-row-value-customer">
-                          <div className="value full-width-ellipsis">
                               {site.customerName}
-                          </div>
                       </div>
                   </Tooltip>
               </div>
