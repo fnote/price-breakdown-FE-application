@@ -12,6 +12,7 @@ import {
     AGREEMENT_CODE_T,
     APPLICATION_LOCALE,
     AVAILABLE_PRICE_ZONES,
+    CLOUD_PCI_TIME_FORMAT,
     CURRENCY_SYMBOL_USD,
     DESCRIPTION_CUSTOMER_NET_PRICE,
     DESCRIPTION_CUSTOMER_REFERENCE_PRICE,
@@ -27,6 +28,7 @@ import {
     DISCOUNT_TYPE_PREQUALIFIED,
     DISCOUNT_TYPE_REF_PRICE,
     EMPTY_ADJUSTMENT_VALUE_INDICATOR,
+    EMPTY_STRING,
     FRACTION_DIGITS_CHANGING_MARGIN_VALUE,
     NOT_APPLICABLE_LABEL,
     PERCENTAGE_FRACTION_DIGITS,
@@ -41,6 +43,7 @@ import {
     PRICE_UNIT_SPLIT,
     SPLIT_STATUS_NO,
     SPLIT_STATUS_YES,
+    STANDARD_TIME_FORMAT,
     UNKNOWN_BASE_VALUE_NAME,
     VOLUME_TIER_OPERATOR_BETWEEN,
     VOLUME_TIER_RANGE_CONNECTOR_AND,
@@ -91,7 +94,7 @@ export const getPriceUnit = ({splitFlag, perWeightFlag}) => {
 
 export const generateDateObject = (dateString) => new Date(dateString.slice(0, 4), dateString.slice(4, 6) - 1, dateString.slice(6, 8));
 
-export const generateTimeObject = (timeString) => moment(timeString, ['HHmmss']).format('hh:mm:ss A');
+export const generateTimeObject = (timeString) => moment(timeString, [STANDARD_TIME_FORMAT]).format(CLOUD_PCI_TIME_FORMAT);
 
 export const generateReadableDate = (dateString) => generateDateObject(dateString)
     .toLocaleDateString(APPLICATION_LOCALE, {
@@ -199,19 +202,19 @@ export const extractRequestInfo = ({priceRequestDate, product: {splitFlag, quant
 });
 
 export const extractHistoryInquiryRequestInfo = ({fromDate, toDate, product: {splitFlag}}) => ({
-    fromDate: fromDate === '' ? '' : generateReadableDate(fromDate),
-    toDate: toDate === '' ? '' : generateReadableDate(toDate),
+    fromDate: fromDate === EMPTY_STRING ? EMPTY_STRING : generateReadableDate(fromDate),
+    toDate: toDate === EMPTY_STRING ? EMPTY_STRING : generateReadableDate(toDate),
     splitStatus: getSplitStatusBySplitFlag(splitFlag)
 });
 
 export const extractTransactions = (transactionHistory) => {
     transactionHistory.forEach((transaction) => {
         transaction.transactionDate = generateReadableDate(transaction.transactionDate);
+        transaction.totalCatchWeight = formatWeight(transaction.totalCatchWeight);
         const perWeightFlag = transaction.perWeightFlag === SPLIT_STATUS_YES;
         transaction.unitPrice = formatPrice(transaction.unitPrice, {perWeightFlag});
         transaction.netPrice = formatPrice(transaction.netPrice, {perWeightFlag});
         transaction.extendedPrice = formatPrice(transaction.extendedPrice, {perWeightFlag});
-        transaction.totalCatchWeight = formatWeight(transaction.totalCatchWeight);
         transaction.createDate = generateReadableDate(transaction.createDate);
         transaction.createTime = generateTimeObject(transaction.createTime);
         transaction.createDateTime = `${transaction.createDate} / ${transaction.createTime}`;
@@ -352,8 +355,8 @@ export const prepareDefaultPriceRuleSection = ({ priceRule }) => {
     // price rule related details
     const headerRow = {
         description: `${DESCRIPTION_PRICE_RULE}: ${priceRule.name}`,
-        adjustmentValue: '',
-        calculatedValue: ''
+        adjustmentValue: EMPTY_STRING,
+        calculatedValue: EMPTY_STRING
     };
 
     // base value details
@@ -363,18 +366,18 @@ export const prepareDefaultPriceRuleSection = ({ priceRule }) => {
             useFixedFractionDigits: true,
             digits: 3
         }),
-        calculatedValue: ''
+        calculatedValue: EMPTY_STRING
     };
 
     // factor related details
     const factorDetails = {
         description: priceRule.factorCalcMethod,
         adjustmentValue: formatFactorDetails(priceRule),
-        calculatedValue: ''
+        calculatedValue: EMPTY_STRING
     };
 
     // if factor value is 0, empty or factor cal method is empty do not show the factor related details
-    if (priceRule.factorValue === 0 || priceRule.factorValue === '' || priceRule.factorCalcMethod === '') {
+    if (priceRule.factorValue === 0 || priceRule.factorValue === EMPTY_STRING || priceRule.factorCalcMethod === EMPTY_STRING) {
         return [headerRow, baseValueDetails];
     }
     return [headerRow, baseValueDetails, factorDetails];

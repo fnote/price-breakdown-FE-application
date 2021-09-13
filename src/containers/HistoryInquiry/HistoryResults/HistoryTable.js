@@ -5,37 +5,34 @@ import {extractTransactions} from '../../../utils/PricingUtils';
 
 const columns = [
   {
-    // eslint-disable-next-line react/display-name
-    title: () => <Tooltip title="OBLIGATION NUMBER">OBLIGATION #</Tooltip>,
+    title: <Tooltip title="OBLIGATION NUMBER">OBLIGATION #</Tooltip>,
     dataIndex: 'obligationId',
     width: '10%',
   },
   {
-    // eslint-disable-next-line react/display-name
-    title: () => <Tooltip title="LINE NUMBER">LINE #</Tooltip>,
+    title: <Tooltip title="LINE NUMBER">LINE #</Tooltip>,
     dataIndex: 'lineNumber',
     width: '6%',
     className: 'history-right-text'
 
   },
   {
-    // eslint-disable-next-line react/display-name
-    title: () => <Tooltip title="TRANSACTION DATE">TRANS. DATE</Tooltip>,
+    title: <Tooltip title="TRANSACTION DATE">TRANS. DATE</Tooltip>,
     dataIndex: 'transactionDate',
     defaultSortOrder: 'descend',
     width: '9%',
     sorter: (a, b) => moment(a.transactionDate).unix() - moment(b.transactionDate).unix(),
   },
   {
-    // eslint-disable-next-line react/display-name
-    title: () => <Tooltip title="SHIPPED QUANTITY">SHIPPED QTY</Tooltip>,
+
+    title: <Tooltip title="SHIPPED QUANTITY">SHIPPED QTY</Tooltip>,
     dataIndex: 'shippedQuantity',
     width: '10%',
     className: 'history-right-text'
   },
   {
-    // eslint-disable-next-line react/display-name
-    title: () => <Tooltip title="TOTAL CATCH WEIGHT">CATCH WEIGHT</Tooltip>,
+
+    title: <Tooltip title="TOTAL CATCH WEIGHT">CATCH WEIGHT</Tooltip>,
     dataIndex: 'totalCatchWeight',
     width: '10%',
     className: 'history-right-text',
@@ -59,8 +56,7 @@ const columns = [
     className: 'history-right-text'
   },
   {
-    // eslint-disable-next-line react/display-name
-    title: () => <Tooltip title="PRICE SOURCE">SOURCE</Tooltip>,
+    title: <Tooltip title="PRICE SOURCE">SOURCE</Tooltip>,
     dataIndex: 'priceSourceType',
     width: '7%',
   },

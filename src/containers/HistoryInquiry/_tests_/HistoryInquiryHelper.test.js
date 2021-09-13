@@ -51,7 +51,6 @@ describe('setInitialValues', () => {
             'site': '019',
             'split': false,
             'supc': '4343',
-            'rangeDate': '',
         });
     });
 
@@ -73,7 +72,6 @@ describe('setInitialValues', () => {
             'site': '',
             'split': false,
             'supc': '',
-            'rangeDate': '',
         });
     });
 });

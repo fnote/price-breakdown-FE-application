@@ -8,7 +8,10 @@ import {getBusinessUnits, setInitialValues} from '../PricingHelper';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {formatNumberInput} from '../../../utils/CommonUtils';
 import {
+    CLOUD_PCI_DATE_FORMAT,
     CORRELATION_ID_HEADER,
+    DEFAULT_REQUEST_HEADER,
+    EMPTY_STRING,
     MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT,
     NOT_APPLICABLE_LABEL,
     ORDER_PRICE_TYPE_HAND,
@@ -43,7 +46,7 @@ const formRequestBody = (requestData) => {
     return JSON.stringify({
         businessUnitNumber: requestData.site,
         customerAccount: requestData.customer,
-        priceRequestDate: requestData.date.format('YYYYMMDD'),
+        priceRequestDate: requestData.date.format(CLOUD_PCI_DATE_FORMAT),
         requestedQuantity: requestData.quantity,
         product,
     });
@@ -75,10 +78,7 @@ const SearchForm = () => {
       fetch(getBffUrlConfig().priceDataEndpoint, {
           method: 'POST',
           body: requestBody,
-          headers: {
-              'Accept': 'application/json, text/plain, */*',
-              'Content-Type': 'application/json'
-          },
+          headers: DEFAULT_REQUEST_HEADER,
           credentials: 'include'
       })
           .then(handleResponse)
@@ -104,13 +104,13 @@ const SearchForm = () => {
 
     const onReset = () => {
         form.setFieldsValue({
-            site: '',
-            customer: '',
-            supc: '',
+            site: EMPTY_STRING,
+            customer: EMPTY_STRING,
+            supc: EMPTY_STRING,
             quantity: 1,
             date: moment(),
             split: false,
-            handPrice: '',
+            handPrice: EMPTY_STRING,
         });
     };
 
@@ -160,11 +160,11 @@ const SearchForm = () => {
                     filterOption={(inputValue, option) => {
                 if (inputValue && option.children) {
                   // unless the backslash is escaped, this will end up with a syntax error
-                  const pattern = inputValue.replace(/\\/g, '').toLowerCase();
+                    const pattern = inputValue.replace(/\\/g, EMPTY_STRING).toLowerCase();
                   if (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/)) {
                     return false;
                   }
-                  return option.children.join('').toLowerCase().match(pattern);
+                    return option.children.join(EMPTY_STRING).toLowerCase().match(pattern);
                 }
                 return true;
               }}

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Tooltip} from 'antd';
-import {NOT_PROVIDED_LABEL} from '../../../constants/Constants';
+import {EMPTY_STRING, NOT_PROVIDED_LABEL} from '../../../constants/Constants';
 import {formatBusinessUnit} from '../../../utils/CommonUtils';
 
 export default function HistoryBar(props) {
@@ -12,7 +12,7 @@ export default function HistoryBar(props) {
         if (str) {
             return (str.length > n) ? `${str.substr(0, n - 3)}...` : str;
         }
-        return '';
+         return EMPTY_STRING;
     };
     return (
         <div className="history-bar-wrapper">

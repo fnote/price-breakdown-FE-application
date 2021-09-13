@@ -13,7 +13,6 @@ const initialState = {
     selectedBusinessUnit: {},
     item: null,
     site: null,
-    transactions: null,
 };
 
 const mapSuccessResponse = (data) => {
