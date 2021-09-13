@@ -382,13 +382,11 @@
   // ===================
 
   .pz-log-review-base {
-    border: 1px solid red;
+    width: 80%;
     height: auto;
-    @include flexbox(1 1 auto, row, space-around, center);
+    @include flexbox(1 1 auto, row, space-between, center);
 
     .pz-log-review-details-base {
-
-
       .pz-log-review-details-name {
         padding: 0.5rem;
 
@@ -406,45 +404,64 @@
           font-size: 1.1rem;
         }
       }
-      .pz-log-review-details-date{
+      .pz-log-review-details-date {
         padding: 0.5rem;
-        font-size:1.1rem;
+        font-size: 1.1rem;
         color: $textstandard;
       }
     }
-    .pz-log-review-info{
-     
+    .pz-log-review-info {
       max-height: 4.615rem;
 
-      .pz-log-review-note-icon{
+      .pz-log-review-note-icon {
         font-size: 1.5rem;
-      cursor: pointer;
-      color: $textstandard;
+        cursor: pointer;
+        color: $textstandard;
       }
     }
-
-   
   }
-   // APPROVE | REJECTED AND DISCARDED TAGS
-   .pz-log-status-tag{
-    width:10rem;
-    height:3rem;
+
+  .pz-log-table-wrapper{
+    .ant-table-tbody{
+      .ant-table-row-level-0{
+        height:13rem !important;
+        .ant-table-cell{
+          &:nth-child(2){
+            border: 0.076rem dashed rgba(0, 0, 0, 0.1);
+            border-top: none;
+            border-bottom: none;
+          }
+          &:nth-child(3){
+            border-right: 0.076rem dashed rgba(0, 0, 0, 0.1);
+          }
+         
+        }
+      }
+    }
+  }
+  
+
+  
+  // APPROVE | REJECTED AND DISCARDED TAGS
+  .pz-log-status-tag {
+    width: 80%;
+    margin-left:2rem;
+    height: 3rem;
     @include flexbox(1 1 auto, row, center, center);
-    border-radius:4px;
-    font-weight:600;
-
+    border-radius: 4px;
+    font-weight: 600;
   }
-  .pz-log-approved{
-    background:#EBF9F4;
-    color:#61B457;
+  .pz-log-approved {
+    background: #ebf9f4;
+    color: #61b457;
   }
-  .pz-log-rejected{
-    background:#FDF4F6;
-    color:#FF6D6D;
+  .pz-log-rejected {
+    background: #fdf4f6;
+    color: #ff6d6d;
   }
-  .pz-log-discarded{
-    background:#FCEFD3;
-    color:#E59E05;
+  .pz-log-discarded {
+    background: #fcefd3;
+    color: #e59e05;
   }
 }
 
@@ -661,7 +678,7 @@
     position: absolute;
     height: 70%;
     width: 3px;
-    border-left: 1px dashed rgb(68, 68, 68);
+    border-left: 1px dashed rgba(68, 68, 68, 0.322);
   }
 
   .pz-review-right-wrapper {
