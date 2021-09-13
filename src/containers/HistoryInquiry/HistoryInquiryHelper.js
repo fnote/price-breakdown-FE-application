@@ -34,12 +34,12 @@ export const setHistoryInquiryInitialValues = (requestContext) => {
 
 /* eslint-disable no-template-curly-in-string */
 export const validateMessages = {
-    required: '${label} is required!',
+    required: '${label} is required!', // NOSONAR
     types: {
-        number: '${label} is not a valid number!',
+        number: '${label} is not a valid number!', // NOSONAR
     },
     number: {
-        range: '${label} must be between ${min} and ${max}',
+        range: '${label} must be between ${min} and ${max}', // NOSONAR
     },
 };
 

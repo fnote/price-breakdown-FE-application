@@ -39,7 +39,7 @@ const renderError = ({ errorCode, message, correlationId }) => (
       <div className="section-wrapper">
         <div className="error message-block">
           <div className="title">
-            <i className="icon fi flaticon-error-1" /> Sorry we could not retrieve this item.
+            <i className="icon fi flaticon-error-1"/> Sorry we could not retrieve history inquiry for this item.
           </div>
           <div className="subitle-title">
             Error {errorCode} - {message}

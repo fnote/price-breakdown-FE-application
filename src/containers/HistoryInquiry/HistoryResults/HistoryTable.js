@@ -3,6 +3,7 @@ import {Table, Tooltip} from 'antd';
 import moment from 'moment';
 import {extractTransactions} from '../../../utils/PricingUtils';
 
+const historyClassName = 'history-right-text';
 const columns = [
   {
     title: <Tooltip title="OBLIGATION NUMBER">OBLIGATION #</Tooltip>,
@@ -13,7 +14,7 @@ const columns = [
     title: <Tooltip title="LINE NUMBER">LINE #</Tooltip>,
     dataIndex: 'lineNumber',
     width: '6%',
-    className: 'history-right-text'
+    className: historyClassName
 
   },
   {
@@ -28,32 +29,32 @@ const columns = [
     title: <Tooltip title="SHIPPED QUANTITY">SHIPPED QTY</Tooltip>,
     dataIndex: 'shippedQuantity',
     width: '10%',
-    className: 'history-right-text'
+    className: historyClassName
   },
   {
 
     title: <Tooltip title="TOTAL CATCH WEIGHT">CATCH WEIGHT</Tooltip>,
     dataIndex: 'totalCatchWeight',
     width: '10%',
-    className: 'history-right-text',
+    className: historyClassName
   },
   {
     title: 'UNIT PRICE',
     dataIndex: 'unitPrice',
-    className: 'history-right-text',
+    className: historyClassName,
     width: '10%',
   },
   {
     title: 'NET PRICE',
     dataIndex: 'netPrice',
-    className: 'history-right-text',
+    className: historyClassName,
     width: '10%',
   },
   {
     title: 'EXTENDED PRICE',
     dataIndex: 'extendedPrice',
     width: '10%',
-    className: 'history-right-text'
+    className: historyClassName
   },
   {
     title: <Tooltip title="PRICE SOURCE">SOURCE</Tooltip>,
