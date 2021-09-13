@@ -4,6 +4,7 @@ import {extractHistoryInquiryRequestInfo, extractItemInfo, extractSiteInfo} from
 export const HistoryInquiryContext = React.createContext({
     historyInquiryData: {},
     setHistoryInquiryData: () => {
+        // do nothing.
     }
 });
 

@@ -6,6 +6,7 @@ import {PRICE_VALIDATION_REQUEST} from '../constants/Constants';
 export const RequestContext = React.createContext({
     requestData: {},
     setRequestData: () => {
+        // do nothing.
     }
 });
 

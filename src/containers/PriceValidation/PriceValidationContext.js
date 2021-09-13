@@ -1,14 +1,10 @@
 import React, {useState} from 'react';
-import {
-    extractItemInfo,
-    extractPricePoints,
-    extractRequestInfo,
-    extractSiteInfo,
-} from '../../utils/PricingUtils';
+import {extractItemInfo, extractPricePoints, extractRequestInfo, extractSiteInfo} from '../../utils/PricingUtils';
 
 export const PriceValidationContext = React.createContext({
     priceData: {},
     setPriceData: () => {
+        // do nothing.
     }
 });
 
