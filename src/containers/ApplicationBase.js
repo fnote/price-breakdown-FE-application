@@ -4,6 +4,7 @@ import {notification} from 'antd';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
+import HistoryInquiry from './HistoryInquiry/HistoryInquiry';
 import PZRHome from './PriceZoneReassignment/PZRHome';
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
@@ -11,9 +12,12 @@ import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
 import {
     NAVIGATION_PATH_FILE_UPLOAD,
+    NAVIGATION_PATH_HISTORY_INQUIRY,
     NAVIGATION_PATH_PRICE_VALIDATION,
-    SUPPORTED_WEB_BROWSERS,
-    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT, SCREEN_PRICE_VALIDATION
+    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT,
+    SCREEN_HISTORY_INQUIRY,
+    SCREEN_PRICE_VALIDATION,
+    SUPPORTED_WEB_BROWSERS
 } from '../constants/Constants';
 
 import {grantViewPermissionsToScreens, unsupportedBrowserState} from '../utils/CommonUtils';
@@ -33,6 +37,10 @@ const Application = (user) => (
             </Route>
             <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
                 <PZRHome/>
+            </Route>
+            <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
+                {grantViewPermissionsToScreens(user, SCREEN_HISTORY_INQUIRY) ? <HistoryInquiry/>
+                    : <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
             </Route>
         </Switch>
 );

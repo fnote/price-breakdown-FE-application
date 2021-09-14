@@ -2,8 +2,8 @@ import React, {useContext} from 'react';
 import PricingResultsMeta from './PricingResultsMeta';
 import PriceBar from './PriceBar';
 import PriceBarDetailed from './PriceBarDetailed';
-import { PriceValidationContext } from '../PriceValidationContext';
-import { UserDetailContext } from '../../UserDetailContext';
+import {PriceValidationContext} from '../PriceValidationContext';
+import {UserDetailContext} from '../../UserDetailContext';
 import RequestId from '../../../components/RequestId';
 
 function PricingResults() {
@@ -11,7 +11,7 @@ function PricingResults() {
     const priceData = priceValidationContext.priceData;
     const response = priceValidationContext.response;
     const userDetailContext = useContext(UserDetailContext);
-    const { userDetails } = userDetailContext.userDetailsData;
+    const {userDetails} = userDetailContext.userDetailsData;
 
     if (response) {
         const { correlationId } = priceValidationContext.response;

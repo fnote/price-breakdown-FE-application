@@ -2,11 +2,13 @@ import React, {useContext} from 'react';
 import {Link, useRouteMatch} from 'react-router-dom';
 import {
     NAVIGATION_PATH_FILE_UPLOAD,
+    NAVIGATION_PATH_HISTORY_INQUIRY,
     NAVIGATION_PATH_PRICE_VALIDATION,
     NAVIGATION_PATH_PRICEZONE_REASSIGNMENT,
-    SCREEN_PRICE_VALIDATION,
+    SCREEN_CIPZ_REASSIGNMENT,
     SCREEN_FILE_UPLOAD,
-    SCREEN_CIPZ_REASSIGNMENT
+    SCREEN_HISTORY_INQUIRY,
+    SCREEN_PRICE_VALIDATION
 } from '../../constants/Constants';
 import {UserDetailContext} from '../../containers/UserDetailContext';
 import {grantViewPermissionsToScreens} from '../../utils/CommonUtils';
@@ -26,6 +28,13 @@ function Navigation() {
                     <li className={getClassName(match, NAVIGATION_PATH_PRICE_VALIDATION)}>
                         <i className="icon fi flaticon-accounting"/>Pricing <span
                         className="bold">Validation Tool</span>
+                    </li>)}
+            </Link>
+            <Link to={NAVIGATION_PATH_HISTORY_INQUIRY}>
+                {grantViewPermissionsToScreens(userRole, SCREEN_HISTORY_INQUIRY) && (
+                    <li className={getClassName(match, NAVIGATION_PATH_HISTORY_INQUIRY)}>
+                        <i className="icon fi flaticon-pricing-journey"/>Pricing <span
+                        className="bold">History Inquiry</span>
                     </li>)}
             </Link>
             <Link to={NAVIGATION_PATH_FILE_UPLOAD}>

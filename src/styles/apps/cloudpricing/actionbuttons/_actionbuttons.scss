@@ -233,3 +233,33 @@
     box-shadow: 0px 0px 0.5rem rgba(132, 176, 197, 0.74);
   }
 }
+
+.refresh-outlined-btn{
+  @include flexbox(0 0 auto, row, center, center);
+  background: #008ace;
+  color: $textalternative;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 3rem 0.5rem 3rem;
+  border-radius: 1.5rem;
+  border: 1px solid $textalternative;
+  box-shadow: 0px 0px 0.1rem rgba(132, 176, 197, 0.74);
+  background: #eb01a5;
+  // background-image: url("IMAGE_URL"); /* fallback */
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAANCAYAAACdKY9CAAAAAXNSR0IArs4c6QAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAADKADAAQAAAABAAAADQAAAAANpPHXAAAAkUlEQVQoFWP4//9/JhDLMhAJGIGK+4Fq/wPxBSDewsjI+A6fXhaoJCOQNgRiXaABR4H0HqDGL1A5FApmA4ogkPMDiPeDMFDjb2RJXBpgaj4AGTuB+BRQ4z+QICENIDUg8AqItwI1XSJWA1gXkNgL8zRMABcNt4GQBgw/4NKAM5TQNfwBuglvPMA0EB3TDKSmJQAQFEJ/h7HZXwAAAABJRU5ErkJggg==) no-repeat 90% center/auto 30%, linear-gradient(#9bc4d8 0%, #2990c2 100%);
+  margin-right: 0rem;
+  margin-left: 0rem;
+  @include flexbox(0 0 auto);
+  user-select: none;
+  outline: none;
+  cursor: pointer;
+  transition: all ease-in-out 200ms;
+  &:hover {
+    opacity: 0.8;
+  }
+  &:active {
+    opacity: 1;
+    box-shadow: 0px 0px 0.5rem rgba(132, 176, 197, 0.74);
+  }
+}

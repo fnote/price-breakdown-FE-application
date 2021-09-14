@@ -44,6 +44,7 @@ const ErrorMessages = {
     CONNECTION_ISSUE_ERROR: 'Could not retrieve the information due to connection issue',
     INVALID_CUSTOMER_GROUP_ERROR: 'Your search did not found any match',
     SEARCH_NOT_FOUND: 'Search not found',
+    UNEXPECTED_TRANSACTION_HISTORY_ERROR: 'Unexpected error occurred while retrieving history inquiry information',
 };
 
 const ErrorsMap = new Map([

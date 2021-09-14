@@ -1,6 +1,6 @@
 // Core
-import React, {useContext, useState, useEffect} from 'react';
-import {Form, Input, Select, Radio} from 'antd';
+import React, {useContext, useEffect, useState} from 'react';
+import {Form, Input, Radio, Select} from 'antd';
 // Contexts
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -8,7 +8,8 @@ import {PZRContext} from '../PZRContext';
 import {fetchSearchResults} from '../handlers/PZRSearchHandler';
 import {fetchAttributeGroups} from '../handlers/PZRAttributeGroupHandler';
 // Constants, Configs and Helper functions
-import {getBusinessUnits, extractOpCoId} from '../helper/PZRHelper';
+import {extractOpCoId, getBusinessUnits} from '../helper/PZRHelper';
+import {EMPTY_STRING} from '../../../constants/Constants';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -22,38 +23,30 @@ const validateMessages = {
 };
 
 const SearchForm = () => {
-    // Constants
     const isCustomerCheckedInitState = false;
     const customerTextboxValueInitState = '';
     const customerGroupTextboxValueInitState = '';
-    // Context access
     const userDetailContext = useContext(UserDetailContext);
     const pZRContext = useContext(PZRContext);
-    // States
     const [isCustomerChecked, setCustomerChecked] = useState(isCustomerCheckedInitState);
     const [customerTextboxValue, setCustomerTextBoxValue] = useState(customerTextboxValueInitState);
     const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState(customerGroupTextboxValueInitState);
     const [attributeGroups, setAttributeGroups] = useState('');
     const [isSearchDisabled, setSearchDisabled] = useState(true);
-
     const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
     const [form] = Form.useForm();
-
     const handleChangeCustomer = (event) => {
         setCustomerTextBoxValue(event.target.value);
     };
-
     const handleChangeCustomerGroup = (event) => {
         setCustomerGroupTextBoxValue(event.target.value);
     };
-
     const restSearchForm = () => {
         form.resetFields();
         setCustomerGroupTextBoxValue(customerGroupTextboxValueInitState);
         setCustomerTextBoxValue(customerTextboxValueInitState);
         setCustomerChecked(isCustomerCheckedInitState);
     };
-
     const onSubmit = (values) => {
         pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
@@ -73,24 +66,28 @@ const SearchForm = () => {
         pZRContext.setSearchResetFunc({resetForm: restSearchForm});
         fetchSearchResults(searchParams, pZRContext);
     };
-
     const getAttributeGroupsFromSeed = () => fetchAttributeGroups({
         userDetailContext,
         setAttributeGroups,
         setSearchDisabled
     });
-
+    const onReset = () => {
+        form.setFieldsValue({
+            site: EMPTY_STRING,
+            customer: EMPTY_STRING,
+            customerGroup: EMPTY_STRING,
+            attributeGroup: EMPTY_STRING
+        });
+    };
     useEffect(() => {
         if (attributeGroups === '') {
             getAttributeGroupsFromSeed();
         }
     }, [getAttributeGroupsFromSeed]);
-
     return (
         <div className={pZRContext.isOnReviewPage ? 'pz-disabled' : ''}>
             <div className="panel-header">
-                <i className="icon fi flaticon-list"/>
-                Search
+                <i className="icon fi flaticon-list"/> Search
             </div>
             <div className="search-form pz-search-form">
                 <Form
@@ -98,13 +95,21 @@ const SearchForm = () => {
                     form={form}
                     validateMessages={validateMessages}
                     onFinish={(value) => onSubmit(value)}
-                >
+                    onReset={onReset}>
+                    <Form.Item name="reset" className="pv-reset-base" label="&nbsp;">
+                        <div className="pv-reset-base">
+                            <button
+                                type="reset"
+                                className="search-refresh-btn refresh-outlined-btn pv-refresh-button">
+                                <i className="icon fi flaticon-refresh pv-refresh-icon"/> CLEAR
+                            </button>
+                        </div>
+                    </Form.Item>
                     <Form.Item
                         name="site"
                         label="Site"
                         className="pz-linebreak pz-linebreak-item-group"
-                        rules={[{required: true}]}
-                    >
+                        rules={[{required: true}]}>
                         <Select
                             placeholder="Select Site"
                             dropdownMatchSelectWidth={false}
@@ -116,10 +121,7 @@ const SearchForm = () => {
                                         : option.children.join('').toLowerCase().match(pattern));
                                 }
                                 return true;
-                            }}
-                            showSearch
-                        >
-                            {getBusinessUnits(activeBusinessUnitMap)}
+                            }} showSearch> {getBusinessUnits(activeBusinessUnitMap)}
                         </Select>
                     </Form.Item>
                     <div className="pz-customer-groupbox">
@@ -154,11 +156,11 @@ const SearchForm = () => {
                                 {
                                     max: 14,
                                     message: 'Should be 14 characters max'
-                                }]}
-                        >
+                                }]}>
                             <Form.Item name="customer">
                                 <Input disabled={!isCustomerChecked}
-                                       value={customerTextboxValue} onChange={handleChangeCustomer}/>
+                                       value={customerTextboxValue} onChange={handleChangeCustomer}
+                                       allowClear/>
                             </Form.Item>
                         </Form.Item>
                         <Form.Item
@@ -177,10 +179,9 @@ const SearchForm = () => {
                                 {
                                     max: 15,
                                     message: 'Should be 15 characters max'
-                                }]}
-                        >
+                                }]}>
                             <Form.Item name="customerGroup">
-                                <Input id="customer-group-text-box" disabled={isCustomerChecked}
+                                <Input allowClear id="customer-group-text-box" disabled={isCustomerChecked}
                                        value={customerGroupTextboxValue} onChange={handleChangeCustomerGroup}/>
                             </Form.Item>
                         </Form.Item>
@@ -189,25 +190,19 @@ const SearchForm = () => {
                         name="attributeGroup"
                         label="Attribute group"
                         className="pz-linebreak pz-linebreak-item-group"
-                        rules={[{required: true}]}
-                    >
+                        rules={[{required: true}]}>
                         <Select
-                            dropdownMatchSelectWidth={false}
-                            optionFilterProp="children"
+                            dropdownMatchSelectWidth={false} optionFilterProp="children"
                             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
-                            showSearch
-                        >
+                            showSearch>
                             {attributeGroups.attributeGroups}
                         </Select>
                     </Form.Item>
                     <Form.Item className="search-btn-wrapper">
                         <button
-                            id="search-button"
-                            type="primary"
+                            id="search-button" type="primary"
                             className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
-                            disabled={isSearchDisabled}
-                        >
-                            Search
+                            disabled={isSearchDisabled}>Search
                         </button>
                     </Form.Item>
                 </Form>

@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import {extractItemInfo, extractPricePoints, extractRequestInfo, extractSiteInfo} from '../../utils/PricingUtils';
+import {extractHistoryInquiryRequestInfo, extractItemInfo, extractSiteInfo} from '../../utils/PricingUtils';
 
-export const PriceValidationContext = React.createContext({
-    priceData: {},
-    setPriceData: () => {
+export const HistoryInquiryContext = React.createContext({
+    historyInquiryData: {},
+    setHistoryInquiryData: () => {
         // do nothing.
     }
 });
@@ -11,37 +11,33 @@ export const PriceValidationContext = React.createContext({
 const initialState = {
     response: null,
     product: null,
-    recentSearches: [],
     selectedBusinessUnit: {},
     item: null,
-    pricePoints: null,
     site: null,
 };
 
 const mapSuccessResponse = (data) => {
     const product = data.product;
-
     return {
         response: data,
         product,
         item: extractItemInfo(product),
-        pricePoints: extractPricePoints(product),
         site: extractSiteInfo(data),
-        order: extractRequestInfo(data)
+        historyRequest: extractHistoryInquiryRequestInfo(data),
     };
 };
 
-const PriceValidationContextProvider = (props) => {
-    const [priceDataState, setPriceData] = useState(initialState);
+const HistoryInquiryContextProvider = (props) => {
+    const [historyInquiryDataState, setHistoryInquiryData] = useState(initialState);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [response, setResponse] = useState(null);
 
-    const priceDataUpdateHandler = (data) => {
+    const HistoryInquiryDataUpdateHandler = (data) => {
         const processedState = mapSuccessResponse(data);
         setIsLoading(false);
         setError(null);
-        setPriceData(processedState);
+        setHistoryInquiryData(processedState);
         setResponse(data);
     };
 
@@ -52,9 +48,9 @@ const PriceValidationContextProvider = (props) => {
     };
 
     return (
-        <PriceValidationContext.Provider value={{
-            setPriceData: priceDataUpdateHandler,
-            priceData: priceDataState,
+        <HistoryInquiryContext.Provider value={{
+            setHistoryInquiryData: HistoryInquiryDataUpdateHandler,
+            historyInquiryData: historyInquiryDataState,
             setErrorData: errorUpdateHandler,
             setIsLoading,
             isLoading,
@@ -64,8 +60,8 @@ const PriceValidationContextProvider = (props) => {
             setResponse
         }}>
             {props.children}
-        </PriceValidationContext.Provider>
+        </HistoryInquiryContext.Provider>
     );
 };
 
-export default PriceValidationContextProvider;
+export default HistoryInquiryContextProvider;
