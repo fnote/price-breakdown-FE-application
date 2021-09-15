@@ -1,20 +1,71 @@
 import {
+    autoSize,
+    calculateResetIndex,
     constructRequestUrl,
+    extractOpCoId,
     formatPriceZones,
     generatePaginationParams,
-    getReviewStatusMsg,
-    getEmptyDataTableMessage,
     generateReviewer,
-    extractOpCoId
+    getAttributeGroups,
+    getEmptyDataTableMessage,
+    getPriceZoneOptions,
+    getReviewStatusMsg,
+    getStyleClassByApprovalStatus,
+    openNotificationWithIcon,
+    truncate
 } from '../PZRHelper';
 
 import {
     REVIEW_STATUS_APPROVED,
-    REVIEW_STATUS_REJECTED,
     REVIEW_STATUS_APPROVED_MSG,
-    REVIEW_STATUS_REJECTED_MSG,
-    REVIEW_STATUS_CHANGED_MSG
+    REVIEW_STATUS_CHANGED_MSG,
+    REVIEW_STATUS_REJECTED,
+    REVIEW_STATUS_REJECTED_MSG
 } from '../../../../constants/PZRConstants';
+import {getBusinessUnits} from "../../../PriceValidation/PricingHelper";
+
+describe('openNotificationWithIcon', () => {
+    test('should create notification', () => {
+        openNotificationWithIcon('error', 'Created', 'Success');
+    });
+});
+
+describe('getPriceZoneOptions', () => {
+    test('should return prize zones', () => {
+        const options = getPriceZoneOptions();
+        expect(options.length).toEqual(5);
+    });
+});
+
+describe('getAttributeGroups', () => {
+    test('should return attribute groups', () => {
+        const groups = getAttributeGroups([{id: 1, name: 'A'}, {id: 2, name: 'B'}]);
+        expect(groups.attributeGroups.length).toBe(2);
+        expect(groups.attributeGroupMap.get(1)).toEqual("A");
+    });
+});
+
+describe('getBusinessUnits', () => {
+    test('should return business units', () => {
+        const bunitsMap = getBusinessUnits([{id: "001", shortName: "Opco1"}, {id: "002", shortName: "Opco2"}]);
+        expect(bunitsMap.length).toBe(2);
+    });
+});
+
+describe('calculateResetIndex', () => {
+    test('should calculate the reset index when index is 0', () => {
+        expect(calculateResetIndex(0, 1)).toEqual(1);
+    });
+
+    test('should calculate the reset index when index < page', () => {
+        expect(calculateResetIndex(1, 10)).toEqual(1);
+    });
+
+    test('should calculate the reset index when index > page', () => {
+        expect(calculateResetIndex(10, 1)).toEqual(1);
+    });
+});
+
 
 describe('constructRequestUrl', () => {
     test('should construct request url correctly when empty query params are provided', () => {
@@ -67,12 +118,16 @@ describe('getReviewStatusMsg', () => {
 });
 
 describe('getEmptyDataTableMessage', () => {
-    test('should return correct messge when there is an error', () => {
+    test('should return correct message when there is an error', () => {
         expect(getEmptyDataTableMessage(true)).toEqual('Sorry we could not retrieve the information');
     });
 
-    test('should return correct messge when there is not an error', () => {
+    test('should return correct message when there is not an error', () => {
         expect(getEmptyDataTableMessage(false)).toEqual('No Changes to Review');
+    });
+
+    test('should return correct message when some other passed', () => {
+        expect(getEmptyDataTableMessage('A')).toEqual('Sorry we could not retrieve the information');
     });
 });
 
@@ -86,6 +141,48 @@ describe('generateReviewer', () => {
             surname: 'Jayalath',
             email: 'Tharuka.Jayalath@syscolabs.com'
         });
+    });
+});
+
+describe('truncate', () => {
+    test('should truncate the string', () => {
+        expect(truncate('truncate', 3)).toEqual('...');
+    });
+
+    test('should truncate the string', () => {
+        expect(truncate('truncate', 7)).toEqual('trun...');
+    });
+
+    test('should truncate non string', () => {
+        expect(truncate(null, 3)).toEqual('');
+    });
+});
+
+describe('autoSize', () => {
+    test('should autoSize the small text', () => {
+        expect(autoSize('autoSize')).toEqual("1.5rem");
+    });
+
+    test('should autoSize the long text', () => {
+        expect(autoSize('autoSizeautoSize')).toEqual("0.9rem");
+    });
+
+    test('should autoSize non string', () => {
+        expect(autoSize(null)).toEqual("1rem");
+    });
+});
+
+describe('getStyleClassByApprovalStatus', () => {
+    test('should return style when approved', () => {
+        expect(getStyleClassByApprovalStatus(REVIEW_STATUS_APPROVED)).toEqual('pz-aproved');
+    });
+
+    test('should return style when rejected', () => {
+        expect(getStyleClassByApprovalStatus(REVIEW_STATUS_REJECTED)).toEqual('pz-rejected');
+    });
+
+    test('should return style when default', () => {
+        expect(getStyleClassByApprovalStatus("DEFAULT")).toEqual('pz-already');
     });
 });
 
