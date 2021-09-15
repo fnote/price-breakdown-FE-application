@@ -86,11 +86,13 @@ const SearchForm = () => {
         }
     }, [getAttributeGroupsFromSeed]);
 
+
+
     return (
         <div className={pZRContext.isOnReviewPage ? 'pz-disabled' : ''}>
             <div className="panel-header">
                 <i className="icon fi flaticon-list"/>
-                Search
+              Search
             </div>
             <div className="search-form pz-search-form">
                 <Form
@@ -200,6 +202,7 @@ const SearchForm = () => {
                             {attributeGroups.attributeGroups}
                         </Select>
                     </Form.Item>
+                   
                     <Form.Item className="search-btn-wrapper">
                         <button
                             id="search-button"
