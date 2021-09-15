@@ -50,6 +50,11 @@ describe('getBusinessUnits', () => {
         const bunitsMap = getBusinessUnits([{id: "001", shortName: "Opco1"}, {id: "002", shortName: "Opco2"}]);
         expect(bunitsMap.length).toBe(2);
     });
+
+    test('should return empty business units', () => {
+        const bunitsMap = getBusinessUnits(null);
+        expect(bunitsMap.length).toBe(0);
+    });
 });
 
 describe('calculateResetIndex', () => {
@@ -129,6 +134,10 @@ describe('getEmptyDataTableMessage', () => {
     test('should return correct message when some other passed', () => {
         expect(getEmptyDataTableMessage('A')).toEqual('Sorry we could not retrieve the information');
     });
+
+    test('should return correct message when some other passed', () => {
+        expect(getEmptyDataTableMessage(null)).toEqual('No Changes to Review');
+    });
 });
 
 describe('generateReviewer', () => {
@@ -153,6 +162,10 @@ describe('truncate', () => {
         expect(truncate('truncate', 7)).toEqual('trun...');
     });
 
+    test('should truncate the string', () => {
+        expect(truncate('truncate', 8)).toEqual('truncate');
+    });
+
     test('should truncate non string', () => {
         expect(truncate(null, 3)).toEqual('');
     });
@@ -165,6 +178,10 @@ describe('autoSize', () => {
 
     test('should autoSize the long text', () => {
         expect(autoSize('autoSizeautoSize')).toEqual("0.9rem");
+    });
+
+    test('should autoSize the long text', () => {
+        expect(autoSize('autoSizeau')).toEqual("0.9rem");
     });
 
     test('should autoSize non string', () => {
