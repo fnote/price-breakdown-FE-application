@@ -1,6 +1,7 @@
 import React from 'react';
 import {Select} from 'antd';
 import moment from 'moment';
+import {EMPTY_STRING} from '../../constants/Constants';
 
 const {Option} = Select;
 
@@ -46,9 +47,9 @@ export const setInitialValues = (requestContext) => {
         };
     }
     return {
-        site: '',
-        customer: '',
-        supc: '',
+        site: EMPTY_STRING,
+        customer: EMPTY_STRING,
+        supc: EMPTY_STRING,
         quantity: 1,
         date: moment(),
         split: false

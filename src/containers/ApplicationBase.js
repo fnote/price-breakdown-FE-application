@@ -12,10 +12,12 @@ import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
 import {
     NAVIGATION_PATH_FILE_UPLOAD,
-    NAVIGATION_PATH_PRICE_VALIDATION,
-    SUPPORTED_WEB_BROWSERS,
     NAVIGATION_PATH_HISTORY_INQUIRY,
-    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT, SCREEN_PRICE_VALIDATION
+    NAVIGATION_PATH_PRICE_VALIDATION,
+    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT,
+    SCREEN_HISTORY_INQUIRY,
+    SCREEN_PRICE_VALIDATION,
+    SUPPORTED_WEB_BROWSERS
 } from '../constants/Constants';
 
 import {grantViewPermissionsToScreens, unsupportedBrowserState} from '../utils/CommonUtils';
@@ -37,7 +39,8 @@ const Application = (user) => (
                 <PZRHome/>
             </Route>
             <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
-                <HistoryInquiry/>
+                {grantViewPermissionsToScreens(user, SCREEN_HISTORY_INQUIRY) ? <HistoryInquiry/>
+                    : <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
             </Route>
         </Switch>
 );

@@ -1,92 +1,61 @@
 import React, {useContext} from 'react';
-import moment from 'moment';
 import {Checkbox, DatePicker, Form, Input, Select} from 'antd';
 import {getBusinessUnits} from '../../PriceValidation/PricingHelper';
 import {UserDetailContext} from '../../UserDetailContext';
 import {getBffUrlConfig} from '../../../utils/Configs';
-import {setHistoryInquiryInitialValues} from '../HistoryInquiryHelper';
-import {CORRELATION_ID_HEADER, HISTORY_INQUIRY_REQUEST, NOT_APPLICABLE_LABEL} from '../../../constants/Constants';
+import {
+    disabledDate,
+    formRequestBody,
+    rangeConfig,
+    setHistoryInquiryInitialValues,
+    validateMessages
+} from '../HistoryInquiryHelper';
+import {
+    CORRELATION_ID_HEADER,
+    DEFAULT_REQUEST_HEADER,
+    EMPTY_STRING,
+    HISTORY_INQUIRY_REQUEST,
+    NOT_APPLICABLE_LABEL
+} from '../../../constants/Constants';
 import {HistoryInquiryContext} from '../HistoryInquiryContext';
 import {RequestContext} from '../../RequestContext';
 
 const {RangePicker} = DatePicker;
-/* eslint-disable no-template-curly-in-string */
-const validateMessages = {
-    required: '${label} is required!',
-    types: {
-        number: '${label} is not a valid number!',
-    },
-    number: {
-        range: '${label} must be between ${min} and ${max}',
-    },
-};
-
-const rangeConfig = {
-    rules: [
-        {
-            type: 'array',
-            required: true,
-            message: 'Please select time!',
-        },
-    ],
-};
-function disabledDate(current) {
-    return current && current > moment().add(1, 'days').endOf('day');
-}
-const formRequestBody = (requestData) => {
-  const product = {
-    supc: requestData.supc,
-    splitFlag: requestData.split,
-  };
-
-  return JSON.stringify({
-      businessUnitNumber: requestData.site,
-      customerAccount: requestData.customer,
-      fromDate: requestData.rangeDate[0] === undefined ? '' : requestData.rangeDate[0].format('YYYYMMDD'),
-      toDate: requestData.rangeDate[1] === undefined ? '' : requestData.rangeDate[1].format('YYYYMMDD'),
-      requestedQuantity: requestData.quantity,
-      product,
-  });
-};
 
 const SearchForm = () => {
-  const [form] = Form.useForm();
-  const historyInquiryContext = useContext(HistoryInquiryContext);
-  const userDetailContext = useContext(UserDetailContext);
-  const requestContext = useContext(RequestContext);
-  const { userDetails: { businessUnitMap = new Map() } } = userDetailContext.userDetailsData;
-  const bUnitMap = getBusinessUnits(businessUnitMap);
-  const initialValues = setHistoryInquiryInitialValues(requestContext);
+    const [form] = Form.useForm();
+    const historyInquiryContext = useContext(HistoryInquiryContext);
+    const userDetailContext = useContext(UserDetailContext);
+    const requestContext = useContext(RequestContext);
+    const {userDetails: {businessUnitMap = new Map()}} = userDetailContext.userDetailsData;
+    const bUnitMap = getBusinessUnits(businessUnitMap);
+    const initialValues = setHistoryInquiryInitialValues(requestContext);
 
-  const handleResponse = (response) => {
-      const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
-    return response.json().then((json) => {
-      if (response.ok) {
-        return {
-          success: true,
-          data: json,
-          headers: { [CORRELATION_ID_HEADER]: correlationId },
-        };
-      }
-      return {
-        success: false,
-        data: json,
-        headers: {[CORRELATION_ID_HEADER]: correlationId},
-      };
-    });
+    const handleResponse = (response) => {
+        const correlationId = response.headers.get(CORRELATION_ID_HEADER) || NOT_APPLICABLE_LABEL;
+        return response.json().then((json) => {
+            if (response.ok) {
+                return {
+                    success: true,
+                    data: json,
+                    headers: {[CORRELATION_ID_HEADER]: correlationId},
+                };
+            }
+            return {
+                success: false,
+                data: json,
+                headers: {[CORRELATION_ID_HEADER]: correlationId},
+            };
+        });
   };
 
   const historyInquiryRequestHandler = (requestData) => {
-      const requestType = HISTORY_INQUIRY_REQUEST;
-      const requestContextData = {requestData, requestType};
+      const requestContextData = {requestData, HISTORY_INQUIRY_REQUEST};
       requestContext.setRequestData(requestContextData);
       fetch(getBffUrlConfig().historyInquiryEndpoint, {
           method: 'POST',
           body: formRequestBody(requestData),
-          headers: {
-              Accept: 'application/json, text/plain, */*',
-              'Content-Type': 'application/json',
-          },
+          headers: DEFAULT_REQUEST_HEADER,
           credentials: 'include',
       })
           .then(handleResponse)
@@ -112,10 +81,9 @@ const SearchForm = () => {
 
     const onReset = () => {
         form.setFieldsValue({
-            site: '',
-            supc: '',
-            customer: '',
-            rangeDate: '',
+            site: EMPTY_STRING,
+            supc: EMPTY_STRING,
+            customer: EMPTY_STRING,
             split: false
         });
     };
@@ -127,50 +95,50 @@ const SearchForm = () => {
   };
 
   return (
-    <>
-      <div className="panel-header">
-        <i className="icon fi flaticon-list" />
-        Search
-      </div>
+      <>
+          <div className="panel-header">
+              <i className="icon fi flaticon-list"/>
+              Search
+          </div>
 
-      <div className="search-form">
-        <Form
-            form={form}
-          name="nest-messages"
-          onFinish={onSubmit}
-          validateMessages={validateMessages}
-          initialValues={initialValues}
-            onReset={onReset}
-        >
-            <Form.Item name="reset" className="history-reset-base" label="&nbsp;">
-                <div className="history-reset-base">
-                    <button
-                        type="reset"
-                        className="search-refresh-btn refresh-outlined-btn history-refresh-button">
-                        <i className="icon fi flaticon-refresh history-refresh-icon"/> CLEAR
-                    </button>
-                </div>
-            </Form.Item>
-            <Form.Item
-                name="site"
-                label="Site"
-                rules={[
-                    {
-                        required: true,
-                    },
-                ]}
-            >
-                <Select
-                    placeholder="Select Site"
-                    dropdownMatchSelectWidth={false}
-                    filterOption={(inputValue, option) => {
-                        if (inputValue && option.children) {
-                            // unless the backslash is escaped, this will end up with a syntax error
-                            const pattern = inputValue.replace(/\\/g, '').toLowerCase();
-                            if (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/)) {
-                                return false;
-                            }
-                            return option.children.join('').toLowerCase().match(pattern);
+          <div className="search-form">
+              <Form
+                  form={form}
+                  name="nest-messages"
+                  onFinish={onSubmit}
+                  validateMessages={validateMessages}
+                  initialValues={initialValues}
+                  onReset={onReset}
+              >
+                  <Form.Item name="reset" className="history-reset-base" label="&nbsp;">
+                      <div className="history-reset-base">
+                          <button
+                              type="reset"
+                              className="search-refresh-btn refresh-outlined-btn history-refresh-button">
+                              <i className="icon fi flaticon-refresh history-refresh-icon"/> CLEAR
+                          </button>
+                      </div>
+                  </Form.Item>
+                  <Form.Item
+                      name="site"
+                      label="Site"
+                      rules={[
+                          {
+                              required: true,
+                          },
+                      ]}
+                  >
+                      <Select
+                          placeholder="Select Site"
+                          dropdownMatchSelectWidth={false}
+                          filterOption={(inputValue, option) => {
+                              if (inputValue && option.children) {
+                                  // unless the backslash is escaped, this will end up with a syntax error
+                                  const pattern = inputValue.replace(/\\/g, EMPTY_STRING).toLowerCase();
+                                  if (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/)) {
+                                      return false;
+                                  }
+                                  return option.children.join(EMPTY_STRING).toLowerCase().match(pattern);
                         }
                         return true;
                 }}

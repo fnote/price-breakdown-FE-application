@@ -1,11 +1,19 @@
 import React from 'react';
 import {Tooltip} from 'antd';
-import {NOT_PROVIDED_LABEL} from '../../../constants/Constants';
+import {EMPTY_STRING, NOT_PROVIDED_LABEL} from '../../../constants/Constants';
 import {formatBusinessUnit} from '../../../utils/CommonUtils';
 
 export default function HistoryBar(props) {
     const {historyInquiryData: {historyRequest, item, site}, userData: {businessUnitMap}} = props;
     const businessUnit = formatBusinessUnit(site.businessUnitNumber, businessUnitMap);
+
+    // truncating
+     const truncate = (str, n) => {
+        if (str) {
+            return (str.length > n) ? `${str.substr(0, n - 3)}...` : str;
+        }
+         return EMPTY_STRING;
+    };
     return (
         <div className="history-bar-wrapper">
 
@@ -17,14 +25,15 @@ export default function HistoryBar(props) {
                     <div className="history-item history-item-number">{item.id}</div>
                     <Tooltip title={item.name} color="blue">
                         <div className="history-item history-item-name">
-                            {item.name}
+                            {truncate(item.name, 38)}
                         </div>
                     </Tooltip>
           <div className="history-item history-row-3">
             <div className="history-row-item">
                 <div className="history-row-title">brand</div>
                 <Tooltip title={item.brand} color="blue">
-                    <div className="history-row-value">{item.brand}</div>
+                    <div className="history-row-value">
+                        {truncate(item.brand, 15)}</div>
                 </Tooltip>
             </div>
             <div className="history-row-item">
@@ -65,7 +74,9 @@ export default function HistoryBar(props) {
                   <div className="history-row-title">customer</div>
                   <div className="history-row-value-num">{site.customerAccount}</div>
                   <Tooltip title={site.customerName} color="blue">
-                    <div className="history-row-value-customer">{site.customerName}</div>
+                      <div className="history-row-value-customer">
+                          {truncate(site.customerName, 38)}
+                      </div>
                   </Tooltip>
               </div>
               <div className="history-row-item">

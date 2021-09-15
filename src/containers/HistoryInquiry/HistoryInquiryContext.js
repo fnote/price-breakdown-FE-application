@@ -4,7 +4,7 @@ import {extractHistoryInquiryRequestInfo, extractItemInfo, extractSiteInfo} from
 export const HistoryInquiryContext = React.createContext({
     historyInquiryData: {},
     setHistoryInquiryData: () => {
-        // This is intentional
+        // do nothing.
     }
 });
 
@@ -14,7 +14,6 @@ const initialState = {
     selectedBusinessUnit: {},
     item: null,
     site: null,
-    transactions: null,
 };
 
 const mapSuccessResponse = (data) => {

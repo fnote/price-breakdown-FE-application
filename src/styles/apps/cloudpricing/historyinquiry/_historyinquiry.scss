@@ -103,7 +103,6 @@
       }
       .history-item-number-row2 {
         font-size: 1.6rem;
-        text-transform: uppercase;
         font-weight: 800;
       }
       .history-item-name {
@@ -250,6 +249,10 @@
 .history-table {
   width: 100%;
   overflow-y: auto;
+
+  .ant-pagination-options{
+    display: none !important;
+  }
 
   .history-table-header{
     height:3rem;

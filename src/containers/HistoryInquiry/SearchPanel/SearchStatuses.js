@@ -39,7 +39,7 @@ const renderError = ({ errorCode, message, correlationId }) => (
       <div className="section-wrapper">
         <div className="error message-block">
           <div className="title">
-            <i className="icon fi flaticon-error-1" /> Sorry we could not retrieve this item.
+            <i className="icon fi flaticon-error-1"/> Sorry we could not retrieve history inquiry for this item.
           </div>
           <div className="subitle-title">
             Error {errorCode} - {message}
@@ -62,7 +62,7 @@ const SearchStatuses = () => {
   if (historyInquiryContext.error) {
     const {errorCode, correlationId} = historyInquiryContext.error;
     if (errorCode) {
-      const message = errorCode === 197 ? ErrorMessages.UNEXPECTED_TRANSACTION_HISTORY_ERROR : ErrorsMap.get(errorCode);
+      const message = errorCode === ErrorCodes.PRICING_ENGINE_ERROR ? ErrorMessages.UNEXPECTED_TRANSACTION_HISTORY_ERROR : ErrorsMap.get(errorCode);
       if (message) {
         return renderError({errorCode, message, correlationId});
       }

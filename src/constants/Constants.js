@@ -1,4 +1,4 @@
-export const CLOUD_PCI_FRONTEND_VERSION = '1.8.0';
+export const CLOUD_PCI_FRONTEND_VERSION = '1.9.0';
 // help page url
 export const HELP_PAGE_URL = 'https://maincourse.cloud.sysco.com/TVRLearningPortal/Content/ProfitMgmt/8Container/CloudPCI_contain.htm';
 
@@ -80,7 +80,9 @@ export const WEIGHT_FRACTION_DIGITS_THREE = 3;
 export const AVAILABLE_PRICE_ZONES = [1, 2, 3, 4, 5];
 export const NOT_APPLICABLE_LABEL = 'N/A';
 export const NOT_PROVIDED_LABEL = '--/--';
-
+export const CLOUD_PCI_DATE_FORMAT = 'YYYYMMDD';
+export const STANDARD_TIME_FORMAT = 'HHmmss';
+export const CLOUD_PCI_TIME_FORMAT = 'hh:mm:ss A';
 export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
 
 export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';

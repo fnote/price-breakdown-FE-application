@@ -5,6 +5,7 @@
  */
 
 import {
+    EMPTY_STRING,
     FILE_NAME_DISPLAY_LENGTH,
     ONLINE_STATUS_CHECK_URL,
     ROLE_SCREEN_PERMISSIONS,
@@ -14,12 +15,12 @@ import {
 
 const BUSINESS_UNIT_NAME_SPLITTER = 'Sysco ';
 
-const extractNames = (businessUnitName = '', splitter = BUSINESS_UNIT_NAME_SPLITTER) => {
+const extractNames = (businessUnitName = EMPTY_STRING, splitter = BUSINESS_UNIT_NAME_SPLITTER) => {
     const names = businessUnitName.split(splitter);
     if (names.length === 2) {
-        return { name: businessUnitName, shortName: names[1] };
+        return {name: businessUnitName, shortName: names[1]};
     }
-    return { name: businessUnitName, shortName: businessUnitName };
+    return {name: businessUnitName, shortName: businessUnitName};
 };
 
 const mapBusinessUnit = ({ bunit_id, bunit_name }) => ({
