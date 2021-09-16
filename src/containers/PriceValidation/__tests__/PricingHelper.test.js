@@ -7,7 +7,7 @@ configure({adapter: new Adapter()});
 
 jest.mock('moment', () => () => jest.requireActual('moment')('2020-01-01T00:00:00.000Z'));
 
-describe.only('formatBusinessUnit', () => {
+describe.only('getBusinessUnits', () => {
     test('should return formatted business unit name for valid OpCo Id', () => {
         expect(getBusinessUnits([])).toEqual([]);
         const businessUnitsMap = [{
@@ -19,6 +19,11 @@ describe.only('formatBusinessUnit', () => {
         const props = mount(businessUnitList[0]).props();
         expect(props.value).toEqual('011');
         expect(props.children.join('')).toEqual('011 - Louiville');
+    });
+
+    test('should return empty business units', () => {
+        const bunitsMap = getBusinessUnits(null);
+        expect(bunitsMap.length).toBe(0);
     });
 });
 

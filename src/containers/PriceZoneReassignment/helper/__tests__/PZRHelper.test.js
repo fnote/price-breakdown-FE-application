@@ -1,18 +1,21 @@
 import {
     autoSize,
     calculateResetIndex,
+    constructFetchRequest,
     constructRequestUrl,
     extractOpCoId,
     formatPriceZones,
     generatePaginationParams,
     generateReviewer,
     getAttributeGroups,
+    getBusinessUnits,
     getEmptyDataTableMessage,
     getPriceZoneOptions,
     getReviewStatusMsg,
     getStyleClassByApprovalStatus,
     openNotificationWithIcon,
-    truncate
+    truncate,
+    updateCompletedRequest
 } from '../PZRHelper';
 
 import {
@@ -22,7 +25,6 @@ import {
     REVIEW_STATUS_REJECTED,
     REVIEW_STATUS_REJECTED_MSG
 } from '../../../../constants/PZRConstants';
-import {getBusinessUnits} from "../../../PriceValidation/PricingHelper";
 
 describe('openNotificationWithIcon', () => {
     test('should create notification', () => {
@@ -47,7 +49,9 @@ describe('getAttributeGroups', () => {
 
 describe('getBusinessUnits', () => {
     test('should return business units', () => {
-        const bunitsMap = getBusinessUnits([{id: "001", shortName: "Opco1"}, {id: "002", shortName: "Opco2"}]);
+        const bunitsMap = getBusinessUnits(
+            new Map([['001', {id: '001', shortName: 'Opco1'}], ['002', {id: '002', shortName: 'Opco2'}]])
+        );
         expect(bunitsMap.length).toBe(2);
     });
 
@@ -71,6 +75,46 @@ describe('calculateResetIndex', () => {
     });
 });
 
+describe('updateCompletedRequest', () => {
+    test('should return a completed request', () => {
+        expect(updateCompletedRequest([
+            [{reviewStatus: "done"}, {reviewStatus: "done"}, {reviewStatus: "start"}, {reviewStatus: "start"}],
+            [{reviewStatus: "start"}, '2', '3', '4']
+        ], 0, 2)).toEqual({
+            "0": [{"reviewStatus": "done"}, {"reviewStatus": "done"}, {"reviewStatus": null}, {"reviewStatus": "start"}],
+            "1": [{"reviewStatus": "start"},
+                "2",
+                "3",
+                "4"
+            ]
+        });
+    });
+});
+
+describe('constructFetchRequest', () => {
+    test('should construct the initial request for GET', () => {
+        expect(constructFetchRequest()).toEqual({
+            "body": null,
+            "credentials": "include",
+            "headers": {
+                "Accept": "application/json",
+            },
+            "method": "GET",
+        });
+    });
+
+    test('should construct the initial request for POST', () => {
+        expect(constructFetchRequest('POST')).toEqual({
+            "body": null,
+            "credentials": "include",
+            "headers": {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+            },
+            "method": "POST",
+        });
+    });
+});
 
 describe('constructRequestUrl', () => {
     test('should construct request url correctly when empty query params are provided', () => {
