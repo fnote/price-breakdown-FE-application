@@ -43,7 +43,7 @@ describe('getAttributeGroups', () => {
     test('should return attribute groups', () => {
         const groups = getAttributeGroups([{id: 1, name: 'A'}, {id: 2, name: 'B'}]);
         expect(groups.attributeGroups.length).toBe(2);
-        expect(groups.attributeGroupMap.get(1)).toEqual("A");
+        expect(groups.attributeGroupMap.get(1)).toEqual('A');
     });
 });
 
@@ -78,14 +78,14 @@ describe('calculateResetIndex', () => {
 describe('updateCompletedRequest', () => {
     test('should return a completed request', () => {
         expect(updateCompletedRequest([
-            [{reviewStatus: "done"}, {reviewStatus: "done"}, {reviewStatus: "start"}, {reviewStatus: "start"}],
-            [{reviewStatus: "start"}, '2', '3', '4']
+            [{reviewStatus: 'done'}, {reviewStatus: 'done'}, {reviewStatus: 'start'}, {reviewStatus: 'start'}],
+            [{reviewStatus: 'start'}, '2', '3', '4']
         ], 0, 2)).toEqual({
-            "0": [{"reviewStatus": "done"}, {"reviewStatus": "done"}, {"reviewStatus": null}, {"reviewStatus": "start"}],
-            "1": [{"reviewStatus": "start"},
-                "2",
-                "3",
-                "4"
+            '0': [{'reviewStatus': 'done'}, {'reviewStatus': 'done'}, {'reviewStatus': null}, {'reviewStatus': 'start'}],
+            '1': [{'reviewStatus': 'start'},
+                '2',
+                '3',
+                '4'
             ]
         });
     });
@@ -94,24 +94,24 @@ describe('updateCompletedRequest', () => {
 describe('constructFetchRequest', () => {
     test('should construct the initial request for GET', () => {
         expect(constructFetchRequest()).toEqual({
-            "body": null,
-            "credentials": "include",
-            "headers": {
-                "Accept": "application/json",
+            'body': null,
+            'credentials': 'include',
+            'headers': {
+                'Accept': 'application/json',
             },
-            "method": "GET",
+            'method': 'GET',
         });
     });
 
     test('should construct the initial request for POST', () => {
         expect(constructFetchRequest('POST')).toEqual({
-            "body": null,
-            "credentials": "include",
-            "headers": {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
+            'body': null,
+            'credentials': 'include',
+            'headers': {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
             },
-            "method": "POST",
+            'method': 'POST',
         });
     });
 });
@@ -217,19 +217,19 @@ describe('truncate', () => {
 
 describe('autoSize', () => {
     test('should autoSize the small text', () => {
-        expect(autoSize('autoSize')).toEqual("1.5rem");
+        expect(autoSize('autoSize')).toEqual('1.5rem');
     });
 
     test('should autoSize the long text', () => {
-        expect(autoSize('autoSizeautoSize')).toEqual("0.9rem");
+        expect(autoSize('autoSizeautoSize')).toEqual('0.9rem');
     });
 
     test('should autoSize the long text', () => {
-        expect(autoSize('autoSizeau')).toEqual("0.9rem");
+        expect(autoSize('autoSizeau')).toEqual('0.9rem');
     });
 
     test('should autoSize non string', () => {
-        expect(autoSize(null)).toEqual("1rem");
+        expect(autoSize(null)).toEqual('1rem');
     });
 });
 
@@ -243,7 +243,7 @@ describe('getStyleClassByApprovalStatus', () => {
     });
 
     test('should return style when default', () => {
-        expect(getStyleClassByApprovalStatus("DEFAULT")).toEqual('pz-already');
+        expect(getStyleClassByApprovalStatus('DEFAULT')).toEqual('pz-already');
     });
 });
 
