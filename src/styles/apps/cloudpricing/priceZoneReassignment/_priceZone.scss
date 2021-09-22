@@ -421,31 +421,28 @@
     }
   }
 
-  .pz-log-table-wrapper{
-    .ant-table-tbody{
-      .ant-table-row-level-0{
-        height:13rem !important;
-        .ant-table-cell{
-          &:nth-child(2){
+  .pz-log-table-wrapper {
+    .ant-table-tbody {
+      .ant-table-row-level-0 {
+        height: 13rem !important;
+        .ant-table-cell {
+          &:nth-child(2) {
             border: 0.076rem dashed rgba(0, 0, 0, 0.1);
             border-top: none;
             border-bottom: none;
           }
-          &:nth-child(3){
+          &:nth-child(3) {
             border-right: 0.076rem dashed rgba(0, 0, 0, 0.1);
           }
-         
         }
       }
     }
   }
-  
 
-  
   // APPROVE | REJECTED AND DISCARDED TAGS
   .pz-log-status-tag {
     width: 80%;
-    margin-left:2rem;
+    margin-left: 2rem;
     height: 3rem;
     @include flexbox(1 1 auto, row, center, center);
     border-radius: 4px;
@@ -463,6 +460,110 @@
     background: #fcefd3;
     color: #e59e05;
   }
+}
+
+// pzr log pop over styles
+
+.pz-log-pop-over {
+  background-color: #fff;
+  width: 18rem;
+ height:26rem;
+  min-height: 10rem;
+
+
+
+  .pz-log-pop-header {
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-top:5px;
+   
+
+    .log-pop-header-left {
+      width: 6.4rem;
+   
+      position: relative;
+      &:after{
+        content: '';
+        height:70%;
+        width:2px;
+        border-right:1px dashed rgba(0,0,0,0.2);
+        position: absolute;
+        right:-10px;
+        top:10px;
+      }
+ 
+     
+      .log-pop-header-top {
+        font-size: 0.6rem;
+        font-weight:400;
+        padding: 0.2rem 0;
+        text-align: center;
+        letter-spacing: 0.6px;
+        color:#507B8F;
+      }
+      .log-pop-header-bottom {
+        background: #76e0f6;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        border-radius: 3px;
+        padding:2px 3px 2px 3px;
+      }
+    }
+
+    .log-pop-header-right{
+      margin:5px 0px 0px 20px;
+      font-weight: 600;
+      color:#507B8F;
+    }
+  }
+
+.pz-log-pop-body{
+display: flex;
+justify-content: center;
+height: 20rem;
+  width: 18rem;
+  overflow-y: auto;
+  margin-top:30px;
+  
+  &::-webkit-scrollbar {
+    background: none;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgba(52, 73, 94, 0.068);
+    border: 5px solid transparent;
+    background-clip: content-box;
+    border-radius: 20px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(52, 73, 94, 0.2);
+    border-radius: 20px;
+    border: 5px solid transparent;
+    background-clip: content-box;
+    cursor: pointer !important;
+  }
+
+
+  .pz-log-pop-ul{
+    width:90%;
+    .pz-log-pop-li{
+      display:flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.4rem;
+      margin-top: 5px;
+      font-size:2rem;
+      border-bottom: 0.5px solid rgba(0, 0, 0, 0.03);
+      color:$textstandard;
+      font-weight: 700;
+    }
+  }
+}
+
 }
 
 // override content styles background

@@ -1,7 +1,8 @@
 import React from 'react'
 import { autoSize, truncate } from '../helper/PZRHelper'
 import {ExclamationCircleOutlined} from '@ant-design/icons';
-import {Tooltip} from 'antd';
+import {Tooltip , Popover} from 'antd';
+import PzPopover from './PzPopover';
 
 export default function PzLogSummery() {
     return (
@@ -47,11 +48,12 @@ export default function PzLogSummery() {
                         {1==1 ? (
                             <>
                                 <div id="customer-group" className="pz-effective-date-text pz-caps">customer group</div>
-                                <Tooltip title={'customerGroup'} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
+                                <Popover content={PzPopover}  trigger="click">
                                     <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('31223')}}>
                                         {truncate('customerGroup', 15)}
                                     </div>
-                                </Tooltip>
+                                    </Popover>
+                              
                             </>
                         ) : (
                             <>
