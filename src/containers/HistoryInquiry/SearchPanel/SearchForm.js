@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {Checkbox, DatePicker, Form, Input, Select} from 'antd';
-import {getBusinessUnits} from '../../PriceValidation/PricingHelper';
+import {filterOption, getBusinessUnits} from '../../PriceValidation/PricingHelper';
 import {UserDetailContext} from '../../UserDetailContext';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
@@ -131,18 +131,8 @@ const SearchForm = () => {
                       <Select
                           placeholder="Select Site"
                           dropdownMatchSelectWidth={false}
-                          filterOption={(inputValue, option) => {
-                              if (inputValue && option.children) {
-                                  // unless the backslash is escaped, this will end up with a syntax error
-                                  const pattern = inputValue.replace(/\\/g, EMPTY_STRING).toLowerCase();
-                                  if (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/)) {
-                                      return false;
-                                  }
-                                  return option.children.join(EMPTY_STRING).toLowerCase().match(pattern);
-                        }
-                        return true;
-                }}
-                showSearch
+                          filterOption={filterOption}
+                          showSearch
             >
               {bUnitMap}
             </Select>
