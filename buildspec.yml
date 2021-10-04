@@ -30,7 +30,7 @@ phases:
       # Unit test run
       - npm test
       # Scan and push to sonarqube
-      - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=$SONAR_HOST -Dsonar.verbose=true
+      - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=$SONAR_HOST -Dsonar.branch.name=$Branch -Dsonar.verbose=true
 
   build:
     commands:
