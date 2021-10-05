@@ -55,15 +55,3 @@ export const setInitialValues = (requestContext) => {
         split: false
     };
 };
-
-export const filterOption = (inputValue, option) => {
-    if (inputValue && option.children) {
-        // unless the backslash is escaped, this will end up with a syntax error
-        const pattern = inputValue.replace(/\\/g, EMPTY_STRING).toLowerCase();
-        if (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/)) {
-            return false;
-        }
-        return option.children.join(EMPTY_STRING).toLowerCase().match(pattern);
-    }
-    return true;
-};

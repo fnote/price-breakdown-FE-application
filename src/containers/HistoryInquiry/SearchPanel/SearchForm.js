@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {Checkbox, DatePicker, Form, Input, Select} from 'antd';
-import {filterOption, getBusinessUnits} from '../../PriceValidation/PricingHelper';
+import {getBusinessUnits} from '../../PriceValidation/PricingHelper';
 import {UserDetailContext} from '../../UserDetailContext';
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
@@ -21,6 +21,18 @@ import {HistoryInquiryContext} from '../HistoryInquiryContext';
 import {RequestContext} from '../../RequestContext';
 
 const {RangePicker} = DatePicker;
+
+export const manipulateSites = (inputText, option) => {
+    if (inputText && option.children) {
+        // unless the backslash is escaped, this will end up with a syntax error
+        const modifiedInput = inputText.replace(/\\/g, EMPTY_STRING).toLowerCase();
+        if (inputText.length !== modifiedInput.length || inputText.match(/[^A-Za-z0-9 -]/)) {
+            return false;
+        }
+        return option.children.join(EMPTY_STRING).toLowerCase().match(modifiedInput);
+    }
+    return true;
+};
 
 const SearchForm = () => {
     const [form] = Form.useForm();
@@ -131,7 +143,7 @@ const SearchForm = () => {
                       <Select
                           placeholder="Select Site"
                           dropdownMatchSelectWidth={false}
-                          filterOption={filterOption}
+                          filterOption={manipulateSites}
                           showSearch
             >
               {bUnitMap}
