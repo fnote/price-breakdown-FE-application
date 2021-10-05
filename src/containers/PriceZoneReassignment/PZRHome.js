@@ -7,6 +7,7 @@ import AppBar from '../../components/AppBar/AppBar';
 import SearchPanel from './SearchPanel/SearchPanel';
 import PzUpdateComponent from './PzUpdateComponent';
 import PriceZoneReview from './PriceZoneReview/PriceZoneReview';
+import PriceZoneLog from './PriceZoneLog/PriceZoneLog';
 import SearchStatuses from './SearchPanel/SearchStatuses';
 
 // Contexts
@@ -19,6 +20,7 @@ import {SCREEN_CIPZ_PZ_UPDATE, SCREEN_CIPZ_REVIEW, SCREEN_CIPZ_SEARCH} from '../
 
 const PZ_UDATE_TAB = 'pz-update-tab';
 const REVIEW_TAB = 'review-tab';
+const LOG_TAB = 'log-tab';
 
 function PZRApp() {
     const {TabPane} = Tabs;
@@ -67,6 +69,18 @@ function PZRApp() {
                             <PriceZoneReview/>
                         </TabPane>
                     )}
+                     <TabPane
+                            tab={
+                                <div className="pz-maintab-item">
+                                    <i className="icon fi flaticon-pz-review pz-icon-tab"/>
+
+                                    <div id="review-changes-tab" className="pz-main-tab-sub"> Transaction Log</div>
+                                </div>
+                            }
+                            key={LOG_TAB}
+                        >
+                           <PriceZoneLog/>
+                        </TabPane>
                 </Tabs>
             </div>
         </div>
