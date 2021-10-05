@@ -6,19 +6,21 @@ import {notification, Select} from 'antd';
 import {formatBusinessUnitsIdShortName} from '../../../utils/CommonUtils';
 // Constants
 import {
-    AVAILABLE_PRICE_ZONES, CORRELATION_ID_HEADER,
+    AVAILABLE_PRICE_ZONES,
+    CORRELATION_ID_HEADER,
     HEADER_NAME_CONTENT_TYPE,
     HEADER_VALUE_APPLICATION_JSON,
-    HTTP_METHOD_GET, NOT_APPLICABLE_LABEL
+    HTTP_METHOD_GET,
+    NOT_APPLICABLE_LABEL
 } from '../../../constants/Constants';
 import {
     CIPZ_API_DATE_FORMAT,
     PZ_DISPLAY_DATE_FORMAT,
     REVIEW_STATUS_APPROVED,
-    REVIEW_STATUS_REJECTED,
     REVIEW_STATUS_APPROVED_MSG,
-    REVIEW_STATUS_REJECTED_MSG,
-    REVIEW_STATUS_CHANGED_MSG
+    REVIEW_STATUS_CHANGED_MSG,
+    REVIEW_STATUS_REJECTED,
+    REVIEW_STATUS_REJECTED_MSG
 } from '../../../constants/PZRConstants';
 
 const {Option} = Select;

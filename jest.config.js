@@ -4,7 +4,9 @@ module.exports = {
   name: 'cloud-pci-frontend',
   verbose: true,
   collectCoverageFrom: [
+    'src/containers/HistoryInquiry/HistoryInquiryHelper.js',
     'src/containers/PriceValidation/PricingHelper.js',
+    'src/containers/PriceZoneReassignment/helper/PZRHelper.js',
     'src/utils/**'
   ],
   transform: {
