@@ -1,6 +1,6 @@
 // Core
 import React, {useContext, useState, useEffect} from 'react';
-import {Form, Input, Select, Radio} from 'antd';
+import {Form, Input, Select, Radio } from 'antd';
 // Contexts
 import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
@@ -87,6 +87,8 @@ const SearchForm = () => {
     }, [getAttributeGroupsFromSeed]);
 
 
+    // antd option
+    const { Option } = Select;
 
     return (
         <div className={pZRContext.isOnReviewPage ? 'pz-disabled' : ''}>
@@ -202,6 +204,24 @@ const SearchForm = () => {
                             {attributeGroups.attributeGroups}
                         </Select>
                     </Form.Item>
+                    { 1==0 ? // Conditional Rendering
+                    <Form.Item
+                        name="transactionLogStatus"
+                        label="Status"
+                        className="pz-linebreak pz-linebreak-item-group"
+                        
+                    >
+                        <Select
+                            dropdownMatchSelectWidth={false}
+                            optionFilterProp="children"
+                            showSearch
+                        >
+                          <Option value="jack">Jack</Option>
+                        <Option value="lucy">Lucy</Option>
+                        <Option value="tom">Tom</Option>
+                        </Select>
+                    </Form.Item>
+                    :<></>}
                    
                     <Form.Item className="search-btn-wrapper">
                         <button
