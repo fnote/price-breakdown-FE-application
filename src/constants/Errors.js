@@ -23,6 +23,7 @@ const ErrorCodes = {
     CIPZ_ALREADY_APPROVED_OR_REJECTED: 102066,
     CIPZ_PROVIDED_INVALID_OFFSET: 102003,
     CIPZ_VALID_PRICE_ZONE_DATA_UNAVAILABLE: 102082,
+    CIPZ_PRICE_ZONE_ALREADY_ASSIGNED: 102083,
 
 };
 
@@ -43,6 +44,7 @@ const ErrorMessages = {
     CONNECTION_ISSUE_ERROR: 'Could not retrieve the information due to connection issue',
     INVALID_CUSTOMER_GROUP_ERROR: 'Your search did not found any match',
     SEARCH_NOT_FOUND: 'Search not found',
+    UNEXPECTED_TRANSACTION_HISTORY_ERROR: 'Unexpected error occurred while retrieving history inquiry information',
 };
 
 const ErrorsMap = new Map([
@@ -63,8 +65,10 @@ const ErrorsMap = new Map([
 ]);
 
 export const CIPZErrorMessages = {
-    FETCH_ITEM_ATTRIBUTE_ERROR_TITLE: 'Sorry we could not retrieve the attribute group information. Please refresh again.',
-    FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE: 'Could not retrieve the attribute group information due to connection issue.',
+    FETCH_ITEM_ATTRIBUTE_ERROR_TITLE: 'Sorry we could not retrieve the business center - item group - attribute group information.'
+    + ' Please refresh again.',
+    FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE: 'Could not retrieve the business center - item group - attribute group information'
+    + ' due to connection issue.',
     FETCH_SEARCH_RESULTS_TITLE: 'Sorry we could not retrieve the information. Please try again later.',
     FETCH_SEARCH_RESULTS_ERROR_MESSAGE: 'Could not retrieve the information due to connection issue.',
     UNKNOWN_ERROR_OCCURRED: 'Something went wrong. Please try again later.',
@@ -87,7 +91,7 @@ export const PZRSEEDErrorsMap = {
     '102010': 'Provided business unit is invalid in SEED',
     '102021': 'Provided customer account is invalid in SEED',
     '102023': 'Provided customer group is invalid in SEED',
-    '102033': 'Provided item attribute group is invalid in SEED',
+    '102033': 'Provided business center - item group - attribute group is invalid in SEED',
 };
 
 export const CIPZErrorsMap = {

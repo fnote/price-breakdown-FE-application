@@ -74,7 +74,7 @@ const businessUnits = new Map(
         ['332', {id: '332', name: 'Sysco Western Minnesota', shortName: 'Western Minnesota'}],
         ['335', {id: '335', name: 'Sysco Bahamas', shortName: 'Bahamas'}],
         ['344', {id: '344', name: 'Sysco IFG - Jacksonville', shortName: 'IFG - Jacksonville'}],
-        ['429', {id: '429', name: 'Sysco Doerle', shortName: 'Doerle'}],
+        ['429', {id: '429', name: 'Sysco Acadiana', shortName: 'Acadiana'}],
         ['450', {id: '450', name: 'Sysco Alaska', shortName: 'Alaska'}]
     ]
 );

@@ -1,20 +1,20 @@
 import { Tooltip } from 'antd'
 import React from 'react'
 
-export default function ReviewerSubmitter({subn , un}) {
+export default function ReviewerSubmitter({submission: {id, givenName, surname, createdTime, submissionNote}}) {
     return (
         <div className="pz-log-review-base">
            <div className="pz-log-review-details-base">
             <div className="pz-log-review-details-name">
                 <div className="pz-log-review-name">
-                    {un}
+                    {givenName}
                 </div>
                 <div className="pz-log-review-subname">
-                   (&nbsp;{subn}&nbsp;)
+                   (&nbsp;{surname}&nbsp;)
                 </div>
             </div>
             <div className="pz-log-review-details-date">
-            04 Aug 2020
+                {createdTime}
             </div>
            </div>
 

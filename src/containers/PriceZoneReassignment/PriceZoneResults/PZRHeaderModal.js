@@ -118,7 +118,7 @@ export const SubmitSuccess = ({Modal, resetSearch, referenceId}) => (
     </div>
 );
 
-export const NoEligiblePriceZones = ({Modal, setSubmitModal, priceZone}) => (
+export const ErrorInfoModal = ({Modal, setSubmitModal, message}) => (
     <div>
         {Modal(
             {
@@ -133,7 +133,7 @@ export const NoEligiblePriceZones = ({Modal, setSubmitModal, priceZone}) => (
                         <Info className="pz-success-anim-logo"/>
                     </div>
                     <div id="success-submission" className="pz-success-text">
-                        Selected item attribute group is not eligible for the Price Zone {priceZone}
+                        {message}
                     </div>
                 </div>
             </div>

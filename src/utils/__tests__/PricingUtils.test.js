@@ -1,14 +1,18 @@
 import {
     convertFactorToPercentage,
+    extractHistoryInquiryRequestInfo,
     extractItemInfo,
-    extractPricePoints, extractRequestInfo,
+    extractPricePoints,
+    extractRequestInfo,
     extractSiteInfo,
+    extractTransactions,
     formatBaseValueName,
     formatFactorDetails,
     formatPrice,
     formatPriceWithoutCurrency,
     generateDateObject,
     generateReadableDate,
+    generateTimeObject,
     generateValidityPeriod,
     getFormattedPercentageValue,
     getPriceUnit,
@@ -475,6 +479,21 @@ describe('extractRequestInfo', () => {
         expect(extractRequestInfo(data)).toEqual({
             'priceRequestDate': 'Oct 28, 2020',
             'quantity': 5,
+            'splitStatus': 'Y'
+        });
+    });
+});
+
+describe('extractHistoryInquiryRequestInfo', () => {
+    test('should return the correct value', () => {
+        const data = {
+            fromDate: '20201028',
+            toDate: '20210101',
+            product: {splitFlag: true}
+        };
+        expect(extractHistoryInquiryRequestInfo(data)).toEqual({
+            'fromDate': 'Oct 28, 2020',
+            'toDate': 'Jan 1, 2021',
             'splitStatus': 'Y'
         });
     });
@@ -1423,5 +1442,82 @@ describe('prepareDefaultPriceRulesSection', () => {
             'calculatedValue': '',
             'description': 'Price Rule: P1P'
         }, {'adjustmentValue': '$5.840', 'calculatedValue': '', 'description': 'P1'}]);
+    });
+});
+
+describe('extractTransactions', () => {
+    test('should return correct response when transaction history given', () => {
+        const transactionHistory = [
+            {
+                'obligationId': '11917294P',
+                'lineNumber': 3,
+                'transactionDate': '20200101',
+                'shippedQuantity': 1,
+                'perWeightFlag': 'N',
+                'totalCatchWeight': 0,
+                'unitPrice': 0.71,
+                'netPrice': 0.71,
+                'extendedPrice': 0.71,
+                'priceSourceType': '',
+                'createDate': '20200101',
+                'createTime': '182515'
+            }
+        ];
+        const formattedTransactionHistory = [{
+            'createDate': 'Jan 1, 2020',
+            'createDateTime': 'Jan 1, 2020 / 06:25:15 PM',
+            'createTime': '06:25:15 PM',
+            'extendedPrice': '$0.71',
+            'lineNumber': 3,
+            'netPrice': '$0.71',
+            'obligationId': '11917294P',
+            'perWeightFlag': 'N',
+            'priceSourceType': '',
+            'shippedQuantity': 1,
+            'totalCatchWeight': '0.000',
+            'transactionDate': 'Jan 1, 2020',
+            'unitPrice': '$0.71'
+        }];
+        expect(extractTransactions(transactionHistory)).toEqual(formattedTransactionHistory);
+    });
+    test('should return prices with 3 decimal points when cwt is true transaction history given', () => {
+        const transactionHistory = [
+            {
+                'obligationId': '11917294P',
+                'lineNumber': 3,
+                'transactionDate': '20200101',
+                'shippedQuantity': 1,
+                'perWeightFlag': 'Y',
+                'totalCatchWeight': 0.000,
+                'unitPrice': 0.71,
+                'netPrice': 0.71,
+                'extendedPrice': 0.71,
+                'priceSourceType': '',
+                'createDate': '20200101',
+                'createTime': '182515'
+            }
+        ];
+        const formattedTransactionHistory = [{
+            'createDate': 'Jan 1, 2020',
+            'createDateTime': 'Jan 1, 2020 / 06:25:15 PM',
+            'createTime': '06:25:15 PM',
+            'extendedPrice': '$0.710',
+            'lineNumber': 3,
+            'netPrice': '$0.710',
+            'obligationId': '11917294P',
+            'perWeightFlag': 'Y',
+            'priceSourceType': '',
+            'shippedQuantity': 1,
+            'totalCatchWeight': '0.000',
+            'transactionDate': 'Jan 1, 2020',
+            'unitPrice': '$0.710'
+        }];
+        expect(extractTransactions(transactionHistory)).toEqual(formattedTransactionHistory);
+    });
+});
+describe('extractTransactions', () => {
+    test('should return correct time when create time given', () => {
+        expect(generateTimeObject('010101')).toEqual('01:01:01 AM');
+        expect(generateTimeObject('130101')).toEqual('01:01:01 PM');
     });
 });

@@ -1,4 +1,4 @@
-export const CLOUD_PCI_FRONTEND_VERSION = '1.6.0';
+export const CLOUD_PCI_FRONTEND_VERSION = '1.9.0';
 // help page url
 export const HELP_PAGE_URL = 'https://maincourse.cloud.sysco.com/TVRLearningPortal/Content/ProfitMgmt/8Container/CloudPCI_contain.htm';
 
@@ -75,10 +75,14 @@ export const UNEXPECTED_ERROR_CODE = 500;
 export const PRICE_FRACTION_DIGITS_THREE = 3;
 export const PRICE_FRACTION_DIGITS_TWO = 2;
 export const PERCENTAGE_FRACTION_DIGITS = 2;
+export const WEIGHT_FRACTION_DIGITS_THREE = 3;
 
 export const AVAILABLE_PRICE_ZONES = [1, 2, 3, 4, 5];
 export const NOT_APPLICABLE_LABEL = 'N/A';
-
+export const NOT_PROVIDED_LABEL = '--/--';
+export const CLOUD_PCI_DATE_FORMAT = 'YYYYMMDD';
+export const STANDARD_TIME_FORMAT = 'HHmmss';
+export const CLOUD_PCI_TIME_FORMAT = 'hh:mm:ss A';
 export const FRACTION_DIGITS_CHANGING_MARGIN_VALUE = 10;
 
 export const CORRELATION_ID_HEADER = 'X-Syy-Correlation-Id';
@@ -89,7 +93,10 @@ export const MAX_VALUE_ALLOWED_FOR_HAND_PRICE_INPUT = 9999999999.999;
 export const NAVIGATION_PATH_PRICE_VALIDATION = '/';
 export const NAVIGATION_PATH_FILE_UPLOAD = '/file-upload';
 export const NAVIGATION_PATH_PRICEZONE_REASSIGNMENT = '/pricezone-reassignment';
+export const NAVIGATION_PATH_HISTORY_INQUIRY = '/history-inquiry';
 
+export const PRICE_VALIDATION_REQUEST = 'price_validation';
+export const HISTORY_INQUIRY_REQUEST = 'history_inquiry';
 export const FILE_UPLOADING_DONE = 'done';
 export const FILE_UPLOADING_ERROR = 'error';
 export const FILE_APPEAR_NOTIFICATION = 'Submitted file(s) will appear in the file list shortly!';
