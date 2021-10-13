@@ -34,7 +34,7 @@ export default function PriceZoneLog() {
       dataIndex: "st",
       key: "st",
       width: "15%",
-      render: (text, record) => <PriceZoneStatus type={record.status}  />,
+      render: (text, record) => <PriceZoneStatus reviewStatus={record.status}  />,
     },
   ];
 

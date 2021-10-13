@@ -7,10 +7,10 @@ export default function ReviewerSubmitter({submission: {id, givenName, surname, 
            <div className="pz-log-review-details-base">
             <div className="pz-log-review-details-name">
                 <div className="pz-log-review-name">
-                    {givenName}
+                    {givenName} {surname}
                 </div>
                 <div className="pz-log-review-subname">
-                   (&nbsp;{surname}&nbsp;)
+                   (&nbsp;{id}&nbsp;)
                 </div>
             </div>
             <div className="pz-log-review-details-date">
@@ -19,7 +19,7 @@ export default function ReviewerSubmitter({submission: {id, givenName, surname, 
            </div>
 
            <div className="pz-log-review-info">
-           <Tooltip id="tooltip" title="note goes here" color="#fff" overlayClassName="pz-tooltip"
+           <Tooltip id="tooltip" title={submissionNote} color="#fff" overlayClassName="pz-tooltip"
                          overlayStyle={{color: '#000'}}>
                     <i className="icon fi flaticon-note pz-log-review-note-icon "/>
                 </Tooltip>

@@ -16,7 +16,12 @@ import {UserDetailContext} from '../UserDetailContext';
 
 // Helper functions and constants
 import {grantViewPermissionsToScreens} from '../../utils/CommonUtils';
-import {SCREEN_CIPZ_PZ_UPDATE, SCREEN_CIPZ_REVIEW, SCREEN_CIPZ_SEARCH} from '../../constants/Constants';
+import {
+    SCREEN_CIPZ_PZ_UPDATE,
+    SCREEN_CIPZ_REVIEW,
+    SCREEN_CIPZ_SEARCH,
+    SCREEN_CIPZ_TRANSACTION_LOG_HISTORY
+} from '../../constants/Constants';
 
 const PZ_UDATE_TAB = 'pz-update-tab';
 const REVIEW_TAB = 'review-tab';
@@ -69,18 +74,20 @@ function PZRApp() {
                             <PriceZoneReview/>
                         </TabPane>
                     )}
-                     <TabPane
-                            tab={
-                                <div className="pz-maintab-item">
-                                    <i className="icon fi flaticon-pz-review pz-icon-tab"/>
+                    {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_TRANSACTION_LOG_HISTORY) && (
+                         <TabPane
+                                tab={
+                                    <div className="pz-maintab-item">
+                                        <i className="icon fi flaticon-pz-review pz-icon-tab"/>
 
-                                    <div id="review-changes-tab" className="pz-main-tab-sub"> Transaction Log</div>
-                                </div>
-                            }
-                            key={LOG_TAB}
-                        >
-                           <PriceZoneLog/>
-                        </TabPane>
+                                        <div id="review-changes-tab" className="pz-main-tab-sub"> Transaction Log</div>
+                                    </div>
+                                }
+                                key={LOG_TAB}
+                            >
+                               <PriceZoneLog/>
+                            </TabPane>
+                    )}
                 </Tabs>
             </div>
         </div>

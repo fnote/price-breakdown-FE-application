@@ -208,6 +208,7 @@ export const SCREEN_CIPZ_REVIEW = 'cipz_reviewer_tab';
 export const SCREEN_CIPZ_PZ_UPDATE = 'cipz_price_zone_update_tab';
 export const SCREEN_CIPZ_REASSIGNMENT = 'cipz_reassignment_tab';
 export const SCREEN_CIPZ_SEARCH = 'cipz_search';
+export const SCREEN_CIPZ_TRANSACTION_LOG_HISTORY = 'cipz_transaction_log_history'
 
 export const DEFAULT_REQUEST_HEADER = {
     'Accept': 'application/json, text/plain, */*',
@@ -270,6 +271,14 @@ export const ROLE_SCREEN_PERMISSIONS = {
         '': false
     },
     [SCREEN_CIPZ_SEARCH]: {
+        [ROLE_APP_ADMIN]: false,
+        [ROLE_GENERAL_USER]: false,
+        [ROLE_CIPZ_SUBMITTER]: true,
+        [ROLE_CIPZ_REVIEWER]: true,
+        [ROLE_CIPZ_SUPPORT]: true,
+        '': false
+    },
+    [SCREEN_CIPZ_TRANSACTION_LOG_HISTORY]: {
         [ROLE_APP_ADMIN]: false,
         [ROLE_GENERAL_USER]: false,
         [ROLE_CIPZ_SUBMITTER]: true,

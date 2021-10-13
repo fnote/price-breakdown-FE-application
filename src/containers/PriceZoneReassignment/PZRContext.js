@@ -10,6 +10,9 @@ export const PZRContext = React.createContext({
     isOnReviewPage: false,
     setIsOnReviewPage: () => {
     },
+    isOnTransactionHistoryLogPage: false,
+    setIsOnTransactionHistoryLogPage: () => {
+    },
     resetSearchResults: () => {
     }
 });
@@ -33,6 +36,7 @@ const PZRContextProvider = (props) => {
     const [isFirstSubmissionDone, setFirstSubmissionDone] = useState(false);
     const [isResponseEmpty, setIsResponseEmpty] = useState(false);
     const [isOnReviewPage, setIsOnReviewPage] = useState(false);
+    const [isOnTransactionHistoryLogPage,setIsOnTransactionHistoryLogPage] = useState(false);
 
     const setSearchResultsData = (data) => {
         setSearchLoading(false);
@@ -80,6 +84,8 @@ const PZRContextProvider = (props) => {
             setIsResponseEmpty,
             isOnReviewPage,
             setIsOnReviewPage,
+            isOnTransactionHistoryLogPage,
+            setIsOnTransactionHistoryLogPage,
             resetSearchResults
         }}>
             {props.children}

@@ -41,6 +41,7 @@ export const getBffUrlConfig = () => {
     // CIPZ apis
     CONFIG.pzUpdateRequests = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-update-requests`;
     CONFIG.pzUpdates = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-updates/:request_id`;
+    CONFIG.pzCustomerDetails = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-updates/:request_id/customers`;
 
     return CONFIG;
 };

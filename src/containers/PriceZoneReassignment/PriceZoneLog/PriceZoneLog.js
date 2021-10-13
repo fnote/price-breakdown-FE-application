@@ -1,13 +1,13 @@
 /* eslint-disable react/display-name */
 // Core
 import React, {useState, useEffect, useContext, useMemo, useRef} from 'react';
-import {Space, Empty, Button} from 'antd';
+import {Space, Empty, Button, Spin} from 'antd';
 import {ReloadOutlined} from '@ant-design/icons';
 // Custom components
 import useModal from '../../../hooks/useModal';
 import ReviewSubmitter from './ReviewerSubmitter';
 import ReviewSummary from './PzLogSummery';
-import ApproveRejectButtons from './PriceZoneStatus';
+import PriceZoneStatus from './PriceZoneStatus';
 import ReferenceDataTable from './ReferenceDataTable';
 import CustomPagination from '../../../components/CustomPagination';
 import ScrollableTable from '../../../components/ScrollableTable';
@@ -48,9 +48,9 @@ const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeReques
         dataIndex: 'submission',
         key: 'submission',
         width: '20%',
-        render: (submission) => (
+        render: (reviewerDetails) => (
             <Space size='middle'>
-                <ReviewSubmitter submission={submission}/>
+                <ReviewSubmitter submission={reviewerDetails}/>
             </Space>
         ),
     },
@@ -62,10 +62,6 @@ const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeReques
         render: (changeSummary) => (
             <Space
                 size='middle'
-                onClick={() => {
-                    setSelectedRecord(changeSummary);
-                    toggle();
-                }}
             >
                 <ReviewSummary changeSummary={changeSummary}/>
             </Space>
@@ -76,9 +72,9 @@ const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeReques
         dataIndex: 'accept',
         key: 'accept',
         width: '20%',
-        render: (cell, row, index) => (
+        render: (cell, row, index, reviewStatus) => (
             <Space size='middle'>
-                <ApproveRejectButtons type="Approved"/>
+                <PriceZoneStatus reviewStatus="Approved"/>
             </Space>
         ),
     },
@@ -141,7 +137,7 @@ export default function PriceZoneLog() {
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
-            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError});
+            fetchTransactionLogHistory({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError});
         } else {
             setCurrentPage(page);
         }

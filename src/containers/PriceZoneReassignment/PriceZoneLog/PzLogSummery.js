@@ -4,6 +4,8 @@ import {ExclamationCircleOutlined} from '@ant-design/icons';
 import {Tooltip , Popover} from 'antd';
 import PzPopover from './PzPopover';
 
+const CURRENT_PRICE_ZONE_TOOLTIP = 'Current price zone of this item attribute group and customer/customer group';
+
 export default function PzLogSummery({
                                          changeSummary: {
                                              businessUnit, newPriceZone, oldPriceZone, effectiveFromDate, customerGroup,
@@ -18,7 +20,7 @@ export default function PzLogSummery({
                 <div className="pz-review-sum-zone">
                     <div className="pz-zone-wrapper">
                         <div className="pz-zone-from-to-base">
-                            <Tooltip title='' color="#fff" overlayClassName="pz-tooltip"
+                            <Tooltip title={CURRENT_PRICE_ZONE_TOOLTIP} color="#fff" overlayClassName="pz-tooltip"
                                      overlayStyle={{color: '#000'}}>
                                 <div id="old-price-zone" className="pz-zone-from">{oldPriceZone}</div>
                             </Tooltip>
@@ -31,9 +33,9 @@ export default function PzLogSummery({
             <div className="pz-review-sum-left-opco">
                 <span id="opco" className="pz-caps">site</span>
                 <div className="pz-review-sum-left-opco">
-                    <Tooltip id="tooltip-opco" title={'lorem'} color="#fff" overlayClassName="pz-tooltip"
+                    <Tooltip id="tooltip-opco" title={businessUnit} color="#fff" overlayClassName="pz-tooltip"
                              overlayStyle={{color: '#000'}}>
-                        <div id="business-unit" className="pz-review-opco">{businessUnit}-Houston</div>
+                        <div id="business-unit" className="pz-review-opco">{businessUnit}</div>
                     </Tooltip>
                 </div>
             </div>
@@ -50,10 +52,10 @@ export default function PzLogSummery({
                 </div>
                 <div className="pz-right-bottom">
                     <div className="pz-right-bottom-left">
-                        {1==1 ? (
+                        {customerGroup ? (
                             <>
                                 <div id="customer-group" className="pz-effective-date-text pz-caps">customer Group</div>
-                                <Popover content={PzPopover}  trigger="click">
+                                <Popover content={<PzPopover id={id}/>}  trigger="click" id={id}>
                                     <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('31223')}}>
                                         {truncate(customerGroup, 15)}
                                     </div>
@@ -81,7 +83,6 @@ export default function PzLogSummery({
                                     {truncate(businessCenterItemAttributeGroup, 60)}
                                 </div>
                             </Tooltip>
-                            <ExclamationCircleOutlined className="pz-attrib-info"/>
                         </div>
 
                     </div>

@@ -8,14 +8,14 @@ import {
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE,
-    PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL
+    PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL, CIPZ_TRANSACTION_HISTORY_LOG_NO_OF_DAYS
 } from '../../../constants/PZRConstants';
 import {CIPZErrorMessages, ErrorCodes} from '../../../constants/Errors';
 
 export const fetchTransactionLogHistory = ({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError}) => {
     const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
     const requestUrl = constructRequestUrl(getBffUrlConfig().pzUpdateRequests,
-        {...paginationParams, request_status: PZ_CHANGE_REQUEST_STATUS_PENDING_APPROVAL});
+        {...paginationParams,is_exported: "y" , no_of_days: CIPZ_TRANSACTION_HISTORY_LOG_NO_OF_DAYS});
     setResultLoading(true);
     fetch(requestUrl, constructFetchRequest())
         .then(handleResponse)

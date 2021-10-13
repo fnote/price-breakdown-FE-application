@@ -96,12 +96,17 @@ export const formatPriceZones = (priceZones = []) => priceZones.join(',');
 export const formatPZRequest = ({
                                     createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate,
                                     customerGroup, customerAccount, businessCenterItemAttributeGroup, businessCenterItemAttributeGroupId,
-                                    summary, id, submissionNote, reviewStatus, ...rem
+                                    summary, id, submissionNote, reviewStatus, reviewer, reviewNote,reviewedTime, ...rem
                                 }, {businessUnitMap}) => ({
     submission: {
         createdTime: formatUnixEpoch(createdTime),
         submissionNote,
         ...submitter,
+    },
+    reviewerDetails:{
+        createdTime: formatUnixEpoch(reviewedTime),
+        submissionNote: reviewNote,
+        ...reviewer,
     },
     changeSummary: {
         id,
