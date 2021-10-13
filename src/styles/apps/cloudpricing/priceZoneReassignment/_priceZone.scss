@@ -439,6 +439,15 @@
     }
   }
 
+  // pzer log other styles
+  
+    @media only screen and (max-width:'1400px'){
+
+      .pz-log-customer-group{
+        width:8rem !important
+      }
+  }
+
   // APPROVE | REJECTED AND DISCARDED TAGS
   .pz-log-status-tag {
     width: 80%;
