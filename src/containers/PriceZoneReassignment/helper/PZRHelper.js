@@ -20,6 +20,7 @@ import {
     REVIEW_STATUS_REJECTED_MSG,
     REVIEW_STATUS_CHANGED_MSG
 } from '../../../constants/PZRConstants';
+import BUSINESS_UNITS_MAP from '../../../constants/BusinessUnits';
 
 const {Option} = Select;
 
@@ -73,6 +74,17 @@ export const getBusinessUnits = (businessUnitsMap) => {
         }));
     }
     return businessUnitOptions;
+};
+
+export const prepareBusinessUnitsMap = (businessUnitNumbers = []) => {
+    const businessUnitsMap = new Map();
+    businessUnitNumbers.forEach((number) => {
+        const businessUnit = BUSINESS_UNITS_MAP.get(number);
+        if (businessUnit) {
+            businessUnitsMap.set(number, businessUnit);
+        }
+    });
+    return businessUnitsMap;
 };
 
 // line 1 : Disabling weekends

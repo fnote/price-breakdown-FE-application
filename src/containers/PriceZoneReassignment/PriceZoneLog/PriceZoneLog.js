@@ -29,9 +29,8 @@ import {
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE
 } from '../../../constants/PZRConstants';
-import {fetchTransactionLogHistory} from "../handlers/PZGetTransactionHistoryLogHandler";
 
-const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing}) => ([
+const generateColumns = ({setSelectedRecord, toggle}) => ([
     {
         title: 'SUBMITTED BY',
         dataIndex: 'submission',
@@ -107,7 +106,7 @@ export default function PriceZoneLog() {
     }, [dataStore, currentPage, businessUnitMap]);
 
     useEffect(() => {
-        pZRContext.setIsOnReviewPage(true);
+        pZRContext.setIsOnTransactionLog(true);
     }, []);
 
     const {Modal, toggle} = useModal();
@@ -141,7 +140,7 @@ export default function PriceZoneLog() {
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
-            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError});
+            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError}, pZRContext.filterParams);
         } else {
             setCurrentPage(page);
         }
@@ -170,6 +169,10 @@ export default function PriceZoneLog() {
     useEffect(() => {
         loadTableData();
     }, []);
+
+    useEffect(() => {
+        loadTableData();
+    }, [pZRContext.filterParams]);
 
     useEffect(() => {
         if (fetchNewData) {
@@ -217,7 +220,7 @@ export default function PriceZoneLog() {
     }, [tableRef.current]);
 
     const renderDataTable = () => {
-        if (pZRContext.isOnReviewPage) {
+        if (pZRContext.isOnTransactionLog) {
             return (
                 <>
                     <ScrollableTable
@@ -244,9 +247,9 @@ export default function PriceZoneLog() {
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
             <Button id="pz-review-refresh" shape="round" icon={<ReloadOutlined />} size="small" disabled={resultLoading}
-                    onClick={() => fetchTransactionLogHistory({
+                    onClick={() => fetchPZChangeRequests({
                         page: 1, store: {}, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError
-                    })}
+                    }, pZRContext.filterParams)}
             >
                 Refresh
             </Button>

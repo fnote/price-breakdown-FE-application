@@ -32,12 +32,17 @@ function PZRApp() {
         <div className="content">
             {grantViewPermissionsToScreens(cipzUserRole, SCREEN_CIPZ_SEARCH) && (<SearchPanel/>)}
             <div className="pz-wrapper  pz-no-bg">
-                <Tabs type="card" defaultActiveKey={REVIEW_TAB}
+                <Tabs type="card" defaultActiveKey={LOG_TAB}
                       onChange={(activeTab) => {
                           if (activeTab === REVIEW_TAB) {
                               pZRContext.setIsOnReviewPage(true);
+                              pZRContext.setIsOnTransactionLog(false);
+                          } else if (activeTab === LOG_TAB) {
+                              pZRContext.setIsOnReviewPage(false);
+                              pZRContext.setIsOnTransactionLog(true);
                           } else {
                               pZRContext.setIsOnReviewPage(false);
+                              pZRContext.setIsOnTransactionLog(false);
                           }
                       }}
                 >

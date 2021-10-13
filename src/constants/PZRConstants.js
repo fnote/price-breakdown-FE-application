@@ -5,6 +5,12 @@ export const PZ_DISPLAY_DATE_FORMAT = 'DD MMM YYYY';
 export const CIPZ_API_DATE_FORMAT = 'YYYYMMDD';
 export const REVIEW_STATUS_APPROVED = 'APPROVED';
 export const REVIEW_STATUS_REJECTED = 'REJECTED';
+export const REVIEW_STATUS_DISCARDED = 'DISCARDED';
 export const REVIEW_STATUS_APPROVED_MSG = 'APPROVED';
 export const REVIEW_STATUS_REJECTED_MSG = 'REJECTED';
 export const REVIEW_STATUS_CHANGED_MSG = 'REVIEWED';
+export const TXN_LOG_SUPPORTED_STATUS_FILTERS = [
+    {label: 'Approved', value: REVIEW_STATUS_APPROVED},
+    {label: 'Rejected', value: REVIEW_STATUS_REJECTED},
+    {label: 'Discarded', value: REVIEW_STATUS_DISCARDED},
+];

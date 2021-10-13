@@ -19,6 +19,18 @@ const handleGetAttributeGroupResponse = (response) => {
     });
 };
 
+const handleUnknownError = (userDetailContext) => {
+    if (!auth.shouldFetchUserDetailsAgain(userDetailContext)) {
+        openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+    }
+};
+
+const handleError = (userDetailContext) => {
+    if (!auth.shouldFetchUserDetailsAgain(userDetailContext)) { // Check this is correct after auth is working
+        openNotificationWithIcon('error', CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
+    }
+};
+
 export const fetchAttributeGroups = ({userDetailContext, setAttributeGroups, setSearchDisabled}) => {
     fetch(getBffUrlConfig().priceZoneReassignmentGetItemAttributeUrl, {
         method: 'GET',
@@ -32,14 +44,28 @@ export const fetchAttributeGroups = ({userDetailContext, setAttributeGroups, set
                 setSearchDisabled(false);
             } else {
                 setSearchDisabled(true);
-                if (!auth.shouldFetchUserDetailsAgain(userDetailContext)) { // Check this is correct after auth is working
-                    openNotificationWithIcon('error', CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
-                }
+                handleError(userDetailContext);
             }
             return null;
         }).catch(() => {
-        if (!auth.shouldFetchUserDetailsAgain(userDetailContext)) {
-            openNotificationWithIcon('error', CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED, CIPZErrorMessages.FETCH_ITEM_ATTRIBUTE_ERROR_TITLE);
-        }
-    });
+            handleUnknownError(userDetailContext);
+        });
+};
+
+export const fetchTransactedAttributeGroups = ({userDetailContext, setTransactedAttributeGroups}) => {
+    fetch(getBffUrlConfig().pzTransactedAttributeGroups, {
+        method: 'GET',
+        headers: DEFAULT_REQUEST_HEADER,
+        credentials: 'include',
+    })
+        .then(handleGetAttributeGroupResponse)
+        .then((resp) => {
+            if (resp.success) {
+                setTransactedAttributeGroups(getAttributeGroups(resp.data.attributeGroups));
+            } else {
+                handleError(userDetailContext);
+            }
+        }).catch(() => {
+            handleUnknownError(userDetailContext);
+        });
 };

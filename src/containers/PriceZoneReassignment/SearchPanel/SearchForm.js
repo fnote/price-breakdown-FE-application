@@ -6,10 +6,12 @@ import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
 // Handlers
 import {fetchSearchResults} from '../handlers/PZRSearchHandler';
-import {fetchAttributeGroups} from '../handlers/PZRAttributeGroupHandler';
+import {fetchAttributeGroups, fetchTransactedAttributeGroups} from '../handlers/PZRAttributeGroupHandler';
 // Constants, Configs and Helper functions
 import {extractOpCoId, getBusinessUnits} from '../helper/PZRHelper';
 import {EMPTY_STRING} from '../../../constants/Constants';
+import {TXN_LOG_SUPPORTED_STATUS_FILTERS} from '../../../constants/PZRConstants';
+import { fetchTransactedBusinessUnits } from '../handlers/PZRGetTransactedBusinessUnitsHandler';
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
@@ -32,8 +34,10 @@ const SearchForm = () => {
     const [customerTextboxValue, setCustomerTextBoxValue] = useState(customerTextboxValueInitState);
     const [customerGroupTextboxValue, setCustomerGroupTextBoxValue] = useState(customerGroupTextboxValueInitState);
     const [attributeGroups, setAttributeGroups] = useState('');
+    const [transactedAttributeGroups, setTransactedAttributeGroups] = useState('');
     const [isSearchDisabled, setSearchDisabled] = useState(true);
     const {userDetails: {activeBusinessUnitMap = new Map()}} = userDetailContext.userDetailsData;
+    const [transactedBusinessUnits, setTransactedBusinessUnits] = useState(null);
     const [form] = Form.useForm();
     const handleChangeCustomer = (event) => {
         setCustomerTextBoxValue(event.target.value);
@@ -47,7 +51,7 @@ const SearchForm = () => {
         setCustomerTextBoxValue(customerTextboxValueInitState);
         setCustomerChecked(isCustomerCheckedInitState);
     };
-    const onSubmit = (values) => {
+    const onSearch = (values) => {
         pZRContext.setSearchResults(null);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;
@@ -66,11 +70,36 @@ const SearchForm = () => {
         pZRContext.setSearchResetFunc({resetForm: restSearchForm});
         fetchSearchResults(searchParams, pZRContext);
     };
+    const onFilter = (values) => {
+        console.log(values);
+        const customer = isCustomerChecked ? values.customer : null;
+        const customerGroup = !isCustomerChecked ? values.customerGroup : null;
+        const opcoId = extractOpCoId(values.site);
+        const attributeGroupMap = transactedAttributeGroups.attributeGroupMap;
+        const filterParams = {
+            site: opcoId,
+            customer,
+            customerGroup,
+            attributeGroup: attributeGroupMap.get(values.attributeGroup),
+            transactionLogStatus: values.transactionLogStatus,
+        };
+        pZRContext.setFilterLoading(true);
+        pZRContext.setFilterParams(filterParams);
+    };
     const getAttributeGroupsFromSeed = () => fetchAttributeGroups({
         userDetailContext,
         setAttributeGroups,
         setSearchDisabled
     });
+    const getTransactedAttributeGroups = () => fetchTransactedAttributeGroups({
+        userDetailContext,
+        setTransactedAttributeGroups
+    });
+    const getTransactedBusinessUnits = () => fetchTransactedBusinessUnits({
+        userDetailContext,
+        setTransactedBusinessUnits
+    });
+    const selectBusinessUnits = () => (pZRContext.isOnTransactionLog ? transactedBusinessUnits : activeBusinessUnitMap);
     const onReset = () => {
         form.setFieldsValue({
             site: EMPTY_STRING,
@@ -78,26 +107,49 @@ const SearchForm = () => {
             customerGroup: EMPTY_STRING,
             attributeGroup: EMPTY_STRING
         });
+        if (pZRContext.isOnTransactionLog) {
+            pZRContext.setFilterLoading(true);
+            pZRContext.setFilterParams({});
+        }
     };
+
     useEffect(() => {
         if (attributeGroups === '') {
             getAttributeGroupsFromSeed();
         }
     }, [getAttributeGroupsFromSeed]);
-  
+
+    useEffect(() => {
+        if (transactedAttributeGroups === '' && pZRContext.isOnTransactionLog) {
+            getTransactedAttributeGroups();
+        }
+    }, [pZRContext.isOnTransactionLog, getTransactedAttributeGroups]);
+
+    useEffect(() => {
+        if (transactedBusinessUnits === null && pZRContext.isOnTransactionLog) {
+            getTransactedBusinessUnits();
+        }
+    }, [pZRContext.isOnTransactionLog, transactedBusinessUnits, getTransactedBusinessUnits]);
+    
     const { Option } = Select;
 
     return (
         <div className={pZRContext.isOnReviewPage ? 'pz-disabled' : ''}>
             <div className="panel-header">
-                <i className="icon fi flaticon-list"/> Search
+                <i className="icon fi flaticon-list"/> {!pZRContext.isOnTransactionLog ? 'Search' : 'Filter'}
             </div>
             <div className="search-form pz-search-form">
                 <Form
                     name="nest-messages"
                     form={form}
                     validateMessages={validateMessages}
-                    onFinish={(value) => onSubmit(value)}
+                    onFinish={(value) => {
+                        if (pZRContext.isOnTransactionLog) {
+                            onFilter(value);
+                        } else {
+                            onSearch(value);
+                        }
+                    }}
                     onReset={onReset}>
                     <Form.Item name="reset" className="pv-reset-base" label="&nbsp;">
                         <div className="pv-reset-base">
@@ -112,7 +164,7 @@ const SearchForm = () => {
                         name="site"
                         label="Site"
                         className="pz-linebreak pz-linebreak-item-group"
-                        rules={[{required: true}]}>
+                        rules={[{required: !pZRContext.isOnTransactionLog}]}>
                         <Select
                             placeholder="Select Site"
                             dropdownMatchSelectWidth={false}
@@ -124,7 +176,7 @@ const SearchForm = () => {
                                         : option.children.join('').toLowerCase().match(pattern));
                                 }
                                 return true;
-                            }} showSearch> {getBusinessUnits(activeBusinessUnitMap)}
+                            }} showSearch> {getBusinessUnits(selectBusinessUnits())}
                         </Select>
                     </Form.Item>
                     <div className="pz-customer-groupbox">
@@ -153,7 +205,7 @@ const SearchForm = () => {
                                     message: 'Not a valid Customer ID'
                                 },
                                 {
-                                    required: isCustomerChecked === true,
+                                    required: !pZRContext.isOnTransactionLog && isCustomerChecked === true,
                                     message: 'Customer or Customer Group is required!'
                                 },
                                 {
@@ -176,7 +228,7 @@ const SearchForm = () => {
                                     message: 'Not a valid Customer Group ID'
                                 },
                                 {
-                                    required: isCustomerChecked === false,
+                                    required: !pZRContext.isOnTransactionLog && isCustomerChecked === false,
                                     message: 'Customer or Customer Group is required!'
                                 },
                                 {
@@ -193,37 +245,38 @@ const SearchForm = () => {
                         name="attributeGroup"
                         label="Attribute group"
                         className="pz-linebreak pz-linebreak-item-group"
-                        rules={[{required: true}]}>
+                        rules={[{required: !pZRContext.isOnTransactionLog}]}>
                         <Select
                             dropdownMatchSelectWidth={false} optionFilterProp="children"
                             filterOption={(input, option) => option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             showSearch>
-                            {attributeGroups.attributeGroups}
+                            {pZRContext.isOnTransactionLog ? transactedAttributeGroups.attributeGroups : attributeGroups.attributeGroups}
                         </Select>
                     </Form.Item>
-                    { 1==0 ? // Conditional Rendering
-                    <Form.Item
+                    { pZRContext.isOnTransactionLog
+                     && <Form.Item
                         name="transactionLogStatus"
                         label="Status"
                         className="pz-linebreak pz-linebreak-item-group"
-                        
-                    >
+                        >
                         <Select
                             dropdownMatchSelectWidth={false}
                             optionFilterProp="children"
                             showSearch
                         >
-                          <Option value="jack">Jack</Option>
-                        <Option value="lucy">Lucy</Option>
-                        <Option value="tom">Tom</Option>
+                            {
+                                TXN_LOG_SUPPORTED_STATUS_FILTERS.map(({label, value}) => (
+                                    <Option key={value} value={value}>{label}</Option>
+                                ))
+                            }
                         </Select>
                     </Form.Item>
-                    :<></>}
+                    }
                     <Form.Item className="search-btn-wrapper">
                         <button
                             id="search-button" type="primary"
                             className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
-                            disabled={isSearchDisabled}>Search
+                            disabled={isSearchDisabled}>{!pZRContext.isOnTransactionLog ? 'Search' : 'Filter'}
                         </button>
                     </Form.Item>
                 </Form>
