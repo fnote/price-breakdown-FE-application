@@ -443,10 +443,11 @@
   .pz-log-status-tag {
     width: 80%;
     margin-left: 2rem;
-    height: 3rem;
+    height: 4rem;
     @include flexbox(1 1 auto, row, center, center);
     border-radius: 4px;
-    font-weight: 600;
+    font-weight: 700;
+    font-size:1.2rem;
   }
   .pz-log-approved {
     background: #ebf9f4;
