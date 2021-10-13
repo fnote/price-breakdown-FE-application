@@ -2,11 +2,20 @@ import React from "react";
 
 export default function PzPopover() {
   const custgroup = [
-    31223, 32112, 34223, 34556, 45654, 53452, 73217, 23423, 21231, 45345,
+    31223,32112, 34223, 34556, 45654, 53452, 73217, 23423, 21231, 45345,
   ];
 
+ 
+  const calcHeight = (cust)=>{
+    if(cust){
+      if(cust.length <= 3){
+        const height =  `${cust.length * 7}rem`;
+        return height
+      }
+    }
+  }
   return (
-    <div className="pz-log-pop-over">
+    <div className="pz-log-pop-over" style={{height:calcHeight(custgroup)}}>
       <div className="pz-log-pop-header">
         <div className="log-pop-header-left">
           <div className="log-pop-header-top">CUSTOMER GROUP</div>
