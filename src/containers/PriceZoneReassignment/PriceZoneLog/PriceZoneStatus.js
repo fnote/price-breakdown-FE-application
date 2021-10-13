@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PriceZoneStatus({reviewStatus}) {
+export default function PriceZoneStatus({status}) {
 
 const Approved = ()=>{
     return(<div className="pz-log-status-tag pz-log-approved">APPROVED</div>)
@@ -16,10 +16,10 @@ const Discarded = ()=>{
     <>
       {
         {
-          'Approved': <Approved />,
-          'Rejected': <Rejected />,
-          'Discarded': <Discarded />,
-        }[reviewStatus]
+          'APPROVED': <Approved />,
+          'REJECTED': <Rejected />,
+          'DISCARDED': <Discarded />,
+        }[status]
       }
     </>
   );

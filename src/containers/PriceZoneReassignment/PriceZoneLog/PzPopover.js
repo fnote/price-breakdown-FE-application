@@ -3,7 +3,7 @@ import { Spin } from 'antd';
 import {fetchCustomerDetails} from "../handlers/PZRGetCustomerDetails";
 import {REVIEW_RESULT_TABLE_PAGE_SIZE} from "../../../constants/PZRConstants";
 
-export default function PzPopover({id}) {
+export default function PzPopover({id,customerGroup}) {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [dataStore, setDataStore] = useState({});
@@ -11,11 +11,6 @@ export default function PzPopover({id}) {
     const [resultLoading, setResultLoading] = useState(false);
     const [error, setError] = useState(false);
     const [customers, setCustomers] = useState(null);
-
-  const custgroup = [
-    31223, 32112, 34223, 34556, 45654, 53452, 73217, 23423, 21231, 45345,
-  ];
-
 
     const loadPopOverWithCustomerData = ()=> fetchCustomerDetails({id, setResultLoading,setError, setCustomers});
 
@@ -32,9 +27,9 @@ export default function PzPopover({id}) {
                         <div className="pz-log-pop-header">
                             <div className="log-pop-header-left">
                                 <div className="log-pop-header-top">CUSTOMER GROUP</div>
-                                <div className="log-pop-header-bottom">31223</div>
+                                <div className="log-pop-header-bottom">{customerGroup}</div>
                             </div>
-                            <div className="log-pop-header-right">10 customers</div>
+                            <div className="log-pop-header-right">{customers.length} customers</div>
                         </div>
 
                         <div className="pz-log-pop-body">

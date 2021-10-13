@@ -43,5 +43,7 @@ export const getBffUrlConfig = () => {
     CONFIG.pzUpdates = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-updates/:request_id`;
     CONFIG.pzCustomerDetails = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-updates/:request_id/customers`;
 
+    CONFIG.pzTransactedAttributeGroups = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-update-requests/item-attribute-groups`;
+    CONFIG.pzTransactedBusinessUnits = `${CONFIG.bffBaseUrl}price-zone-reassignment/pz-update-requests/opcos`;
     return CONFIG;
 };

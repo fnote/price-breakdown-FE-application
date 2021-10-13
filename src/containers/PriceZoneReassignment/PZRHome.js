@@ -41,8 +41,13 @@ function PZRApp() {
                       onChange={(activeTab) => {
                           if (activeTab === REVIEW_TAB) {
                               pZRContext.setIsOnReviewPage(true);
+                              pZRContext.setIsOnTransactionLog(false);
+                          } else if (activeTab === LOG_TAB) {
+                              pZRContext.setIsOnReviewPage(false);
+                              pZRContext.setIsOnTransactionLog(true);
                           } else {
                               pZRContext.setIsOnReviewPage(false);
+                              pZRContext.setIsOnTransactionLog(false);
                           }
                       }}
                 >

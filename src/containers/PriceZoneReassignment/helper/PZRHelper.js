@@ -20,6 +20,7 @@ import {
     REVIEW_STATUS_REJECTED_MSG,
     REVIEW_STATUS_CHANGED_MSG
 } from '../../../constants/PZRConstants';
+import BUSINESS_UNITS_MAP from '../../../constants/BusinessUnits';
 
 const {Option} = Select;
 
@@ -75,6 +76,17 @@ export const getBusinessUnits = (businessUnitsMap) => {
     return businessUnitOptions;
 };
 
+export const prepareBusinessUnitsMap = (businessUnitNumbers = []) => {
+    const businessUnitsMap = new Map();
+    businessUnitNumbers.forEach((number) => {
+        const businessUnit = BUSINESS_UNITS_MAP.get(number);
+        if (businessUnit) {
+            businessUnitsMap.set(number, businessUnit);
+        }
+    });
+    return businessUnitsMap;
+};
+
 // line 1 : Disabling weekends
 // line 2 : Disabling past days
 // line 3 : Disabling future date after next monday
@@ -96,7 +108,7 @@ export const formatPriceZones = (priceZones = []) => priceZones.join(',');
 export const formatPZRequest = ({
                                     createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate,
                                     customerGroup, customerAccount, businessCenterItemAttributeGroup, businessCenterItemAttributeGroupId,
-                                    summary, id, submissionNote, reviewStatus, reviewer, reviewNote,reviewedTime, ...rem
+                                    summary, id, submissionNote, status, reviewStatus, reviewer, reviewNote,reviewedTime, ...rem
                                 }, {businessUnitMap}) => ({
     submission: {
         createdTime: formatUnixEpoch(createdTime),
@@ -121,6 +133,7 @@ export const formatPZRequest = ({
         ...summary
     },
     reviewStatus,
+    status,
     other: {
         ...rem,
     }

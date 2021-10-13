@@ -29,9 +29,8 @@ import {
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE
 } from '../../../constants/PZRConstants';
-import {fetchTransactionLogHistory} from "../handlers/PZGetTransactionHistoryLogHandler";
 
-const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeRequests, approveRejectProgressing}) => ([
+const generateColumns = ({setSelectedRecord, toggle}) => ([
     {
         title: 'SUBMITTED BY',
         dataIndex: 'submission',
@@ -69,14 +68,18 @@ const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeReques
     },
     {
         title: 'STATUS',
-        dataIndex: 'accept',
-        key: 'accept',
+        dataIndex: 'status',
+        key: 'status',
         width: '20%',
-        render: (cell, row, index, reviewStatus) => (
-            <Space size='middle'>
-                <PriceZoneStatus reviewStatus="Approved"/>
-            </Space>
-        ),
+        render: (status) => {
+            console.log('llllllllllllllllllllllll')
+            console.log(status)
+            return(
+                <Space size='middle'>
+                    <PriceZoneStatus status={status}/>
+                </Space>
+            )
+        }
     },
 ]);
 
@@ -97,13 +100,14 @@ export default function PriceZoneLog() {
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
         if (currentPageData) {
+            console.log(dataStore[currentPage]);
             return dataStore[currentPage].map((record) => formatPZRequest(record, {businessUnitMap}));
         }
         return [];
     }, [dataStore, currentPage, businessUnitMap]);
 
     useEffect(() => {
-        pZRContext.setIsOnReviewPage(true);
+        pZRContext.setIsOnTransactionLog(true);
     }, []);
 
     const {Modal, toggle} = useModal();
@@ -137,7 +141,8 @@ export default function PriceZoneLog() {
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
-            fetchTransactionLogHistory({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError});
+            fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError}, pZRContext.filterParams);
+            // fetchTransactionLogHistory({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError});
         } else {
             setCurrentPage(page);
         }
@@ -166,6 +171,10 @@ export default function PriceZoneLog() {
     useEffect(() => {
         loadTableData();
     }, []);
+
+    useEffect(() => {
+        loadTableData();
+    }, [pZRContext.filterParams]);
 
     useEffect(() => {
         if (fetchNewData) {
@@ -213,7 +222,7 @@ export default function PriceZoneLog() {
     }, [tableRef.current]);
 
     const renderDataTable = () => {
-        if (pZRContext.isOnReviewPage) {
+        if (pZRContext.isOnTransactionLog) {
             return (
                 <>
                     <ScrollableTable
@@ -240,9 +249,9 @@ export default function PriceZoneLog() {
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
             <Button id="pz-review-refresh" shape="round" icon={<ReloadOutlined />} size="small" disabled={resultLoading}
-                    onClick={() => fetchTransactionLogHistory({
+                    onClick={() => fetchPZChangeRequests({
                         page: 1, store: {}, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError
-                    })}
+                    }, pZRContext.filterParams)}
             >
                 Refresh
             </Button>

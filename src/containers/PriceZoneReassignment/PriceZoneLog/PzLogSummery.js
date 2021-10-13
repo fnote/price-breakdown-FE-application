@@ -55,7 +55,7 @@ export default function PzLogSummery({
                         {customerGroup ? (
                             <>
                                 <div id="customer-group" className="pz-effective-date-text pz-caps">customer Group</div>
-                                <Popover content={<PzPopover id={id}/>}  trigger="click" id={id}>
+                                <Popover content={<PzPopover id={id} customerGroup={customerGroup}/>}  trigger="click" id={id}>
                                     <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('31223')}}>
                                         {truncate(customerGroup, 15)}
                                     </div>

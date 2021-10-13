@@ -26,9 +26,16 @@ const initialSearchParamsState = {
     attributeGroupId: null,
 };
 
+const initialFilterParamsState = {
+    is_exported: 'Y',
+    no_exported_days: '180',
+};
+
 const PZRContextProvider = (props) => {
     const [isSearchLoading, setSearchLoading] = useState(false);
+    const [isFilterLoading, setFilterLoading] = useState(false);
     const [searchParams, setSearchParams] = useState({...initialSearchParamsState});
+    const [filterParams, setFilterParams] = useState(initialFilterParamsState);
     const [searchResults, setSearchResults] = useState(null);
     const [searchError, setSearchError] = useState(null);
     const [isSearchTableLoading, setSearchTableLoading] = useState(false);
@@ -36,7 +43,7 @@ const PZRContextProvider = (props) => {
     const [isFirstSubmissionDone, setFirstSubmissionDone] = useState(false);
     const [isResponseEmpty, setIsResponseEmpty] = useState(false);
     const [isOnReviewPage, setIsOnReviewPage] = useState(false);
-    const [isOnTransactionHistoryLogPage,setIsOnTransactionHistoryLogPage] = useState(false);
+    const [isOnTransactionLog, setIsOnTransactionLog] = useState(false);
 
     const setSearchResultsData = (data) => {
         setSearchLoading(false);
@@ -84,9 +91,13 @@ const PZRContextProvider = (props) => {
             setIsResponseEmpty,
             isOnReviewPage,
             setIsOnReviewPage,
-            isOnTransactionHistoryLogPage,
-            setIsOnTransactionHistoryLogPage,
-            resetSearchResults
+            resetSearchResults,
+            isOnTransactionLog,
+            setIsOnTransactionLog,
+            filterParams,
+            setFilterParams,
+            isFilterLoading,
+            setFilterLoading
         }}>
             {props.children}
         </PZRContext.Provider>
