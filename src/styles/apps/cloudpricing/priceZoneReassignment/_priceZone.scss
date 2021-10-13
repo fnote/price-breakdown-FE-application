@@ -1241,6 +1241,13 @@ height: 20rem;
 .pz-disabled {
   pointer-events: none !important;
   filter: grayscale(0.7);
+
+  .pv-reset-base {
+    @include flexbox(1 1 auto, row, flex-end, center);
+    position: absolute;
+    top: -1px;
+  }
+
 }
 
 // pagination align right
