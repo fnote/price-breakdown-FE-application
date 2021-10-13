@@ -4,6 +4,7 @@ import {notification} from 'antd';
 import Login from './Login/Login';
 import PriceValidation from './PriceValidation/PriceValidation';
 import FileUpload from './FileUpload/FileUpload';
+import HistoryInquiry from './HistoryInquiry/HistoryInquiry';
 import PZRHome from './PriceZoneReassignment/PZRHome';
 import {auth} from '../utils/security/Auth';
 import AppLoader from '../components/AppLoader';
@@ -11,9 +12,12 @@ import {UserDetailContext} from './UserDetailContext';
 import {AppLoaderContext} from '../components/AppLoderContext';
 import {
     NAVIGATION_PATH_FILE_UPLOAD,
+    NAVIGATION_PATH_HISTORY_INQUIRY,
     NAVIGATION_PATH_PRICE_VALIDATION,
-    SUPPORTED_WEB_BROWSERS,
-    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT, SCREEN_PRICE_VALIDATION
+    NAVIGATION_PATH_PRICEZONE_REASSIGNMENT,
+    SCREEN_HISTORY_INQUIRY,
+    SCREEN_PRICE_VALIDATION,
+    SUPPORTED_WEB_BROWSERS
 } from '../constants/Constants';
 
 import {grantViewPermissionsToScreens, unsupportedBrowserState} from '../utils/CommonUtils';
@@ -22,20 +26,24 @@ import BrowserDetector from '../utils/BrowserDetector';
 import NetworkConnectivityAlert from '../components/NetworkConnectivityAlert/NetworkConnectivityAlert';
 import UnsupportedBrowserTopAlert from '../components/UnsupportedBrowser/UnsupportedBrowserTopAlert';
 
-const Application = (user) =>(
+const Application = (user) => (
         <Switch>
             <Route exact path={NAVIGATION_PATH_FILE_UPLOAD}>
                 <FileUpload/>
             </Route>
             <Route exact path={NAVIGATION_PATH_PRICE_VALIDATION}>
-                {grantViewPermissionsToScreens(user,SCREEN_PRICE_VALIDATION)? <PriceValidation/> :  <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
+                {grantViewPermissionsToScreens(user, SCREEN_PRICE_VALIDATION) ? <PriceValidation/>
+                    : <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
             </Route>
             <Route exact path={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}>
                 <PZRHome/>
             </Route>
+            <Route exact path={NAVIGATION_PATH_HISTORY_INQUIRY}>
+                {grantViewPermissionsToScreens(user, SCREEN_HISTORY_INQUIRY) ? <HistoryInquiry/>
+                    : <Redirect to={NAVIGATION_PATH_PRICEZONE_REASSIGNMENT}/>}
+            </Route>
         </Switch>
 );
-
 
 export default function ApplicationBase() {
     const userDetailContext = useContext(UserDetailContext);
@@ -78,7 +86,7 @@ export default function ApplicationBase() {
     } else if (appLoaderContext.appLoadingState) {
         component = <AppLoader/>;
     } else {
-        component = auth.isUserLoginCompleted() && (userRole||cipzUserRole) ? Application(userRole) : <Login/>;
+        component = auth.isUserLoginCompleted() && (userRole || cipzUserRole) ? Application(userRole) : <Login/>;
     }
 
     return (

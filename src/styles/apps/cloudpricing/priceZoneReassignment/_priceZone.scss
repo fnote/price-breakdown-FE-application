@@ -480,11 +480,11 @@
     align-items: center;
     position: relative;
     margin-top:5px;
-   
+
 
     .log-pop-header-left {
       width: 6.4rem;
-   
+
       position: relative;
       &:after{
         content: '';
@@ -495,8 +495,8 @@
         right:-10px;
         top:10px;
       }
- 
-     
+
+
       .log-pop-header-top {
         font-size: 0.6rem;
         font-weight:400;
@@ -530,7 +530,7 @@ height: 20rem;
   width: 18rem;
   overflow-y: auto;
   margin-top:30px;
-  
+
   &::-webkit-scrollbar {
     background: none;
   }
