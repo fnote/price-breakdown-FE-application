@@ -75,7 +75,7 @@ const generateColumns = ({setSelectedRecord, toggle, approveRejectPZChangeReques
         title: 'STATUS',
         dataIndex: 'accept',
         key: 'accept',
-        width: '20%',
+        width: '15%',
         render: (cell, row, index) => (
                 <ApproveRejectButtons type="Approved"/>
         ),
