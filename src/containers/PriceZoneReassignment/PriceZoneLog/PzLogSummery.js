@@ -12,6 +12,7 @@ export default function PzLogSummery({
                                              customerAccount, businessCenterItemAttributeGroup, customerCount, supcCount, id
                                          }
                                      }) {
+
     return (
         <div className="pz-review-wrapper pz-review-middle pz-cursor">
         <div className="pz-review-sum-left">
@@ -52,24 +53,27 @@ export default function PzLogSummery({
                 </div>
                 <div className="pz-right-bottom">
                     <div className="pz-right-bottom-left">
-                        {customerGroup ? (
-                            <>
-                                <div id="customer-group" className="pz-effective-date-text pz-caps">customer Group</div>
-                                <Popover content={<PzPopover id={id} customerGroup={customerGroup}/>}  trigger="click" id={id}>
-                                    <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('31223')}}>
-                                        {truncate(customerGroup, 15)}
-                                    </div>
-                                    </Popover>
+                        {customerGroup && customerAccount ? (
 
+                            <>
+                                <div id="customer" className="pz-effective-date-text pz-caps pz-log-customer-group">customer</div>
+                                {/*<Tooltip title={customerAccount} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>*/}
+                                <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>
+                                    <div id="customer-account" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('lorem')}}>
+                                        {truncate(customerAccount, 15)}
+                                    </div>
+                                </Popover>
+                                {/*</Tooltip>*/}
                             </>
                         ) : (
                             <>
-                                <div id="customer" className="pz-effective-date-text pz-caps ">customer</div>
-                                <Tooltip title={customerAccount} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>
-                                    <div id="customer-account" className="pz-effective-date" style={{fontSize: autoSize('lorem')}}>
-                                        {truncate(customerAccount, 15)}
+                                <div id="customer-group" className="pz-effective-date-text pz-caps pz-log-customer-group">customer Group</div>
+                                <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>
+                                    <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('31223')}}>
+                                        {truncate(customerGroup, 15)}
                                     </div>
-                                </Tooltip>
+                                </Popover>
+
                             </>
                         )}
                     </div>

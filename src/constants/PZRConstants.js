@@ -11,7 +11,7 @@ export const REVIEW_STATUS_REJECTED_MSG = 'REJECTED';
 export const REVIEW_STATUS_CHANGED_MSG = 'REVIEWED';
 export const CIPZ_TRANSACTION_HISTORY_LOG_NO_OF_DAYS = 100;
 export const TXN_LOG_SUPPORTED_STATUS_FILTERS = [
-    {label: 'Approved', value: REVIEW_STATUS_APPROVED},
-    {label: 'Rejected', value: REVIEW_STATUS_REJECTED},
-    {label: 'Discarded', value: REVIEW_STATUS_DISCARDED},
+    {label: 'APPROVED', value: REVIEW_STATUS_APPROVED},
+    {label: 'REJECTED', value: REVIEW_STATUS_REJECTED},
+    {label: 'DISCARDED', value: REVIEW_STATUS_DISCARDED},
 ];

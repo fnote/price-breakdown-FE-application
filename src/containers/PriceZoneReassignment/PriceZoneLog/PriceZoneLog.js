@@ -75,9 +75,9 @@ const generateColumns = ({setSelectedRecord, toggle}) => ([
             console.log('llllllllllllllllllllllll')
             console.log(status)
             return(
-                <Space size='middle'>
+                // <Space size='middle'>
                     <PriceZoneStatus status={status}/>
-                </Space>
+                // </Space>
             )
         }
     },
@@ -142,7 +142,6 @@ export default function PriceZoneLog() {
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
             fetchPZChangeRequests({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError}, pZRContext.filterParams);
-            // fetchTransactionLogHistory({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError});
         } else {
             setCurrentPage(page);
         }
@@ -248,13 +247,13 @@ export default function PriceZoneLog() {
 
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
-            <Button id="pz-review-refresh" shape="round" icon={<ReloadOutlined />} size="small" disabled={resultLoading}
-                    onClick={() => fetchPZChangeRequests({
-                        page: 1, store: {}, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError
-                    }, pZRContext.filterParams)}
-            >
-                Refresh
-            </Button>
+            {/*<Button id="pz-review-refresh" shape="round" icon={<ReloadOutlined />} size="small" disabled={resultLoading}*/}
+            {/*        onClick={() => fetchPZChangeRequests({*/}
+            {/*            page: 1, store: {}, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError*/}
+            {/*        }, pZRContext.filterParams)}*/}
+            {/*>*/}
+            {/*    Refresh*/}
+            {/*</Button>*/}
             {renderDataTable()}
             <CustomPagination
                 className="pz-review-pagination"

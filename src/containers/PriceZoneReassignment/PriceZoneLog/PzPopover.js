@@ -3,7 +3,7 @@ import { Spin } from 'antd';
 import {fetchCustomerDetails} from "../handlers/PZRGetCustomerDetails";
 import {REVIEW_RESULT_TABLE_PAGE_SIZE} from "../../../constants/PZRConstants";
 
-export default function PzPopover({id,customerGroup}) {
+export default function PzPopover({id,customerGroup,customerAccount}) {
 
     const [currentPage, setCurrentPage] = useState(1);
     const [dataStore, setDataStore] = useState({});
@@ -18,12 +18,23 @@ export default function PzPopover({id,customerGroup}) {
         loadPopOverWithCustomerData();
     }, []);
 
+    const calcHeight = (cust)=>{
+        if(cust){
+            if(cust.length <= 3){
+                const height =  `${cust.length * 7}rem`;
+                return height
+            }
+        }
+    }
+
+
     console.log('we are here')
     console.log(customers)
+
     return(
         <div>
             {customers ? (
-                    <div className="pz-log-pop-over">
+                    <div className="pz-log-pop-over" style={{height:calcHeight(customers)}}>
                         <div className="pz-log-pop-header">
                             <div className="log-pop-header-left">
                                 <div className="log-pop-header-top">CUSTOMER GROUP</div>
