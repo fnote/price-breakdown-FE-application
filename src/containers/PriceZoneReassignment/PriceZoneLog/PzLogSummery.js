@@ -8,7 +8,7 @@ const CURRENT_PRICE_ZONE_TOOLTIP = 'Current price zone of this item attribute gr
 
 export default function PzLogSummery({
                                          changeSummary: {
-                                             businessUnit, newPriceZone, oldPriceZone, effectiveFromDate, customerGroup,
+                                             businessUnit, newPriceZone, oldPriceZone, effectiveFromDate, exportedEffectiveFromDate, customerGroup,
                                              customerAccount, businessCenterItemAttributeGroup, customerCount, supcCount, id
                                          }
                                      }) {
@@ -47,7 +47,7 @@ export default function PzLogSummery({
                     <div className="pz-effective-wrapper">
                         <div id="effective-date" className="pz-effective-date-text pz-caps">effective date</div>
                         <div id="effective-from-date"
-                            className="pz-effective-date pz-main-text">{effectiveFromDate}</div>
+                            className="pz-effective-date pz-main-text">{exportedEffectiveFromDate}</div>
                     </div>
 
                 </div>

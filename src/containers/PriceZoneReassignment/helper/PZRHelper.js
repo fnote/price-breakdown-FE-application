@@ -106,9 +106,9 @@ export const generateReviewer = ({username, firstName, lastName, email}) => ({
 export const formatPriceZones = (priceZones = []) => priceZones.join(',');
 
 export const formatPZRequest = ({
-                                    createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate,
+                                    createdTime, submitter, newPriceZone, oldPriceZone, businessUnitNumber, effectiveFromDate, exportedEffectiveFromDate,
                                     customerGroup, customerAccount, businessCenterItemAttributeGroup, businessCenterItemAttributeGroupId,
-                                    summary, id, submissionNote, status, reviewStatus, reviewer, reviewNote,reviewedTime, ...rem
+                                    summary, id, submissionNote, status, reviewStatus, reviewer, reviewNote, reviewedTime, ...rem
                                 }, {businessUnitMap}) => ({
     submission: {
         createdTime: formatUnixEpoch(createdTime),
@@ -126,6 +126,7 @@ export const formatPZRequest = ({
         newPriceZone,
         oldPriceZone: formatPriceZones(oldPriceZone),
         effectiveFromDate: formatDate(effectiveFromDate),
+        exportedEffectiveFromDate: formatDate(exportedEffectiveFromDate),
         customerGroup,
         customerAccount,
         businessCenterItemAttributeGroup,
