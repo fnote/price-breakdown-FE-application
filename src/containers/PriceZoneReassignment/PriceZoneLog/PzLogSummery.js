@@ -88,30 +88,7 @@ export default function PzLogSummery({
                 </div>
                 <div className="pz-right-bottom">
                     <div className="pz-right-bottom-left">
-
-                        {showCustomerDetails(customerAccount,customerGroup,id)}
-                        {/*{customerGroup && customerAccount ? (*/}
-
-                        {/*    <>*/}
-                        {/*        <div id="customer" className="pz-effective-date-text pz-caps pz-log-customer-group">customer</div>*/}
-                        {/*        <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>*/}
-                        {/*            <div id="customer-account" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('lorem')}}>*/}
-                        {/*                {truncate(customerAccount, 15)}*/}
-                        {/*            </div>*/}
-                        {/*        </Popover>*/}
-                        {/*    </>*/}
-                        {/*) : (*/}
-                        {/*        <>*/}
-                        {/*            <div id="customer-group" className="pz-effective-date-text pz-caps pz-log-customer-group">customer Group</div>*/}
-                        {/*            <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>*/}
-                        {/*                <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('31223')}}>*/}
-                        {/*                    {truncate(customerGroup, 15)}*/}
-                        {/*                </div>*/}
-                        {/*            </Popover>*/}
-
-                        {/*        </>*/}
-
-                        {/*)}*/}
+                        {showCustomerDetails(customerAccount, customerGroup, id)}
                     </div>
                     <div className="pz-right-bottom-right">
                         <div id="customer-group" className="pz-effective-date-text pz-caps">attribute group</div>
