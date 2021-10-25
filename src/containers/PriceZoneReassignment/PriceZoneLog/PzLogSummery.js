@@ -1,10 +1,45 @@
 import React from 'react'
-import { autoSize, truncate } from '../helper/PZRHelper'
-import {ExclamationCircleOutlined} from '@ant-design/icons';
+import {autoSize, openNotificationWithIcon, truncate} from '../helper/PZRHelper'
 import {Tooltip , Popover} from 'antd';
 import PzPopover from './PzPopover';
 
 const CURRENT_PRICE_ZONE_TOOLTIP = 'Current price zone of this item attribute group and customer/customer group';
+
+
+const showCustomerDetails = (customerAccount, customerGroup, id) => {
+    if(customerGroup && customerAccount){
+        return (
+            <>
+            <div id="customer" className="pz-effective-date-text pz-caps pz-log-customer-group">customer</div>
+            <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>
+                <div id="customer-account" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('lorem')}}>
+                    {truncate(customerAccount, 15)}
+                </div>
+            </Popover>
+        </>)
+    }
+    if (customerGroup){
+        return (
+            <>
+            <div id="customer-group" className="pz-effective-date-text pz-caps pz-log-customer-group">customer Group</div>
+            <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>
+                <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('31223')}}>
+                    {truncate(customerGroup, 15)}
+                </div>
+            </Popover>
+        </>
+        )
+    } else {
+        return (
+            <>
+                <div id="customer" className="pz-effective-date-text pz-caps pz-log-customer-group">customer</div>
+                    <div id="customer-account" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('lorem')}}>
+                        {truncate(customerAccount, 15)}
+                    </div>
+            </>
+        )
+    }
+};
 
 export default function PzLogSummery({
                                          changeSummary: {
@@ -53,29 +88,30 @@ export default function PzLogSummery({
                 </div>
                 <div className="pz-right-bottom">
                     <div className="pz-right-bottom-left">
-                        {customerGroup && customerAccount ? (
 
-                            <>
-                                <div id="customer" className="pz-effective-date-text pz-caps pz-log-customer-group">customer</div>
-                                {/*<Tooltip title={customerAccount} color="#fff" overlayClassName="pz-tooltip" overlayStyle={{color: '#000'}}>*/}
-                                <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>
-                                    <div id="customer-account" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('lorem')}}>
-                                        {truncate(customerAccount, 15)}
-                                    </div>
-                                </Popover>
-                                {/*</Tooltip>*/}
-                            </>
-                        ) : (
-                            <>
-                                <div id="customer-group" className="pz-effective-date-text pz-caps pz-log-customer-group">customer Group</div>
-                                <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>
-                                    <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('31223')}}>
-                                        {truncate(customerGroup, 15)}
-                                    </div>
-                                </Popover>
+                        {showCustomerDetails(customerAccount,customerGroup,id)}
+                        {/*{customerGroup && customerAccount ? (*/}
 
-                            </>
-                        )}
+                        {/*    <>*/}
+                        {/*        <div id="customer" className="pz-effective-date-text pz-caps pz-log-customer-group">customer</div>*/}
+                        {/*        <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>*/}
+                        {/*            <div id="customer-account" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('lorem')}}>*/}
+                        {/*                {truncate(customerAccount, 15)}*/}
+                        {/*            </div>*/}
+                        {/*        </Popover>*/}
+                        {/*    </>*/}
+                        {/*) : (*/}
+                        {/*        <>*/}
+                        {/*            <div id="customer-group" className="pz-effective-date-text pz-caps pz-log-customer-group">customer Group</div>*/}
+                        {/*            <Popover content={<PzPopover id={id} customerGroup={customerGroup} customerAccount ={customerAccount}/>}  trigger="click" id={id}>*/}
+                        {/*                <div id="customer-group" className="pz-effective-date pz-customer-tag" style={{fontSize: autoSize('31223')}}>*/}
+                        {/*                    {truncate(customerGroup, 15)}*/}
+                        {/*                </div>*/}
+                        {/*            </Popover>*/}
+
+                        {/*        </>*/}
+
+                        {/*)}*/}
                     </div>
                     <div className="pz-right-bottom-right">
                         <div id="customer-group" className="pz-effective-date-text pz-caps">attribute group</div>
