@@ -84,7 +84,12 @@ export const CIPZErrorMessages = {
     REJECT_CIPZ_API_FAILIURE_TITLE: 'Sorry we could not reject the request. Please try again later.',
     REJECT_CIPZ_API_FAILIURE_MESSAGE: 'Could not reject the request due to connection issue.',
     ALREADY_REVIEWED_ALERT_TITLE: 'This change is already reviewed by another manager',
-    ALREADY_REVIEWED_ALERT_MESSAGE: 'Please refresh the page to get latest pending approval items'
+    ALREADY_REVIEWED_ALERT_MESSAGE: 'Please refresh the page to get latest pending approval items',
+    FETCH_TRANSACTED_BUSINESS_UNITS_ERROR_TITLE: 'Sorry we could not retrieve the business units associated with transactions.'
+    + ' Please refresh again.',
+    FETCH_TRANSACTED_BUSINESS_UNITS_ERROR_MESSAGE: 'Could not retrieve the business units associated with transactions'
+    + ' due to connection issue.',
+    
 };
 
 export const PZRSEEDErrorsMap = {

@@ -71,11 +71,9 @@ const SearchForm = () => {
         fetchSearchResults(searchParams, pZRContext);
     };
     const onFilter = (values) => {
-        console.log(values);
         const customer = isCustomerChecked ? values.customer : null;
         const customerGroup = !isCustomerChecked ? values.customerGroup : null;
         const opcoId = extractOpCoId(values.site);
-        const attributeGroupMap = transactedAttributeGroups.attributeGroupMap;
         const filterParams = {
             site: opcoId,
             customer,
