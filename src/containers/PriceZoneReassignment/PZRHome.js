@@ -85,7 +85,7 @@ function PZRApp() {
                                     <div className="pz-maintab-item">
                                         <i className="icon fi flaticon-pz-review pz-icon-tab"/>
 
-                                        <div id="review-changes-tab" className="pz-main-tab-sub"> Transaction Log</div>
+                                        <div id="transaction-log-tab" className="pz-main-tab-sub"> Transaction Log</div>
                                     </div>
                                 }
                                 key={LOG_TAB}

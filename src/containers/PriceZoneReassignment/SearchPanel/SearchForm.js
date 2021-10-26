@@ -272,7 +272,7 @@ const SearchForm = () => {
                     }
                     <Form.Item className="search-btn-wrapper">
                         <button
-                            id="search-button" type="primary"
+                            id={!pZRContext.isOnTransactionLog ? 'search-button' : 'filter-button'} type="primary"
                             className={isSearchDisabled ? 'search-btn outlined-btn pz-disabled' : 'search-btn outlined-btn '}
                             disabled={isSearchDisabled}>{!pZRContext.isOnTransactionLog ? 'Search' : 'Filter'}
                         </button>
