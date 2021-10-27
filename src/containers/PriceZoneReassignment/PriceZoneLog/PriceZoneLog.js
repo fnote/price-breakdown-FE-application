@@ -38,7 +38,7 @@ const generateColumns = ({setSelectedRecord, toggle}) => ([
         width: '20%',
         render: (submission) => (
             <Space size='middle'>
-                <ReviewSubmitter submission={submission}/>
+                <ReviewSubmitter submission={submission} type="submit"/>
             </Space>
         ),
     },
@@ -49,7 +49,7 @@ const generateColumns = ({setSelectedRecord, toggle}) => ([
         width: '20%',
         render: (reviewerDetails) => (
             <Space size='middle'>
-                <ReviewSubmitter submission={reviewerDetails}/>
+                <ReviewSubmitter submission={reviewerDetails} type="review"/>
             </Space>
         ),
     },
