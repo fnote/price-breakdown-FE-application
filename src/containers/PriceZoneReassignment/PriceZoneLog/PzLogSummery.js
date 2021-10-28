@@ -81,7 +81,7 @@ export default function PzLogSummery({
                 <div className="pz-right-top">
                     <div className="pz-effective-wrapper">
                         <div id="effective-date" className="pz-effective-date-text pz-caps">effective date</div>
-                        <div id="effective-from-date"
+                        <div id="exported-effective-from-date"
                             className="pz-effective-date pz-main-text">{exportedEffectiveFromDate}</div>
                     </div>
 
@@ -91,7 +91,7 @@ export default function PzLogSummery({
                         {showCustomerDetails(customerAccount, customerGroup, id)}
                     </div>
                     <div className="pz-right-bottom-right">
-                        <div id="customer-group" className="pz-effective-date-text pz-caps">attribute group</div>
+                        <div id="attribute-group" className="pz-effective-date-text pz-caps">attribute group</div>
                         <div className="pz-attrib-base">
                             <Tooltip title={businessCenterItemAttributeGroup} color="#fff" overlayClassName="pz-tooltip"
                                      overlayStyle={{color: '#000'}}>
