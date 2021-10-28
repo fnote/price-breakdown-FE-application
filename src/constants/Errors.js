@@ -65,9 +65,9 @@ const ErrorsMap = new Map([
 ]);
 
 export const CIPZErrorMessages = {
-    FETCH_ITEM_ATTRIBUTE_ERROR_TITLE: 'Sorry we could not retrieve the business center - item group - attribute group information.'
-    + ' Please refresh again.',
-    FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE: 'Could not retrieve the business center - item group - attribute group information'
+    FETCH_ITEM_ATTRIBUTE_ERROR_MESSAGE: 'Could not retrieve the attribute groups'
+    + ' due to connection issue.',
+    FETCH_CUSTOMER_ERROR_MESSAGE: 'Could not retrieve the customer details'
     + ' due to connection issue.',
     FETCH_SEARCH_RESULTS_TITLE: 'Sorry we could not retrieve the information. Please try again later.',
     FETCH_SEARCH_RESULTS_ERROR_MESSAGE: 'Could not retrieve the information due to connection issue.',
@@ -78,6 +78,7 @@ export const CIPZErrorMessages = {
     CIPZ_POST_ERROR_TITLE: 'Sorry we could not update the requested price zone. Please try again later.',
     FETCH_CIPZ_API_DATA_TITLE: 'Sorry we could not retrieve the information.',
     FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE: 'Could not retrieve the approval request page due to connection issue.',
+    FETCH_TRANSACTION_LOG_HISTORY_ERROR_MESSAGE : 'Could not retrieve the transaction log history page due to connection issue.',
     FETCH_CIPZ_REFERENCE_TABLE_ERROR_MESSAGE: 'Could not retrieve the reference page due to connection issue.',
     APPROVE_CIPZ_API_FAILIURE_TITLE: 'Sorry we could not approve the request. Please try again later.',
     APPROVE_CIPZ_API_FAILIURE_MESSAGE: 'Could not approve the request due to connection issue.',
@@ -85,11 +86,9 @@ export const CIPZErrorMessages = {
     REJECT_CIPZ_API_FAILIURE_MESSAGE: 'Could not reject the request due to connection issue.',
     ALREADY_REVIEWED_ALERT_TITLE: 'This change is already reviewed by another manager',
     ALREADY_REVIEWED_ALERT_MESSAGE: 'Please refresh the page to get latest pending approval items',
-    FETCH_TRANSACTED_BUSINESS_UNITS_ERROR_TITLE: 'Sorry we could not retrieve the business units associated with transactions.'
-    + ' Please refresh again.',
-    FETCH_TRANSACTED_BUSINESS_UNITS_ERROR_MESSAGE: 'Could not retrieve the business units associated with transactions'
+    FETCH_TRANSACTED_BUSINESS_UNITS_ERROR_MESSAGE: 'Could not retrieve the OpCos'
     + ' due to connection issue.',
-    
+
 };
 
 export const PZRSEEDErrorsMap = {

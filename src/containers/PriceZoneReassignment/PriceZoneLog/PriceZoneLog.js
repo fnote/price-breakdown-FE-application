@@ -1,8 +1,7 @@
 /* eslint-disable react/display-name */
 // Core
 import React, {useState, useEffect, useContext, useMemo, useRef} from 'react';
-import {Space, Empty, Button, Spin} from 'antd';
-import {ReloadOutlined} from '@ant-design/icons';
+import {Space, Empty} from 'antd';
 // Custom components
 import useModal from '../../../hooks/useModal';
 import ReviewSubmitter from './ReviewerSubmitter';
@@ -29,6 +28,8 @@ import {
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE
 } from '../../../constants/PZRConstants';
+import {PZRRequestId} from "../../../components/RequestId";
+import {emptyResponse, emptyResponseForTHL} from "../SearchPanel/SearchStatuses";
 
 const generateColumns = ({setSelectedRecord, toggle}) => ([
     {
@@ -72,12 +73,8 @@ const generateColumns = ({setSelectedRecord, toggle}) => ([
         key: 'status',
         width: '20%',
         render: (status) => {
-            console.log('llllllllllllllllllllllll')
-            console.log(status)
             return(
-                // <Space size='middle'>
                     <PriceZoneStatus status={status}/>
-                // </Space>
             )
         }
     },
@@ -100,7 +97,6 @@ export default function PriceZoneLog() {
     const dataSource = useMemo(() => {
         const currentPageData = dataStore[currentPage];
         if (currentPageData) {
-            console.log(dataStore[currentPage]);
             return dataStore[currentPage].map((record) => formatPZRequest(record, {businessUnitMap}));
         }
         return [];
@@ -222,6 +218,11 @@ export default function PriceZoneLog() {
 
     const renderDataTable = () => {
         if (pZRContext.isOnTransactionLog) {
+            if (totalResultCount===0 && pZRContext.isFilterUsed){
+                return (
+                    emptyResponseForTHL()
+                )
+            }
             return (
                 <>
                     <ScrollableTable
@@ -236,6 +237,7 @@ export default function PriceZoneLog() {
                         loading={resultLoading}
                         scroll={{ y: tableSize.height - 80 }}
                         locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
+                        // locale={{emptyText: <empty/>}}
                         onChange={calcSize}
                     />
                     {selectedRecord && <ReferenceTable record={selectedRecord}/>}
@@ -247,13 +249,6 @@ export default function PriceZoneLog() {
 
     return (
         <div className='pz-review-base-wrapper' ref={tableRef}>
-            {/*<Button id="pz-review-refresh" shape="round" icon={<ReloadOutlined />} size="small" disabled={resultLoading}*/}
-            {/*        onClick={() => fetchPZChangeRequests({*/}
-            {/*            page: 1, store: {}, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError*/}
-            {/*        }, pZRContext.filterParams)}*/}
-            {/*>*/}
-            {/*    Refresh*/}
-            {/*</Button>*/}
             {renderDataTable()}
             <CustomPagination
                 className="pz-review-pagination"

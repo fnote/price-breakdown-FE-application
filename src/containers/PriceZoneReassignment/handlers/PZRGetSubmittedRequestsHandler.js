@@ -51,6 +51,7 @@ const generateRequestUrl = (paginationParams, filters) => {
 export const fetchPZChangeRequests = ({page, store, setResultLoading, setTotalResultCount, setDataStore, setCurrentPage, setError}, filters = null) => {
     const paginationParams = generatePaginationParams(page, REVIEW_RESULT_TABLE_PAGE_SIZE);
     const requestUrl = generateRequestUrl(paginationParams, filters);
+    const filtersAvailable = filtersPresent(filters);
     setResultLoading(true);
     fetch(requestUrl, constructFetchRequest())
         .then(handleResponse)
@@ -76,9 +77,14 @@ export const fetchPZChangeRequests = ({page, store, setResultLoading, setTotalRe
                         setError
                     });
                 } else {
+                    let errorMessage = ''
+                    if (filtersAvailable) {
+                        errorMessage = CIPZErrorMessages.FETCH_TRANSACTION_LOG_HISTORY_ERROR_MESSAGE
+                    }else {
+                        errorMessage = CIPZErrorMessages.FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE
+                    }
                     setError(true);
-                    openNotificationWithIcon('error',
-                    CIPZErrorMessages.FETCH_CIPZ_PENDING_APPROVAL_REQUEST_SUMMARY_MESSAGE, CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
+                    openNotificationWithIcon('error', errorMessage , CIPZErrorMessages.FETCH_CIPZ_API_DATA_TITLE);
                     setCurrentPage(page);
                     setResultLoading(false);
                 }

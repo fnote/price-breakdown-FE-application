@@ -80,6 +80,18 @@ const emptyResponse = (correlationId) => (
     </div>
 );
 
+export const emptyResponseForTHL = () => (
+    <div className="search-statuses cipz-empty-search">
+        <div className="section-wrapper">
+            <div className="info message-block">
+                <div className="title">
+                    <i className="icon fi flaticon-error-1"/> Your search did not find any match.
+                </div>
+            </div>
+        </div>
+    </div>
+);
+
 const renderContinueSearch = () => (
     <div className="search-statuses cipz-empty-search">
         <div className="section-wrapper">

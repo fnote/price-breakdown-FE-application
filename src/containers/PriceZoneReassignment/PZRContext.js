@@ -44,6 +44,7 @@ const PZRContextProvider = (props) => {
     const [isResponseEmpty, setIsResponseEmpty] = useState(false);
     const [isOnReviewPage, setIsOnReviewPage] = useState(false);
     const [isOnTransactionLog, setIsOnTransactionLog] = useState(false);
+    const [isFilterUsed, setFilterUsed ] = useState(false);
 
     const setSearchResultsData = (data) => {
         setSearchLoading(false);
@@ -97,7 +98,9 @@ const PZRContextProvider = (props) => {
             filterParams,
             setFilterParams,
             isFilterLoading,
-            setFilterLoading
+            setFilterLoading,
+            isFilterUsed,
+            setFilterUsed
         }}>
             {props.children}
         </PZRContext.Provider>

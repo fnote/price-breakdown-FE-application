@@ -90,6 +90,7 @@ function PZRApp() {
                                 }
                                 key={LOG_TAB}
                             >
+                               {/*<SearchStatuses/>*/}
                                <PriceZoneLog/>
                             </TabPane>
                     )}

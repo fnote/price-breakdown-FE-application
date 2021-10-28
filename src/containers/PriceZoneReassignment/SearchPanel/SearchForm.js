@@ -83,6 +83,7 @@ const SearchForm = () => {
         };
         pZRContext.setFilterLoading(true);
         pZRContext.setFilterParams(filterParams);
+        pZRContext.setFilterUsed(true)
     };
     const getAttributeGroupsFromSeed = () => fetchAttributeGroups({
         userDetailContext,
@@ -145,6 +146,7 @@ const SearchForm = () => {
                         if (pZRContext.isOnTransactionLog) {
                             onFilter(value);
                         } else {
+                            pZRContext.setFilterUsed(false)
                             onSearch(value);
                         }
                     }}
