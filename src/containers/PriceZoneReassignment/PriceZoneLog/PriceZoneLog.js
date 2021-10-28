@@ -28,7 +28,6 @@ import {
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE
 } from '../../../constants/PZRConstants';
-import {PZRRequestId} from "../../../components/RequestId";
 import {emptyResponse, emptyResponseForTHL} from "../SearchPanel/SearchStatuses";
 
 const generateColumns = ({setSelectedRecord, toggle}) => ([

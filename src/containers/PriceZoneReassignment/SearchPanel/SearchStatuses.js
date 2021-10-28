@@ -70,7 +70,7 @@ const emptyResponse = (correlationId) => (
                 </div>
                 <div className="pz-search-suggestion-list">
                     <ul>
-                        <li>Make sure correct Site is selected.</li>
+                        <li>Make sure correct Site OpCo is selected.</li>
                         <li>Make sure entered Customer or Customer Group are valid.</li>
                     </ul>
                 </div>
@@ -85,7 +85,17 @@ export const emptyResponseForTHL = () => (
         <div className="section-wrapper">
             <div className="info message-block">
                 <div className="title">
-                    <i className="icon fi flaticon-error-1"/> Your search did not find any match.
+                    <i className="icon fi flaticon-error-1"/> Your filter did not find any match.
+                </div>
+                <div className="subitle-title">
+                    Suggestions
+                </div>
+                <div className="pz-search-suggestion-list">
+                    <ul>
+                        <li>Make sure correct OpCo is selected. or</li>
+                        <li>Make sure entered Customer or Customer Group are valid. or</li>
+                        <li>Make sure correct combination of OpCo, Customer or Customer Group & Attribute Group is selected.</li>
+                    </ul>
                 </div>
             </div>
         </div>
