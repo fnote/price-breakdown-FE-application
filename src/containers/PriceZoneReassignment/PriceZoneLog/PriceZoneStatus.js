@@ -12,7 +12,6 @@ const Discarded = ()=>{
     return(<div id="pz-log-status" className="pz-log-status-tag pz-log-discarded">DISCARDED</div>)
 }
   return (
-      // ADDED FOR TESTING PURPOSES
     <>
       {
         {

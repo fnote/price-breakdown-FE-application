@@ -1,13 +1,9 @@
 import React, {useEffect, useState} from "react";
 import { Spin } from 'antd';
 import {fetchCustomerDetails} from "../handlers/PZRGetCustomerDetails";
-import {REVIEW_RESULT_TABLE_PAGE_SIZE} from "../../../constants/PZRConstants";
 
 export default function PzPopover({id,customerGroup,customerAccount}) {
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const [dataStore, setDataStore] = useState({});
-    const [totalResultCount, setTotalResultCount] = useState(REVIEW_RESULT_TABLE_PAGE_SIZE);
     const [resultLoading, setResultLoading] = useState(false);
     const [error, setError] = useState(false);
     const [customers, setCustomers] = useState(null);
@@ -26,10 +22,6 @@ export default function PzPopover({id,customerGroup,customerAccount}) {
             }
         }
     }
-
-
-    console.log('we are here')
-    console.log(customers)
 
     return(
         <div>

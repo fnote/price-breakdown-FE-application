@@ -30,7 +30,7 @@ import {
 } from '../../../constants/PZRConstants';
 import {emptyResponse, emptyResponseForTHL} from "../SearchPanel/SearchStatuses";
 
-const generateColumns = ({setSelectedRecord, toggle}) => ([
+const generateColumns = () => ([
     {
         title: 'SUBMITTED BY',
         dataIndex: 'submission',
@@ -225,18 +225,12 @@ export default function PriceZoneLog() {
             return (
                 <>
                     <ScrollableTable
-                        columns={generateColumns({
-                            setSelectedRecord,
-                            toggle,
-                            approveRejectPZChangeRequests,
-                            approveRejectProgressing
-                        })}
+                        columns={generateColumns()}
                         dataSource={dataSource}
                         pagination={false}
                         loading={resultLoading}
                         scroll={{ y: tableSize.height - 80 }}
                         locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
-                        // locale={{emptyText: <empty/>}}
                         onChange={calcSize}
                     />
                     {selectedRecord && <ReferenceTable record={selectedRecord}/>}

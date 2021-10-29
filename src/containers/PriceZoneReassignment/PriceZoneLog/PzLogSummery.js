@@ -1,5 +1,5 @@
 import React from 'react'
-import {autoSize, openNotificationWithIcon, truncate} from '../helper/PZRHelper'
+import {autoSize, truncate} from '../helper/PZRHelper'
 import {Tooltip , Popover} from 'antd';
 import PzPopover from './PzPopover';
 
