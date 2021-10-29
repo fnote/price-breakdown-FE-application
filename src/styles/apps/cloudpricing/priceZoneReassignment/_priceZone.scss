@@ -440,18 +440,18 @@
   }
 
   // pzer log other styles
+  
+    @media only screen and (max-width:'1400px'){
 
-  @media only screen and (max-width:'1400px'){
-
-    .pz-log-customer-group{
-      width:8rem !important
-    }
+      .pz-log-customer-group{
+        width:8rem !important
+      }
   }
 
   // APPROVE | REJECTED AND DISCARDED TAGS
   .pz-log-status-tag {
     width: 80%;
-    margin-left: 2rem;
+    margin-left: 1rem;
     height: 4rem;
     @include flexbox(1 1 auto, row, center, center);
     border-radius: 4px;
@@ -1250,12 +1250,13 @@ height: 20rem;
 .pz-disabled {
   pointer-events: none !important;
   filter: grayscale(0.7);
-}
 
-.pv-reset-base {
-  @include flexbox(1 1 auto, row, flex-end, center);
-  position: absolute;
-  top: -1px;
+  .pv-reset-base {
+    @include flexbox(1 1 auto, row, flex-end, center);
+    position: absolute;
+    top: -1px;
+  }
+
 }
 
 // pagination align right
