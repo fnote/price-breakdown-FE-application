@@ -15,12 +15,8 @@ import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
 // Handlers
 import {fetchPZChangeRequests} from '../handlers/PZRGetSubmittedRequestsHandler';
-// utils, configs
-import {getBffUrlConfig} from '../../../utils/Configs';
 import {
     formatPZRequest,
-    constructPatchPayload,
-    generateReviewer,
     getTHLEmptyDataTableMessage
 } from '../helper/PZRHelper';
 // constants
