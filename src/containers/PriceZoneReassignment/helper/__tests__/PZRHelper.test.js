@@ -12,7 +12,7 @@ import {
     getEmptyDataTableMessage,
     getPriceZoneOptions,
     getReviewStatusMsg,
-    getStyleClassByApprovalStatus,
+    getStyleClassByApprovalStatus, getTHLEmptyDataTableMessage,
     openNotificationWithIcon,
     truncate,
     updateCompletedRequest
@@ -181,6 +181,24 @@ describe('getEmptyDataTableMessage', () => {
 
     test('should return correct message when some other passed', () => {
         expect(getEmptyDataTableMessage(null)).toEqual('No Changes to Review');
+    });
+});
+
+describe('getTHLEmptyDataTableMessage', () => {
+    test('should return correct message when there is an error', () => {
+        expect(getTHLEmptyDataTableMessage(true)).toEqual('Sorry we could not retrieve the information');
+    });
+
+    test('should return correct message when there is not an error', () => {
+        expect(getTHLEmptyDataTableMessage(false)).toEqual('No Transactions to display');
+    });
+
+    test('should return correct message when some other passed', () => {
+        expect(getTHLEmptyDataTableMessage('A')).toEqual('Sorry we could not retrieve the information');
+    });
+
+    test('should return correct message when some other passed', () => {
+        expect(getTHLEmptyDataTableMessage(null)).toEqual('No Transactions to display');
     });
 });
 
