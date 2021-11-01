@@ -13,7 +13,7 @@ import {
     getPriceZoneOptions,
     getReviewStatusMsg,
     getStyleClassByApprovalStatus, getTHLEmptyDataTableMessage,
-    openNotificationWithIcon,
+    openNotificationWithIcon, prepareBusinessUnitsMap,
     truncate,
     updateCompletedRequest
 } from '../PZRHelper';
@@ -58,6 +58,13 @@ describe('getBusinessUnits', () => {
     test('should return empty business units', () => {
         const bunitsMap = getBusinessUnits(null);
         expect(bunitsMap.length).toBe(0);
+    });
+});
+
+describe('prepareBusinessUnits', () => {
+    test('should return business units', () => {
+        const bunitsMap = prepareBusinessUnitsMap(['001','002']);
+        expect(bunitsMap.size).toBe(2);
     });
 });
 
