@@ -66,6 +66,11 @@ describe('prepareBusinessUnits', () => {
         const bunitsMap = prepareBusinessUnitsMap(['001','002']);
         expect(bunitsMap.size).toBe(2);
     });
+
+    test('should not return business units', () => {
+        const bunitsMap = prepareBusinessUnitsMap([]);
+        expect(bunitsMap.size).toBe(0);
+    });
 });
 
 describe('calculateResetIndex', () => {
