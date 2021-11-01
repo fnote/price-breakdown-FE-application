@@ -15,7 +15,6 @@ import {UserDetailContext} from '../../UserDetailContext';
 import {PZRContext} from '../PZRContext';
 // Handlers
 import {fetchPZChangeRequests} from '../handlers/PZRGetSubmittedRequestsHandler';
-import {handleApproveReject} from '../handlers/PZRApproveRejectHandler';
 // utils, configs
 import {getBffUrlConfig} from '../../../utils/Configs';
 import {
@@ -28,7 +27,7 @@ import {
 import {
     REVIEW_RESULT_TABLE_PAGE_SIZE
 } from '../../../constants/PZRConstants';
-import {emptyResponse, emptyResponseForTHL} from "../SearchPanel/SearchStatuses";
+import {emptyResponseForTHL} from "../SearchPanel/SearchStatuses";
 
 const generateColumns = () => ([
     {
@@ -87,7 +86,6 @@ export default function PriceZoneLog() {
     const [resultLoading, setResultLoading] = useState(false);
     const [error, setError] = useState(false);
     const [selectedRecord, setSelectedRecord] = useState(null);
-    const [approveRejectProgressing, setApproveRejectProgressing] = useState(false);
     const [fetchNewData, setFetchNewData] = useState(false);
     const userDetailContext = useContext(UserDetailContext);
     const {activeBusinessUnitMap: businessUnitMap} = userDetailContext.userDetailsData.userDetails;
@@ -106,33 +104,6 @@ export default function PriceZoneLog() {
     }, []);
 
     const {Modal, toggle} = useModal();
-
-    const approveRejectPZChangeRequests = (
-        {id, index}, {reviewNote, status}, {successCallback, failureCallback, alreadyApprovedRejectedCallback}
-    ) => {
-        setApproveRejectProgressing(true);
-        const payload = constructPatchPayload({id}, {
-            reviewNote,
-            status
-        }, generateReviewer(userDetailContext.userDetailsData.userDetails));
-        const requestUrl = getBffUrlConfig().pzUpdateRequests;
-        handleApproveReject({
-            requestUrl,
-            payload,
-            dataStore,
-            currentPage,
-            index,
-            dataResetIndex,
-            status,
-            setDataStore,
-            setFetchNewData,
-            setDataResetIndex,
-            setApproveRejectProgressing,
-            successCallback,
-            failureCallback,
-            alreadyApprovedRejectedCallback
-        });
-    };
 
     const loadTableData = (page = 1, store = {}) => {
         if (!store[page]) {
