@@ -185,19 +185,19 @@ describe('getEmptyDataTableMessage', () => {
 });
 
 describe('getTHLEmptyDataTableMessage', () => {
-    test('should return correct message when there is an error', () => {
+    test('should return correct message when there is an THL error', () => {
         expect(getTHLEmptyDataTableMessage(true)).toEqual('Sorry we could not retrieve the information');
     });
 
-    test('should return correct message when there is not an error', () => {
+    test('should return correct message when there is not an THL error', () => {
         expect(getTHLEmptyDataTableMessage(false)).toEqual('No Transactions to display');
     });
 
-    test('should return correct message when some other passed', () => {
+    test('should return correct THL message when some other passed', () => {
         expect(getTHLEmptyDataTableMessage('A')).toEqual('Sorry we could not retrieve the information');
     });
 
-    test('should return correct message when some other passed', () => {
+    test('should return correct THL message when some other passed', () => {
         expect(getTHLEmptyDataTableMessage(null)).toEqual('No Transactions to display');
     });
 });

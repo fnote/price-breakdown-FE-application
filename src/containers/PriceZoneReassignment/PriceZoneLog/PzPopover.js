@@ -17,8 +17,7 @@ export default function PzPopover({id,customerGroup,customerAccount}) {
     const calcHeight = (cust)=>{
         if(cust){
             if(cust.length <= 3){
-                const height =  `${cust.length * 7}rem`;
-                return height
+                return `${cust.length * 7}rem`;
             }
         }
     }
