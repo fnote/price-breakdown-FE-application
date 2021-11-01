@@ -14,8 +14,6 @@ export const PZRContext = React.createContext({
         // This is intentional
     },
     isOnTransactionHistoryLogPage: false,
-    setIsOnTransactionHistoryLogPage: () => {
-    },
     resetSearchResults: () => {
         // This is intentional
     }

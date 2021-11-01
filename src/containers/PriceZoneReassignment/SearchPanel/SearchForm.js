@@ -108,7 +108,7 @@ const SearchForm = () => {
         userDetailContext,
         setTransactedBusinessUnits
     });
-    const selectBusinessUnits = () => (pZRContext.isOnTransactionLog ? transactedBusinessUnits : activeBusinessUnitMap);
+
     const onReset = () => {
         form.setFieldsValue({
             site: EMPTY_STRING,
