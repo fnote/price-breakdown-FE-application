@@ -1,4 +1,10 @@
 version: 0.2
+
+env:
+  parameter-store:
+    SONAR_HOST: "/CP/COMMON/SONAR/HOST"
+    SONAR_TOKEN: "/CP/COMMON/SONAR/TOKEN"
+
 phases:
   install:
     runtime-versions:
@@ -21,8 +27,10 @@ phases:
       - sonar-scanner --version
   pre_build:
     commands:
-    # Scan and push to sonarqube
-    #- sonar-scanner -Dsonar.host.url=https://cloudpricing-sonar-dev.prcp-np.us-east-1.aws.sysco.net/ -Dsonar.verbose=true -Dsonar.projectName=Cloud-PCI-Frontend
+      # Unit test run
+      - npm test
+      # Scan and push to sonarqube
+      - sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=$SONAR_HOST -Dsonar.branch.name=$Branch -Dsonar.verbose=true
 
   build:
     commands:

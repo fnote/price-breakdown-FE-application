@@ -20,13 +20,25 @@ import {
 
 /* eslint-disable no-template-curly-in-string */
 const validateMessages = {
-  required: '${label} is required!',
-  types: {
-    number: '${label} is not a valid number!',
-  },
-  number: {
-    range: '${label} must be between ${min} and ${max}',
-  },
+    required: '${label} is required!',
+    types: {
+        number: '${label} is not a valid number!',
+    },
+    number: {
+        range: '${label} must be between ${min} and ${max}',
+    },
+};
+
+export const filterOption = (inputValue, option) => {
+    if (inputValue && option.children) {
+        // unless the backslash is escaped, this will end up with a syntax error
+        const pattern = inputValue.replace(/\\/g, EMPTY_STRING).toLowerCase();
+        if (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/)) {
+            return false;
+        }
+        return option.children.join(EMPTY_STRING).toLowerCase().match(pattern);
+    }
+    return true;
 };
 
 const formRequestBody = (requestData) => {
@@ -36,8 +48,8 @@ const formRequestBody = (requestData) => {
     };
 
     if (requestData.handPrice) {
-      const orderPriceNumericalValue = Number(requestData.handPrice);
-      if (orderPriceNumericalValue > 0) {
+        const orderPriceNumericalValue = Number(requestData.handPrice);
+        if (orderPriceNumericalValue > 0) {
         product.orderPrice = `${orderPriceNumericalValue}`;
         product.orderPriceType = ORDER_PRICE_TYPE_HAND;
       }
@@ -157,18 +169,8 @@ const SearchForm = () => {
                 <Select
                     placeholder="Select Site"
                     dropdownMatchSelectWidth={false}
-                    filterOption={(inputValue, option) => {
-                if (inputValue && option.children) {
-                  // unless the backslash is escaped, this will end up with a syntax error
-                    const pattern = inputValue.replace(/\\/g, EMPTY_STRING).toLowerCase();
-                  if (inputValue.length !== pattern.length || inputValue.match(/[^A-Za-z0-9 -]/)) {
-                    return false;
-                  }
-                    return option.children.join(EMPTY_STRING).toLowerCase().match(pattern);
-                }
-                return true;
-              }}
-              showSearch
+                    filterOption={filterOption}
+                    showSearch
             >
               {bUnitMap}
             </Select>

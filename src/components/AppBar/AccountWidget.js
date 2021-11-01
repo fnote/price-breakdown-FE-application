@@ -66,20 +66,22 @@ class AccountWidget extends React.Component {
 
         {visible && (
           <div
-            id="account-menu"
-            className="account-menu show"
-            role="button"
-            tabIndex="-1"
-            onKeyPress={() => {}}
-            onClick={this.toggleMenu}>
-            <Navigation />
+              id="account-menu"
+              className="account-menu show"
+              role="button"
+              tabIndex="-1"
+              onKeyPress={() => {
+                // This is intentional
+              }}
+              onClick={this.toggleMenu}>
+            <Navigation/>
             <ul>
               <li className="appversion">
                 Version {CLOUD_PCI_FRONTEND_VERSION}
               </li>
               <li className="hide">
                 <div className="menulabel">Profile</div>
-                <span className="icon fi flaticon-account" />
+                <span className="icon fi flaticon-account"/>
               </li>
               <li className="hide">
                 <div className="menulabel">Settings</div>
@@ -119,32 +121,38 @@ class AccountWidget extends React.Component {
           </div>
         )}
         {visible && (
-          <div
-            role="button"
-            tabIndex="-4"
-            onKeyPress={() => {}}
-            className="backgroundClickContainer"
-            onClick={this.toggleMenu}
-          />
+            <div
+                role="button"
+                tabIndex="-4"
+                onKeyPress={() => {
+                  // This is intentional
+                }}
+                className="backgroundClickContainer"
+                onClick={this.toggleMenu}
+            />
         )}
         {!visible && (
-          <div
-            role="button"
-            tabIndex="-4"
-            onKeyPress={() => {}}
-            className="sidemenu-toggle"
-            onClick={this.toggleMenu}>
-            <MenuOutlined />
-          </div>
+            <div
+                role="button"
+                tabIndex="-4"
+                onKeyPress={() => {
+                  // This is intentional
+                }}
+                className="sidemenu-toggle"
+                onClick={this.toggleMenu}>
+              <MenuOutlined/>
+            </div>
         )}
-        <div
-          role="button"
-          tabIndex="-5"
-          onKeyPress={() => {}}
-          className={visible ? 'sidemenu-closer show' : 'sidemenu-closer'}
-          onClick={this.toggleMenu}>
-          <CloseOutlined />
-        </div>
+          <div
+              role="button"
+              tabIndex="-5"
+              onKeyPress={() => {
+                // This is intentional
+              }}
+              className={visible ? 'sidemenu-closer show' : 'sidemenu-closer'}
+              onClick={this.toggleMenu}>
+            <CloseOutlined/>
+          </div>
       </div>
     );
   }

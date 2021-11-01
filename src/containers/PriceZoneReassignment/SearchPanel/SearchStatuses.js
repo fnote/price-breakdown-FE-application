@@ -119,6 +119,23 @@ const renderContinueSearch = () => (
     </div>
 );
 
+function handlingErrorScenarios(errorCode, correlationId, PZRContextData) {
+    if (errorCode === ErrorCodes.SEED_NO_RESULTS_ERROR) { // Show empty response screen if SEED returned this error code
+        return emptyResponse(correlationId);
+    }
+
+    if (errorCode === ErrorCodes.SEED_UNKNOWN_ERROR) { // Notification for SEED server errors
+        openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_ERROR_MESSAGE, CIPZErrorMessages.FETCH_SEARCH_RESULTS_TITLE);
+        PZRContextData.setErrorData(null);
+        return null;
+    }
+
+    // Everything else will be shown in error page (All HTTP 400 errors from SEED/BFF)
+    const renderMessage = PZRSEEDErrorsMap[errorCode] ? PZRSEEDErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_SEED_SEARCH_ERROR;
+    PZRContextData.resetSearchResults();
+    return renderError({errorCode, message: renderMessage, correlationId});
+}
+
 const SearchStatuses = () => {
     const PZRContextData = useContext(PZRContext);
 
@@ -136,20 +153,7 @@ const SearchStatuses = () => {
             return null;
         }
         if (errorCode) {
-            if (errorCode === ErrorCodes.SEED_NO_RESULTS_ERROR) { // Show empty response screen if SEED returned this error code
-                return emptyResponse(correlationId);
-            }
-
-            if (errorCode === ErrorCodes.SEED_UNKNOWN_ERROR) { // Notification for SEED server errors
-                openNotificationWithIcon('error', CIPZErrorMessages.FETCH_SEARCH_RESULTS_ERROR_MESSAGE, CIPZErrorMessages.FETCH_SEARCH_RESULTS_TITLE);
-                PZRContextData.setErrorData(null);
-                return null;
-            }
-
-            // Everything else will be shown in error page (All HTTP 400 errors from SEED/BFF)
-            const renderMessage = PZRSEEDErrorsMap[errorCode] ? PZRSEEDErrorsMap[errorCode] : CIPZErrorMessages.GENERIC_SEED_SEARCH_ERROR;
-            PZRContextData.resetSearchResults();
-            return renderError({errorCode, message: renderMessage, correlationId});
+            return handlingErrorScenarios(errorCode, correlationId, PZRContextData);
         }
         PZRContextData.resetSearchResults();
         return renderError({errorCode: ErrorCodes.UNEXPECTED_ERROR, message: CIPZErrorMessages.UNKNOWN_ERROR_OCCURRED});

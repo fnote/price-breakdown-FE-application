@@ -8,7 +8,9 @@ import React, {useState} from 'react';
 
 export const AppLoaderContext = React.createContext({
     appLoadingState: false,
-    setAppLoadingState: () => {}
+    setAppLoadingState: () => {
+        // This is intentional
+    }
 
 });
 

@@ -3,17 +3,21 @@ import React, {useState} from 'react';
 export const PZRContext = React.createContext({
     searchParams: {},
     setSearchParams: () => {
+        // This is intentional
     },
     searchResults: {},
     setSearchResults: () => {
+        // This is intentional
     },
     isOnReviewPage: false,
     setIsOnReviewPage: () => {
+        // This is intentional
     },
     isOnTransactionHistoryLogPage: false,
     setIsOnTransactionHistoryLogPage: () => {
     },
     resetSearchResults: () => {
+        // This is intentional
     }
 });
 

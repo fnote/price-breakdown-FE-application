@@ -224,6 +224,7 @@ export default function ApproveRejectButtons({row, index, handle, disable}) {
                             type='primary'
                             className='pz-search-btn outlined-btn'
                             onClick={() => {
+                                // This is intentional
                             }}
                         >
                             APPROVE

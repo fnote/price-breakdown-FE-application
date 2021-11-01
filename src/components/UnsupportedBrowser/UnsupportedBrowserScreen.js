@@ -16,7 +16,7 @@ import safari from '../../styles/images/safari.svg';
 
 function _getSupportedBrowserList(browsers) {
   const supportedBrowserList = [];
-  Object.entries(browsers).map(([key, value]) => supportedBrowserList.push(key + UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR + value));
+  Object.entries(browsers).forEach(([key, value]) => supportedBrowserList.push(key + UNSUPPORTED_WEB_BROWSER_SPLIT_SEPARATOR + value));
 
   return supportedBrowserList;
 }

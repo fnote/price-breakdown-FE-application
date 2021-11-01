@@ -115,6 +115,14 @@ class FileList extends React.Component {
         });
     };
 
+    // -----------throw an Error if response is non-ok---------------
+    throwError(response) {
+        if (!response.ok) {
+            throw Error(response.statusText);
+        }
+        return response.json();
+    }
+
     // ------ delete job ------
     deleteJob = (jobId) => {
         // set the file state to deleting
@@ -128,10 +136,7 @@ class FileList extends React.Component {
 
         jobDeleteRequestHandler(jobId)
             .then((response) => {
-                if (!response.ok) {
-                    throw Error(response.statusText);
-                }
-                return response.json();
+                return this.throwError(response);
             }).then((response) => {
             const fileNames = removeFileNamePrefixFromList(response.data.fileNames);
             const formattedFileNames = [];
@@ -194,10 +199,7 @@ class FileList extends React.Component {
             });
             generateSignedUrls(fileNamesArrayWithPciPrefix)
                 .then((response) => {
-                    if (!response.ok) {
-                        throw Error(response.statusText);
-                    }
-                    return response.json();
+                    return this.throwError(response);
                 }).catch(() => {
                     const fileNamesWithOutPrefix = removeFileNamePrefixFromList(fileNamesArrayWithPciPrefix);
                     const errorMsg = 'Failed to download the files.';
