@@ -22,7 +22,7 @@ import {
     formatPZRequest,
     constructPatchPayload,
     generateReviewer,
-    getEmptyDataTableMessage
+    getTHLEmptyDataTableMessage
 } from '../helper/PZRHelper';
 // constants
 import {
@@ -230,7 +230,7 @@ export default function PriceZoneLog() {
                         pagination={false}
                         loading={resultLoading}
                         scroll={{ y: tableSize.height - 80 }}
-                        locale={{emptyText: <Empty description={getEmptyDataTableMessage(error)}/>}}
+                        locale={{emptyText: <Empty description={getTHLEmptyDataTableMessage(error)}/>}}
                         onChange={calcSize}
                     />
                     {selectedRecord && <ReferenceTable record={selectedRecord}/>}
@@ -251,7 +251,7 @@ export default function PriceZoneLog() {
                     updateDataStore(current);
                 }}
                 pageSize={REVIEW_RESULT_TABLE_PAGE_SIZE}
-                disabled={resultLoading}
+                disabled={resultLoading || totalResultCount===0}
             />
         </div>
     );

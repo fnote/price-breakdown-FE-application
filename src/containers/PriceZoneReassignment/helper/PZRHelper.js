@@ -214,6 +214,8 @@ export const getReviewStatusMsg = (status = null) => {
 
 export const getEmptyDataTableMessage = (error = false) => (error ? 'Sorry we could not retrieve the information' : 'No Changes to Review');
 
+export const getTHLEmptyDataTableMessage = (error = false) => (error ? 'Sorry we could not retrieve the information' : 'No Transactions to display');
+
 /**
  * Truncates a given input string based on the maximum allowed length param provided
  * If the length of the string > maximum allowed length, truncate and attach '...' to the end of the string
