@@ -4,8 +4,8 @@ import {fetchCustomerDetails} from "../handlers/PZRGetCustomerDetails";
 
 export default function PzPopover({id,customerGroup,customerAccount}) {
 
-    const [setResultLoading] = useState(false);
-    const [setError] = useState(false);
+    const [resultLoading, setResultLoading] = useState(false);
+    const [error, setError] = useState(false);
     const [customers, setCustomers] = useState(null);
 
     const loadPopOverWithCustomerData = ()=> fetchCustomerDetails({id, setResultLoading,setError, setCustomers});
