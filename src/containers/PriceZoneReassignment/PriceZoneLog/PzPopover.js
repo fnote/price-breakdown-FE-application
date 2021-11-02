@@ -37,8 +37,6 @@ export default function PzPopover({id,customerGroup,customerAccount}) {
                         <div className="pz-log-pop-body">
                             <ul className="pz-log-pop-ul">
                                 {customers.map((customer, i) => {
-                                    console.log('we here 2 ')
-                                    console.log(customers)
                                     return (
                                         <li key={i} className="pz-log-pop-li">
                                             {customer.id}

@@ -140,6 +140,8 @@ const SearchForm = () => {
         }
     }, [pZRContext.isOnTransactionLog, transactedBusinessUnits, getTransactedBusinessUnits]);
 
+    const selectBusinessUnits = () => (pZRContext.isOnTransactionLog ? transactedBusinessUnits : activeBusinessUnitMap);
+
     const { Option } = Select;
 
     return (
@@ -180,7 +182,7 @@ const SearchForm = () => {
                             dropdownMatchSelectWidth={false}
                             filterOption={(inputValue, option) => {
                                 return manipulateSitesToShowcase(inputValue, option);
-                            }} showSearch> {getBusinessUnits(activeBusinessUnitMap)}
+                            }} showSearch> {getBusinessUnits(selectBusinessUnits())}
                         </Select>
                     </Form.Item>
                     <div className="pz-customer-groupbox">
